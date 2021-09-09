@@ -48,3 +48,51 @@
 >
 > <span style='color: red;'>默认导入的注意事项：</span>默认导入时的接收名称可以任意名称，<span style="color: #329BDC;">只要是合法的成员名称即可</span>
 
+##### ES6模块化的按需导出和导入
+
+> **按需导出：**
+>
+> 按需导出的语法：<span style="color: red;">export</span> <span style="color: #329BDC;">按需导出的成员</span>
+>
+> ```javascript
+> // 当前模块为03_m2.js
+> 
+> // 向外按需导出变量 s1
+> export let s1 = 'aaa'
+> // 向外按需导出变量 s2
+> export let s2 = 'ccc'
+> // 向外按需导出方法 say
+> export function say(){}
+> ```
+>
+> **按需导入：**
+>
+> 按需导入的语法：<span style="color: red;">import</span> {<span style="color: #329BDC;">s1</span>} <span style="color: red;">from</span>> '模块标识符'
+>
+> ```javascript
+> // 导入模块成员
+> import { s1, s2, say } from './03_m2.js'
+> 
+> console.log(s1) // 打印输出 aaa
+> console.log(s2) // 打印输出 ccc
+> console.log(sa) // 打印输出 [Function: say]
+> ```
+>
+> <span style='color: red;'>按需导出与按需导入的注意事项：</span>
+>
+> - 每个模块中可以使用<span style="color: red;">多次</span>按需导出
+>
+> - 按需<span style="color: red;">导入的成员名称</span>必须和<span style="color: red;">按需导出的名称</span>保持一致
+>
+> - 按需导入时，可以使用<span style="color: red;"> as 关键字</span>>进行重命名
+>
+> - ```javascript
+>   // 导入模块成员
+>   import { s1, s2 as str2, say } from './03_m2.js'
+>   
+>   console.log(s1) // 打印输出 aaa
+>   console.log(str2) // 打印输出 ccc
+>   console.log(say) // 打印输出 [Function: say]
+>   ```
+>
+> - 按需导入可以和默认导入一起使用
