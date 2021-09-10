@@ -11,14 +11,6 @@
 > <span style="color: green;">JVM：</span>
 >     java运行虚拟机
 
-##### Java代码注意事项
-
-> 一个java文件中有且只有一个public类，且类的名词要与文件名相同
->
-> 数字默认赋值为int，如果想要使用long类型，数字的后面必须加上L或小写的l(不建议使用)
->
-> 小数默认赋值为double，如果想要使用float类型，数字的后面必须加上f
-
 ##### 类和对象之间的关系
 
 > <span style="color: red;">**对象是类的实例，类是对象的模板**</span>
@@ -48,44 +40,9 @@
 >
 > ||：如果左边为假，右边执行；如果左边为真，右边不执行
 
-##### Java 中 String 使用 equals() 和 == 的区别
-
-> String 中 == 比较引用地址是否相同，equals() 比较字符串的内容是否相同
->
-> ```java
-> String s1 = "Hello";              // String 直接创建
-> String s2 = "Hello";              // String 直接创建
-> String s3 = s1;                   // 相同引用
-> String s4 = new String("Hello");  // String 对象创建
-> String s5 = new String("Hello");  // String 对象创建
->  
-> s1 == s1;         // true, 相同引用
-> s1 == s2;         // true, s1 和 s2 都在公共池中，引用相同
-> s1 == s3;         // true, s3 与 s1 引用相同
-> s1 == s4;         // false, 不同引用地址
-> s4 == s5;         // false, 堆中不同引用地址
->  
-> s1.equals(s3);    // true, 相同内容
-> s1.equals(s4);    // true, 相同内容
-> s4.equals(s5);    // true, 相同内容
-> ```
-
 ##### if与switch结构之间的区别
 
 > if常用于区间型判断，进行大量数据的判断，减少代码的编写
 >
 > switch常用于精确型判断，进行少量数据的精确判断，性能略高
-
-##### Java生成指定范围的随机数
-
-```java
-public static void main(String[] args) {
-	// 打印 30到50之间的随机数
-	int min = 30;
-	int max = 50;
-	for (int i = 0; i < 10; i++) {
-		System.out.println(new Random().nextInt(max - min) + min);
-	}
-}
-```
 
