@@ -11,10 +11,6 @@
 > <span style="color: green;">JVM：</span>
 >  java运行虚拟机
 
-##### 类和对象之间的关系
-
-> **对象是类的实例，类是对象的模板**
-
 ##### Java面向对象编程的特性
 
 > - **封装**
@@ -181,23 +177,22 @@
 >
 > ```java
 > public static void sort(int[] array) {
-> 	for(int i = 0; i < array.length - 1; i++){
->         for(int j = 0; j < array.length - i - 1; j++){
->             // array[j] < array[j+1]：从大到小排序；array[j] > array[j+1]：从小到大排序
->             if(array[j] < array[j+1])
->             {
->                 int temp = array[j];
->                 array[j] = array[j+1];
->                 array[j+1] = temp;
->             }
->         }  
->     }   
-> }
+> 	for(int i = 0; i < array.length - 1; i++) {
+>    		for(int j = 0; j < array.length - i - 1; j++) {
+>                 // array[j] < array[j+1]：从大到小排序；array[j] > array[j+1]：从小到大排序
+>                 if(array[j] < array[j+1]) {
+>                 	int temp = array[j];
+>                 	array[j] = array[j+1];
+>                 	array[j+1] = temp;
+>             	}
+>         	}
+>     	}
+>    }
 > ```
->
-> **快速排序：**
->
-> ```java
+> 
+>**快速排序：**
+> 
+>```java
 > /**
 >  * 快速排序
 >  * 
@@ -261,8 +256,8 @@
 > 	quickSortCore(array, i + 1, right);
 > }
 > ```
->
 > 
+>
 
 ##### Java中的break用法
 
@@ -432,24 +427,24 @@
 >             // 调用方法
 >             int result = sum( a: 10, b: 20);
 >             System.out.println(result);		// 30
->               
+>                 
 >             int result2 = sum( a: 10.0, b: 20.0);
 >             System.out.println(result2);	// 30.0
->               
+>                 
 >             int result3 = sum( a: 10, b: 20, c: 30);
 >             System.out.println(result3);	// 60
 >         }
->           
+>             
 >         // 需求1：求两个 int 类型数据和的方法
 >         public static int sum(int a, int b) {
 >             return a + b;
 >         }
->           
+>             
 >         // 需求2：求两个 double 类型数据和的方法
 >         public static double sum(double a, double b) {
 >             return a + b;
 >         }
->           
+>             
 >         // 需求3：求三个 int 类型数据和的方法
 >         public static int sum(int a, int b, int c) {
 >             return a + b + c;
@@ -473,7 +468,7 @@
 >             // 方法体
 >         }
 >     }
->         
+>             
 >     // 属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
@@ -537,6 +532,141 @@ public static void main(String[] args) {
 	}
 }
 ```
+
+##### Java中的类与对象
+
+> **对象的概念：**
+>
+> Java中一切皆对象
+>
+> **类的概念：**
+>
+> 类是对现实生活中一类具有<span style="color: red;">共同属性</span>和<span style="color:red;">行为</span>的事物的抽象
+>
+> **类的特点：**
+>
+> - 类是对象的数据类型
+> - 类是具有相同属性和行为的一组对象的集合
+>
+> **类与对象之间的关系：**
+>
+> <span style="color: red;text-decoration:underline;">对象是类的实例，类是对象的模板</span>
+>
+> **类的定义：**
+>
+> 类是Java程序的基本组成单位
+>
+> 类的组成：属性和行为
+>
+> - 属性：在类中铜卦成员变量来体现(勒种方法外的变量)
+> - 行为：在勒种铜卦成员方法来体现(和前面的方法相比去掉static关键字即可)
+>
+> ==类的定义步骤==
+>
+> 格式：
+>
+> ```java
+> // 定义类
+> public class 类名{
+>     // 编写类的成员变量
+>     变量1的数据类型 变量1;
+>     变量2的数据类型 变量2;
+>     ...
+>     // 编写类的成员方法
+>     方法1;
+>     方法2;
+>     ...
+> }
+> ```
+>
+> 范例：
+>
+> ```java
+> public class Phone{
+>     // 成员变量
+>     String brand;
+>     int price;
+>     // 成员方法
+>     public void call() {
+>         System.out.println("打电话");
+>     }
+>     public void sendMessage() {
+>         System.out.println("发短信");
+>     }
+> }
+> ```
+>
+> **对象的使用**
+>
+> ==创建对象==
+>
+> - 格式：<span style="color: red;">类名</span> <span style="color: #329BDC;">对象名</span> = <span style="color: #8163BD;">new</span> <span style="color: red;">类名</span>();
+> - 范例：<span style="color: red;">Phone</span> <span style="color: #329BDC;">p</span> = <span style="color: #8163BD;">new</span> <span style="color: red;">Phone</span>();
+>
+> ==使用对象==
+>
+> 使用成员变量：
+>
+> - 格式：<span style="color: red;">对象名</span>.<span style="color: #329BDC;">变量名</span> 
+> - 范例：<span style="color: red;">p</span>.<span style="color: #329BDC;">brand</span> 
+>
+> 使用成员方法：
+>
+> - 格式：<span style="color: red;">对象名</span>.<span style="color: #329BDC;">方法名</span>()
+> - 范例：<span style="color: red;">p</span>.<span style="color: #329BDC;">call</span>()
+>
+> ```java
+> public class PhoneDemo{
+> 	publie static main(String[] args){
+>         // 创建对象
+>         Phone p = new Phone();
+>         // 使用成员变量
+>         System.out.println(p.brand); // null
+>         System.out.println(p.price); // 0
+>         // 给成员变量赋值
+>         p.brand = "小米";
+>         p.price = 2999;
+>         System.out.println(p.brand); // 小米
+>         System.out.println(p.price); // 2999
+>         // 使用成员方法
+>         p.call(); // 打电话
+>         p.sendMessage(); // 发短信
+>     }
+> }
+> ```
+>
+> *Java堆内存中的成员变量有默认值*
+>
+> **成员变量和局部变量**
+>
+> - 成员变量：类中方法外的变量
+> - 局部变量：方法中的变量
+>
+> ==成员变量和局部变量的区别==
+>
+> |      区别      |                  成员变量                  |                    局部变量                    |
+> | :------------: | :----------------------------------------: | :--------------------------------------------: |
+> |  类中位置不同  |                 类中方法外                 |              方法内或者方法声明上              |
+> | 内存中位置不同 |                   堆内存                   |                     栈内存                     |
+> |  生命周期不同  | 随着对象的存在而存在，随着对象的消失而消失 | 随着方法的调用而存在，随着方法的调用完毕而消失 |
+> |  初始化值不同  |              有默认的初始化值              | 没有默认的初始化值，必须先定义，复制，才能使用 |
+>
+> **类的封装**
+>
+> <span style="color: red;">private关键字</span>(<span style="color: #329BDC;">私有</span>)：
+>
+> - *是一个权限修饰符*
+> - *可以修饰成员(成员变量和成员方法)*
+> - *作用是保护成员不被别的类使用，被<span style="color: red;">private</span>修饰的成员只在本类中才能访问*
+>
+> 针对<span style="color: red;">private</span>修饰的成员变量，如果需要被其他类使用，提供相应的操作
+>
+> - 提供"<span style="color: red;">get变量名()</span>"方法，用于获取成员变量的值，方法用<span style="color: red;">public</span>修饰
+> - 提供"<span style="color: red;">set变量名(参数)</span>"方法，用于设置成员变量的值，方法用<span style="color: red;">public</span>修饰
+>
+> <span style="color: red;">protected关键字</span>(<span style="color: #329BDC;">保护</span>)：
+>
+> <span style="color: red;">public关键字</span>(<span style="color: #329BDC;">公共</span>)：
 
 ##### 复制对象和复制引用的区别
 
