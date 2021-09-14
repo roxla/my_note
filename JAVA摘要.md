@@ -28,6 +28,27 @@
 >
 > switch常用于精确型判断，进行少量数据的精确判断，性能略高
 
+##### Java中的数组排序
+
+> **冒泡排序：**
+>
+> ```java
+> public static void sort(int[] array) {
+> 	for(int i = 0; i < array.length - 1; i++) {
+> 		for(int j = 0; j < array.length - i - 1; j++) {
+>              // array[j] < array[j+1]：从大到小排序；array[j] > array[j+1]：从小到大排序
+>              if(array[j] < array[j+1]) {
+>              	int temp = array[j];
+>              	array[j] = array[j+1];
+>              	array[j+1] = temp;
+>          	}
+>      	}
+>  	}
+> }
+> ```
+>
+> 
+
 ##### 复制对象和复制引用的区别
 
 > 

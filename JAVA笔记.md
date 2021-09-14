@@ -178,21 +178,64 @@
 > ```java
 > public static void sort(int[] array) {
 > 	for(int i = 0; i < array.length - 1; i++) {
->    		for(int j = 0; j < array.length - i - 1; j++) {
->                 // array[j] < array[j+1]：从大到小排序；array[j] > array[j+1]：从小到大排序
->                 if(array[j] < array[j+1]) {
->                 	int temp = array[j];
->                 	array[j] = array[j+1];
->                 	array[j+1] = temp;
->             	}
->         	}
->     	}
->    }
+> 		for(int j = 0; j < array.length - i - 1; j++) {
+>              // array[j] < array[j+1]：从大到小排序；array[j] > array[j+1]：从小到大排序
+>              if(array[j] < array[j+1]) {
+>              	int temp = array[j];
+>              	array[j] = array[j+1];
+>              	array[j+1] = temp;
+>          	}
+>      	}
+>  	}
+> }
 > ```
-> 
->**快速排序：**
-> 
->```java
+>
+> **选择排序：**
+>
+> ```java
+> public static void choiceSort(int[] array) {
+>     for(int i = 0; i < array.length - 1; i++){
+>         int max = 0;
+>         for(int j = 0; j < array.length - i; j++){
+>             if(array[max] < array[j])
+>                 max = j;
+>         }
+>         int temp = array[array.length - 1 - i];
+>         array[array.length - 1 - i] = array[max];
+>         array[max] = temp;
+>     }
+> }
+> ```
+>
+> **插入排序：**
+>
+> ```java
+> public static void insertionSort(int[] array) {
+>    /*
+> 	* 默认，第一个数为已排序的数
+> 	* 直接插入排序法：从第一个开始遍历数组，每个数字都在前面已经被遍历的数字中插入
+> 	* 从小到大排序的话，碰到比它大的数，往后移，直到比它小就停下
+> 	*/
+>     for(int i = 1; i < array.length; i++){
+>         int temp = array[i];
+>         int j;
+>         // 在前面已经遍历过的数中比较
+>         for(j = i - 1; j >= 0; j--){
+>             if(temp < array[j]){
+>                 array[j+1] = array[j];
+>             }else{
+>                 break;
+>             }
+>         }
+>         // 遇到比比较值小的，就放在比较值的后面
+>         array[j+1] = temp;
+>     }
+> }
+> ```
+>
+> **快速排序：**
+>
+> ```java
 > /**
 >  * 快速排序
 >  * 
@@ -256,8 +299,8 @@
 > 	quickSortCore(array, i + 1, right);
 > }
 > ```
-> 
 >
+> 
 
 ##### Java中的break用法
 
@@ -396,7 +439,7 @@
 > }
 > ```
 >
-> | <span style="color: #DB2D20;">public static</span> | 修饰符                                                       |
+> | <span style="color: #DB2D20;">public static</span> | 修饰符，用于控制用户对于修饰的成员的访问权限                 |
 > | :------------------------------------------------: | :----------------------------------------------------------- |
 > |  <span style="color: #42B983;">返回值类型</span>   | 方法操作完毕之后返回的数据的数据类型。如果方法操作完毕，没有数据返回，这里写 void，而且方法体重一般不写 return |
 > |    <span style="color: #E2287F;">方法名</span>     | 调用方法时候使用的标识                                       |
@@ -427,24 +470,24 @@
 >             // 调用方法
 >             int result = sum( a: 10, b: 20);
 >             System.out.println(result);		// 30
->                 
+>                     
 >             int result2 = sum( a: 10.0, b: 20.0);
 >             System.out.println(result2);	// 30.0
->                 
+>                     
 >             int result3 = sum( a: 10, b: 20, c: 30);
 >             System.out.println(result3);	// 60
 >         }
->             
+>                 
 >         // 需求1：求两个 int 类型数据和的方法
 >         public static int sum(int a, int b) {
 >             return a + b;
 >         }
->             
+>                 
 >         // 需求2：求两个 double 类型数据和的方法
 >         public static double sum(double a, double b) {
 >             return a + b;
 >         }
->             
+>                 
 >         // 需求3：求三个 int 类型数据和的方法
 >         public static int sum(int a, int b, int c) {
 >             return a + b + c;
@@ -468,7 +511,7 @@
 >             // 方法体
 >         }
 >     }
->             
+>                     
 >     // 属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
@@ -536,6 +579,8 @@ public static void main(String[] args) {
 ##### Java中的类与对象
 
 > **对象的概念：**
+>
+> 对象是实际存在的该类事物的每个个体，因而也称为实例
 >
 > Java中一切皆对象
 >
@@ -639,7 +684,7 @@ public static void main(String[] args) {
 >
 > **成员变量和局部变量**
 >
-> - 成员变量：类中方法外的变量
+> - 成员变量(全局变量)：类中方法外的变量
 > - 局部变量：方法中的变量
 >
 > ==成员变量和局部变量的区别==
@@ -651,24 +696,190 @@ public static void main(String[] args) {
 > |  生命周期不同  | 随着对象的存在而存在，随着对象的消失而消失 | 随着方法的调用而存在，随着方法的调用完毕而消失 |
 > |  初始化值不同  |              有默认的初始化值              | 没有默认的初始化值，必须先定义，复制，才能使用 |
 >
-> **类的封装**
->
+
+##### 类的关键字
+
 > <span style="color: red;">private关键字</span>(<span style="color: #329BDC;">私有</span>)：
 >
-> - *是一个权限修饰符*
-> - *可以修饰成员(成员变量和成员方法)*
-> - *作用是保护成员不被别的类使用，被<span style="color: red;">private</span>修饰的成员只在本类中才能访问*
+> - 是一个权限修饰符
+> - 可以修饰成员(成员变量和成员方法)
+> - 作用是保护成员不被别的类使用，被<span style="color: red;">private</span>修饰的成员只在本类中才能访问
 >
 > 针对<span style="color: red;">private</span>修饰的成员变量，如果需要被其他类使用，提供相应的操作
 >
 > - 提供"<span style="color: red;">get变量名()</span>"方法，用于获取成员变量的值，方法用<span style="color: red;">public</span>修饰
 > - 提供"<span style="color: red;">set变量名(参数)</span>"方法，用于设置成员变量的值，方法用<span style="color: red;">public</span>修饰
 >
+> ```java
+> // 学生类
+> public class Student {
+>     // 成员变量
+>     private String name;
+>     private int age;
+>     
+>     // get/set方法
+>     public void setName(String n) {
+>         name = n;
+>     }
+>     public String getName() {
+>         return name;
+>     }
+>     
+>     public void setAge(int a) {
+>         age = a;
+>     }
+>     public int getAge() {
+>         return age;
+>     }
+>     
+>     public void show() {
+>         System.out.println(name + "，" + age);
+>     }
+> }
+> ```
+>
 > <span style="color: red;">protected关键字</span>(<span style="color: #329BDC;">保护</span>)：
 >
+> - 是一个权限修饰符
+> - 可以修饰成员(成员变量和成员方法)
+>
 > <span style="color: red;">public关键字</span>(<span style="color: #329BDC;">公共</span>)：
+>
+> - 是一个权限修饰符
+> - 可以修饰成员(成员变量和成员方法)
+>
+> <span style="color: red;">this关键字</span>：
+>
+> ```java
+> public class Student {
+>     private String name;
+>     
+>     public String getName() {
+>         return name;
+>     }
+>     public void setName(String name) {
+>         this.name = name; // this.name 指代的是 private String name
+>     }
+> }
+> ```
+>
+> - this修饰的变量用于指代成员变量
+>
+>   - 方法的形参如果与成员变量同名，不带this修饰的变量指的是形参，而不是成员变量
+>   - 方法的形参没有与成员变量同名，不带this修饰的变量指的是成员变量
+>
+> - <span style="color: red;">解决局部变量隐藏成员变量</span>的时候使用<span style="color: red;">this</span>关键字
+>
+> - <span style="color: red;">this</span>：代表所在类的对象引用
+>
+>   - 记住：方法被哪个对象调用，this就代表哪个对象
+>
+>   - ```java
+>     public class StudentDemo {
+>         public static void main(String[] args) {
+>             Student s1 = new Student();
+>             s1.setName("王狗蛋"); // setName 方法中的 this 代表 s1 这个对象
+>             
+>             Student s2 = new Student();
+>             s2.setName("李铁蛋"); // setName 方法中的 this 代表 s2 这个对象
+>         }
+>     }
+>     ```
+>
+> - 
+
+##### 类的封装
+
+> **封装概述**
+>
+> 封装是面相对象三大特征之一
+>
+> 封装是面相对象编程语言对客观世界的模拟，客观世界里成员变量都是隐藏在对象内部的，外界是无法直接操作的
+>
+> **封装的原则**
+>
+> 将类的某些信息隐藏在类内部，不允许外部程序直接访问，而是通过该类提供的方法来实现对隐藏信息的操作和访问成员变量<span style="color: red;">private</span>，提供对应的<span style="color: red;">getXxx()/setXxx()</span>方法
+>
+> ```java
+> public class Student {
+>     private String name;
+>     
+>     public String getName() {
+>         return name;
+>     }
+>     public void setName(String name) {
+>         this.name = name; // this.name 指代的是 private String name
+>     }
+> }
+> ```
+>
+> **封装的好处**
+>
+> - 通过方法来控制成员变量的操作，提高了代码的安全性
+> - 把代码用方法进行封装，提高了代码的复用性
+>
+> **构造方法**
+>
+> 构造方法是一种特殊的方法
+>
+> - 作用：创建对象
+>
+> - 格式：
+>
+>   ```java
+>   public class 类名 {
+>       修饰符 类名(参数) {
+>       }
+>   }
+>   ```
+>
+> - 范例：
+>
+>   ```java
+>   public class Student {
+>       public Student() {
+>           // 构造方法内书写的内容
+>       }
+>   }
+>   ```
+>
+> - 功能：主要是完成对象数据的初始化
+>
+> ```java
+> public class Student {
+>     private String name;
+>     private int age;
+>     // 构造方法
+>     public Student() {
+>         System.out.println("无参构造方法");
+>     }
+>     public void show() {
+>         System.out.println(name + "，" + age);
+>     }
+> }
+> ```
+>
+> **构造方法的注意事项**
+>
+> 
+
+##### 类的继承
+
+> 
+
+##### 类的多态
+
+> 
+
+##### 类的抽象
+
+> 
 
 ##### 复制对象和复制引用的区别
+
+> 
+
+##### 重载和重写的区别
 
 > 
 
