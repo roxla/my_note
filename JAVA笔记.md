@@ -169,7 +169,28 @@
 >
 > *当遍历集合或数组时，如果需要访问集合或数组的下标，那么最好使用旧式的方式来实现循环或遍历，而不要使用增强的for循环，因为它丢失了下标信息*
 >
-> **java.util.Arrays**	java数组工具类 
+> <span style="color: #329BDC;">java.util.Arrays</span>	java数组工具类
+>
+> **对象数组**
+>
+> - 在数组中存储的是对象，表示数组中的每一个元素都是对象
+> - 格式：<span style="color: red;">类的类型</span>[] <span style="color: #329BDC;">数组名</span> = <span style="color: #DB2D20;">new</span> <span style="color: red;">类的类型</span>[<span style="color: #329BDC;">长度</span>];
+> - 注意：
+>   - 新建数组中不存在对象，数组中的默认初始值为null
+>   - 这时候的每一个元素相当于：Person[0] = null;
+>
+> ```java
+> Person[] pers = new Person[3];
+> // 此时 pers[0] 存储的内容为null
+> System.out.println(pers[0]); // null
+> 
+> Person per1 = new Person();
+> pers[0] = per1;
+> // 此时 pers[0] 存储的内容为 per1 所指向的堆内存的地址
+> System.out.println(pers[0]); // per1的地址
+> ```
+>
+> 
 
 ##### Java中的数组排序
 
@@ -470,24 +491,24 @@
 >             // 调用方法
 >             int result = sum( a: 10, b: 20);
 >             System.out.println(result);		// 30
->                     
+>                       
 >             int result2 = sum( a: 10.0, b: 20.0);
 >             System.out.println(result2);	// 30.0
->                     
+>                       
 >             int result3 = sum( a: 10, b: 20, c: 30);
 >             System.out.println(result3);	// 60
 >         }
->                 
+>                   
 >         // 需求1：求两个 int 类型数据和的方法
 >         public static int sum(int a, int b) {
 >             return a + b;
 >         }
->                 
+>                   
 >         // 需求2：求两个 double 类型数据和的方法
 >         public static double sum(double a, double b) {
 >             return a + b;
 >         }
->                 
+>                   
 >         // 需求3：求三个 int 类型数据和的方法
 >         public static int sum(int a, int b, int c) {
 >             return a + b + c;
@@ -511,7 +532,7 @@
 >             // 方法体
 >         }
 >     }
->                     
+>                         
 >     // 属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
@@ -716,7 +737,7 @@ public static void main(String[] args) {
 >     // 成员变量
 >     private String name;
 >     private int age;
->     
+> 
 >     // get/set方法
 >     public void setName(String n) {
 >         name = n;
@@ -724,14 +745,14 @@ public static void main(String[] args) {
 >     public String getName() {
 >         return name;
 >     }
->     
+> 
 >     public void setAge(int a) {
 >         age = a;
 >     }
 >     public int getAge() {
 >         return age;
 >     }
->     
+> 
 >     public void show() {
 >         System.out.println(name + "，" + age);
 >     }
@@ -751,9 +772,10 @@ public static void main(String[] args) {
 > <span style="color: red;">this关键字</span>：
 >
 > ```java
+> // 标准类
 > public class Student {
 >     private String name;
->     
+> 
 >     public String getName() {
 >         return name;
 >     }
@@ -775,18 +797,25 @@ public static void main(String[] args) {
 >   - 记住：方法被哪个对象调用，this就代表哪个对象
 >
 >   - ```java
+>     // 测试类
 >     public class StudentDemo {
 >         public static void main(String[] args) {
 >             Student s1 = new Student();
 >             s1.setName("王狗蛋"); // setName 方法中的 this 代表 s1 这个对象
->             
+>     
 >             Student s2 = new Student();
 >             s2.setName("李铁蛋"); // setName 方法中的 this 代表 s2 这个对象
 >         }
 >     }
 >     ```
 >
-> - 
+> - 1
+>
+> <span style="color: red;">static关键字</span>：
+>
+> - 1
+>
+> *注意：静态方法不得访问非静态内容，非静态可以访问静态内容*
 
 ##### 类的封装
 
@@ -802,14 +831,14 @@ public static void main(String[] args) {
 >
 > ```java
 > public class Student {
->     private String name;
->     
->     public String getName() {
->         return name;
->     }
->     public void setName(String name) {
->         this.name = name; // this.name 指代的是 private String name
->     }
+>  private String name;
+> 
+>  public String getName() {
+>      return name;
+>  }
+>  public void setName(String name) {
+>      this.name = name; // this.name 指代的是 private String name
+>  }
 > }
 > ```
 >
@@ -861,11 +890,33 @@ public static void main(String[] args) {
 >
 > **构造方法的注意事项**
 >
-> 
+> 1. 构造方法的创建
+>    1. 如果没有定义构造方法，系统将给出一个<span style="color: red;">默认</span>的<span style="color: red;">无参数构造方法</span>
+>    2. 如果定义了构造方法，系统将不再提供默认的构造方法
+> 2. 构造方法的重载
+>    1. 如果自定义了带参构造方法，还要使用无参构造方法，就必须再写一个无参数构造方法
+> 3. 推荐的使用方式
+>    1. <span style="color: red;">无论是否使用，都手工书写无参数构造方法</span>
+>
+> **标准类的制作**
+>
+> 1. 成员变量
+>    1. 使用<span style="color: red;">private</span>修饰
+> 2. 构造方法
+>    1. 提供一个无参构造方法
+>    2. 提供一个带多个参数的构造方法
+> 3. 成员方法
+>    1. 提供每一个成员变量对应的<span style="color: red;">setXxx()/getXxx()</span>
+>    2. 提供一个现实对象信息的<span style="color: red;">show()</span>
+> 4. 创建对象并为其成员变量赋值的两种方式
+>    1. 无参构造方法创建对象后使用<span style="color: red;">setXxx()</span>赋值
+>    2. 使用带参构造方法直接创建带有属性值的对象
 
 ##### 类的继承
 
-> 
+> **继承的概述**
+>
+> 继承是面相对象三大特征之一。可以使得子类具有父类的属性和方法，还可以在子类中重新定义，追加属性和方法
 
 ##### 类的多态
 
@@ -881,9 +932,21 @@ public static void main(String[] args) {
 
 ##### 重载和重写的区别
 
-> 
+> 方法重载（overload）实现的是编译时的多态性（也称为前绑定），而方法重写（override）实现的是运行时的多态性（也称为后绑定）。运行时的多态是面向对象最精髓的东西，要实现多态需要做两件事：1. 方法重写（子类继承父类并重写父类中已有的或抽象的方法）
 
 ##### 深拷贝和浅拷贝
+
+> 
+
+##### final、finally、finalize 有什么区别
+
+> 
+
+##### spring mvc 和 struts 的区别是什么
+
+> 
+
+##### 如何避免 SQL 注入
 
 > 
 

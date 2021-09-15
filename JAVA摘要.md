@@ -1,11 +1,35 @@
 ##### JDK、JRE、JVM之间的关系
 
 > <span style="color: green;">JDK：</span>
->      java开发工具包，包含jre和开发人员使用的工具(date，类型...，Scanner)
+> java开发工具包，包含jre和开发环境，开发人员使用的工具(date，类型...，Scanner)
 > <span style="color: green;">JRE：</span>
->    java运行环境，包含jvm和运行所需的核心类
+> java运行环境，包含jvm和运行所需的核心类
 > <span style="color: green;">JVM：</span>
->     java运行虚拟机
+> java运行虚拟机
+
+##### Java 中 String 使用 equals() 和 == 的区别
+
+> 在 String 中 == 比较引用地址是否相同，equals() 比较字符串的内容是否相同
+>
+> 在 int 中 == 和 equals() 相同
+>
+> ```java
+> String s1 = "Hello";              // String 直接创建
+> String s2 = "Hello";              // String 直接创建
+> String s3 = s1;                   // 相同引用
+> String s4 = new String("Hello");  // String 对象创建
+> String s5 = new String("Hello");  // String 对象创建
+> 
+> s1 == s1;         // true, 相同引用
+> s1 == s2;         // true, s1 和 s2 都在公共池中，引用相同
+> s1 == s3;         // true, s3 与 s1 引用相同
+> s1 == s4;         // false, 不同引用地址
+> s4 == s5;         // false, 堆中不同引用地址
+> 
+> s1.equals(s3);    // true, 相同内容
+> s1.equals(s4);    // true, 相同内容
+> s4.equals(s5);    // true, 相同内容
+> ```
 
 ##### 类和对象之间的关系
 
@@ -54,6 +78,22 @@
 > 
 
 ##### 深拷贝和浅拷贝
+
+> 
+
+##### 重载和重写的区别
+
+> 方法重载（overload）实现的是编译时的多态性（也称为前绑定），而方法重写（override）实现的是运行时的多态性（也称为后绑定）。运行时的多态是面向对象最精髓的东西，要实现多态需要做两件事：1. 方法重写（子类继承父类并重写父类中已有的或抽象的方法）
+
+##### final、finally、finalize 有什么区别
+
+> 
+
+##### spring mvc 和 struts 的区别是什么
+
+> 
+
+##### 如何避免 SQL 注入
 
 > 
 
