@@ -491,24 +491,24 @@
 >             // 调用方法
 >             int result = sum( a: 10, b: 20);
 >             System.out.println(result);		// 30
->                       
+>                           
 >             int result2 = sum( a: 10.0, b: 20.0);
 >             System.out.println(result2);	// 30.0
->                       
+>                           
 >             int result3 = sum( a: 10, b: 20, c: 30);
 >             System.out.println(result3);	// 60
 >         }
->                   
+>                       
 >         // 需求1：求两个 int 类型数据和的方法
 >         public static int sum(int a, int b) {
 >             return a + b;
 >         }
->                   
+>                       
 >         // 需求2：求两个 double 类型数据和的方法
 >         public static double sum(double a, double b) {
 >             return a + b;
 >         }
->                   
+>                       
 >         // 需求3：求三个 int 类型数据和的方法
 >         public static int sum(int a, int b, int c) {
 >             return a + b + c;
@@ -532,7 +532,7 @@
 >             // 方法体
 >         }
 >     }
->                         
+>                                 
 >     // 属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
@@ -759,15 +759,35 @@ public static void main(String[] args) {
 > }
 > ```
 >
+> <span style="color: red;">default关键字</span>(<span style="color: #329BDC;">默认</span>)：
+>
+> - 是一个权限修饰符
+> - 可以修饰成员(成员变量和成员方法)
+> - default修饰的属性和方法，只能在本包下使用，其他包的子类继承本包的父类也不能在其他包中使用
+>
 > <span style="color: red;">protected关键字</span>(<span style="color: #329BDC;">保护</span>)：
 >
 > - 是一个权限修饰符
 > - 可以修饰成员(成员变量和成员方法)
+> - protected修饰的属性和方法，在不同包的子类中可以被使用，但在无继承关系的两个类中不能使用
 >
 > <span style="color: red;">public关键字</span>(<span style="color: #329BDC;">公共</span>)：
 >
 > - 是一个权限修饰符
 > - 可以修饰成员(成员变量和成员方法)
+> - public修饰的属性和方法，在任何地方都能使用
+>
+> |                   修饰符                   | 类内部 | 同一个包 | 子类 | 任何地方 |
+> | :----------------------------------------: | :----: | :------: | :--: | :------: |
+> |  <span style="color: red;">private</span>  |  Yes   |          |      |          |
+> |  <span style="color: red;">default</span>  |  Yes   |   Yes    |      |          |
+> | <span style="color: red;">protected</span> |  Yes   |   Yes    | Yes  |          |
+> |  <span style="color: red;">public</span>   |  Yes   |   Yes    | Yes  |   Yes    |
+>
+> *对于class的权限修饰只可以用 public 和 default*
+>
+> - public 类可以在任意地方被访问
+> - default 类只可以被同一个包内部的类访问
 >
 > <span style="color: red;">this关键字</span>：
 >
@@ -809,13 +829,48 @@ public static void main(String[] args) {
 >     }
 >     ```
 >
-> - 1
+>
+> <span id="Super" style="color: red;">super关键字</span>：
+>
+> <span style="color: red;">super</span>关键字的用法和<span style="color: red;">this</span>关键字的用法相似
+>
+> - <span style="color: red;">this</span>：代表本类对象的引用
+> - <span style="color: red;">super</span>：代表父类存储空间的标识(可以理解为父类对象引用)
+>
+> | 关键字 |              访问成员变量              |             访问构造方法             |              访问成员方法              |
+> | :----: | :------------------------------------: | :----------------------------------: | :------------------------------------: |
+> |  this  | this.成员变量        访问本类成员变量  | this(. . .)        访问本类构造方法  | this.成员方法        访问本类成员方法  |
+> | super  | super.成员变量        访问父类成员变量 | super(. . .)        访问父类构造方法 | super.成员方法        访问父类成员方法 |
+>
+> ```java
+> public class Fu {
+>     public Fu(int age) {
+>         System.out.printLn("Fu中的带参构造方法被调用");
+>     }
+> }
+> 
+> public class Zi extends Fu {
+>     public Zi(int age) {
+>         super(20);
+>         System.out.printLn("Zi中的带参构造方法被调用");
+>     }
+> }
+> 
+> public class Demo {
+>     public static void main(String[] args) {
+>         Zi z2 = new Zi(20);	// Fu中的带参构造方法被调用
+>         					// Zi中的带参构造方法被调用
+>     }
+> }
+> ```
 >
 > <span style="color: red;">static关键字</span>：
 >
 > - 1
 >
 > *注意：静态方法不得访问非静态内容，非静态可以访问静态内容*
+>
+> 
 
 ##### 类的封装
 
@@ -831,14 +886,14 @@ public static void main(String[] args) {
 >
 > ```java
 > public class Student {
->  private String name;
+> private String name;
 > 
->  public String getName() {
->      return name;
->  }
->  public void setName(String name) {
->      this.name = name; // this.name 指代的是 private String name
->  }
+> public String getName() {
+>   return name;
+> }
+> public void setName(String name) {
+>   this.name = name; // this.name 指代的是 private String name
+> }
 > }
 > ```
 >
@@ -849,9 +904,11 @@ public static void main(String[] args) {
 >
 > **构造方法**
 >
+> 在类的实例过程中，需要构造对象，这时就需要使用到构造方法
+>
 > 构造方法是一种特殊的方法
 >
-> - 作用：创建对象
+> - 作用：用于对象的创建，类的实例化与对象的初始化
 >
 > - 格式：
 >
@@ -917,6 +974,227 @@ public static void main(String[] args) {
 > **继承的概述**
 >
 > 继承是面相对象三大特征之一。可以使得子类具有父类的属性和方法，还可以在子类中重新定义，追加属性和方法
+>
+> Java只支持单继承，不允许多重继承
+>
+> - 一个子类只能有一个父类
+> - 一个父类可以派生出多个子类
+>
+> **继承的格式**
+>
+> <span style="color: #E25B51;">public class</span> <span style="color: #329BDC;">子类名</span> <span style="color: red;">extends</span> <span style="color: #329BDC;">父类名</span>{}
+>
+> ```java
+> public class Zi extends Fu{}
+> ```
+>
+> - Fu：是父类，也被称为基类、超类
+> - Zi：是子类，也被称为派生类
+>
+> **继承的注意事项**
+>
+> 在子类方法中访问一个变量
+>
+> 1. 先从子类局部范围找
+> 2. 再从子类成员范围找
+> 3. 最后从父类成员范围找
+> 4. 如果都没有就报错(不考虑父类的父类)
+>
+> 在子类方法中访问一个方法
+>
+> 1. 先从子类成员范围找
+> 2. 再从父类成员范围找
+> 3. 如果都没有就报错(不考虑父类的父类)
+>
+> 子类继承父类：只能继承父类中非私有的属性和方法
+>
+> 构造方法不能被继承
+>
+> **继承的好处和弊端**
+>
+> ==好处==
+>
+> - 提高了代码的<span style="color: red; font-weight: bold;">复用性</span>(多个类相同的成员可以放到同一个类中)
+> - 提高了代码的<span style="color: red; font-weight: bold;">维护性</span>(如果方法的代码需要修改，修改一处即可)
+>
+> ==弊端==
+>
+> - 继承让类与类之间产生了关系，类的耦合性增强了，当父类发生变化时子类实现也不得不跟着变化，削弱了子类的独立性
+>
+> **什么时候使用继承**
+>
+> - 继承体现的关系：<span style="color: red;">is a</span>
+> - 假设法：我有两个类A和B，如果他们满足A是B的一种，或者B是A的一种，就说明他们存在继承关系，这个时候就可以考虑使用继承来体现，否则就不能滥用继承
+> - 举例：苹果和水果(可以使用继承，水果为父类)，猫和动物(可以使用继承，动物为父类)，猫和狗(不可以使用继承)
+>
+> **继承中构造方法的访问特点**
+>
+> ==子类中所有的构造方法默认都会访问父类中无参的构造方法==
+>
+> ```java
+> public class Fu {
+>     public Fu() {
+>         System.out.printLn("Fu中的无参构造方法被调用");
+>     }
+> 
+>     public Fu(int age) {
+>         System.out.printLn("Fu中的带参构造方法被调用");
+>     }
+> }
+> 
+> public class Zi extends Fu {
+>     public Zi() {
+>         System.out.printLn("Zi中的无参构造方法被调用");
+>     }
+> 
+>     public Zi(int age) {
+>         System.out.printLn("Zi中的带参构造方法被调用");
+>     }
+> }
+> 
+> public class Demo {
+>     public static void main(String[] args) {
+>         Zi z = new Zi();	// Fu中的无参构造方法被调用
+>         					// Zi中的无参构造方法被调用
+> 
+>         Zi z2 = new Zi(20);	// Fu中的无参构造方法被调用
+>         					// Zi中的带参构造方法被调用
+>     }
+> }
+> ```
+>
+> - 因为子类会继承父类中的数据，可能还会使用父类的数据，所有，子类初始化之前，一定要先完成父类数据的初始化
+> - 每一个子类构造方法的第一条语句默认都是：[super()](#Super)
+>
+> ==如果父类中没有无参构造方法，只有带参构造方法==
+>
+> - 通过使用 super 关键字去显示的调用父类的带参构造方法
+> - 在父类中自己提供一个无参构造方法
+>
+> <span style="color: red;">推荐：自己给出无参构造方法</span>
+>
+> ```java
+> public class Fu {
+>     public Fu() {
+>         System.out.printLn("Fu中的无参构造方法被调用");
+>     }
+> 
+>     public Fu(int age) {
+>         System.out.printLn("Fu中的带参构造方法被调用");
+>     }
+> }
+> 
+> public class Zi extends Fu {
+>     public Zi() {
+>         System.out.printLn("Zi中的无参构造方法被调用");
+>     }
+> 
+>     public Zi(int age) {
+>         super(20);
+>         System.out.printLn("Zi中的带参构造方法被调用");
+>     }
+> }
+> 
+> public class Demo {
+>     public static void main(String[] args) {
+>         Zi z = new Zi();	// Fu中的无参构造方法被调用
+>         					// Zi中的无参构造方法被调用
+> 
+>         Zi z2 = new Zi(20);	// Fu中的带参构造方法被调用
+>         					// Zi中的带参构造方法被调用
+>     }
+> }
+> ```
+>
+> *注意：如果使用父类带参构造方法，调用父类构造方法必须放在第一行*
+>
+> **方法重写**
+>
+> ==方法重写的概念==
+>
+> 子类出现了和父类中一模一样的方法声明(方法名相同，参数列表相同)，返回值相同，访问权限不得严于父类(父类方法的访问权限为 protected 时，子类重写方法的权限不能严于 protected)
+>
+> *需要重写的父类的方法访问权限不能是 private*
+>
+> ==方法重写的使用==
+>
+> 当子类需要父类功能，而功能主体有子类特有的内容时，可以重写父类方法，这样就沿袭了父类的功能，又定义了子类特有的内容
+>
+> ```java
+> // 手机类
+> public class Phone {
+> 	public void call(String name) {
+> 		System.out.println("给" + name + "打电话");
+> 	}
+> }
+> 
+> // 新手机类
+> public class NewPhone extends Phone {
+> 	public void call(String name) {
+> 		System.out.println("开启视频功能");
+> //		System.out.println("给" + name + "打电话");
+> 		super.call(name);
+> 	}
+> }
+> 
+> // 测试类
+> public class PhomeDemo {
+> 	public static void main(String[] args) {
+> 		// 创建对象，调用方法
+> 		Phone p = new Phone();
+> 		p.call("李狗蛋");		// 给李狗蛋打电话
+> 		System.out.println("-------");
+> 		
+> 		NewPhone np = new NewPhone();
+> 		np.call("李狗蛋");		// 开启视频功能
+> 							  // 给李狗蛋打电话
+> 	}
+> }
+> ```
+>
+> ==@Override 注解==
+>
+> 用来检测当前的方法，是否为重写方法，如果不是就报出异常
+>
+> ```java
+> // 手机类
+> public class Phone {
+> 	public void call(String name) {
+> 		System.out.println("给" + name + "打电话");
+> 	}
+> }
+> 
+> // 新手机类
+> public class NewPhone extends Phone {
+>     @Override // 不是重写 报错
+> 	public void calll(String name) {
+> 		System.out.println("开启视频功能");
+> //		System.out.println("给" + name + "打电话");
+> 		super.call(name);
+> 	}
+> }
+> ```
+>
+> ```java
+> // 手机类
+> public class Phone {
+> 	public void call(String name) {
+> 		System.out.println("给" + name + "打电话");
+> 	}
+> }
+> 
+> // 新手机类
+> public class NewPhone extends Phone {
+>     @Override // 是重写 不报错
+> 	public void call(String name) {
+> 		System.out.println("开启视频功能");
+> //		System.out.println("给" + name + "打电话");
+> 		super.call(name);
+> 	}
+> }
+> ```
+>
+> 
 
 ##### 类的多态
 
@@ -933,6 +1211,10 @@ public static void main(String[] args) {
 ##### 重载和重写的区别
 
 > 方法重载（overload）实现的是编译时的多态性（也称为前绑定），而方法重写（override）实现的是运行时的多态性（也称为后绑定）。运行时的多态是面向对象最精髓的东西，要实现多态需要做两件事：1. 方法重写（子类继承父类并重写父类中已有的或抽象的方法）
+>
+> *重载发生在一个类中，同名的方法如果有不同的参数列表则视为重载；重写发生在子类与父类之间，重写要求子类被重写方法与父类被重写方法有相同的参数列表，有兼容的返回类型。*
+>
+> <span style="color: #329BDC;">方法名相同，参数列表不同，重载；方法名相同，参数列表相同，返回值相同，重写</span>
 
 ##### 深拷贝和浅拷贝
 
