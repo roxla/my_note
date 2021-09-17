@@ -890,6 +890,16 @@ public static void main(String[] args) {
 > - 能访问静态的成员方法
 >
 > *静态成员方法只能访问静态成员，非静态成员可以访问静态内容*
+>
+> <span style="color: red;">final关键字</span>(<span style="color: #329BDC;">最终态</span>)：
+>
+> <span style="color: red;">final</span> 关键字是最终的意思，可以修饰成员方法，成员变量，类
+>
+> <span style="color: red;">final</span> 修饰的特点
+>
+> - 修饰方法：表明该方法是最终方法，<span style="color: red;">不能被重写</span>
+> - 修饰变量：表明该变量是常量，<span style="color: red;">不能再次被赋值</span>
+> - 修饰类：表明该类是最终类，<span style="color: red;">不能被继承</span>
 
 ##### 类的封装
 
@@ -1523,6 +1533,229 @@ public static void main(String[] args) {
 > *重载发生在一个类中，同名的方法如果有不同的参数列表则视为重载；重写发生在子类与父类之间，重写要求子类被重写方法与父类被重写方法有相同的参数列表，有兼容的返回类型。*
 >
 > <span style="color: #329BDC;">在同一个类中，方法名相同，参数列表不同，重载；在子类和父类之间，方法名相同，参数列表相同，返回值相同，子类权限修饰符不严于父类，重写</span>
+
+##### 内部类
+
+> **内部类概述**
+>
+> 就是在一个类中定义一个类。距离：在一个类A的内部定义一个类B，类B就被称为内部类
+>
+> **内部类的定义格式**
+>
+> 格式：
+>
+> ```java
+> public class 类名 {
+>     修饰符 class 类名 {
+>     }
+> }
+> ```
+>
+> 范例：
+>
+> ```java
+> public class Outer {
+>     public class Inner {
+>     }
+> }
+> ```
+>
+> **内部类的访问特点**
+>
+> - 内部类可以直接访问外部类的成员，包括私有
+> - 外部类要访问内部类的成员，必须创建对象
+>
+> ```java
+> public class Outer {
+>     private int num = 10;
+>     public class Inner {
+>         public void show() {
+>             System.out.println(num);	// 10
+>         }
+>     }
+>     public void method() {
+> //		show();        // 报错
+>         Inner i = new Inner();
+>         i.show();
+>     }
+> }
+> ```
+>
+> **成员内部类**
+>
+> 按照内部类在类中定义的位置不同，可以分为如下两种形式
+>
+> - 在类的成员位置：成员内部类
+> - 在类的局部位置：局部内部类
+>
+> 成员内部类，外界创建对象使用的格式
+>
+> - 格式：<span style="color: red;">外部类名</span>.<span style="color: #329BDC;">内部类名</span> 对象名 = <span style="color: red;">外部类对象</span>.<span style="color: #329BDC;">内部类对象</span>;
+> - 范例：<span style="color: red;">Outer</span>.<span style="color: #329BDC;">Inner</span> oi = <span style="color: red;">new Outer()</span>.<span style="color: #329BDC;">new Inner()</span>;
+>
+> ```java
+> public class Outer {
+>     private int num = 10;
+>     
+>     public class Inner {
+>         public void show() {
+>             System.out.println(num);	// 10
+>         }
+>     }
+> }
+> public class InneerDemo {
+>     public static void main(String[] args) {
+>         // 创建内部类对象，并调用方法
+>       	Outer.Inner oi = new Outer().new Inner();
+>         oi.show();	// 10
+>     }
+> }
+> ```
+>
+> ==常用的内部类的定义格式和使用==
+>
+> ```java
+> public class Outer {
+>     private int num = 10;
+>     
+>     private class Inner {
+>         public void show() {
+>             System.out.println(num);	// 10
+>         }
+>     }
+>     
+>     public void method() {
+>         Inner i = new Inner();
+>         i.show();
+>     }
+> }
+> 
+> public class InneerDemo {
+>     public static void main(String[] args) {
+>       	Outer.o = new Outer();
+>         o.method;	// 10
+>     }
+> }
+> ```
+>
+> **局部内部类**
+>
+> 局部内部类是在方法中定义的类，所以外界是无法直接使用，需要在方法内部创建对象并使用
+>
+> 该类可以直接访问外部类的成员，也可以访问方法内的局部变量
+>
+> ```java
+> public class Outer {
+>     private int num = 10;
+>     
+>     public void method() {
+>         int num2 = 20;
+>         class Inner {
+>         	public void show() {
+>                 // 访问外部类的成员
+>             	System.out.println(num);	// 10
+>                 // 访问方法内的局部变量
+>                 System.out.println(num2);	
+>         	}
+>         }
+>         // 在方法内部创建对象并使用
+>         Inner i = new Inner();
+>         i.show();
+>     }
+> }
+> 
+> public class OuterDemo {
+>     public static void main(String[] args) {
+>       	Outer.o = new Outer();
+>         o.method;	// 10
+>         			// 20
+>     }
+> }
+> ```
+>
+> **匿名内部类**
+>
+> 匿名内部类属于一种特殊的局部内部类
+>
+> *前提：存在一个类或者接口，这里的类可以是具体类也可以是抽象类*
+>
+> - 格式：
+>
+>   ```java
+>   new 类名或者接口名(){
+>       重写方法;
+>   }
+>   ```
+>
+> - 范例：
+>
+>   ```java
+>   new Inter() {
+>       public void show(){
+>       }
+>   }
+>   ```
+>
+> <span style="color: red;">本质：是一个继承了该类或者实现了该接口的子类匿名对象</span>
+>
+> 单次调用：
+>
+> ```java
+> public class Outer {
+>     
+>     public void method() {
+>        new Inter() {
+>            @Override
+>            public void show() {
+>                System.out.println("匿名内部类");
+>            }
+>        }.show(); 
+>     }
+> }
+> 
+> public class OuterDemo {
+>     public static void main(String[] args) {
+>       	Outer.o = new Outer();
+>         o.method;	// 匿名内部类
+>     }
+> }
+> ```
+>
+> 多次调用：
+>
+> ```java
+> public interface Inter {
+>     void show();
+> }
+> 
+> public class Outer {
+>     
+>     public void method() {
+>        Inter i = new Inter() {
+>            @Override
+>            public void show() {
+>                System.out.println("匿名内部类");
+>            }
+>        };
+>        i.show();	// 1次调用
+>        i.show();	// 2次调用
+>     }
+> }
+> 
+> public class OuterDemo {
+>     public static void main(String[] args) {
+>       	Outer.o = new Outer();
+>         o.method;	// 匿名内部类
+>         			// 匿名内部类
+>     }
+> }
+> ```
+>
+> 
+
+##### 常用类
+
+> 
 
 ##### 复制对象和复制引用的区别
 
