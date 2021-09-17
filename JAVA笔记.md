@@ -491,24 +491,24 @@
 >             // 调用方法
 >             int result = sum( a: 10, b: 20);
 >             System.out.println(result);		// 30
->                           
+>                             
 >             int result2 = sum( a: 10.0, b: 20.0);
 >             System.out.println(result2);	// 30.0
->                           
+>                             
 >             int result3 = sum( a: 10, b: 20, c: 30);
 >             System.out.println(result3);	// 60
 >         }
->                       
+>                         
 >         // 需求1：求两个 int 类型数据和的方法
 >         public static int sum(int a, int b) {
 >             return a + b;
 >         }
->                       
+>                         
 >         // 需求2：求两个 double 类型数据和的方法
 >         public static double sum(double a, double b) {
 >             return a + b;
 >         }
->                       
+>                         
 >         // 需求3：求三个 int 类型数据和的方法
 >         public static int sum(int a, int b, int c) {
 >             return a + b + c;
@@ -532,7 +532,7 @@
 >             // 方法体
 >         }
 >     }
->                                 
+>                                     
 >     // 属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
@@ -777,6 +777,8 @@ public static void main(String[] args) {
 > - 可以修饰成员(成员变量和成员方法)
 > - public修饰的属性和方法，在任何地方都能使用
 >
+> <span name="Ptable" style="color: green;">权限修饰符层级表(由低到高)</span>
+>
 > |                   修饰符                   | 类内部 | 同一个包 | 子类 | 任何地方 |
 > | :----------------------------------------: | :----: | :------: | :--: | :------: |
 > |  <span style="color: red;">private</span>  |  Yes   |          |      |          |
@@ -866,11 +868,28 @@ public static void main(String[] args) {
 >
 > <span style="color: red;">static关键字</span>：
 >
-> - 1
+> - <span style="color: red;">static</span> 关键字是静态的意思，可以修饰成员方法，成员变量
 >
-> *注意：静态方法不得访问非静态内容，非静态可以访问静态内容*
+> <span style="color: red;">static</span> 修饰的特点
 >
-> 
+> - 被类的所有对象共享	<- *判断是否使用静态关键字的条件*
+> - 可以通过类名调用	<- *也可以通过对象名调用，但推荐使用类名调用*
+>
+> ==static 访问特点==
+>
+> 非静态的成员方法
+>
+> - 能访问静态的成员变量
+> - 能访问非静态的成员变量
+> - 能访问静态的成员方法
+> - 能访问非京台的成员方法
+>
+> 静态的成员方法
+>
+> - 能访问静态的成员变量
+> - 能访问静态的成员方法
+>
+> *静态成员方法只能访问静态成员，非静态成员可以访问静态内容*
 
 ##### 类的封装
 
@@ -1112,9 +1131,16 @@ public static void main(String[] args) {
 >
 > ==方法重写的概念==
 >
-> 子类出现了和父类中一模一样的方法声明(方法名相同，参数列表相同)，返回值相同，访问权限不得严于父类(父类方法的访问权限为 protected 时，子类重写方法的权限不能严于 protected)
+> 子类出现了和父类中一模一样的方法声明(方法名相同，参数列表相同)，返回值相同，访问权限不得严于父类
+>
+> ==方法重写的注意事项==
 >
 > *需要重写的父类的方法访问权限不能是 private*
+>
+> 子类方法访问权限不能更低(public > 默认 >private)
+>
+> - 父类方法的访问权限为 default 时，子类重写方法的权限不能低于 default
+> - [权限修饰符层级表](#Ptable)
 >
 > ==方法重写的使用==
 >
@@ -1144,7 +1170,7 @@ public static void main(String[] args) {
 > 		Phone p = new Phone();
 > 		p.call("李狗蛋");		// 给李狗蛋打电话
 > 		System.out.println("-------");
-> 		
+> 
 > 		NewPhone np = new NewPhone();
 > 		np.call("李狗蛋");		// 开启视频功能
 > 							  // 给李狗蛋打电话
@@ -1194,27 +1220,313 @@ public static void main(String[] args) {
 > }
 > ```
 >
-> 
-
-##### 类的多态
-
-> 
+> **继承的注意事项**
+>
+> - Java中类只支持单继承，不支持多继承
+>
+>   ```java
+>   public class Father {
+>       public void smoke() {
+>           System.out.println("爸爸爱抽烟");
+>       }
+>   }
+>   public class Mother {
+>       public void dance() {
+>           System.out.println("妈妈爱跳舞");
+>       }
+>   }
+>   public class Son extends Father, Mother {
+>       // 报错，Java中类只支持单继承，不支持多继承
+>   }
+>   ```
+>
+> - Java中类支持多层继承
+>
+>   ```java
+>   public class Grandad {
+>       public void drink() {
+>           System.out.println("爷爷爱喝酒");
+>       }
+>   }
+>   public class Father extends Grandad {
+>       public void smoke() {
+>           System.out.println("爸爸爱抽烟");
+>       }
+>   }
+>   public class Son extends Father {
+>       // 可以使用 drink()，Java中类支持多层继承
+>   }
+>   ```
 
 ##### 类的抽象
 
+> **抽象的概念**
+>
+> 在Java中，一个没有方法体的方法应该定义为抽象方法，而类中如果有抽象方法，该类必须定义为抽象类
+>
+> **抽象类和抽象方法的格式**
+>
+> - 格式：使用 <span style="color: red;">abstract</span> 修饰的类和方法就是抽象类和抽象方法
+>
+> - 范例：
+>
+> ```java
+> // 用abstract修饰的类，叫作抽象类
+> public abstract class MotoVehicle() {
+>     // 用abstract修饰的方法，叫作抽象方法
+>     public abstract void calcRent(int day);
+> }
+> ```
+>
+> <span style="color: red;">抽象类中可以没有抽象方法，但是有抽象方法的类必须是一个抽象类</span>
+>
+> **抽象的注意事项**
+>
+> - 抽象类不能被初始化，只能被继承
+>
+> - 抽象方法在子类中必须重写，除非子类是一个抽象类
+>   - 在抽象子类中，可以不实现父类的抽象方法
+>   - 但是最终的子类也必须去实现所有父类的抽象方法
+>
+> ```java
+> //用abstract修饰的类,叫做抽象类
+> public abstract class MotoVehicle {
 > 
+> 	private String no;
+> 	
+> 	public MotoVehicle() {
+> 		// TODO Auto-generated constructor stub
+> 	}
+> 	public MotoVehicle(String no){
+> 		this.no = no;
+> 	}
+> 	public String getNo() {
+> 		return no;
+> 	}
+> 	public void setNo(String no) {
+> 		this.no = no;
+> 	}
+> 	//在父类中的方法,因为概念模糊化,没有具体操作,需要将方法设置为抽象方法,使子类中必须重写
+> 	//用abstract修饰的方法为抽象方法,抽象方法没有方法体
+> 	public abstract int calcRent(int day);
+> }
+> 
+> public abstract class HuoChe extends MotoVehicle {
+> 		//在抽象子类中,可以不实现父类的抽象方法
+> 	
+> 		public abstract void lahuo();
+> }
+> 
+> public class HuoCheZi extends HuoChe {
+> 	//但是最终的子类也必须去实现,所有父类的抽象方法
+> 	@Override
+> 	public int calcRent(int day) {
+> 		// TODO Auto-generated method stub
+> 		return 0;
+> 	}
+> 	@Override
+> 	public void lahuo() {
+> 		// TODO Auto-generated method stub
+> 		
+> 	}
+> }
+> ```
 
-##### 复制对象和复制引用的区别
+##### 类的多态
 
+> **多态的概念**
+>
+> 同一个对象，在不同时刻表现出来的不同状态
+>
+> 举例：猫
+>
+> - 我们可以说猫是猫：<span style="color: red;">猫 cat = new 猫();</span>
+> - 我们也可以说猫是动物：<span style="color: red;">动物 animal = new 猫();</span>
+>
+> 这里猫在不同的时刻表现出来了不同的形态，这就是多态
+>
+> **多态的作用**
+>
+> *提高代码的复用率，增加代码的灵活性*
+>
+> **多态的前提和体现**
+>
+> - 有继承/实现关系
+> - 有方法重现
+> - 有父类引用指向子类对象
+>   - 动物 animal = new 猫();
+>     - 动物 animal：父类引用
+>     - new 猫()：子类对象
+>
+> 范例：
+>
+> ```java
+> public class Animal {
+>     public void eat() {
+>         System.out.println("动物吃东西");
+>     }
+> }
+> public class Cat extends Animal {
+>     @Override
+>     public void eat() {
+>         System.out.println("猫吃鱼");
+>     }
+> }
+> public class AnimalDemo {
+>     public static void main(String[] args) {
+>         //  有父类引用指向子类对象
+>         Animal a = new Cat();
+>     }
+> }
+> ```
+>
+> **多态的使用**
+>
+> 使用父类作为形参时，根据实参来决定执行哪个子类中的方法(*根据传入的参数不同，同一个父类的方法表现出不同的状态*)
+>
+> ```java
+> public abstract class Pet {
+> 	public abstract void eat(String food);
+> }
+> 
+> public class Penguin extends Pet {
+> 	@Override
+> 	public void eat(String food) {
+> 		System.out.println("企鹅吃" + food);
+> 	}
+> }
+> 
+> public class Dog extends Pet {
+> 	@Override
+> 	public void eat(String food) {
+> 		System.out.println("狗吃" + food);
+> 	}
+> }
+> 
+> public class Master {
+>     public void feed(Pet pet, String food){
+> 		pet.eat(food);
+> 	}
+> }
+> 
+> public class PetDemo {
+> 	public static void main(String[] args) {
+>        	Master m = new Master();
+> 		Dog dog = new Dog();
+>         Penguin pen = new Penguin();
+>         
+>         m.feed(dog, "骨头");	// 狗吃骨头
+>         m.feed(pen, "鱼");	// 企鹅吃鱼
+>     }
+> }
+> ```
+>
+> **多态中成员访问特点**
+>
+> - 成员变量：编译看左边，执行看左边
+> - 成员方法：编译看左边，执行看右边
+>
+> ```java
+> public class Animal {
+> 	public int age = 40;
+> 	
+> 	public void eat() {
+> 		System.out.println("动物吃东西");
+> 	}
+> }
+> 
+> public class Cat extends Animal {
+> 	public int age = 20;
+> 	public int weight = 10;
+> 
+> 	@Override
+> 	public void eat() {
+> 		System.out.println("猫吃鱼");
+> 	}
+> 
+> 	public void playGame() {
+> 		System.out.println("猫捉迷藏");
+> 	}
+> }
+> 
+> public class AnimalDemo {
+> 	public static void main(String[] args) {
+> 	//  有父类引用指向子类对象
+>         Animal a = new Cat();
+>         
+>         System.out.println(a.age);	// 40
+>         System.out.println(a.weight);	// 编译不通过
+>         
+>         a.eat();	// 猫吃鱼
+>         a.playGame();	// 编译不通过
+> 	}
+> }
+> ```
+>
+> 为什么成员变量和成员方法的访问不一样
+>
+> - 因为成员方法有重写，而成员变量没有
+>
+> **多态的好处和弊端**
+>
+> - 好处：提高了程序的扩展性
+>   - 具体体现：定义方法的时候，使用父类型作为参数，将来在使用的时候，使用具体的子类型参与操作
+> - 弊端：不能使用子类的特有功能
+>
+> **多态中的转型**
+>
+> - 向上转型
+>   - 从子到父
+>   - 父类引用指向子类对象
+> - 向下转型
+>   - 从父到子
+>   - 父类引用转为子类对象
+>
+> ```java
+> public class Animal {
+> 	public void eat() {
+> 		System.out.println("动物吃东西");
+> 	}
+> }
+> 
+> public class Cat extends Animal {
+> 	@Override
+> 	public void eat() {
+> 		System.out.println("猫吃鱼");
+> 	}
+> 
+> 	public void playGame() {
+> 		System.out.println("猫捉迷藏");
+> 	}
+> }
+> 
+> public class AnimalDemo {
+> 	public static void main(String[] args) {
+> 	// 父类引用指向子类对象
+>     Animal a = new Cat();	// 向上转型
+>     a.eat();	// 猫吃鱼
+> //  a.playGame();	// 编译报错，因为 Animal 类中没有 playGame() 方法
+>         
+>     // 父类引用转为子类对象
+>     Cat c = (Cat)a; // 向下转型
+>     c.eat();	// 猫吃鱼
+> 	c.playGame();	// 猫捉迷藏
+> }
+> ```
+>
 > 
 
 ##### 重载和重写的区别
 
-> 方法重载（overload）实现的是编译时的多态性（也称为前绑定），而方法重写（override）实现的是运行时的多态性（也称为后绑定）。运行时的多态是面向对象最精髓的东西，要实现多态需要做两件事：1. 方法重写（子类继承父类并重写父类中已有的或抽象的方法）
+> ~~方法重载（overload）实现的是编译时的多态性（也称为前绑定），而方法重写（override）实现的是运行时的多态性（也称为后绑定）。运行时的多态是面向对象最精髓的东西，要实现多态需要做两件事：1. 方法重写（子类继承父类并重写父类中已有的或抽象的方法）~~
 >
 > *重载发生在一个类中，同名的方法如果有不同的参数列表则视为重载；重写发生在子类与父类之间，重写要求子类被重写方法与父类被重写方法有相同的参数列表，有兼容的返回类型。*
 >
-> <span style="color: #329BDC;">方法名相同，参数列表不同，重载；方法名相同，参数列表相同，返回值相同，重写</span>
+> <span style="color: #329BDC;">在同一个类中，方法名相同，参数列表不同，重载；在子类和父类之间，方法名相同，参数列表相同，返回值相同，子类权限修饰符不严于父类，重写</span>
+
+##### 复制对象和复制引用的区别
+
+> 
 
 ##### 深拷贝和浅拷贝
 
