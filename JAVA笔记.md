@@ -33,6 +33,13 @@
 > - char（字符）	2字节	0 ~ 65535(ASCII表对比)
 > - boolean（布尔值）	1字节	true，false
 
+##### Java中的四大基本引用类型
+
+> - 数组
+> - String
+> - 类
+> - 接口
+
 ##### Java中&和&&，|和||的区别
 
 > &：无论左边真假，右边都要执行
@@ -491,24 +498,24 @@
 >             // 调用方法
 >             int result = sum( a: 10, b: 20);
 >             System.out.println(result);		// 30
->                             
+>                                   
 >             int result2 = sum( a: 10.0, b: 20.0);
 >             System.out.println(result2);	// 30.0
->                             
+>                                   
 >             int result3 = sum( a: 10, b: 20, c: 30);
 >             System.out.println(result3);	// 60
 >         }
->                         
+>                               
 >         // 需求1：求两个 int 类型数据和的方法
 >         public static int sum(int a, int b) {
 >             return a + b;
 >         }
->                         
+>                               
 >         // 需求2：求两个 double 类型数据和的方法
 >         public static double sum(double a, double b) {
 >             return a + b;
 >         }
->                         
+>                               
 >         // 需求3：求三个 int 类型数据和的方法
 >         public static int sum(int a, int b, int c) {
 >             return a + b + c;
@@ -532,7 +539,7 @@
 >             // 方法体
 >         }
 >     }
->                                     
+>                                                 
 >     // 属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
@@ -824,7 +831,7 @@ public static void main(String[] args) {
 >         public static void main(String[] args) {
 >             Student s1 = new Student();
 >             s1.setName("王狗蛋"); // setName 方法中的 this 代表 s1 这个对象
->     
+>             
 >             Student s2 = new Student();
 >             s2.setName("李铁蛋"); // setName 方法中的 this 代表 s2 这个对象
 >         }
@@ -869,11 +876,12 @@ public static void main(String[] args) {
 > <span style="color: red;">static关键字</span>：
 >
 > - <span style="color: red;">static</span> 关键字是静态的意思，可以修饰成员方法，成员变量
+> - <span style="color: red;">static</span> 修饰的内容不需要依赖于对象进行访问，只要类加载，就可以通过类直接访问
 >
 > <span style="color: red;">static</span> 修饰的特点
 >
 > - 被类的所有对象共享	<- *判断是否使用静态关键字的条件*
-> - 可以通过类名调用	<- *也可以通过对象名调用，但推荐使用类名调用*
+> - 可以通过类名直接调用	<- *也可以通过对象名调用，但推荐使用类名调用*
 >
 > ==static 访问特点==
 >
@@ -1346,7 +1354,7 @@ public static void main(String[] args) {
 
 > **多态的概念**
 >
-> 同一个对象，在不同时刻表现出来的不同状态
+> 同一个对象，在不同时刻表现出来的不同状态，最终得到不同的结果
 >
 > 举例：猫
 >
@@ -1424,7 +1432,7 @@ public static void main(String[] args) {
 >        	Master m = new Master();
 > 		Dog dog = new Dog();
 >         Penguin pen = new Penguin();
->         
+> 
 >         m.feed(dog, "骨头");	// 狗吃骨头
 >         m.feed(pen, "鱼");	// 企鹅吃鱼
 >     }
@@ -1439,7 +1447,7 @@ public static void main(String[] args) {
 > ```java
 > public class Animal {
 > 	public int age = 40;
-> 	
+> 
 > 	public void eat() {
 > 		System.out.println("动物吃东西");
 > 	}
@@ -1463,10 +1471,10 @@ public static void main(String[] args) {
 > 	public static void main(String[] args) {
 > 	//  有父类引用指向子类对象
 >         Animal a = new Cat();
->         
+> 
 >         System.out.println(a.age);	// 40
 >         System.out.println(a.weight);	// 编译不通过
->         
+> 
 >         a.eat();	// 猫吃鱼
 >         a.playGame();	// 编译不通过
 > 	}
@@ -1491,6 +1499,7 @@ public static void main(String[] args) {
 > - 向下转型
 >   - 从父到子
 >   - 父类引用转为子类对象
+>   - 当需要使用到子类对象中特有的方法及属性时,将父类类型重新还原为子类类型,才可以调用子类中特有的方法和属性
 >
 > ```java
 > public class Animal {
@@ -1516,7 +1525,7 @@ public static void main(String[] args) {
 >     Animal a = new Cat();	// 向上转型
 >     a.eat();	// 猫吃鱼
 > //  a.playGame();	// 编译报错，因为 Animal 类中没有 playGame() 方法
->         
+> 
 >     // 父类引用转为子类对象
 >     Cat c = (Cat)a; // 向下转型
 >     c.eat();	// 猫吃鱼
@@ -1526,6 +1535,168 @@ public static void main(String[] args) {
 >
 > 
 
+##### 接口
+
+> **接口的概述**
+>
+> 接口就是一种公共的规范标准，只要符合规范标准，大家都可以通用
+>
+> Java中的接口更多的体现在对行为的抽象，提出标准(功能)
+>
+> **接口的特点**
+>
+> - 接口用关键字<span style="color: red;">interface</span>修饰
+>
+>   - public <span style="color: red;">interface</span> 接口名 {}
+>
+>     ```java
+>     public interface USBInterfase {
+>         // USB的标准是提供服务
+>         // 在接口中因为默认都是抽象方法，所以 abstract 可以省略，
+>         public void service();
+>     }
+>     ```
+>
+> - 类实现接口用<span style="color: red;">implements</span>表示
+>
+>   - public class 类名 <span style="color: red;">implements</span> 接口名 {}
+>
+>     ```java
+>     public class UDisk implements USBInterfase {
+>         @Override
+>     	public void service() {
+>     		System.out.println("USB插入，交换数据");
+>     	}
+>     }
+>     public class USBSan implements USBInterfase {
+>         @Override
+>     	public void service() {
+>     		System.out.println("USB插入，风扇转起来了");
+>     	}
+>     }
+>   
+>     public class USBDemo{
+>         public static void main(String[] args) {
+>             USBInterfase usb = new USBSan();
+>             usb.service(); // USB插入，交换数据
+>   
+>             USBInterfase usb = new UDisk();
+>             usb.service(); // USB插入，风扇转起来了
+>         }
+>     }
+>     ```
+>
+> - 接口不能实例化
+>
+>   - 接口如何实例化
+>     - 参照多态的方式，铜卦实现类对象实例化，这叫接口多态
+>     - 多态的形式：具有类多态，抽象类多态，接口多态
+>     - 多态的前提：有继承或者实现关系；有方法重写；有父(类/接口)引用指向(子/实现)类对象
+>
+> - 接口的实现类
+>
+>   - 要么重写接口中的所有抽象方法
+>   - 要么是抽象类
+>
+> **接口的成员特点**
+>
+> - 成员变量
+>   - 只能是常量
+>   - 默认修饰符：<span style="color: red;">public static final</span>
+> - 构造方法
+>   - 结构没有构造方法，因为接口主要是对行为进行抽象的，是没有具体存在
+>   - 一个类如果没有父类，默认继承自Object类
+> - 成员方法
+>   - 只能是抽象方法
+>   - 默认修饰符：public abstract
+>
+> **JDK1.8之后提供的实体方法**
+>
+> - 默认方法
+>   - 使用default修饰，不可省略，供子类调用或重写
+> - 静态方法
+>   - 使用static修饰，供接口直接调用
+>
+> ```java
+> public interface USBInterfase {
+>     // 默认方法
+>     public default void show() {
+> 		System.out.println("这是接口的默认方法");
+> 	}
+>     // 静态方法
+>     public static void print() {
+> 		System.out.println("这是可以被接口直接调用的方法");
+> 	}
+> }
+> ```
+>
+> **类和接口的关系**
+>
+> - 类和类的关系
+>   - 继承关系，只能单继承，但是可以多层继承
+> - 类和接口的关系
+>   - 实现关系，可以单实现，也可以多实现，还可以在继承一个类的同时实现多个接口
+> - 接口和接口的关系
+>   - 继承关系，可以单继承，也可以多继承
+>
+> 被实现的接口可以视为类内自带的方法，当使用该类的数组时，所有数组内的成员均持有该方法，并且方法内的属性使用的是对应数组成员的属性
+>
+> ```java
+> public interface ShowNum {
+>     // 默认方法
+>     public void show();
+> }
+> 
+> public class Num implements ShowNum {
+>    private int n;
+>    
+>    public Num() {
+>    }
+>    
+>    public Num(int n) {
+>        this.n = n;
+>    }
+>     
+>    public int getNum() {
+> 		return id;
+>    }
+>     
+>    public int setNum(int n) {
+> 		this.n = n;
+>    }
+>     
+>    @Override
+> 	public void show() {
+> 		System.out.println(n);
+> 	}
+> }
+> 
+> public class NumDemo {
+>     public static void main(String[] args) {
+>         Num[] nums = new Num[3];
+>         for(int i = 0; i < 3; i++)
+>             nums[i] = new Num(i);
+>         
+>         nums[0].show();	// 0
+>         nums[1].show();	// 1
+>         nums[2].show();	// 2
+>     }
+> }
+> ```
+>
+> **抽象类和接口的区别**
+>
+> - 成员区别
+>   - 抽象类：变量，常量；有构造方法；有抽象方法，也有非抽象方法
+>   - 接口：常量；抽象方法
+> - 关系区别
+>   - 类与类：继承，单继承
+>   - 类与接口：实现，可以单实现，也可以多实现
+>   - 接口与接口：继承，单继承，多继承
+> - 设计理念区别
+>   - 抽象类：对类抽象，包括属性、行为
+>   - 接口：对行为抽象，主要是行为
+
 ##### 重载和重写的区别
 
 > ~~方法重载（overload）实现的是编译时的多态性（也称为前绑定），而方法重写（override）实现的是运行时的多态性（也称为后绑定）。运行时的多态是面向对象最精髓的东西，要实现多态需要做两件事：1. 方法重写（子类继承父类并重写父类中已有的或抽象的方法）~~
@@ -1533,6 +1704,10 @@ public static void main(String[] args) {
 > *重载发生在一个类中，同名的方法如果有不同的参数列表则视为重载；重写发生在子类与父类之间，重写要求子类被重写方法与父类被重写方法有相同的参数列表，有兼容的返回类型。*
 >
 > <span style="color: #329BDC;">在同一个类中，方法名相同，参数列表不同，重载；在子类和父类之间，方法名相同，参数列表相同，返回值相同，子类权限修饰符不严于父类，重写</span>
+
+##### 设计模式
+
+> 
 
 ##### 内部类
 
