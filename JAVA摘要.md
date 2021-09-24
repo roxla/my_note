@@ -89,8 +89,27 @@
 >
 > <span style="color: #329BDC;">在同一个类中，方法名相同，参数列表不同，重载；在子类和父类之间，方法名相同，参数列表相同，返回值相同，子类权限修饰符不严于父类，重写</span>
 
+##### final 在 Java 中有什么作用
+
+> - 修饰方法：表明该方法是最终方法，<span style="color: red;">不能被重写</span>
+>
+> - 修饰变量：表明该变量是常量，<span style="color: red;">不能再次被赋值</span>
+> - 修饰类：表明该类是最终类，<span style="color: red;">不能被继承</span>
+
 ##### final、finally、finalize 有什么区别
 
+> - final：是修饰符，如果修饰类，此类不能被继承；如果修饰方法和变量，则表示此方法和此变量不能在被改变，只能使用。
+> - finally：是 try{}     catch{} finally{} 最后一部分，表示不论发生任何情况都会执行，finally 部分可以省略，但如果 finally 部分存在，则一定会执行 finally 里面的代码。
+> - finalize： 是 Object 类的一个方法，在垃圾收集器执行的时候会调用被回收对象的此方法。
+
+##### Java 中的 Math. round(-1. 5) 等于多少
+
+> 等于 -1，因为在数轴上取值时，中间值（0.5）向右取整，所以正 0.5 是往上取整，负 0.5 是直接舍弃
+
+##### Java 中操作字符串都有哪些类？它们之间有什么区别？
+
+> 操作字符串的类有：<span style="color: red;">String、StringBuffer、StringBuilder</span>。
+>
 > 
 
 ##### spring mvc 和 struts 的区别是什么

@@ -498,24 +498,24 @@
 >             // 调用方法
 >             int result = sum( a: 10, b: 20);
 >             System.out.println(result);		// 30
->                                   
+>                                       
 >             int result2 = sum( a: 10.0, b: 20.0);
 >             System.out.println(result2);	// 30.0
->                                   
+>                                       
 >             int result3 = sum( a: 10, b: 20, c: 30);
 >             System.out.println(result3);	// 60
 >         }
->                               
+>                                   
 >         // 需求1：求两个 int 类型数据和的方法
 >         public static int sum(int a, int b) {
 >             return a + b;
 >         }
->                               
+>                                   
 >         // 需求2：求两个 double 类型数据和的方法
 >         public static double sum(double a, double b) {
 >             return a + b;
 >         }
->                               
+>                                   
 >         // 需求3：求三个 int 类型数据和的方法
 >         public static int sum(int a, int b, int c) {
 >             return a + b + c;
@@ -539,7 +539,7 @@
 >             // 方法体
 >         }
 >     }
->                                                 
+>                                                         
 >     // 属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
@@ -573,7 +573,7 @@
 >
 > - 引用类型
 >
->   - ==对于引用类型的参数，形式参数的改变，英雄实际参数的值==
+>   - ==对于引用类型的参数，形式参数的改变，影响实际参数的值==
 >
 >   - ```java
 >     public class argsDemo02 {
@@ -589,7 +589,7 @@
 >     }
 >     ```
 >
->     
+>     *基本数据类型传递的是栈空间中的值，引用数据类型传递的是堆空间的地址值*
 
 ##### Java生成指定范围的随机数
 
@@ -768,7 +768,7 @@ public static void main(String[] args) {
 >
 > <span style="color: red;">default关键字</span>(<span style="color: #329BDC;">默认</span>)：
 >
-> - 是一个权限修饰符
+> - 是一个权限修饰符，如果成员和类不写权限修饰符，默认使用此关键字
 > - 可以修饰成员(成员变量和成员方法)
 > - default修饰的属性和方法，只能在本包下使用，其他包的子类继承本包的父类也不能在其他包中使用
 >
@@ -831,7 +831,7 @@ public static void main(String[] args) {
 >         public static void main(String[] args) {
 >             Student s1 = new Student();
 >             s1.setName("王狗蛋"); // setName 方法中的 this 代表 s1 这个对象
->             
+>         
 >             Student s2 = new Student();
 >             s2.setName("李铁蛋"); // setName 方法中的 this 代表 s2 这个对象
 >         }
@@ -882,6 +882,20 @@ public static void main(String[] args) {
 >
 > - 被类的所有对象共享	<- *判断是否使用静态关键字的条件*
 > - 可以通过类名直接调用	<- *也可以通过对象名调用，但推荐使用类名调用*
+>
+> **静态块**
+>
+> - static关键字还有一个比较关键的作用，用来形成静态代码块（static{}(即static块)）以优化程序性能
+>
+>   ```java
+>   static {}
+>   ```
+>
+> - *static块可以置于类中的任何地方，类中可以有多个static块*
+>
+> - <span style="color: red;">在类初次被加载的时候执行且仅会被执行一次</span>（这是优化性能的原因！！！），<span style="color: #329BDC;">会按照static块的顺序来执行每个static块，一般用来初始化静态变量和调用静态方法</span>
+>
+> *static块是会按照顺序执行，与main入口函数无关*
 >
 > ==static 访问特点==
 >
@@ -1535,7 +1549,7 @@ public static void main(String[] args) {
 >
 > 
 
-##### 接口
+##### Java接口
 
 > **接口的概述**
 >
@@ -1574,12 +1588,12 @@ public static void main(String[] args) {
 >     		System.out.println("USB插入，风扇转起来了");
 >     	}
 >     }
->   
+>       
 >     public class USBDemo{
 >         public static void main(String[] args) {
 >             USBInterfase usb = new USBSan();
 >             usb.service(); // USB插入，交换数据
->   
+>       
 >             USBInterfase usb = new UDisk();
 >             usb.service(); // USB插入，风扇转起来了
 >         }
@@ -1707,7 +1721,379 @@ public static void main(String[] args) {
 
 ##### 设计模式
 
+> **设计模式的概述**
+>
+> - 是一套可以反复使用，多数人知晓，经过分类编目的代码设计经验总结
+> - 代码可以重复利用，让代码更容易让人理解，保证代码的可靠性，提高工作的效率，优化代码结构
+> - 设计模式初步确定23种设计模式：单例设计模式，工厂方法模式，抽象工厂模式，模板设计模式，代理设计模式
+>
+> *设计模式主要掌握：单例设计模式，简单工厂设计模式，抽象工厂模式，工厂方法模式，模板设计模式，代理设计模式*
+>
+> **单例设计模式**
+>
+> 确保只有一个实例,且该实例向整个系统提供,这种设计的类叫做单例类,该类创建的实例也就叫做单例.单例模式是一种对象的创建模式
+>
+> ==懒汉式单例设计模式==
+>
+> 该模式只在你需要对象时才会生成单例对象
+>
+> ==懒汉式单例设计模式的格式==
+>
+> - 将构造方法设置为私有的
+>
+>   ```java
+>   private LazySingle() {}
+>   ```
+>
+> - 声明本类类型，并设置为static
+>
+>   ```java
+>   private static LazySingle ls = null;
+>   ```
+>
+> - 设置一个可被外部访问获取实例的静态方法
+>
+>   ```java
+>   public static LazySingle getExample() {
+>       if(ls == null)
+>           ls = new LazySingle();
+>       return ls;
+>   }
+>   ```
+>
+> ```java
+> public class LazySingle {
+>     private String name;
+>     
+>     public void setName(String name) {
+>         this.name = name;
+>     }
+>     public String getName() {
+>         return name;
+>     }
+>     
+>     private LazySingle() {}
+>     private static LazySingle ls = null;
+>     public static LazySingle getExample() {
+>         if(ls == null)
+>             ls = new LazySingle();
+>         return ls;
+> 	}
+>     
+>     public void print() {
+>         System.out.println(name + "说：今天天气不错");
+>     }
+> }
 > 
+> public class LazySingleDemo {
+>     public static void main(String[] args) {
+>         LazySingle lazy = LazySingle.getExample();
+>         lazy.setName("张三");
+>         lazy.print();	//  张三说：今天天气不错
+>         
+>         // 再次创建一个对象，判断两个对象是否相等
+>         LazySingle lisi = LazySingle.getExample();
+>         lisi.setName("李四");
+>         lisi.print();	//  李四说：今天天气不错
+>         
+>         System.out.println(lazy == lisi);	// true
+>     }
+> }
+> ```
+>
+> ==饿汉式单例设计模式==
+>
+> 该模式在类被加载时就会实例化一个对象
+>
+> ==饿汉式单例设计模式的格式==
+>
+> - 将构造方法设置为私有的
+>
+>   ```java
+>   private HungrySingle() {}
+>   ```
+>
+> - 创建对象，需要将对象设置为私有的，并将对象设置为最终的对象
+>
+>   ```java
+>   private static final HungrySingle hs = new HungrySingle();
+>   ```
+>
+> - 设置获取实例的静态方法
+>
+>   ```java
+>   public static HungrySingle getExample() {
+>       return hs;
+>   }
+>   ```
+>
+> ```java
+> /**
+> * 饿汉式单例模式：在声明时就需要创建的一种方式
+> */
+> public class HungrySingle {
+>     private String name;
+>     
+>     public void setName(String name) {
+>         this.name = name;
+>     }
+>     public String getName() {
+>         return name;
+>     }
+>     
+>     private HungrySingle() {}
+>     private static final HungrySingle hs = new HungrySingle();
+>     public static HungrySingle getExample() {
+>         return hs;
+>     }
+>     
+>     public void print() {
+>         System.out.println(name + "说：今天天气不错");
+>     }
+> }
+> 
+> public class HungrySingleDemo {
+>     public static void main(String[] args) {
+>         HungrySingle hungry = HungrySingle.getExample();
+>         hungry.setName("张三");
+>         hungry.print();	//  张三说：今天天气不错
+>         
+>         // 再次创建一个对象，判断两个对象是否相等
+>         HungrySingle lisi = HungrySingle.getExample();
+>         lisi.setName("李四");
+>         lisi.print();	//  李四说：今天天气不错
+>         
+>         System.out.println(hungry == lisi);	// true
+>     }
+> }
+> ```
+>
+> ==饿汉式与懒汉式的区别==
+>
+> 饿汉式
+>
+> - 类一旦加载，就把单例初始化完成，保证获取的时候单例是已经存在的
+> - 天生就是线程安全的，可以直接用于多线程而不出现问题
+> - 在类的创建的同时就实例化一个静态对象，不管用不用，都会占据内存，但相应的，在第一次调用对象时，速度也会更快，因为资源早就初始完成
+>
+> 懒汉式
+>
+> - 只有当调用的时候，才会去初始化单例对象
+> - 本身线程是不安全的，为了实现线程安全，需要控制线程的进入
+> - 懒汉式会延迟加载对象，在第一次调用单例对象时，在调用的时候才初始化对象，第一次调用对象时会慢，后续跟饿汉式一样
+>
+> **工厂设计模式**
+>
+> 工厂模式是我们最常用的实例化对象模式了，是用工厂方法代替new操作的一种模式
+>
+> *工厂模式就相当于创建实例对象的new*
+>
+> 工厂模式让对象的使用者无需了解具体实现，只需要通过对象工厂直接拿过来用就行了
+>
+> ==简单工厂设计模式==
+>
+> 简单工厂模式是指由一个工厂对象决定创建出哪一种产品类的实例
+>
+> 负责实现创建所有实例的内部逻辑，并提供外部所调用的方法，创建所需要的对象
+>
+> ```java
+> // 设计生产线模型
+> public interface Product {
+>     public void intro();
+> }
+> public class ColaProduct implements Product {
+> 	@Override
+> 	public void intro() {
+> 		System.out.println("机器轰隆隆响,可乐慢慢生产出来....");
+> 	}
+> }
+> public class SpriteProduct implements Product {
+> 	@Override
+> 	public void intro() {
+> 		System.out.println("机器轰隆隆响,雪碧慢慢生产出来....");
+> 	}
+> }
+> // 负责实现创建所有实例的内部逻辑，并提供外部所调用的方法，创建所需要的对象
+> public class SimpleFactory {
+>     // 通过不同的参数，获取到不同的结果
+>     public static Product getProduct(String type) {
+>         switch(type) {
+>         case "c":
+>         	return new ColaProduct();
+>         case "s":
+>         	return new SpriteProduct();
+>         }
+>         return null;
+>     }
+> }
+> 
+> public class FactoryDemo {
+>      public static void main(String[] args) {
+>         System.out.println("Cola raw materials");
+> 		Product cola = SimpleFactory.create("c");
+> 		cola.intro();	// 机器轰隆隆响,可乐慢慢生产出来....
+> 		System.out.println("Sprite raw materials");
+> 		Product sprite = SimpleFactory.create("s");
+> 		sprite.intro();	// 机器轰隆隆响,雪碧慢慢生产出来....
+> 
+>          
+>      }
+> }
+> ```
+>
+> - 特点：
+>   - 它是一个具体的类,非接口,抽象类,有一个重要的方法create()的方法,利用if或者switch创建不同对象返回
+>   - Create()一般是静态方法,所以也称之为静态工厂
+> - 缺点：
+>   - 扩展性差(我想要增加一种芬达,除了新增芬达类,还要修改工厂方法)
+>   - 不同产品需要不同的额外参数进行创建,不支持自动化
+>
+> **抽象工厂模式**
+>
+> 提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类
+>
+> ==何时使用==
+>
+> 系统的产品有多于一个的产品族，而系统只消费其中某一族的产品
+>
+> ==格式==
+>
+> ```java
+> public interface Product {
+>     // 生产流水线标准
+> 	public void intro();
+> }
+> public class ColaProduct implements Product {
+> 	@Override
+> 	public void intro() {
+> 		System.out.println("机器轰隆隆响,可乐慢慢生产出来....");
+> 	}
+> }
+> 
+> public abstract class Packing {
+> 	// 包装流水线标准
+> 	public abstract void doPack();
+> }
+> public class NormalPack extends Packing {
+> 	@Override
+> 	public void doPack() {
+> 		System.out.println("对商品进行简易包装...");
+> 	}
+> }
+> public class HigherPack extends Packing {
+> 	@Override
+> 	public void doPack() {
+> 		System.out.println("对商品进行豪华礼盒包装...");
+> 	}
+> }
+> /**
+>  * 工厂设计,既有商品,还要包装
+>  */
+> public interface ProductFactory {
+> 
+> 	public Product getProduct();
+> 	
+> 	public Packing getPack();
+> }
+> public class NormalFactory implements ProductFactory {
+> 	@Override
+> 	public Product getProduct() {
+> 		//普通工厂主动创建生产线对象
+> 		return new ColaProduct(); 
+> 	}
+> 	@Override
+> 	public Packing getPack() {
+> 		//创建包装线对象
+> 		return new NormalPack();
+> 	}
+> }
+> public class HigherFactory implements ProductFactory {
+> 	@Override
+> 	public Product getProduct() {
+> 		return new ColaProduct();
+> 	}
+> 	@Override
+> 	public Packing getPack() {
+> 		return new HigherPack();
+> 	}
+> }
+> 
+> public class FactoryDemo {
+> 
+> 	public static void main(String[] args) {
+> 		//普通工厂进行商品的生产与简单包装
+> 		ProductFactory pf = new NormalFactory();
+> 		pf.getProduct().intro();	// 机器轰隆隆响,可乐慢慢生产出来....
+> 		pf.getPack().doPack();		// 对商品进行简易包装...
+> 		//高级工厂生产商品,并豪华包装
+> 		ProductFactory hf = new HigherFactory();
+> 		hf.getProduct().intro();	// 机器轰隆隆响,可乐慢慢生产出来....
+> 		hf.getPack().doPack();		// 对商品进行豪华礼盒包装...
+> 	}
+> }
+> ```
+>
+> **工厂方法模式**
+>
+> **模板设计模式**
+>
+> **代理设计模式**
+
+##### 代码块
+
+> <span style="color: #329BDC;">代码块分为</span>：
+>
+> - **局部代码块**
+>
+>   ```java
+>   public class DataInit {
+>       private int id;
+>       public int getId() {
+>           {
+>               id = 10;
+>           }
+>           return id;
+>       }
+>   }
+>   ```
+>
+>   - 局部代码块定义在方法或语句中的代码块
+>   - 特点：
+>     - 注意代码块的作用域
+>
+> - **构造代码块**
+>
+>   ```java
+>   public class DataInit {
+>       private int id;
+>       {
+>           id = 5;
+>       }
+>   }
+>   ```
+>
+>   - 构造代码块是定义在类的成员位置
+>
+>   - 特点：
+>     - 优先于构造方法执行，构造代码块用于执行所有对象所需的初始化动作
+>     - 每次创建对象的时候，都会执行一次构造代码块
+>
+> - **静态代码块**
+>
+>   ```java
+>   public class DataInit {
+>       private static int id;
+>       static {
+>           id = 5;
+>       }
+>   }
+>   ```
+>
+>   - 静态代码块是定义在成员位置，使用static修饰的代码块
+>   - 特点：
+>     - 优先于主方法执行，优先于构造代码块执行，当以任意形式第一次使用到该类时执行
+>     - 该类不管创建多少个对象，静态代码块只会执行一次
+>     - 静态代码块，只能为静态属性赋值
 
 ##### 内部类
 
@@ -1721,8 +2107,8 @@ public static void main(String[] args) {
 >
 > ```java
 > public class 类名 {
->     修饰符 class 类名 {
->     }
+>  修饰符 class 类名 {
+>  }
 > }
 > ```
 >
@@ -1730,8 +2116,8 @@ public static void main(String[] args) {
 >
 > ```java
 > public class Outer {
->     public class Inner {
->     }
+>  public class Inner {
+>  }
 > }
 > ```
 >
@@ -1771,7 +2157,7 @@ public static void main(String[] args) {
 > ```java
 > public class Outer {
 >     private int num = 10;
->     
+> 
 >     public class Inner {
 >         public void show() {
 >             System.out.println(num);	// 10
@@ -1792,13 +2178,13 @@ public static void main(String[] args) {
 > ```java
 > public class Outer {
 >     private int num = 10;
->     
+> 
 >     private class Inner {
 >         public void show() {
 >             System.out.println(num);	// 10
 >         }
 >     }
->     
+> 
 >     public void method() {
 >         Inner i = new Inner();
 >         i.show();
@@ -1822,7 +2208,7 @@ public static void main(String[] args) {
 > ```java
 > public class Outer {
 >     private int num = 10;
->     
+> 
 >     public void method() {
 >         int num2 = 20;
 >         class Inner {
@@ -1877,7 +2263,6 @@ public static void main(String[] args) {
 >
 > ```java
 > public class Outer {
->     
 >     public void method() {
 >        new Inter() {
 >            @Override
@@ -1904,7 +2289,7 @@ public static void main(String[] args) {
 > }
 > 
 > public class Outer {
->     
+> 
 >     public void method() {
 >        Inter i = new Inter() {
 >            @Override
@@ -1926,11 +2311,146 @@ public static void main(String[] args) {
 > }
 > ```
 >
+> *匿名内部类的本质：是一个继承了该类或者实现该接口的子类匿名对象*
+>
+> **静态内部类**
+>
+> 创建内部类对象，静态内部类不需要依靠外部类的实例，跟普通类是一样的
+>
+> ```java
+> // 外部类
+> public class Outer {
+>     // 静态内部类
+>     public static class Inner {
+>     	System.out.println("这是一个静态内部类");
+>     }
+> }
+> 
+> public class OuterDemo {
+>     public static void main(String[] args) {
+>       	Inner in = new Inner();
+>         in.show();
+>     }
+> }
+> ```
+>
 > 
 
 ##### 常用类
 
+> **String类**
+>
+> 字符串类属于四大基本引用类型之一，该类用于创建和操作字符串
+>
+> 常用的方法：
+>
+> | 方法名                | 说明                                                         |
+> | --------------------- | ------------------------------------------------------------ |
+> | charAt()              | 通过指定位置，返回对应字符                                   |
+> | indexOf()             | 通过查找字符，返回第一次出现字符的位置                       |
+> | lastIndexOf()         | 通过末尾开始查找，返回第一次出现字符的位置                   |
+> | subString(start, end) | 截取子字符串，形成新字符串(如果有结束下标位置，不包含结束下标) |
+> | length()              | 获取到字符串的长度                                           |
+> | indexOf(str, start)   | 从指定位置开始查找，对应字符，并返回第一次匹配到的字符位置   |
+> | split()               | 通过指定字符拆分字符串为字符串数组，数组中不包含指定字符     |
+> | String.join(str, arr) | 通过指定字符，将数组元素拼接为字符串                         |
+> | trim()                | 去掉字符串前后空格                                           |
+> | replace(str, str)     | 通过查找字符，将该字符替换为指定的字符                       |
+>
+> **StringBuffer类**
+>
 > 
+>
+> **StringBuilder类**
+>
+> 
+>
+> **String、StringBuffer、StringBuilder之间的区别**
+>
+> - String
+> - StringBuffer
+> - StringBuilder
+>
+> **System类**
+>
+> 
+>
+> **Data类**
+>
+> 
+>
+> **包装类**
+>
+> 包装类是基本数据类型封装成对象，为该数据类型提供丰富的操作方法
+>
+> 常用方法：基本数据类型与字符串之间的转换
+>
+> 基本类型对应的包装类：
+>
+> | 基本类型 | 包装类型  |
+> | -------- | --------- |
+> | byte     | Byte      |
+> | short    | Short     |
+> | int      | Integer   |
+> | long     | Long      |
+> | float    | Float     |
+> | double   | Double    |
+> | char     | Character |
+> | boolean  | Boolean   |
+>
+> Integer类(常用)：包装一个对象中的原始类型int值
+>
+> 可以使用方法: Integer(int value) Integer(String 数字) parseInt(String 数字) ValueOf(String 数字)
+>
+> ```java
+> public class IntegerDemo {
+> 	public static void main(String[] args) {
+> 		//通过包装类,将原始数据类型转换为包装类
+> 		int num = 34;
+> 		//将原始数据包装
+> 		Integer i = new Integer(num);
+> 		//通过构造方法将字符串转换为数字
+> 		Integer s = new Integer("15");
+> 		//通过parseInt将字符串转换为数字
+> 		Integer s1 = Integer.parseInt("23");
+> 		//通过valueOf()将字符串转换为数字
+> 		Integer s2 = Integer.valueOf("28");
+> 		
+> 		Integer num1 = 35;   //直接将数字赋值给包装类,这种方式叫做包装类的自动装箱
+> 		int num2 = num1;		//直接将包装类数据变为原始数据,这种叫做包装类的自动拆箱
+> 		
+> 		Double d = new Double("32.5"); //字符串转换小数
+> 		System.out.println(i+s);		// 49
+> 		System.out.println(i+s+s1);		// 72
+> 		System.out.println(i+s+s1+s2);	// 100
+> 	}
+> }
+> ```
+>
+> **Object类**
+>
+> Object类是所有类的基类，所有类都直接或间接的继承自Object类
+>
+> - toString方法是属于Object类的方法，其他类使用的toString是重写Object的方法
+> - equals方法是属于Object类的方法，其他类使用时，也是重写的Object类的方法
+>
+> **Math类**
+>
+> 数学类
+>
+> 包含执行基本数字运算方法，方法为静态方法
+>
+> 包含的方法：
+>
+> | 方法名                                                 | 说明                               |
+> | ------------------------------------------------------ | ---------------------------------- |
+> | abs                                                    | 返回参数的绝对值                   |
+> | ceil                                                   | 向上取整，取到一个最大值整数       |
+> | floor                                                  | 向下取整，取到一个最小值整数       |
+> | <span style="color: #329BDC;">round</span>             | 四舍五入                           |
+> | <span style="color: #329BDC;">max(int a, int b)</span> | 获取两个值中的最大值               |
+> | <span style="color: #329BDC;">min(int a, int b)</span> | 获取两个值中的最小值               |
+> | <span style="color: #329BDC;">random</span>            | 获取一个0到1之间的小数(不包含0和1) |
 
 ##### 复制对象和复制引用的区别
 
