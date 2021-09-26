@@ -102,6 +102,31 @@
 > - finally：是 try{}     catch{} finally{} 最后一部分，表示不论发生任何情况都会执行，finally 部分可以省略，但如果 finally 部分存在，则一定会执行 finally 里面的代码。
 > - finalize： 是 Object 类的一个方法，在垃圾收集器执行的时候会调用被回收对象的此方法。
 
+##### Integer的值范围-128~127
+
+> java中数据类型可以分为两类，一种的基本数据类型，一种是引用数据类型。
+>
+> 基本数据类型的数据不是对象，所以对于要将数据类型作为对象来使用的情况，java提供了相对应的包装类。
+>
+> int是基本数据类型，integer是引用数据类型，是int的包装类。
+>
+> 自动装箱的过程：引用了valueOf()的方法
+>
+> ```java
+> public static Integer valueOf(int i) {
+>     assert IntegerCache.high >= 127;
+>     if (i >= IntegerCache.low && i <= IntegerCache.high)
+>         return IntegerCache.cache[i + (-IntegerCache.low)];
+>     return new Integer(i);
+> }
+> ```
+>
+> assertion就是在程序中的一条语句，它对一个boolean表达式进行检查，一个正确程序必须保证这个boolean表达式的值为true；如果该值为false，说明程序已经处于不正确的状态下，系统将给出警告并且退出。一般来说，assertion用于保证程序最基本、关键的正确性。
+>
+> *java内部为了节省内存，IntegerCache类中有一个数组缓存了值从-128到127的Integer对象。当我们调用Integer.valueOf（int i）的时候，如果i的值时结余-128到127之间的，会直接从这个缓存中返回一个对象，否则就new一个新的Integer对象。*
+>
+> <span style="color: red;">总结：当我们给一个Integer赋予一个int类型的值的时候它会调用Integer的静态方法ValueOf()方法。一旦程序调用valueOf 方法，如果i的值是在-128 到 127 之间就直接在cache缓存数组中去取Integer对象。而不在此范围内的数值则要new到堆中了</span>
+
 ##### Java 中的 Math. round(-1. 5) 等于多少
 
 > 等于 -1，因为在数轴上取值时，中间值（0.5）向右取整，所以正 0.5 是往上取整，负 0.5 是直接舍弃
