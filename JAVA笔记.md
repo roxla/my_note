@@ -336,7 +336,6 @@
 >
 > ```java
 > public class ForDemo3 {
-> 
 > 	public static void main(String[] args) {
 > 		stop:for(int j=1;j<=5;j++){  //5个学生
 > 			for(int i=1;i<=10;i++){		//每个学生打印10
@@ -498,24 +497,24 @@
 >             // 调用方法
 >             int result = sum( a: 10, b: 20);
 >             System.out.println(result);		// 30
->                                           
+>                                               
 >             int result2 = sum( a: 10.0, b: 20.0);
 >             System.out.println(result2);	// 30.0
->                                           
+>                                               
 >             int result3 = sum( a: 10, b: 20, c: 30);
 >             System.out.println(result3);	// 60
 >         }
->                                       
+>                                           
 >         // 需求1：求两个 int 类型数据和的方法
 >         public static int sum(int a, int b) {
 >             return a + b;
 >         }
->                                       
+>                                           
 >         // 需求2：求两个 double 类型数据和的方法
 >         public static double sum(double a, double b) {
 >             return a + b;
 >         }
->                                       
+>                                           
 >         // 需求3：求三个 int 类型数据和的方法
 >         public static int sum(int a, int b, int c) {
 >             return a + b + c;
@@ -539,7 +538,7 @@
 >             // 方法体
 >         }
 >     }
->                                                                 
+>                                                                         
 >     // 属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
@@ -831,7 +830,7 @@ public static void main(String[] args) {
 >         public static void main(String[] args) {
 >             Student s1 = new Student();
 >             s1.setName("王狗蛋"); // setName 方法中的 this 代表 s1 这个对象
->                 
+>                         
 >             Student s2 = new Student();
 >             s2.setName("李铁蛋"); // setName 方法中的 this 代表 s2 这个对象
 >         }
@@ -1588,12 +1587,12 @@ public static void main(String[] args) {
 >     		System.out.println("USB插入，风扇转起来了");
 >     	}
 >     }
->           
+>               
 >     public class USBDemo{
 >         public static void main(String[] args) {
 >             USBInterfase usb = new USBSan();
 >             usb.service(); // USB插入，交换数据
->           
+>               
 >             USBInterfase usb = new UDisk();
 >             usb.service(); // USB插入，风扇转起来了
 >         }
@@ -2378,11 +2377,21 @@ public static void main(String[] args) {
 >
 > **StringBuffer类**
 >
-> 
+> 概述：线程安全的一个可变长度字符序列。 字符串缓冲区就像一个String，但可以修改。初始容量为16个字符
+>
+> |       方法名        | 说明                                   |
+> | :-----------------: | -------------------------------------- |
+> | new StringBuffer()  | 构造方法                               |
+> |    append(元素);    | 添加元素到末尾                         |
+> |     indexOf();      | 通过查找字符，返回第一次出现字符的位置 |
+> | insert(下标, 元素); | 在指定位置插入元素                     |
+> |     reverse();      | 倒转字符串                             |
 >
 > **StringBuilder类**
 >
 > 概述：StringBuilder是一个可变字符串类，我们可以把它看成是一个容器(这里的可变指的是StringBuilder对象中的内容是可变的)
+>
+> 此类的方法与StringBuffer相同，但不保证线程安全。 此类设计用作简易替换为StringBuffer在正在使用由单个线程字符串缓冲区的地方（如通常是这种情况）
 >
 > <span style="color: red;">String和StringBuilder的区别</span>
 >
@@ -2392,8 +2401,17 @@ public static void main(String[] args) {
 > **String、StringBuffer、StringBuilder之间的区别**
 >
 > - String
+>   - 效率最低
+>   - 在操作字符串过程中,会舍弃原有空间开辟新的空间
+>   - 没有做线程安全
 > - StringBuffer
+>   - 效率略高
+>   - 这是一个字符串缓冲区,所有字符操作在同一空间,所有效率略高
+>   - 有做线程安全
 > - StringBuilder
+>   - 效率最高
+>   - 和StringBuffer是在同一空间
+>   - 没有做线程安全
 >
 > **System类**
 >
@@ -2510,7 +2528,17 @@ public static void main(String[] args) {
 >
 > **Calendar日历类**
 >
-> 
+> Calendar为特定瞬间与一组日历字段之间的转换提供一系列操作方法
+>
+> Calendar提供一个类方法getInstance用于获取当前日期的日历对象
+>
+> 使用方法获取到日历或操作日历
+>
+> 常用方法:
+>
+> - get(日历字段);
+> - set(year,month,date);
+> - add();
 >
 > **Integer 包装类**
 >
@@ -2558,6 +2586,20 @@ public static void main(String[] args) {
 > 		System.out.println(i+s+s1+s2);	// 100
 > 	}
 > }
+> ```
+>
+> *int和String的相互转换*
+>
+> ```java
+> // int ---> String
+> int number = 100;
+> String s = "" + number;
+> 
+> // String ---> int
+> String s = "100";
+> Integer i = Integer.valueof(s);
+> int x = i.intValue();
+> System.out.println
 > ```
 >
 > **Object类**
@@ -2702,7 +2744,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println(date);
 >   }
->   
+>       
 >   private static Date format(String str) throws ParseException {	// 仅抛出异常
 >       DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 >       // 因为异常已经抛出,所以当前不需要处理异常
@@ -2765,7 +2807,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println("验明正身");
 >   }
->   
+>       
 >   //想要抛出一个实例,方法后还得抛出一个对应的类型
 >   public static void checkSex(String sex) throws Exception {
 >       if ("男".equals(sex) || "女".equals(sex))
@@ -2816,7 +2858,7 @@ public static void main(String[] args) {
 >
 >   - List集合下有两个子类实现类
 >
->     - ArrayList：变相的数组，和数组一样可以存储多个元素，但集合没有固定长度，集合中的每一个元素类型为Object类型
+>     - ArrayList(动态数组集合)：变相的数组，和数组一样可以存储多个元素，但集合没有固定长度，集合中的每一个元素类型为Object类型
 >
 >       - 格式：
 >
@@ -2832,18 +2874,339 @@ public static void main(String[] args) {
 >         |            set(下标, 元素)，             | 修改对应下标元素             |
 >         |        remove(下标)，remove(元素)        | 删除对应元素(整数默认为下标) |
 >         |                get(下标)                 | 获取对应下标元素             |
+>         |                  size()                  | 获取元素的个数               |
 >
->     - LinkedList：
+>     - LinkedList(链式集合)：是List集合的子类实现类，是一种链式的动态数组，与ArrayList集合相似，但是
+>
+>       - 格式
+>
+>         ```java
+>         LinkedList 集合名 = new LinkedList();
+>         ```
+>
+>       - 常用方法：
+>
+>         |                  方法名                  | 说明             |
+>         | :--------------------------------------: | ---------------- |
+>         | add(元素)，add(下标, 元素)，addAll(集合) | 添加元素         |
+>         |              addFirst(元素)              | 添加元素到开头   |
+>         |                get(下标)                 | 获取对应下标元素 |
+>         |                getFirst()                | 获取第一个元素   |
+>         |                getLast()                 | 获取最后一个元素 |
+>         |              removeFirst()               | 删除第一个元素   |
+>         |               removeLast()               | 删除最后一个元素 |
+>
+>       - 遍历集合
+>
+>         ```java
+>         LinkedList ll = new LinkedList();
+>         ll.add("1");
+>         ll.add("2");
+>         ...
+>         ll.add("100");
+>         for(Object object : ll)
+>             System.out.println(object);
+>         ```
+>
+> - 使用List集合存储学生对象
+>
+>   ```java
+>   public class StudentDemo {
+>   	public static void main(String[] args) {
+>   		List studentList = new ArrayList();
+>
+>   		studentList.add(new Student(1, "123", "男", 25));
+>   		studentList.add(new Student(2, "456", "男", 23));
+>   		studentList.add(new Student(3, "789", "男", 22));
+>
+>   		for (Object object : studentList) {
+>   			Student stu = (Student) object;
+>   			System.out.println(
+>   					"学生编号：" + stu.getId() + " 学生姓名：" + stu.getName() + " 学生性别：" + stu.getSex() + " 学生年龄：" + stu.getAge());
+>   		}
+>   	}
+>   }
+>   ```
 >
 > - **Set**
 >
->   - 概述：
+>   - 概述：Set集合继承于Collection，是一种无序且唯一的集合
 >
-> **泛型**
+>   - HashSet 是 Set 集合接口的子类实现类
+>
+>     - HashSet 的特点：
+>
+>       - 不能保证数据的顺序
+>       - 集合元素可以是 null，但是只能有一个
+>       - HashSet 不是线程安全的
+>
+>     - 格式：
+>
+>       ```java
+>       Set 集合名 = new HashSet;
+>       ```
+>
+>     - 常用方法：
+>
+>       |    方法名    | 说明                 |
+>       | :----------: | -------------------- |
+>       |  add(元素)   | 添加元素             |
+>       |    size()    | 获取元素的个数       |
+>       | remove(元素) | 删除对应元素         |
+>       |  iterator()  | 迭代器，用于遍历集合 |
+>
+>     - Iterator 迭代器
+>
+>       - Iterator迭代器,承载集合中元素,用于遍历集合,迭代器本身不能存储数据,但是能通过迭代器删除集合底层元素
+>
+>       - 循环遍历迭代器：
+>
+>         ```java
+>         Set set = new HashSet();
+>         
+>         set.add("1");
+>         ll.add("2");
+>         ...
+>         ll.add("100");
+>         // 遍历集合，因为Set集合没有下标，故此不能使用for循环遍历，这时候需要使用迭代器
+>         Iterator it = set.iterator();
+>         // 循环遍历迭代器
+>         // 判断迭代器中是否还有下一个元素，如果没有就返回false
+>         while(it.hasNext()) {
+>             // 有就取出
+>             Object obj = it.next();
+>             System.out.println(obj);
+>         }
+>         // forEach循环遍历集合，也不需要下标
+>         for(Object object : set)
+>             System.out.println(object);
+>         ```
 >
 > **Map**
 >
-> **Collections**
+> 概述：map集合是一种键对应值的集合,键采用set集合方式存储,value采用collection集合方式存储
+>
+> - Interface Map<K,V>
+>   - K：键的类型，使用Set存储，无序且唯一
+>   - V：值的类型，使用Collection存储，可重复
+> - 将键映射到值的对象；不能包含重复的键；每个键可以映射到最多一个值
+> - 举例：学生的学号和姓名
+>   - itheima001	李狗蛋
+>   - itheima002	王铁蛋
+>   - itheima003	张钢蛋
+>
+> 创建Map集合的对象
+>
+> - 多态的方式
+>
+> - 具体的实现类HashMap
+>
+>   ```java
+>   Map map = new HashMap();
+>   ```
+>
+> 特点：
+>
+> - 键值对映射关系
+> - 一个键对应一个值
+> - 键不能重复,值可以重复
+> - 元素存取无序
+>
+> 常用方法：
+>
+> |      方法名      | 说明            |
+> | :--------------: | --------------- |
+> | put(key, value); | 添加元素        |
+> |  putAll(Map m);  | 添加Map集合     |
+> |     keySet()     | 返回所有的key值 |
+> |     get(key)     | 根据key来获取值 |
+> |      size()      | 获取元素个数    |
+> |     clear()      | 移除所有键值对  |
+> |   remove(key)    | 通过key删除元素 |
+> | containsKey(key) | 判断键是否存在  |
+>
+> 遍历Map集合
+>
+> ```java
+> Map map = new HashMap();
+> map.put(key1, value1);
+> map.put(key2, value2);
+> ...
+> map.put(key10, value10);
+> 
+> // 获取到所有的键
+> Set set = map.keySet();
+> for(Object key : set){
+>     // map.get(键)得到对应的value值
+>     System.out.println(key+"对应的值有:"+map.get(key));
+> }
+> ```
+>
+> **泛型**
+>
+> 概述：本质是参数化类型，就是将类型由原来的具体的类型参数化，然后在使用/调用时传入具体的类型
+>
+> - 解决元素存储的安全性问题
+> - 解决获取元素时，需要类型强制转换的问题
+>
+> 泛型使用：
+>
+> **<T> **：
+>
+> - 泛型使用<>来表示泛型，在<>中规定泛型的对应类型
+>
+> - 声明式泛型，采用T，E来表示一个占位,等待具体赋予指定类型
+>
+> - <span style="color: red;">注意：T或E只能是类，不能使用基本数据类型；若要使用基本数据类型，需要转换成 Integer 类 </span>
+>
+> - 范例：
+>
+>   ```java
+>   // 在JDK1.7之前对象中的<>内也必须填写泛型，JDK1.7之后默认为前方类型
+>   List<Student> list = new ArrayList<>();
+>   // list.add("zhangsan");	// 报错，泛型规定list中只能放Student类型对象
+>   list.add(new Student(1, "123", "男", 25));
+>   // 遍历集合不需要任何强转
+>   for(Student stu : list){
+>       // 默认规定只能存储类型，所以不需要任何强转
+>       System.out.println(stu.toString());
+>   }
+>   ```
+>
+> Map集合使用泛型：
+>
+> *值对应的类型是一个集合，就需要放置集合类型，集合中也需要泛型*
+>
+> - 格式：
+>
+>   ```java
+>   Map<String, List<String>> map = new HashMap<>();
+>   ```
+>
+> - 范例：
+>
+>   ```java
+>   public class MapCityDemo {
+>   
+>   	public static void main(String[] args) {
+>   		//创建map集合,一般key使用String类型,值可以是任意类型
+>   		//值对应的类型是一个集合,就需要放置集合类型,集合中也需要泛型
+>   		Map<String, List<String>> map = new HashMap<>();
+>   		//广东省
+>   		List<String> list = new ArrayList<>();
+>   		list.add("广州市");
+>   		list.add("深圳市");
+>   		list.add("佛山市");
+>   		//广西省
+>   		List<String> list1 = new ArrayList<>();
+>   		list1.add("南宁市");
+>   		list1.add("桂林市");
+>   		list1.add("玉林市");
+>   		list1.add("柳州市");
+>   		
+>   		map.put("广东省", list);
+>   		map.put("广西省", list1);
+>   		
+>   		//获取到所有的键
+>   		Set<String> set = map.keySet();
+>   		for (String key : set) {
+>   			//map.get(键)得到对应的value值
+>   			System.out.println(key+"对应的值有:");
+>   			for (String city : map.get(key)) {
+>   				System.out.println(city);
+>   			}
+>   		}
+>   		System.out.println("集合中是否有广东这个key:"+map.containsKey("广东省"));
+>   	}
+>   }
+>   ```
+>
+> **Java中线程安全的集合**
+>
+> 线程不安全的集合普遍比线程安全的集合效率高的多
+>
+> - Vector：就比Arraylist多了个同步化机制（线程安全）。
+>
+>
+> - Hashtable：就比Hashmap多了个线程安全。
+>
+>
+> - ConcurrentHashMap:是一种高效但是线程安全的集合。
+>
+>
+> - Stack：栈，也是线程安全的，继承于Vector
+> - List item
+> - java.util.concurrent 包下所有的集合类
+>   - ArrayBlockingQueue
+>   - ConcurrentHashMap
+>   - ConcurrentLinkedQueue
+>   - ConcurrentLinkedDeque
+
+##### IO流
+
+> **字节流**
+>
+> *概述*：
+>
+> - IO：输入/输出(Input/Output)
+> - 流：是一种抽象概念，是对数据传输的总称。也就是说数据在设备间的传输称为流，流的本质是数据传输
+> - IO流就是用来处理设备间数据传输问题的
+>   - 常见的应用：文件复制；文件上传；文件下载
+>
+> *IO流的分类*：
+>
+> - 按照数据的流向
+>   - 输入流：读数据
+>   - 输出流：写数据
+> - 按照数据类型来分
+>   - 字节流
+>     - 字节输入流；字节输出流
+>   - 字符流
+>     - 字符输入流；字符输出流
+>   - 一般来说，我们说IO流的分类是按照<span style="color: red;">数据类型</span>来分的
+> - 如果数据通过Window自带的记事本软件打开，我们还可以读懂里面的内容，就是用字符流；否则是用字节流。如果你不知道该使用哪种类型的流，就是用字节流
+>
+> *字节流写数据*：
+>
+> 字节流抽象基类
+>
+> - InputStream：这个抽象类是表示字节输入流的所有类的超类
+> - OutputStream：这个抽象类是表示字节输出流的所有类的超类
+> - 子类名特点：子类名称都是其父类名作为子类名的后缀
+>
+> FileOutputStream：文件输出流用于将数据写入File
+>
+> - FileOutputStream(String name)：创建文件输出流以指定的名称写入文件
+>
+>   ```java
+>   FileOutputStream fos = new FileOutputStream("myByteStream\\fos.txt");
+>   ```
+>
+>   - FileOutputStream 做了三件事
+>     - 调用系统功能创建了文件
+>     - 创建了字节输出流对象
+>     - 让字节输出流对象指向创建好的文件
+>
+> - void write(int b)：将指定的字节写入此文件输出流
+>
+>   ```java
+>   fos.write(97); // fos.txt ---> a
+>   fos.write(57); // fos.txt ---> 9
+>   ```
+>
+> - 所有和IO相关的操作，最后都要释放资源
+>
+>   - void close()：关闭此文件输出流并释放与此流相关联的任何系统资源
+>
+>   ```java
+>   fos.close();
+>   ```
+>
+> - 使用字节输出流写数据的步骤
+>
+>   - 创建字节流对象(调用系统功能创建了文件，创建字节输出流对象，让字节输出流对象指向文件)
+>   - 调用字节输出流对象的写数据方法
+>   - 释放资源(关闭此文件输出流并释放与此流相关联的任何系统资源)
 
 ##### 复制对象和复制引用的区别
 
@@ -2864,6 +3227,22 @@ public static void main(String[] args) {
 ##### 如何避免 SQL 注入
 
 > 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
