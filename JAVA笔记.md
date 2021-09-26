@@ -2358,9 +2358,23 @@ public static void main(String[] args) {
 > | replace(str, str)     | 通过查找字符，将该字符替换为指定的字符                       |
 > | toCharArray()         | 将内容转换为字符数组                                         |
 >
-> String对象的特点
+> <span style="color: red;">String对象的特点</span>
 >
 > 1. 通过new创建的字符串对象，每一次new都会申请一个内存空间，虽然内容相同，但是地址值不同
+>
+>    ```java
+>    String a = new String("helloworld");
+>    String b = new String("helloworld");
+>    Systen.out.println(a == b); // false
+>    ```
+>
+> 2. 以“”方式给出的字符串，只要字符序列相同(顺序和大小写)，无论在程序代码中出现几次，JVM都只会建立一个String对象，并在字符串池中维护
+>
+>    ```java
+>    String a = "helloworld";
+>    String b = "hello"+"world";
+>    Systen.out.println(a == b); // true
+>    ```
 >
 > **StringBuffer类**
 >
@@ -2368,7 +2382,12 @@ public static void main(String[] args) {
 >
 > **StringBuilder类**
 >
-> 
+> 概述：StringBuilder是一个可变字符串类，我们可以把它看成是一个容器(这里的可变指的是StringBuilder对象中的内容是可变的)
+>
+> <span style="color: red;">String和StringBuilder的区别</span>
+>
+> - String：内容是不可变的
+> - StringBuilder：内容是可变的
 >
 > **String、StringBuffer、StringBuilder之间的区别**
 >
@@ -2772,17 +2791,59 @@ public static void main(String[] args) {
 
 ##### 集合
 
-> Collection
+> 集合的特点：提供一种存储空间可变的存储模型，存储的数据容量可以随时发生改变
 >
-> List
+> 集合体系结构
 >
-> Set
+> **Collection**
 >
-> 泛型
+> 概述：
 >
-> Map
+> - 是单例集合的顶层接口，它表示一组对象，这些对象称之为<span style="color: red;">Collection元素</span>，统一存储Object对象
+> - JDK不提供此接口的任何直接实现，它提供更具体的子接口(List和Set)实现
 >
-> Collections
+> 子接口：
+>
+> - **List**
+>
+>   - 概述：有序集合，用户可以精确控制列表中每个元素的插入位置，也可以通过索引访问具体元素，并搜索列表中的元素
+>
+>   - 特点：
+>
+>     - 有索引
+>     - 可以存储重复元素
+>     - 元素取值有序
+>
+>   - List集合下有两个子类实现类
+>
+>     - ArrayList：变相的数组，和数组一样可以存储多个元素，但集合没有固定长度，集合中的每一个元素类型为Object类型
+>
+>       - 格式：
+>
+>         ```java
+>         List 集合名 = new ArrayList();
+>         ```
+>
+>       - 常用方法：
+>
+>         |                  方法名                  | 说明                         |
+>         | :--------------------------------------: | ---------------------------- |
+>         | add(元素)，add(下标, 元素)，addAll(集合) | 添加元素                     |
+>         |            set(下标, 元素)，             | 修改对应下标元素             |
+>         |        remove(下标)，remove(元素)        | 删除对应元素(整数默认为下标) |
+>         |                get(下标)                 | 获取对应下标元素             |
+>
+>     - LinkedList：
+>
+> - **Set**
+>
+>   - 概述：
+>
+> **泛型**
+>
+> **Map**
+>
+> **Collections**
 
 ##### 复制对象和复制引用的区别
 
