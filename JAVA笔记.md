@@ -497,24 +497,24 @@
 >             // 调用方法
 >             int result = sum( a: 10, b: 20);
 >             System.out.println(result);		// 30
->                                               
+>                                                 
 >             int result2 = sum( a: 10.0, b: 20.0);
 >             System.out.println(result2);	// 30.0
->                                               
+>                                                 
 >             int result3 = sum( a: 10, b: 20, c: 30);
 >             System.out.println(result3);	// 60
 >         }
->                                           
+>                                             
 >         // 需求1：求两个 int 类型数据和的方法
 >         public static int sum(int a, int b) {
 >             return a + b;
 >         }
->                                           
+>                                             
 >         // 需求2：求两个 double 类型数据和的方法
 >         public static double sum(double a, double b) {
 >             return a + b;
 >         }
->                                           
+>                                             
 >         // 需求3：求三个 int 类型数据和的方法
 >         public static int sum(int a, int b, int c) {
 >             return a + b + c;
@@ -538,7 +538,7 @@
 >             // 方法体
 >         }
 >     }
->                                                                         
+>                                                                             
 >     // 属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
@@ -830,7 +830,7 @@ public static void main(String[] args) {
 >         public static void main(String[] args) {
 >             Student s1 = new Student();
 >             s1.setName("王狗蛋"); // setName 方法中的 this 代表 s1 这个对象
->                         
+>                             
 >             Student s2 = new Student();
 >             s2.setName("李铁蛋"); // setName 方法中的 this 代表 s2 这个对象
 >         }
@@ -1587,12 +1587,12 @@ public static void main(String[] args) {
 >     		System.out.println("USB插入，风扇转起来了");
 >     	}
 >     }
->               
+>                 
 >     public class USBDemo{
 >         public static void main(String[] args) {
 >             USBInterfase usb = new USBSan();
 >             usb.service(); // USB插入，交换数据
->               
+>                 
 >             USBInterfase usb = new UDisk();
 >             usb.service(); // USB插入，风扇转起来了
 >         }
@@ -2256,7 +2256,7 @@ public static void main(String[] args) {
 >   }
 >   ```
 >
-> <span style="color: red;">本质：是一个继承了该类或者实现了该接口的子类匿名对象</span>
+> <span style="color: red;">匿名内部类的本质：是一个继承了该类或者实现了该接口的子类匿名对象</span>
 >
 > 单次调用：
 >
@@ -2310,7 +2310,7 @@ public static void main(String[] args) {
 > }
 > ```
 >
-> *匿名内部类的本质：是一个继承了该类或者实现该接口的子类匿名对象*
+> *注意：匿名内部类中不能出现抽象⽅法，也不能出现静态成员*
 >
 > **静态内部类**
 >
@@ -2744,7 +2744,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println(date);
 >   }
->       
+>   
 >   private static Date format(String str) throws ParseException {	// 仅抛出异常
 >       DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 >       // 因为异常已经抛出,所以当前不需要处理异常
@@ -2807,7 +2807,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println("验明正身");
 >   }
->       
+>   
 >   //想要抛出一个实例,方法后还得抛出一个对应的类型
 >   public static void checkSex(String sex) throws Exception {
 >       if ("男".equals(sex) || "女".equals(sex))
@@ -2830,6 +2830,28 @@ public static void main(String[] args) {
 >   |         用在方法声明后面，跟的是异常类名         |   用在方法体内，跟的是异常对象名   |
 >   |       表示抛出异常，由该方法的调用者来处理       | 表示抛出异常，由方法体内的语句处理 |
 >   | 表示出现异常的一种可能性，并不一定会发生这些异常 |    执行throw一定抛出了某种异常     |
+>
+> **finally**
+>
+> <span style="color: red;">finally语句块总是会被执行</span>。它主要用于回收在try块里打开的物力资源(如数据库连接、网络连接和磁盘文件)。只有finally块，执行完成之后，才会回来执行try或者catch块中的return或者throw语句，如果finally中使用了return或者throw等终止方法的语句，则就不会跳回执行，直接停止
+>
+> ```java
+> public static void main(String[] args) {
+>     Scanner in = new Scanner(System.in);
+>     System.out.println("请输入学生性别:");
+>     String sex = in.next();
+>     try {
+>         checkSex(sex);
+>     } catch (Exception e) {
+>         // 此处处理的异常为自定义异常
+>         System.out.println(e.getMessage());	// 性别必须是'男'或者'女'！
+>     } finally {
+>         System.out.println("验明正身");
+>     }
+> }
+> ```
+>
+> 
 
 ##### 集合
 
@@ -3103,10 +3125,10 @@ public static void main(String[] args) {
 >   		list1.add("桂林市");
 >   		list1.add("玉林市");
 >   		list1.add("柳州市");
->   		
+>   
 >   		map.put("广东省", list);
 >   		map.put("广西省", list1);
->   		
+>   
 >   		//获取到所有的键
 >   		Set<String> set = map.keySet();
 >   		for (String key : set) {
@@ -3120,6 +3142,18 @@ public static void main(String[] args) {
 >   	}
 >   }
 >   ```
+>
+> **Collections 集合工具类**
+>
+> 集合工具类，针对集合封装了很多集合工具方法
+>
+> 常用方法：
+>
+> |     方法      | 描述                     |
+> | :-----------: | ------------------------ |
+> |  sort(list)   | 集合升序排序             |
+> | reverse(list) | 反转指定列表中的元素顺序 |
+> | shuffle(list) | 使用默认的随机源随机排列 |
 >
 > **Java中线程安全的集合**
 >
@@ -3152,6 +3186,11 @@ public static void main(String[] args) {
 > - 流：是一种抽象概念，是对数据传输的总称。也就是说数据在设备间的传输称为流，流的本质是数据传输
 > - IO流就是用来处理设备间数据传输问题的
 >   - 常见的应用：文件复制；文件上传；文件下载
+> - IO流是一组有顺序，有起点和终点的字节集合，是对于数据传输的一种总称。即数据在设备与设备之间的传输都称之为流
+>
+> *文件流*：
+>
+> 文件：是存储或记录在一起的一个数据集合，叫作文件
 >
 > *IO流的分类*：
 >
@@ -3165,6 +3204,56 @@ public static void main(String[] args) {
 >     - 字符输入流；字符输出流
 >   - 一般来说，我们说IO流的分类是按照<span style="color: red;">数据类型</span>来分的
 > - 如果数据通过Window自带的记事本软件打开，我们还可以读懂里面的内容，就是用字符流；否则是用字节流。如果你不知道该使用哪种类型的流，就是用字节流
+>
+> *File类访问文件属性*
+>
+> 格式：
+>
+> ```java
+> File file = new File(文件路径);
+> ```
+>
+> 常用方法：
+>
+> | 方法名称                 | 说明                                                 |
+> | ------------------------ | ---------------------------------------------------- |
+> | boolean exists()         | 判断文件或目录是否存在                               |
+> | boolean isFile()         | 判断是否是文件                                       |
+> | boolean isDirectory()    | 判断是否是目录                                       |
+> | String getPath()         | 返回此对象表示的文件的相对路径名                     |
+> | String getAbsolutePath() | 返回此对象表示的文件的绝对路径名                     |
+> | String getName()         | 返回此对象表示的文件或目录的名称                     |
+> | boolean delete()         | 删除此对象指定的文件或目录                           |
+> | boolean createNewFile()  | 创建名称的空文件，不创建文件夹                       |
+> | long length()            | 返回文件的长度，单位为字节，如果文件不存在，则返回OL |
+> | boolean mkdirs()         | 创建文件夹，包含其父目录                             |
+> | boolean delete()         | 删除文件或目录                                       |
+>
+> 寻找文件的方法：
+>
+> ```java
+> public long showFile(File file) {
+> 	long num = 0
+>     // 1.通过目录获取到目录中所有内容
+>     File[] files = file.listFiles();
+>     // 2.判断该文件目录下是否为null，不为null才可以操作
+>     if(files != null){
+>         // 3.循环遍历当前文件夹下的所有内容
+>         for(File fi : files) {
+>             // 4.判断每个内容是否为目录
+>             if(fi.isDirectory()) {
+>                 // 如果是文件夹，就调用自己这个方法，将当前文件夹作为根，继续向下遍历
+>                 num += showFile(fi);
+>             }else {
+>                 // 如果是文件，数量加1，并输出
+>                 num++;
+>                 System.out.println(fi.getPath());
+>             }
+>         }
+>     }
+>     return num;
+> }
+> ```
 >
 > *字节流写数据*：
 >
@@ -3207,6 +3296,204 @@ public static void main(String[] args) {
 >   - 创建字节流对象(调用系统功能创建了文件，创建字节输出流对象，让字节输出流对象指向文件)
 >   - 调用字节输出流对象的写数据方法
 >   - 释放资源(关闭此文件输出流并释放与此流相关联的任何系统资源)
+>
+> 字节流写数据的3种方式
+>
+> |                 方法名                 | 说明                                                         |
+> | :------------------------------------: | ------------------------------------------------------------ |
+> |           void write(int b)            | 将指定的字节写入此文件输出流；一次写一个字节数据             |
+> |          void write(byte[] b)          | 将b.length字节从指定的字节数组写入此文件输出流；一次写一个字节数组数据 |
+> | void write(byte[] b, int off, int len) | 将len字节从指定的字节数组开始，从偏移量off开始写入此文件输出流；一次写一个字节数组的部分数据 |
+>
+> ```java
+> FileOutputStream fos = new FileOutputStream("myByteStream\\fos.txt");
+> 
+> // void write(byte[] b)
+> byte[] bys = {97, 98, 99, 100, 101};
+> fos.write(bys);	// abcde
+> // byte[] getBytes()：返回字符串对应的字节数组
+> byte[] = "abcde".getBytes();
+> fos.write(bys);	// abcde
+> // void write(byte[] b, int off, int len)
+> fos.write(bys, 1, 3); // bcd
+> ```
+>
+> 字节流写数据的两个小问题
+>
+> - 字节流写数据如何实现换行
+>
+>   - 写完数据后，加换行符
+>
+>     - windows: \r\n
+>
+>     - linux: \n
+>
+>     - mac: \r
+>
+>       ```java
+>       fos.write("hello\n".getBytes());	// hello<br/>
+>       ```
+>
+> - 字节流写数据如何实现追加写入
+>
+>   - public FileOutputStream(String name, boolean append)
+>   - 创建文件输出流以指定的名称写入文件。如果第二个参数为true，则字节将写入文件的末尾而不是开头
+>
+> 字节流写数据加异常处理
+>
+> <span style="color: red;">finally</span>：在异常处理时提供<span style="color: red;">finally</span>块来执行所有清除操作。比如说IO流中的释放资源
+>
+> 特点：被<span style="color: red;">finally</span>控制的语句一定会执行，除非JVM退出
+>
+> ```java
+> public class FileInputStreamDemo {
+> 	public static void main(String[] args) {
+>         FileOutputStream fos = null;
+> 		try {
+> 			fos = new FileOutputStream("myByteStream\\fos.txt");
+>             fos.write("hello".getBytes());
+> 		} catch (IOException e) {
+> 			e.printStackTrace();
+> 		} finally {
+>             // 只有文件有被打开才进行资源的释放
+>             if(fos != null) {
+>                 try {
+>                     fos.close();
+>                 }  catch (IOException e) {
+>                     e.printStackTrace();
+>                 }
+> 			}
+>         }
+> 	}
+> }
+> ```
+>
+> *字节流读数据*
+>
+> FileInputStream：从文件系统中的文件获取输入字节
+>
+> - FileInputStream(String name)：通过打开与实际文件的连接来创建一个FileInputStream，该文件由文件系统中的路径名name命名
+>
+> 使用字节输入流读数据的步骤：
+>
+> 1. 创建字节输入流对象
+> 2. 调用字节输入流对象的读数据方法
+> 3. 释放资源
+>
+> 范例：
+>
+> ```java
+> public class FileInputStreamDemo {
+>     public static void main(String[] args) throws IOException {
+>         // 创建字节输入流对象
+>         // fos.txt文件内容 ab
+>         FileInputStream fis = new FileInputStream("myByteStream\\fos.txt");
+>         // 调用字节输入流对象的读数据方法
+>         // int read()：从该输入流读取一个字节的数据
+>         
+>         // 第一次读取数据
+>         int by = fis.read();
+>         System.out.println(by); // 97
+>         System.out.println((char)by); // a
+>         
+>         // 多次读取数据
+>         int by;
+>         while((by = fis.read()) != -1) 
+>             System.out.print((char)by); // ab
+> 
+>         // 释放资源
+>         fis.close();
+>     }
+> }
+> ```
+>
+> 字节流读数据的3种方式
+>
+> |              方法名              | 说明                                                         |
+> | :------------------------------: | ------------------------------------------------------------ |
+> |              read()              | 从指定的文件中读取输入流；一次读一个字节数据                 |
+> |          read(byte[] b)          | 从指定的文件中读取b.length字节数组长度的输入流；一次读一个字节数组数据 |
+> | read(byte[] b, int off, int len) | 从指定文件的输入流读取len字节，从偏移量off开始将读取到的第一个字节存入到指定的字节数组中 |
+>
+> ```java
+> FileInputStream fis = new FileInputStream("myByteStream\\fos.txt");
+> // fos.txt文件内容 abcde
+> // int read(byte[] b)
+> byte[] bys = new byte[2];
+> fis.read(bys);	// abcde
+> System.out.println((char)bys[0]); // a
+> System.out.println((char)bys[1]); // b
+> 
+> // int read(byte[] b, int off, int len)
+> fis.read(bys, 1, 1); // bys[0]被偏移，读取到的a被存入到bys[1]中
+> System.out.println((char)bys[0]); // null
+> System.out.println((char)bys[1]); // a
+> ```
+>
+> *字节流复制图片*案例
+>
+> ```java
+> public class StreamCopy {
+> 	/*
+> 	 * 采用数组的方式读取和输出内容
+> 	 */
+> 	public static void main(String[] args) {
+> 		//准备文件
+> 		File file = new File("d:/java/java.jpg");
+> 		File of = new File("D:/java/test",file.getName());
+> 		//记录开始时间
+> 		long start = System.currentTimeMillis();
+> 		//准备输入输出流
+> 		InputStream in = null;
+> 		OutputStream out = null;
+> 		try {
+> 			in = new FileInputStream(file);
+> 			out = new FileOutputStream(of);
+> 			//准备一个自定义的存储数组,为读取时设置一个自定义缓冲区
+> 			byte[] bs = new byte[10];
+> 			//每次读取的长度
+> 			int len = 0;
+> 			//读取数据,每次读取数据到数组,后面的每次读取都是在替换数组内容
+> 			while((len=in.read(bs))!=-1){
+> 				//将读取的数据输出
+> 				//len保证最后一个读取的内容是对应长度内容,而非整个数组
+> 				//0表示读取数组便宜量
+> 				out.write(bs,0,len);
+> 			}
+> 			System.out.println("文件复制成功!");
+> 			out.flush();  //清空缓存
+> 		} catch (Exception e) {
+> 			// TODO Auto-generated catch block
+> 			e.printStackTrace();
+> 		}finally {
+> 			//关闭资源
+> 			try {
+> 				if(in!=null)
+> 					in.close();
+> 				if(out!=null)
+> 					out.close();
+> 			} catch (IOException e) {
+> 				e.printStackTrace();
+> 			}
+> 		}
+> 		long end = System.currentTimeMillis();
+> 		System.out.println("总共耗时:"+(end-start));
+> 	}
+> }
+> ```
+>
+> *字节缓冲流*
+>
+> - BufferOutputStream：该类实现缓冲输出流。通过设置这样的输出流，应用程序可以向底层输出流写入字节，而不必为写入的每个字节导致底层系统的调用
+> - BufferedInputStream：创建BufferedInputStream将创建一个内部缓冲区数组。当从流中读取或跳过字节时，内部缓冲区将根据需要从所包含的输入流中重新填充，一次很多字节
+>
+> **字符流**
+>
+> 字符的输入流
+>
+> 字符输入流与字节输入流类似，但运行的单元更大，且只能用于读取文本
+>
+> 字符流 Reader 抽象类
 
 ##### 复制对象和复制引用的区别
 
