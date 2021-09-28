@@ -3940,7 +3940,7 @@ public static void main(String[] args) {
 > br.close();
 > ```
 >
-> *对象序列化流*
+> *对象序列化流与对象反序列化流*
 >
 > 对象序列化:就是将对象保存到磁盘中,或者在网络中传输对象
 >
@@ -3952,13 +3952,13 @@ public static void main(String[] args) {
 >
 > 要实现序列化和反序列化就要使用对象序列化流和对象反序列化流
 >
-> - 对象序列化流：ObjectOutputStream
+> - **对象序列化流**：<span style="color: red;">ObjectOutputStream</span>
 >
 >   - 将Java对象的原始数据类型和图形写入OutputStream。可以使用ObjectInputStream读取(重构)对象。可以通过使用流的文件来实现对象的持久存储。如果流是网络套接字流，则可以在另一个主机上火另一个进程中重构对象
 >
->   - 构造方法：ObjectOutputStream(OutputStream out)：创建一个写入指定的OutputStream的ObjectOutputStream
+>   - 构造方法：<span style="color: red;">ObjectOutputStream</span>(<span style="color: #329BDC;">OutputStream out</span>)：创建一个写入指定的OutputStream的ObjectOutputStream
 >
->   - 序列化对象的方法：void writeObject(Object obj)：将指定的对象写入ObjectOutputStream
+>   - 序列化对象的方法：<span style="color: red;">void writeObject</span>(<span style="color: #329BDC;">Object obj</span>)：将指定的对象写入ObjectOutputStream
 >
 >     ```java
 >     public class Student implements Serializable{
@@ -4010,9 +4010,194 @@ public static void main(String[] args) {
 >     - 一个对象要想被序列化，该对象所属的类必须必须实现<span style="color: red;">Serializable</span>接口
 >     - <span style="color: red;">Serializable</span>是一个<span style="color: red;">标记接口</span>，实现该接口，不需要重写任何方法(*实现该接口表示该类可以被序列化和反序列化*)
 >
-> - 对象反序列化流：ObjectInputStream
+> - **对象反序列化流**：<span style="color: red;">ObjectInputStream</span>
 >
-> *对象反序列化流*
+>   - **使用ObjectInputStream反序列化，需使用先前ObjectOutputStream编写的原始数据和对象**
+>
+>   - 构造方法：<span style="color: red;">ObjectInputStream</span>(<span style="color: #329BDC;">InputStream in</span>)：创建从指定的InputStream读取的ObjectInputStream
+>
+>   - 反序列化对象的方法：<span style="color: red;">Object readObject</span>()：从ObjectInputStream读取一个对象
+>
+>     ```java
+>     // 创建从指定的InputStream读取的ObjectInputStream
+>     ObjectInputStream ois = new ObjectInputStream(new FileInputStream("myOtherStream/oos.txt"));
+>     Object obj = ois.readObject();
+>     // 输出对象
+>     Student s = (Student) obj;
+>     System.out.println(s.getName() + "," + s.getAge());
+>     // 释放资源
+>     ois.close();
+>     ```
+>
+> - 给一个成员变量加上<span style="color: red;">transient</span>关键字修饰，该关键字标记的成员变量不参与序列化过程
+>
+>   ```java
+>   public class Student implements Serializable{
+>   	private String name;
+>   	private transient int age;
+>       ...
+>   }
+>   
+>   Student s = new Student("林青霞", 30);
+>   序列化。。。
+>   反序列化。。。
+>   System.out.println(s.getName() + "," + s.getAge()); // 林青霞,0
+>   ```
+>
+> - **serialVersionUID**：<span style="color: red;">private static final long serialVersionUID = 1L</span>;
+>
+>   - **serialVersionUID**用于给序列化的对象一个固定的UID，以防止用对象序列化流序列化对象后，修改对象所属的类文件，读取数据出现<span style="color: red;">InvalidClassException</span>异常
+>   - 显式声明**serialVersionUID**后，序列化运行时将使用此值，而不是根据序列化规范计算该类各个方面以生成的默认的**serialVersionUID**值
+>
+> 序列化存储集合
+>
+> ```java
+> public class StudentStreamDemo {
+> 	/*
+> 	 * 创建集合,添加3到5个学生
+> 	 * 将集合序列化到文件
+> 	 * 再次放文件反序列化处理,并添加2个学生
+> 	 * 最后再序列化到文件
+> 	 */
+> 	public static void main(String[] args) {
+> 		List<Student> stus = new ArrayList<>();
+> 		stus.add(new Student(1,"zhangsan",20,"男"));
+> 		stus.add(new Student(2,"lisi",18,"女"));
+> 		stus.add(new Student(3,"wangwu",20,"男"));
+> 		//调用序列方法,序列化
+> 		try {
+> 			//序列初始化
+> 			outStream(stus,"d:/java/Student.txt");
+> 			//反序列化得到集合
+> 			stus = inStream("d:/java/Student.txt");
+> 			//添加数据
+> 			stus.add(new Student(4, "wanghong", 18, "女"));
+> 			stus.add(new Student(5, "tiantian", 18, "女"));
+> 			//再次序列化,参数1为序列化内容,参数2为序列化地址
+> 			outStream(stus,"d:/java/Student.txt");
+> 			stus = inStream("d:/java/Student.txt");
+> 			for (Student stu : stus) {
+> 				System.out.println(stu.toString());
+> 			}
+> 		} catch (Exception e) {
+> 			e.printStackTrace();
+> 		}
+> 		
+> 	}
+> 	//序列化方法
+> 	public static void outStream(Object obj,String path) throws Exception{
+> 		 ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path));
+> 		 oos.writeObject(obj);
+> 		 oos.close();
+> 	}
+> 	//反序列化方法
+> 	public static List<Student> inStream(String path) throws Exception{
+> 		List<Student> list = null;
+> 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path));
+> 		list = (List<Student>) ois.readObject();
+> 		return list;
+> 	}
+> }
+> ```
+>
+> *Properties*
+>
+> 概述：
+>
+> - 是一个Map体系的集合类
+> - Properties可以保存到流中或从流中加载
+>
+> ```java
+> // 创建Properties对象
+> Properties prop = new Properties();
+> // 添加数据
+> prop.put("item01", "123");
+> prop.put("item02", "456");
+> prop.put("item03", "789");
+> // 遍历prop
+> Set<Object> keySet = prop.keySet();
+> for (Object key : keySet) {
+>     Object value = prop.get(key);
+>     System.out.println(key + "," + value);
+> }
+> ```
+>
+> Properties作为集合的特有方法：
+>
+> |                    方法名                    | 说明                                                         |
+> | :------------------------------------------: | ------------------------------------------------------------ |
+> | Object setProperty(String key, String value) | 设置集合的键和值，都是String类型，底层调用Hashtable方法put   |
+> |        String getProperty(String key)        | 使用此属性列表中指定的键搜索属性                             |
+> |    Set**<String>** stringPropertyNames()     | 从该属性列表中返回一个不可修改的键集，其中键及其对应的值是字符串 |
+>
+> ```java
+> Properties prop = new Properties();
+> // 设置集合的键和值
+> prop.setProperty("item01", "123");
+> prop.setProperty("item02", "456");
+> prop.setProperty("item03", "789");
+> // 使用指定的键搜索属性
+> System.out.println(prop.getProperty("item01"));		// 123
+> System.out.println(prop.getProperty("item011"));	// null
+> // 从该属性列表中返回一个不可修改的键集，其中键及其对应的值是字符串
+> Set<String> names = prop.stringPropertyNames();
+> for (String key : names) {
+>     String value = prop.getProperty(key);
+> 	System.out.println(key + "," + value);	// item03,789\r\n item02,456\r\n item01,123\r\n
+> }
+> ```
+>
+> *properties和IO流相结合使用*
+>
+> |                    方法名                     | 说明                                                         |
+> | :-------------------------------------------: | ------------------------------------------------------------ |
+> |        void load(InputStream inStream)        | 从输入字节流读取属性列表(键和元素对)                         |
+> |           void load(Reader reader)            | 从输入字符流读取到属性列表(键和元素对)                       |
+> | void store(OutputStream out, String comments) | 将此属性列表(键和元素对)写入此Properties表中，以适合于使用load(InputStream)方法的格式写入输出字节流 |
+> |  void store(Writer writer, String comments)   | 将此属性列表(键和元素对)写入此Properties表中，以适合使用load(Reader)方法的格式写入输出字节流 |
+>
+> ```java
+> public class PropertiesDemo {
+> 	public static void main(String[] args) {
+> 		try {
+> 			// 把集合中的数据保存到文件
+> 			myStore();
+> 			//将文件中的键值对读取为java中
+> 			myLoad();
+> 		} catch (Exception e) {
+> 			e.printStackTrace();
+> 		}
+> 	}
+> 	//读取属性文件
+> 	private static void myLoad() throws Exception {
+> 		Properties prop = new Properties();
+> 		//通过输入流找到并获取文件
+> 		InputStream in = new FileInputStream("jdbc.properties");
+> 		//properties中的load方法,将流加载为属性列表
+> 		prop.load(in);
+> 		in.close();
+> 		//获取各个属性
+> 		System.out.println("驱动类名:"+prop.getProperty("className"));
+> 		System.out.println("用户名:"+prop.getProperty("name"));
+> 	}
+> 	//写出属性文件
+> 	private static void myStore() throws Exception {
+> 		// 创建properties集合
+> 		Properties prop = new Properties();
+> 
+> 		prop.setProperty("className", "com.mysql.jdbc.Driver");
+> 		// 通过properties设置属性,键值对应,设置后可以被键搜索
+> 		prop.setProperty("username", "root");
+> 		prop.setProperty("password", "123456");
+> 		
+> 		//降属性保存到jdbc.properties的文件中
+> 		Writer out = new FileWriter("jdbc.properties");
+> 		//属性集合properties集合将流写出
+> 		prop.store(out, null);
+> 		out.close();
+> 	}
+> }
+> ```
 
 ##### 复制对象和复制引用的区别
 
