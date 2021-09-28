@@ -497,24 +497,24 @@
 >             // 调用方法
 >             int result = sum( a: 10, b: 20);
 >             System.out.println(result);		// 30
->                                                 
+>                                                   
 >             int result2 = sum( a: 10.0, b: 20.0);
 >             System.out.println(result2);	// 30.0
->                                                 
+>                                                   
 >             int result3 = sum( a: 10, b: 20, c: 30);
 >             System.out.println(result3);	// 60
 >         }
->                                             
+>                                               
 >         // 需求1：求两个 int 类型数据和的方法
 >         public static int sum(int a, int b) {
 >             return a + b;
 >         }
->                                             
+>                                               
 >         // 需求2：求两个 double 类型数据和的方法
 >         public static double sum(double a, double b) {
 >             return a + b;
 >         }
->                                             
+>                                               
 >         // 需求3：求三个 int 类型数据和的方法
 >         public static int sum(int a, int b, int c) {
 >             return a + b + c;
@@ -538,7 +538,7 @@
 >             // 方法体
 >         }
 >     }
->                                                                             
+>                                                                                 
 >     // 属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
@@ -830,7 +830,7 @@ public static void main(String[] args) {
 >         public static void main(String[] args) {
 >             Student s1 = new Student();
 >             s1.setName("王狗蛋"); // setName 方法中的 this 代表 s1 这个对象
->                             
+>                                 
 >             Student s2 = new Student();
 >             s2.setName("李铁蛋"); // setName 方法中的 this 代表 s2 这个对象
 >         }
@@ -1587,12 +1587,12 @@ public static void main(String[] args) {
 >     		System.out.println("USB插入，风扇转起来了");
 >     	}
 >     }
->                 
+>                   
 >     public class USBDemo{
 >         public static void main(String[] args) {
 >             USBInterfase usb = new USBSan();
 >             usb.service(); // USB插入，交换数据
->                 
+>                   
 >             USBInterfase usb = new UDisk();
 >             usb.service(); // USB插入，风扇转起来了
 >         }
@@ -2744,7 +2744,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println(date);
 >   }
->   
+>     
 >   private static Date format(String str) throws ParseException {	// 仅抛出异常
 >       DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 >       // 因为异常已经抛出,所以当前不需要处理异常
@@ -2807,7 +2807,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println("验明正身");
 >   }
->   
+>     
 >   //想要抛出一个实例,方法后还得抛出一个对应的类型
 >   public static void checkSex(String sex) throws Exception {
 >       if ("男".equals(sex) || "女".equals(sex))
@@ -2985,7 +2985,7 @@ public static void main(String[] args) {
 >
 >         ```java
 >         Set set = new HashSet();
->         
+>                 
 >         set.add("1");
 >         ll.add("2");
 >         ...
@@ -3109,7 +3109,7 @@ public static void main(String[] args) {
 >
 >   ```java
 >   public class MapCityDemo {
->   
+>     
 >   	public static void main(String[] args) {
 >   		//创建map集合,一般key使用String类型,值可以是任意类型
 >   		//值对应的类型是一个集合,就需要放置集合类型,集合中也需要泛型
@@ -3125,10 +3125,10 @@ public static void main(String[] args) {
 >   		list1.add("桂林市");
 >   		list1.add("玉林市");
 >   		list1.add("柳州市");
->   
+>     
 >   		map.put("广东省", list);
 >   		map.put("广西省", list1);
->   
+>     
 >   		//获取到所有的键
 >   		Set<String> set = map.keySet();
 >   		for (String key : set) {
@@ -3203,7 +3203,11 @@ public static void main(String[] args) {
 >   - 字符流
 >     - 字符输入流；字符输出流
 >   - 一般来说，我们说IO流的分类是按照<span style="color: red;">数据类型</span>来分的
-> - 如果数据通过Window自带的记事本软件打开，我们还可以读懂里面的内容，就是用字符流；否则是用字节流。如果你不知道该使用哪种类型的流，就是用字节流
+>   - 如果数据通过Window自带的记事本软件打开，我们还可以读懂里面的内容，就是用字符流；否则是用字节流。如果你不知道该使用哪种类型的流，就是用字节流
+> - 按对象分：
+>   - 高端流：字符流
+>   - 低端流：字节流
+>   - 一般来说后缀带reader或writer的为高端流,但是有个例外**printStream**是一个高端流(*所有的低端流都是字节流，所有的高端流是字符流*)
 >
 > *File类访问文件属性*
 >
@@ -3263,7 +3267,7 @@ public static void main(String[] args) {
 > - OutputStream：这个抽象类是表示字节输出流的所有类的超类
 > - 子类名特点：子类名称都是其父类名作为子类名的后缀
 >
-> FileOutputStream：文件输出流用于将数据写入File
+> <span style="color: red;">FileOutputStream</span>：文件输出流用于将数据写入File
 >
 > - FileOutputStream(String name)：创建文件输出流以指定的名称写入文件
 >
@@ -3370,7 +3374,7 @@ public static void main(String[] args) {
 >
 > *字节流读数据*
 >
-> FileInputStream：从文件系统中的文件获取输入字节
+> <span style="color: red;">FileInputStream</span>：从文件系统中的文件获取输入字节
 >
 > - FileInputStream(String name)：通过打开与实际文件的连接来创建一个FileInputStream，该文件由文件系统中的路径名name命名
 >
@@ -3390,12 +3394,12 @@ public static void main(String[] args) {
 >         FileInputStream fis = new FileInputStream("myByteStream\\fos.txt");
 >         // 调用字节输入流对象的读数据方法
 >         // int read()：从该输入流读取一个字节的数据
->         
+> 
 >         // 第一次读取数据
 >         int by = fis.read();
 >         System.out.println(by); // 97
 >         System.out.println((char)by); // a
->         
+> 
 >         // 多次读取数据
 >         int by;
 >         while((by = fis.read()) != -1) 
@@ -3484,16 +3488,531 @@ public static void main(String[] args) {
 >
 > *字节缓冲流*
 >
-> - BufferOutputStream：该类实现缓冲输出流。通过设置这样的输出流，应用程序可以向底层输出流写入字节，而不必为写入的每个字节导致底层系统的调用
-> - BufferedInputStream：创建BufferedInputStream将创建一个内部缓冲区数组。当从流中读取或跳过字节时，内部缓冲区将根据需要从所包含的输入流中重新填充，一次很多字节
+> - BufferedOutputStream：
+>   - 该类实现缓冲输出流。通过设置这样的输出流，应用程序可以向底层输出流写入字节，而不必为写入的每个字节导致底层系统的调用
+> - BufferedInputStream：
+>   - 创建BufferedInputStream将创建一个内部缓冲区数组。当从流中读取或跳过字节时，内部缓冲区将根据需要从所包含的输入流中重新填充，一次很多字节
+>
+> 构造方法
+>
+> - 字节缓冲输出流：<span style="color: red;">BufferedOutputStream</span>(<span style="color: #329BDC;">OutputStream out</span>)
+>
+>   ```java
+>   BufferedOutputStream(new FileOutputStream("myByteStream\\fos.txt"));
+>   ```
+>
+> - 字节缓冲输入流：<span style="color: red;">BufferedInputStream</span>(<span style="color: #329BDC;">InputStream in</span>)
+>
+>   ```java
+>   BufferedInputStream(new FileInputStream("myByteStream\\fos.txt"));
+>   ```
+>
+> - 字节缓冲流<span style="color: red;">仅仅提供缓冲区</span>，而真正的读写数据还得依靠基本的字节流对象进行操作
+>
+> 字节缓冲输出流写数据
+>
+> ```java
+> BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("myByteStream\\bos.txt"));
+> // 写数据
+> bos.write("hello\r\n".getBytes());
+> bos.write("world\r\n".getBytes());
+> // 释放资源
+> bos.close();
+> ```
+>
+> 字节缓冲输入流读数据
+>
+> ```java
+> BufferedInputStream bis = new BufferedInputStream(new FileInputStream("myByteStream\\bos.txt"));
+> // 一次读取一个字节数据
+> int by;
+> while((by = bis.read()) != -1) {
+>     System.out.print((char)by);
+> }
+> // 一次读取一个字节数组的数据
+> byte[] bys = new byte[1024];
+> int len;
+> while((len = bis.read(bys)) != -1) {
+>     System.out.print(new String(bys, 0, len));
+> }
+> // 释放资源
+> bos.close();
+> ```
+>
+> 字节缓冲流复制视频
+>
+> ```java
+> public static void method() {
+>     BufferedInputStream bis = null;
+>     BufferedOutputStream bos = null;
+>     try {
+>         // 准备文件
+>         bis = new BufferedInputStream(new FileInputStream("E:/copy/source/字节输出流.mp4"));
+>         bos = new BufferedOutputStream(new FileOutputStream("E:/copy/target/字节输出流.mp4"));
+> 		//准备一个自定义的存储数组,为读取时设置一个自定义缓冲区
+>         byte[] bys = new byte[1024];
+>         //每次读取的长度
+>         int len;
+> 		// 开始拷贝
+>         while ((len = bis.read(bys)) != -1) {
+>             bos.write(bys, 0, len);
+>         }
+>         System.out.println("文件复制成功!");
+>         // 清空缓存
+> 		bos.flush();
+>     } catch (IOException e) {
+>         e.printStackTrace();
+>     } finally {
+>         try {
+>             if (bos != null)
+>                 bos.close();
+>             if (bis != null)
+>                 bis.close();
+>         } catch (IOException e) {
+>             e.printStackTrace();
+>         }
+>     }
+> }
+> ```
 >
 > **字符流**
 >
-> 字符的输入流
+> 概述：由于字节流操作中文不是特别的方便，所以Java就提供字符流
+>
+> - <span style="color: red;">字符流</span> = <span style="color: red;">字节流</span> + <span style="color: red;">编码表</span>
+>
+> 用字节流复制文本文件时，文本文件也会有中文，但是没有问题，原因是最终底层操作会自动进行字节拼接成中文，如何识别是中文的呢？
+>
+> - 汉字在存储的时候，无论选择哪种编码存储，第一个字节都是负数
+>
+> *字符串中的编码解码*
+>
+> 编码：
+>
+> - <span style="color: #329BDC;">byte[] getBytes()</span>：使用平台的默认字符集将该String编码为一系列字节，将结果存储到新的字节数组中
+> - <span style="color: #329BDC;">byte[] getBytes(String charsetName)</span>：使用指定的字符集将该String编码为一系列字节，将结果存储到新的字节数组中
+>
+> 解码：
+>
+> - <span style="color: #329BDC;">String(byte[] bytes)</span>：通过使用平台的默认字符集解码指定的字节数组来构造新的String
+> - <span style="color: #329BDC;">String(byte[] bytes, String charsetName)</span>：通过指定的字符集解码指定的字节数组来构造新的String
+>
+> <span style="color: red;">注意：编码和解码所使用的编码表必须相同</span>
+>
+> *字符流中的编码解码问题*
+>
+> 字符流抽象基类
 >
 > 字符输入流与字节输入流类似，但运行的单元更大，且只能用于读取文本
 >
-> 字符流 Reader 抽象类
+> - Reader：字符输入流的抽象类
+> - Writer：字符输出流的抽象类
+>
+> 字符流中和编码解码问题相关的两个类：
+>
+> - InputStreamReader
+>
+>   ```java
+>   // 使用默认的字符编码
+>   FileInputStream fis= new FileInputStream("myCharStream/osw.txt");
+>   InputStreamReader isr = new InputStreamReader(fis);
+>   int ch;
+>   while((ch = isr.read()) != -1){
+>       System.out.print((char)ch);
+>   }
+>   isr.close();
+>   
+>   // 使用自定义的字符编码
+>   FileInputStream fis= new FileInputStream("myCharStream/osw.txt");
+>   InputStreamReader isr = new InputStreamReader(fis, "GBK");
+>   int ch;
+>   while((ch = isr.read()) != -1){
+>       System.out.print((char)ch);
+>   }
+>   isr.close();
+>   ```
+>
+> - OutputStreamWriter
+>
+>   ```java
+>   // 使用默认的字符编码
+>   FileOutputStream fos = new FileOutputStream("myCharStream/osw.txt");
+>   OutputStreamWriter osw = new OutputStreamWriter(fos);
+>   osw.write("中国");
+>   osw.close();
+>   
+>   // 使用自定义的字符编码
+>   FileOutputStream fos = new FileOutputStream("myCharStream/osw.txt");
+>   OutputStreamWriter osw = new OutputStreamWriter(fos, "GBK");
+>   osw.write("中国");
+>   osw.close();
+>   ```
+>
+> *字符流写数据的5中方式*
+>
+> |                  方法名                   | 说明                 |
+> | :---------------------------------------: | -------------------- |
+> |             void write(int c)             | 写一个字符           |
+> |          void write(char[] cbuf)          | 写入一个字符数组     |
+> | void write(char[] cbuf, int off, int len) | 写入字符数组的一部分 |
+> |          void write(String str)           | 写一个字符串         |
+> | void write(String str, int off, int len)  | 写一个字符串的一部分 |
+>
+> 字符流写数据范例
+>
+> ```java
+> OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream("myCharStream/osw.txt"));
+> osw.write(97);	// 字符流写数据不能直接写入文件，需要通过字节流来写数据
+> // 刷新流，清空缓存
+> osw.flush();	// 将缓冲区中的字符通过字节流写入到文件中
+> char[] chs = {'a','b','c'};
+> osw.write(chs);	// abc
+> osw.write(chs, 0, 2); // ab
+> osw.write("abcde");	// abcde
+> osw.write("abcde", 1, 3);	// bcd
+> osw.close();	// 关闭文件前先进行刷新
+> ```
+>
+> *字符流读数据的2种方式*
+>
+> |        方法名         | 说明                   |
+> | :-------------------: | ---------------------- |
+> |      int read()       | 一次读一个字符数据     |
+> | int read(char[] cbuf) | 一次读一个字符数组数据 |
+>
+> 字符流写数据范例
+>
+> ```java
+> InputStreamReader isr = new InputStreamReader(new FileInputStream("myCharStream/osw.txt"));
+> // 一次读一个字符数据
+> int ch;
+> while((ch = isr.read()) != -1){
+>     System.out.print((char)ch);
+> }
+> // 一次读一个字符数组数据
+> char[] chs = new char[1024];
+> int len;
+> while((len = isr.read(chs)) != -1){
+>     System.out.print(new String(ch, 0, len));
+> }
+> // 释放资源
+> isr.close();
+> ```
+>
+> *字符流复制文件*
+>
+> ```java
+> public class StreamCopy {
+> 
+> 	public static void main(String[] args) {
+> 		// 准备文件
+> 		File file = new File("E:/copy/source/StreamCopy.java");
+> 		File of = new File("E:/copy/target/", file.getName());
+> 		// 记录开始时间
+> 		long start = System.currentTimeMillis();
+> 		// 准备输入输出流
+> 		InputStreamReader in = null;
+> 		OutputStreamWriter out = null;
+> 		try {
+> 			in = new InputStreamReader(new FileInputStream(file));
+> 			out = new OutputStreamWriter(new FileOutputStream(of));
+> 			// 准备一个自定义的存储数组,为读取时设置一个自定义缓冲区
+> 			char[] bs = new char[10];
+> 			// 每次读取的长度
+> 			int len = 0;
+> 			// 读取数据,每次读取数据到数组,后面的每次读取都是在替换数组内容
+> 			while ((len = in.read(bs)) != -1) {
+> 				// 将读取的数据输出
+> 				// len保证最后一个读取的内容是对应长度内容,而非整个数组
+> 				// 0表示读取数组便宜量
+> 				out.write(bs, 0, len);
+> 			}
+> 			System.out.println("文件复制成功!");
+> 			out.flush(); // 清空缓存
+> 		} catch (IOException e) {
+> 			// TODO Auto-generated catch block
+> 			e.printStackTrace();
+> 		} finally {
+> 			// 关闭文件
+> 			try {
+> 				if (in != null)
+> 					in.close();
+> 				if (out != null)
+> 					out.close();
+> 			} catch (IOException e) {
+> 				e.printStackTrace();
+> 			}
+> 		}
+> 		// 计算结束时间
+> 		long end = System.currentTimeMillis();
+> 		System.out.println("总共耗时:" + (end - start));
+> 	}
+> }
+> ```
+>
+> 为了简化书写，转换流提供了对应的子类
+>
+> |           方法名            | 说明                     |
+> | :-------------------------: | ------------------------ |
+> | FileReader(String fileName) | 用于读取字符文件的便捷类 |
+> | FileWriter(String fileName) | 用于写入字符文件的便捷类 |
+>
+> ```java
+> // 简化字符流复制文件
+> public class StreamCopy {
+> 	public static void main(String[] args) throws IOException {
+>         // 根据数据源创建字符输入流对象
+>         FileReader fr = new FileReader("E:/copy/source/StreamCopy.java");
+>         // 根据目的地创建字符输出流对象
+>         FileWriter fw new FileWriter("E:/copy/target/StreamCopy.java");
+>         // 读写数据，复制文件
+>         char[] chs = new char[10];
+>         int len;
+>         while((len = fr.read(chs)) != -1){
+>             fw.write(chs, 0, len);
+>         }
+>         // 释放资源
+>         fw.close();
+>         fr.close();
+>     }
+> }
+> ```
+>
+> *字符缓冲流*
+>
+> - BufferedWriter：将文本写入字符输出流，缓冲字符，以提供单个字符，数组和字符串的高效写入，可以指定缓冲区大小，或者可以使用默认大小。默认值足够大，可用于大多数用途
+> - BufferedReader：从字符输入流读取文本，缓冲字符，以提供字符，数组和行的高效读取，可以指定缓冲区大小，或者可以使用默认大小。默认值足够大，可用于大多数用途
+>
+> 构造方法：
+>
+> - BufferedWriter(Writer out)
+>
+>   ```java
+>   FileWriter fw = new FileWriter("myCharStream/bw.txt");
+>   BufferedWriter bw = new BufferedWriter(fw);
+>   bw.write("hello\r\n");
+>   bw.write("world\r\n");
+>   bw.close();
+>   ```
+>
+> - BufferedReader(Reader in)
+>
+>   ```java
+>   FileReader fr = new FileReader("myCharStream/bw.txt");
+>   BufferedReader br = new BufferedReader(fr);
+>   char[] chs = new char[10];
+>   int len;
+>   while((len = br.read(chs)) != -1) {
+>       System.out.print(new String(chs, 0, len));
+>   }
+>   ```
+>
+> <span style="color: #329BDC;">缓冲流的默认值大小均为8192</span>
+>
+> *字符缓冲流特有功能*
+>
+> BufferedWriter：
+>
+> - void newLine()：写一个行分隔符，行分隔符字符串由系统属性定义
+>
+>   ```java
+>   bw.write("hello");
+>   bw.newLine();
+>   ```
+>
+> BufferedReader：
+>
+> - public String readLine()：读一行文字。结果包含行的内容的字符串，不包括任何行终止字符，如果流的结尾已经到达，则为null
+>
+>   ```java
+>   String line = br.readLine();
+>   System.out.println(line);
+>   ```
+>
+> *字符流只能赋值文本数据，有5种方式，一般采用字符缓冲流的特有功能*
+>
+> **特殊操作流**
+>
+> *标准输入输出流*
+>
+> System类中有两个静态的成员变量：
+>
+> - public static final InputStream in：标准输入流。通常该流对应于键盘输入或由主机环境或用户指定的另一个输入源
+>
+>   ```java
+>   InputStream is = System.in;
+>   
+>   int by;
+>   while((by = is.read()) != -1) {
+>       System.out.print((char)by);
+>   }
+>   // 把字节流转换为字符流
+>   InputStreamReader isr = new InputStreamReader(is);	// 读取汉字
+>   // 使用字符缓冲输入流实现一次读取一行数据
+>   BufferedReader br = new BufferedReader(isr);
+>   // 读取输入的数据
+>   String line = br.readLine();
+>   System.out.print(line);
+>   ```
+>
+>   简化
+>
+>   ```java
+>   BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+>   String line = br.readLine();
+>   System.out.print(line);
+>   // 字符串转换为整数
+>   int i = Integer.parseInt(br.readLine());
+>   System.out.print(i);
+>   ```
+>
+>   Java提供的类Scanner就进行了以上的过程来实现键盘录入
+>
+> - public static final PrintStream out：标准输出流。通常该流对应于显示输出或由主机环境或用户指定的另一个输出目标
+>
+>   ```java
+>   PrintStream ps = System.out;
+>   ps.println("hello");	// ---> System.out.println
+>   ps.println("100");	// ---> System.out.println
+>   ```
+>
+> *打印流*
+>
+> 打印流分类：
+>
+> - 字节打印流：PrintSteam
+> - 字符打印流：PrintWriter
+>
+> 打印流的特点：
+>
+> - 只负责输出数据，不负责读取数据
+> - 有自己的特有方法
+>
+> 字节打印流：
+>
+> - PrintSteam(String fileName)：使用指定的文件名创建新的打印流
+>
+>   ```java
+>   PrintSteam ps = new PrintSteam("myOtherStream/ps.txt");
+>   ps.write(97);	// a
+>   ps.print(97);	// 97
+>   ps.println(98);	// 98\r\n
+>   ps.close();
+>   ```
+>
+> - 使用继承父类的方法写数据，查看的时候会转码；使用自己的特有方法写数据，查看的数据原样输出
+>
+> 字符打印流：
+>
+> - 字符打印流PrintWriter的构造方法：
+>
+>   |                   方法名                   | 说明                                                         |
+>   | :----------------------------------------: | ------------------------------------------------------------ |
+>   |        PrintWriter(String fileName)        | 使用指定的文件名创建一个新的PrintWriter，而不需要自动执行刷新 |
+>   | PrintWriter(Writer out, boolean autoFlush) | 创建一个新的PrintWriter：out：字符输出流；autoFlush：一个布尔值，如果为真，则println，printf，或format方法将刷新输出缓冲区 |
+>
+>   ```java
+>   // 无自动刷新
+>   PrintWriter pw = new PrintWriter("myOtherStream/ps.txt");
+>   pw.println("hello");
+>   pw.flush();
+>   pw.println("world");
+>   pw.flush();
+>   // 自动刷新
+>   PrintWriter pw = new PrintWriter(new FileWriter("myOtherStream/ps.txt"), true);
+>   pw.println("hello");
+>   pw.println("world");
+>   ```
+>
+> 字符打印流改进复制Java文件代码
+>
+> ```java
+> // 根据数据源创建字符输入流对象
+> BufferedReader br = new BufferedReader(new FileReader("E:/copy/source/StreamCopy.java"));
+> // 根据目的地创建字符输出流对象
+> PrintWriter pw = new PrintWriter(new FileWriter("E:/copy/target/StreamCopy.java"), true);
+> // 读写数据，复制文件
+> String line;
+> while ((line = br.readLine()) != null) 
+>     pw.println(line);
+> // 释放资源
+> pw.close();
+> br.close();
+> ```
+>
+> *对象序列化流*
+>
+> 对象序列化:就是将对象保存到磁盘中,或者在网络中传输对象
+>
+> 这种机制就是使用一个字节序列表示一个对象,该字节序列包含：对象类型，对象数据和对象存储的属性等信息
+>
+> 字节序列写到文件之后，相当于文件中持久保存了一个对象信息
+>
+> 反之,该字节序列还可以从文件中读取回来,重构对象,这种叫做反序列化
+>
+> 要实现序列化和反序列化就要使用对象序列化流和对象反序列化流
+>
+> - 对象序列化流：ObjectOutputStream
+>
+>   - 将Java对象的原始数据类型和图形写入OutputStream。可以使用ObjectInputStream读取(重构)对象。可以通过使用流的文件来实现对象的持久存储。如果流是网络套接字流，则可以在另一个主机上火另一个进程中重构对象
+>
+>   - 构造方法：ObjectOutputStream(OutputStream out)：创建一个写入指定的OutputStream的ObjectOutputStream
+>
+>   - 序列化对象的方法：void writeObject(Object obj)：将指定的对象写入ObjectOutputStream
+>
+>     ```java
+>     public class Student implements Serializable{
+>     	private String name;
+>     	private int age;
+>     
+>     	public Student() {
+>     	}
+>     
+>     	public Student(String name, int age) {
+>     		super();
+>     		this.name = name;
+>     		this.age = age;
+>     	}
+>     
+>     	public String getName() {
+>     		return name;
+>     	}
+>     
+>     	public void setName(String name) {
+>     		this.name = name;
+>     	}
+>     
+>     	public int getAge() {
+>     		return age;
+>     	}
+>     
+>     	public void setAge(int age) {
+>     		this.age = age;
+>     	}
+>     }
+>     
+>     public class StudentDemo {
+>     	public static void main(String[] args) throws IOException {
+>     		// 创建一个写入指定的OutputStream的ObjectOutputStream
+>     		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("myOtherStream/oos.txt"));
+>     		// 创建对象
+>     		Student s = new Student("林青霞", 30);
+>     		// 将指定的对象写入ObjectOutputStream
+>     		oos.writeObject(s);
+>     		// 释放资源
+>     		oos.close();
+>     	}
+>     }
+>     ```
+>
+>   - <span style="color: red;">注意</span>：
+>
+>     - 一个对象要想被序列化，该对象所属的类必须必须实现<span style="color: red;">Serializable</span>接口
+>     - <span style="color: red;">Serializable</span>是一个<span style="color: red;">标记接口</span>，实现该接口，不需要重写任何方法(*实现该接口表示该类可以被序列化和反序列化*)
+>
+> - 对象反序列化流：ObjectInputStream
+>
+> *对象反序列化流*
 
 ##### 复制对象和复制引用的区别
 
