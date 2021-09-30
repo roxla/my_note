@@ -497,24 +497,24 @@
 >             // 调用方法
 >             int result = sum( a: 10, b: 20);
 >             System.out.println(result);		// 30
->                                                   
+>                                                     
 >             int result2 = sum( a: 10.0, b: 20.0);
 >             System.out.println(result2);	// 30.0
->                                                   
+>                                                     
 >             int result3 = sum( a: 10, b: 20, c: 30);
 >             System.out.println(result3);	// 60
 >         }
->                                               
+>                                                 
 >         // 需求1：求两个 int 类型数据和的方法
 >         public static int sum(int a, int b) {
 >             return a + b;
 >         }
->                                               
+>                                                 
 >         // 需求2：求两个 double 类型数据和的方法
 >         public static double sum(double a, double b) {
 >             return a + b;
 >         }
->                                               
+>                                                 
 >         // 需求3：求三个 int 类型数据和的方法
 >         public static int sum(int a, int b, int c) {
 >             return a + b + c;
@@ -538,7 +538,7 @@
 >             // 方法体
 >         }
 >     }
->                                                                                 
+>                                                                                     
 >     // 属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
@@ -830,7 +830,7 @@ public static void main(String[] args) {
 >         public static void main(String[] args) {
 >             Student s1 = new Student();
 >             s1.setName("王狗蛋"); // setName 方法中的 this 代表 s1 这个对象
->                                 
+>                                     
 >             Student s2 = new Student();
 >             s2.setName("李铁蛋"); // setName 方法中的 this 代表 s2 这个对象
 >         }
@@ -1587,12 +1587,12 @@ public static void main(String[] args) {
 >     		System.out.println("USB插入，风扇转起来了");
 >     	}
 >     }
->                   
+>                     
 >     public class USBDemo{
 >         public static void main(String[] args) {
 >             USBInterfase usb = new USBSan();
 >             usb.service(); // USB插入，交换数据
->                   
+>                     
 >             USBInterfase usb = new UDisk();
 >             usb.service(); // USB插入，风扇转起来了
 >         }
@@ -2744,7 +2744,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println(date);
 >   }
->     
+>       
 >   private static Date format(String str) throws ParseException {	// 仅抛出异常
 >       DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 >       // 因为异常已经抛出,所以当前不需要处理异常
@@ -2807,7 +2807,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println("验明正身");
 >   }
->     
+>       
 >   //想要抛出一个实例,方法后还得抛出一个对应的类型
 >   public static void checkSex(String sex) throws Exception {
 >       if ("男".equals(sex) || "女".equals(sex))
@@ -2985,7 +2985,7 @@ public static void main(String[] args) {
 >
 >         ```java
 >         Set set = new HashSet();
->                 
+>                         
 >         set.add("1");
 >         ll.add("2");
 >         ...
@@ -3109,7 +3109,7 @@ public static void main(String[] args) {
 >
 >   ```java
 >   public class MapCityDemo {
->     
+>       
 >   	public static void main(String[] args) {
 >   		//创建map集合,一般key使用String类型,值可以是任意类型
 >   		//值对应的类型是一个集合,就需要放置集合类型,集合中也需要泛型
@@ -3125,10 +3125,10 @@ public static void main(String[] args) {
 >   		list1.add("桂林市");
 >   		list1.add("玉林市");
 >   		list1.add("柳州市");
->     
+>       
 >   		map.put("广东省", list);
 >   		map.put("广西省", list1);
->     
+>       
 >   		//获取到所有的键
 >   		Set<String> set = map.keySet();
 >   		for (String key : set) {
@@ -3640,7 +3640,7 @@ public static void main(String[] args) {
 >   OutputStreamWriter osw = new OutputStreamWriter(fos);
 >   osw.write("中国");
 >   osw.close();
->   
+>     
 >   // 使用自定义的字符编码
 >   FileOutputStream fos = new FileOutputStream("myCharStream/osw.txt");
 >   OutputStreamWriter osw = new OutputStreamWriter(fos, "GBK");
@@ -4215,9 +4215,7 @@ public static void main(String[] args) {
 
 > 
 
-##### 如何避免 SQL 注入
 
-> 
 
 
 
