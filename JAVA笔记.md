@@ -1,8 +1,8 @@
-什么是程序
+## 什么是程序
 
 > ==程序可以看成是指令(代码)的集合，就是程序==
 
-##### JDK、JRE、JVM之间的关系
+## JDK、JRE、JVM之间的关系
 
 > <span style="color: green;">JDK：</span>
 >   java开发工具包，包含jre和开发人员使用的工具(date，类型...，Scanner)
@@ -11,18 +11,25 @@
 > <span style="color: green;">JVM：</span>
 >  java运行虚拟机
 
-##### Java面向对象编程的特性
+## Java面向对象编程的特性
 
-> - **封装**
->   - *通常认为封装是把数据和操作数据的方法绑定起来，对数据的访问只能通过已定义的接口。面向对象的本质就是将现实世界描绘成一系列完全自治、封闭的对象。我们在类中编写的方法就是对实现细节的一种封装；我们编写一个类就是对数据和数据操作的封装。可以说，封装就是隐藏一切可隐藏的东西，只向外界提供最简单的编程接口。*
-> - **继承**
->   - *继承是从已有类得到继承信息创建新类的过程。提供继承信息的类被称为父类（超类、基类）；得到继承信息的类被称为子类（派生类）。继承让变化中的软件系统有了一定的延续性，同时继承也是封装程序中可变因素的重要手段。*
-> - **多态**
->   - *多态性是指允许不同子类型的对象对同一消息作出不同的响应。简单的说就是用同样的对象引用调用同样的方法但是做了不同的事情。多态性分为编译时的多态性和运行时的多态性。如果将对象的方法视为对象向外界提供的服务，那么运行时的多态性可以解释为：当A 系统访问B 系统提供的服务时，B系统有多种提供服务的方式， 但一切对A 系统来说都是透明的。方法重载（overload）实现的是编译时的多态性（也称为前绑定），而方法重写（override）实现的是运行时的多态性（也称为后绑定）。运行时的多态是面向对象最精髓的东西，要实现多态需要做两件事：1. 方法重写（子类继承父类并重写父类中已有的或抽象的方法）；2. 对象造型（用父类型引用引用子类型对象，这样同样的引用调用同样的方法就会根据子类对象的不同而表现出不同的行为）。*
-> - **抽象**
->   - *抽象是将一类对象的共同特征总结出来构造类的过程，包括数据抽象和行为抽象两方面。抽象只关注对象有哪些属性和行为，并不关注这些行为的细节是什么。*
+### 封装
 
-##### Java中的八大基本数据类型
+> **通常认为封装是把数据和操作数据的方法绑定起来，对数据的访问只能通过已定义的接口。面向对象的本质就是将现实世界描绘成一系列完全自治、封闭的对象。我们在类中编写的方法就是对实现细节的一种封装；我们编写一个类就是对数据和数据操作的封装。可以说，封装就是隐藏一切可隐藏的东西，只向外界提供最简单的编程接口。**
+
+### 继承
+
+> **继承是从已有类得到继承信息创建新类的过程。提供继承信息的类被称为父类（超类、基类）；得到继承信息的类被称为子类（派生类）。继承让变化中的软件系统有了一定的延续性，同时继承也是封装程序中可变因素的重要手段。**
+
+### 多态
+
+> **多态性是指允许不同子类型的对象对同一消息作出不同的响应。简单的说就是用同样的对象引用调用同样的方法但是做了不同的事情。多态性分为编译时的多态性和运行时的多态性。如果将对象的方法视为对象向外界提供的服务，那么运行时的多态性可以解释为：当A 系统访问B 系统提供的服务时，B系统有多种提供服务的方式， 但一切对A 系统来说都是透明的。方法重载（overload）实现的是编译时的多态性（也称为前绑定），而方法重写（override）实现的是运行时的多态性（也称为后绑定）。运行时的多态是面向对象最精髓的东西，要实现多态需要做两件事：1. 方法重写（子类继承父类并重写父类中已有的或抽象的方法）；2. 对象造型（用父类型引用引用子类型对象，这样同样的引用调用同样的方法就会根据子类对象的不同而表现出不同的行为）。**
+
+### 抽象
+
+> **抽象是将一类对象的共同特征总结出来构造类的过程，包括数据抽象和行为抽象两方面。抽象只关注对象有哪些属性和行为，并不关注这些行为的细节是什么。**
+
+## Java中的八大基本数据类型
 
 > - byte（位）	1字节	-128 ~ 127
 > - short（短整数）	2字节	-32768 ~ 32767
@@ -33,14 +40,14 @@
 > - char（字符）	2字节	0 ~ 65535(ASCII表对比)
 > - boolean（布尔值）	1字节	true，false
 
-##### Java中的四大基本引用类型
+## Java中的四大基本引用类型
 
 > - 数组
 > - String
 > - 类
 > - 接口
 
-##### Java中&和&&，|和||的区别
+## Java中&和&&，|和||的区别
 
 > &：无论左边真假，右边都要执行
 >
@@ -50,7 +57,7 @@
 >
 > ||：如果左边为假，右边执行；如果左边为真，右边不执行
 
-##### Java 中 String 使用 equals() 和 == 的区别
+## Java 中 String 使用 equals() 和 == 的区别
 
 > String 中 == 比较引用地址是否相同，equals() 比较字符串的内容是否相同
 >
@@ -72,13 +79,13 @@
 > s4.equals(s5);    // true, 相同内容
 > ```
 
-##### if与switch结构之间的区别
+## if与switch结构之间的区别
 
 > if常用于区间型判断，进行大量数据的判断，减少代码的编写
 >
 > switch常用于精确型判断，进行少量数据的精确判断，性能略高
 
-##### Java代码注意事项
+## Java代码注意事项
 
 > 一个java文件中有且只有一个public类，且类的名词要与文件名相同
 >
@@ -86,10 +93,10 @@
 >
 > 小数默认赋值为double，如果想要使用float类型，数字的后面必须加上f
 
-##### Java中的数组
+## Java中的数组
 
-> **数组的定义格式**
->
+### 数组的定义格式
+
 > - 格式一：<span style="color: red;">数据类型</span>[] <span style="color: #329BDC;">变量名</span>
 >   - 范例：<span style="color: red;">int</span>[] <span style="color: #329BDC;">arr</span>	<span style="color: green;">定义了一个int类型的数组，数组名是arr</span>
 > - 格式二：<span style="color: red;">数据类型</span> <span style="color: #329BDC;">变量名</span>[]
@@ -97,8 +104,9 @@
 >
 > <span style="color: red;">推荐使用格式一来定义数组</span>
 >
-> **数组的初始化的方式**
->
+
+### 数组的初始化的方式
+
 > - 动态初始化：初始化时只指定数组长度，由系统为数组分配初始值
 >   - 格式：<span style="color: red;">数据类型</span>[] <span style="color: #329BDC;">变量名</span> = <span style="color: red;">new</span> 数组类型[<span style="color: #329BDC;">数组长度</span>];
 >   - 范例：<span style="color: red;">int</span>[] <span style="color: #329BDC;">arr</span> = <span style="color: red;">new</span> int[<span style="color: #329BDC;">3</span>];
@@ -119,49 +127,51 @@
 >
 > - 引用数据类型：默认值是<span style="color: red;">null</span>
 >
-> **多个数组指向相同内存**
->
-> ```java
-> int[] arr = new int[3];
-> arr[0] = 100;
-> System.out.println(arr[0]); // 100
-> 
-> int[] arr2 = arr;	// 这两个数组指向相同的内存
-> arr2[0] = 111; // 修改arr2的值就等于修改arr的值
-> System.out.println(arr[0]); // 111
-> ```
->
-> **数组元素访问**
->
+
+### 多个数组指向相同内存
+
+```java
+int[] arr = new int[3];
+arr[0] = 100;
+System.out.println(arr[0]); // 100
+
+int[] arr2 = arr;	// 这两个数组指向相同的内存
+arr2[0] = 111; // 修改arr2的值就等于修改arr的值
+System.out.println(arr[0]); // 111
+```
+
+### 数组元素访问
+
 > - 数组变量访问方式
 >   - 格式：数组名
 > - 数组内部保存的数据的访问方式
 >   - 格式：数组名[<span style="color: red;">索引</span>]
 >
-> **数组初始化常见错误**
->
-> ```java
-> public static void main(String[] args) {
-> 	int[] num = new int[]{2,3,4,5};
-> 	// 常见的错误1,创建静态数组初始化时,给长度
-> 	// int[] nums = new int[3]{1,2,3};
-> 
-> 	// 常见错误2,静态数组先声明,后简版赋值
-> 	int[] nums = null;
-> 	// nums = {1,2,3,4,5};数组没有这种赋值方式   //静态数组初始化简版赋值,必须一步到位
-> 	// nums = new int[]{1,3,4,56}; 
-> 
-> 	// int[] nums = new int[3];
-> 	// nums = {1,2,3};  //数组没有这种赋值方式
-> 
-> 	//常见错误3,通过长度取值,数组下标越界
-> 	//System.out.println(num[4]);
-> 	System.out.println(nums[1]);
-> }
-> ```
->
-> **for...each循环**
->
+
+### 数组初始化常见错误
+
+```java
+public static void main(String[] args) {
+	int[] num = new int[]{2,3,4,5};
+	// 常见的错误1,创建静态数组初始化时,给长度
+	// int[] nums = new int[3]{1,2,3};
+
+	// 常见错误2,静态数组先声明,后简版赋值
+	int[] nums = null;
+	// nums = {1,2,3,4,5};数组没有这种赋值方式   //静态数组初始化简版赋值,必须一步到位
+	// nums = new int[]{1,3,4,56}; 
+
+	// int[] nums = new int[3];
+	// nums = {1,2,3};  //数组没有这种赋值方式
+
+	//常见错误3,通过长度取值,数组下标越界
+	//System.out.println(num[4]);
+	System.out.println(nums[1]);
+}
+```
+
+### for...each循环
+
 > ```java
 > String[] names = {"A", "B", "C"}
 > // forEach循环，将数组names中的元素，每次循环后交给String name变量
@@ -178,8 +188,9 @@
 >
 > <span style="color: #329BDC;">java.util.Arrays</span>	java数组工具类
 >
-> **对象数组**
->
+
+### 对象数组
+
 > - 在数组中存储的是对象，表示数组中的每一个元素都是对象
 > - 格式：<span style="color: red;">类的类型</span>[] <span style="color: #329BDC;">数组名</span> = <span style="color: #DB2D20;">new</span> <span style="color: red;">类的类型</span>[<span style="color: #329BDC;">长度</span>];
 > - 注意：
@@ -197,140 +208,137 @@
 > System.out.println(pers[0]); // per1的地址
 > ```
 >
-> 
 
-##### Java中的数组排序
+### Java中的数组排序
 
-> **冒泡排序：**
->
-> ```java
-> public static void sort(int[] array) {
-> 	for(int i = 0; i < array.length - 1; i++) {
-> 		for(int j = 0; j < array.length - i - 1; j++) {
->              // array[j] < array[j+1]：从大到小排序；array[j] > array[j+1]：从小到大排序
->              if(array[j] < array[j+1]) {
->              	int temp = array[j];
->              	array[j] = array[j+1];
->              	array[j+1] = temp;
->          	}
->      	}
->  	}
-> }
-> ```
->
-> **选择排序：**
->
-> ```java
-> public static void choiceSort(int[] array) {
->     for(int i = 0; i < array.length - 1; i++){
->         int max = 0;
->         for(int j = 0; j < array.length - i; j++){
->             if(array[max] < array[j])
->                 max = j;
->         }
->         int temp = array[array.length - 1 - i];
->         array[array.length - 1 - i] = array[max];
->         array[max] = temp;
->     }
-> }
-> ```
->
-> **插入排序：**
->
-> ```java
-> public static void insertionSort(int[] array) {
->    /*
-> 	* 默认，第一个数为已排序的数
-> 	* 直接插入排序法：从第一个开始遍历数组，每个数字都在前面已经被遍历的数字中插入
-> 	* 从小到大排序的话，碰到比它大的数，往后移，直到比它小就停下
-> 	*/
->     for(int i = 1; i < array.length; i++){
->         int temp = array[i];
->         int j;
->         // 在前面已经遍历过的数中比较
->         for(j = i - 1; j >= 0; j--){
->             if(temp < array[j]){
->                 array[j+1] = array[j];
->             }else{
->                 break;
->             }
->         }
->         // 遇到比比较值小的，就放在比较值的后面
->         array[j+1] = temp;
->     }
-> }
-> ```
->
-> **快速排序：**
->
-> ```java
-> /**
->  * 快速排序
->  * 
->  * @param array
->  */
-> public static void quickSort(int[] array) {
-> 	int len;
-> 	if (array == null || (len = array.length) == 0 || len == 1) {
-> 		return;
-> 	}
-> 	quickSortCore(array, 0, len - 1);
-> }
-> 
-> /**
->  * 快排核心算法，递归实现
->  * 
->  * @param array
->  * @param left
->  * @param right
->  */
-> public static void quickSortCore(int[] array, int left, int right) {
-> 	if (left > right) {
-> 		return;
-> 	}
-> 	// base中存放基准数
-> 	int base = array[left];
-> 	int i = left, j = right;
-> 	while (i != j) {
-> 		// 顺序很重要，先从右边开始往左找，直到找到比base值小的数
-> 		while (array[j] >= base && i < j) {
-> 			j--;
-> 		}
-> 
-> 		// 再从左往右边找，直到找到比base值大的数
-> 		while (array[i] <= base && i < j) {
-> 			i++;
-> 		}
-> 
-> 		// 上面的循环结束表示找到了位置或者(i>=j)了，交换两个数在数组中的位置
-> 		if (i < j) {
-> 			int tmp = array[i];
-> 			array[i] = array[j];
-> 			array[j] = tmp;
-> 		}
-> 	}
-> 	// 这时候，跳出上面大的while循环之后，i和j肯定是相等的，因为上面循环的条件是i&lt;j，所以，跳出循环时，i和j是相等的
-> 	/**
-> 	 * 假如最好的情况是一个有序序列 1 3 5 7 9 temp = 1 i = 0 arr[i] = 1 j = 4 arr[j] = 9
-> 	 * 而且在这里，如果先从左边开始寻找的话，一直往右寻找大于1的数，直到i变成4还没有找到就停止了；但是下面的语句就会把9赋值在1上了
-> 	 * 如果先从右边开始寻找的话，一直往左寻找小于1的数，直到j变成0还没有找到然后停止，此时i和j都是0，所以就是把自身交换一下并不影响顺序。
-> 	 * 这也是为什么强调如果选择数组左边第一个数作为基准值的时候，得先从右边开始查找数。
-> 	 */
-> 	// 将基准数放到中间的位置（基准数归位）
-> 	// 下面的i和j其实相等的，所以用哪一个都一样。
-> 	array[left] = array[i];
-> 	array[i] = base;
-> 
-> 	// 递归，继续向基准的左右两边执行和上面同样的操作
-> 	// i的索引处为上面已确定好的基准值的位置，无需再处理
-> 	quickSortCore(array, left, i - 1);
-> 	quickSortCore(array, i + 1, right);
-> }
-> ```
->
-> 
+#### 冒泡排序
 
-##### Java中的break用法
+```java
+public static void sort(int[] array) {
+    for (int i = 0; i < array.length - 1; i++) {
+        for (int j = 0; j < array.length - i - 1; j++) {
+            // array[j] < array[j+1]：从大到小排序；array[j] > array[j+1]：从小到大排序
+            if (array[j] < array[j + 1]) {
+                int temp = array[j];
+                array[j] = array[j + 1];
+                array[j + 1] = temp;
+            }
+        }
+    }
+}
+```
+
+#### 选择排序
+
+ ```java
+public static void choiceSort(int[] array) {
+	for(int i = 0; i < array.length - 1; i++){
+		int max = 0;
+		for(int j = 0; j < array.length - i; j++){
+			if(array[max] < array[j])
+				max = j;
+		}
+		int temp = array[array.length - 1 - i];
+		array[array.length - 1 - i] = array[max];
+		array[max] = temp;
+	}
+}
+ ```
+
+#### 插入排序
+
+```java
+public static void insertionSort(int[] array) {
+	/**
+	 * 默认，第一个数为已排序的数
+	 * 直接插入排序法：从第一个开始遍历数组，每个数字都在前面已经被遍历的数字中插入
+	 * 从小到大排序的话，碰到比它大的数，往后移，直到比它小就停下
+	 */
+	for(int i = 1; i < array.length; i++){
+		int temp = array[i];
+		int j;
+		// 在前面已经遍历过的数中比较
+		for(j = i - 1; j >= 0; j--){
+			if(temp < array[j]){
+				array[j+1] = array[j];
+			}else{
+				break;
+			}
+		}
+		// 遇到比比较值小的，就放在比较值的后面
+		array[j+1] = temp;
+	}
+}
+```
+
+#### 快速排序
+
+```java
+/**
+ * 快速排序
+ * 
+ * @param array
+ */
+public static void quickSort(int[] array) {
+    int len;
+    if (array == null || (len = array.length) == 0 || len == 1) {
+        return;
+    }
+    quickSortCore(array, 0, len - 1);
+}
+
+/**
+ * 快排核心算法，递归实现
+ * 
+ * @param array
+ * @param left
+ * @param right
+ */
+public static void quickSortCore(int[] array, int left, int right) {
+    if (left > right) {
+        return;
+    }
+    // base中存放基准数
+    int base = array[left];
+    int i = left, j = right;
+    while (i != j) {
+        // 顺序很重要，先从右边开始往左找，直到找到比base值小的数
+        while (array[j] >= base && i < j) {
+            j--;
+        }
+
+        // 再从左往右边找，直到找到比base值大的数
+        while (array[i] <= base && i < j) {
+            i++;
+        }
+
+        // 上面的循环结束表示找到了位置或者(i>=j)了，交换两个数在数组中的位置
+        if (i < j) {
+            int tmp = array[i];
+            array[i] = array[j];
+            array[j] = tmp;
+        }
+    }
+    // 这时候，跳出上面大的while循环之后，i和j肯定是相等的，因为上面循环的条件是i&lt;j，所以，跳出循环时，i和j是相等的
+    /**
+     * 假如最好的情况是一个有序序列 1 3 5 7 9 temp = 1 i = 0 arr[i] = 1 j = 4 arr[j] = 9
+	 * 而且在这里，如果先从左边开始寻找的话，一直往右寻找大于1的数，直到i变成4还没有找到就停止了；但是下面的语句就会把9赋值在1上了
+	 * 如果先从右边开始寻找的话，一直往左寻找小于1的数，直到j变成0还没有找到然后停止，此时i和j都是0，所以就是把自身交换一下并不影响顺序。
+	 * 这也是为什么强调如果选择数组左边第一个数作为基准值的时候，得先从右边开始查找数。
+	 */
+    // 将基准数放到中间的位置（基准数归位）
+    // 下面的i和j其实相等的，所以用哪一个都一样。
+    array[left] = array[i];
+    array[i] = base;
+
+    // 递归，继续向基准的左右两边执行和上面同样的操作
+    // i的索引处为上面已确定好的基准值的位置，无需再处理
+    quickSortCore(array, left, i - 1);
+    quickSortCore(array, i + 1, right);
+}
+```
+
+## Java中的break用法
 
 > <span style="color: red;">break 名称</span>		*结束指定名称的循环*
 >
@@ -348,97 +356,99 @@
 > }
 > ```
 
-##### Java中的方法
+## Java中的方法
 
-> **方法定义**
->
+### 方法定义
+
 > - <span style='color: purple; text-decoration:underline;'>无参数</span>：
 >
 >   格式：
 >
 >   - ```java
->     public static void 方法名(){
->     	// 方法体
+>    public static void 方法名(){
+>       	// 方法体
 >     }
 >     ```
->
+> 
 >   范例：
 >
 >   ```java
->   public static void isEvenNumber(){
+>  public static void isEvenNumber(){
 >   	// 方法体
 >   }
 >   ```
->
+> 
 > - <span style='color: purple; text-decoration:underline;'>有参数</span>：
 >
 >   - 格式：
 >
 >   - ```java
->     public static void 方法名(数据类型 变量名1, 数据类型 变量名2, ...){
->     	// 方法体
+>    public static void 方法名(数据类型 变量名1, 数据类型 变量名2, ...){
+>       	// 方法体
 >     }
 >     ```
->
+> 
 >   - 范例：
 >
 >   - ```java
->     public static void isEvenNumber(int num1, int num2, ...){
->     	// 方法体
+>    public static void isEvenNumber(int num1, int num2, ...){
+>       	// 方法体
 >     }
 >     ```
->
+> 
 >   - 注意：
 >
 >     - 方法定义时，参数中的数据类型与变量名都不能缺少，缺少任意一个程序将报错
->     - 方法定义时，多个参数之间使用逗号(，)分隔
->
+>    - 方法定义时，多个参数之间使用逗号(，)分隔
+> 
 > - <span style='color: purple; text-decoration:underline;'>有返回值</span>：
 >
 >   - 格式：
 >
 >   - ```java
->     public static 数据类型 方法名(参数){
+>    public static 数据类型 方法名(参数){
 >         return 数据;
 >     }
 >     ```
->
+> 
 >   - 范例：
 >
 >   - ```java
->     public static boolean isEvenNumber(int number){
+>    public static boolean isEvenNumber(int number){
 >         return true;
 >     }
 >     ```
->
+> 
 >   - 注意：
 >
 >     - 方法定义时return后面的返回值与方法定义上的数据类型要匹配，否则程序将报错
 >
-> **方法调用**
->
+
+### 方法调用
+
 > - <span style='color: purple; text-decoration:underline;'>无参数</span>：
->   - 格式：<span style="color: red;">方法名</span>();
+>  - 格式：<span style="color: red;">方法名</span>();
 >     - 范例：<span style="color: red;">isEvenNumber</span>();
-> - <span style='color: purple; text-decoration:underline;'>有参数</span>：
+>- <span style='color: purple; text-decoration:underline;'>有参数</span>：
 >   - 格式：<span style="color: red;">方法名</span>(<span style="color: #329BDC;">变量名1/常量值1, 变量名2/常量值2</span>);
->     - 范例：<span style="color: red;">getMax</span>(<span style="color: #329BDC;">5, 6</span>);
+>    - 范例：<span style="color: red;">getMax</span>(<span style="color: #329BDC;">5, 6</span>);
 >   - 方法调用时，参数的数量与类型必须与方法定义中的设置相匹配，否则程序将报错
 > - <span style='color: purple; text-decoration:underline;'>有返回值</span>：
 >   - 格式1：方法名(参数);
 >     - 范例：isEvenNumber(5);
 >   - 格式2：<span style="color: red;">数据类型 变量名</span> = 方法名(参数);
->     - 范例：<span style="color: blue;">boolean</span> flag = isEvenNumber(5);
+>    - 范例：<span style="color: blue;">boolean</span> flag = isEvenNumber(5);
 >   - 方法的返回值通常会使用变量接收，否则该返回值将无意义 (<span style="color: #42B983;">一般使用格式2来进行调用</span>)
 >
-> **方法的注意事项**
->
+
+### 方法的注意事项
+
 > - 方法不能嵌套定义
 >
 >   - ```java
->     // 错误的定义方式
+>    // 错误的定义方式
 >     public static void methodOne() {
->         // 代码片段1
+>        // 代码片段1
 >         public static void methodTwo() {
 >             // 代码片段2
 >         }
@@ -452,145 +462,148 @@
 >     public static void methodOne() {
 >         // 代码片段
 >         return 100;
->     }
+>      }
 >     ```
 >
-> **方法的通用格式**
->
+
+### 方法的通用格式
+
 > 格式：
 >
 > ```java
-> public static 返回值类型 方法名(参数) {
+>public static 返回值类型 方法名(参数) {
 >     方法体
->     return 数据;
+>    return 数据;
 > }
 > ```
->
+> 
 > | <span style="color: #DB2D20;">public static</span> | 修饰符，用于控制用户对于修饰的成员的访问权限                 |
 > | :------------------------------------------------: | :----------------------------------------------------------- |
-> |  <span style="color: #42B983;">返回值类型</span>   | 方法操作完毕之后返回的数据的数据类型。如果方法操作完毕，没有数据返回，这里写 void，而且方法体重一般不写 return |
+>|  <span style="color: #42B983;">返回值类型</span>   | 方法操作完毕之后返回的数据的数据类型。如果方法操作完毕，没有数据返回，这里写 void，而且方法体重一般不写 return |
 > |    <span style="color: #E2287F;">方法名</span>     | 调用方法时候使用的标识                                       |
-> |     <span style="color: #329BDC;">参数</span>      | 由数据类型和变量名组成，多个参数之间用逗号隔开               |
+>|     <span style="color: #329BDC;">参数</span>      | 由数据类型和变量名组成，多个参数之间用逗号隔开               |
 > |      <span style="color: blue;">方法体</span>      | 完成功能的代码块                                             |
 > |    <span style="color: #E04D42;">return</span>     | 如果方法操作完毕，有数据返回，用于把数据返回给调用者         |
->
+> 
 > 定义方法时，要做到<span style="color: red;">两个明确</span>
->
-> - <span style="color: #DB2D20;">明确返回值类型：</span>主要是明确方法操作完毕之后是否有数据返回，如果没有，写 void；如果有，写对应的数据类型
+> 
+>- <span style="color: #DB2D20;">明确返回值类型：</span>主要是明确方法操作完毕之后是否有数据返回，如果没有，写 void；如果有，写对应的数据类型
 > - <span style="color: #DB2D20;">明确参数：</span>主要是明确参数的类型和数量
 >
 > 调用方法时：*void 类型的方法，直接调用即可；非 void 类型的方法，推荐用变量接收调用*
 >
-> **方法的重载**
->
+
+### 方法的重载
+
 > - 概述：
 >
 >   - 方法重载指同一类中定义的多个方法之间的关系，满足下列条件的多个方法相互构成重载
 >
 >     - 多个方法在同一个类中
->     - 多个方法具有相同的方法名
+>    - 多个方法具有相同的方法名
 >     - 多个方法的参数不相同，类型不同或者数量不同
->
+> 
 >   - ```java
 >     public class methodDemo {
 >         public static int main(String[] args) {
->             // 调用方法
+>            // 调用方法
 >             int result = sum( a: 10, b: 20);
->             System.out.println(result);		// 30
->                                                     
+>            System.out.println(result);		// 30
+>             
 >             int result2 = sum( a: 10.0, b: 20.0);
 >             System.out.println(result2);	// 30.0
->                                                     
+>             
 >             int result3 = sum( a: 10, b: 20, c: 30);
->             System.out.println(result3);	// 60
+>            System.out.println(result3);	// 60
 >         }
->                                                 
+>            
 >         // 需求1：求两个 int 类型数据和的方法
->         public static int sum(int a, int b) {
+>        public static int sum(int a, int b) {
 >             return a + b;
 >         }
->                                                 
+>             
 >         // 需求2：求两个 double 类型数据和的方法
 >         public static double sum(double a, double b) {
->             return a + b;
+>            return a + b;
 >         }
->                                                 
+>            
 >         // 需求3：求三个 int 类型数据和的方法
 >         public static int sum(int a, int b, int c) {
 >             return a + b + c;
 >         }
 >     }
->     ```
->
-> - 特点：
->
+>    ```
+> 
+>- 特点：
+> 
 >   - 重载仅对应方法的定义，与方法的调用无关，调用方式参照标准格式
 >
 >   - 重载仅针对同一类中方法的名称与参数进行识别，与返回值无关，换句话说不能通过返回值来判定两个方法是否相互构成重载
 >
 >   - ```java
->     // 不属于方法重载
+>    // 不属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
 >             // 方法体
 >         }
 >         public static int fn(int a) {
->             // 方法体
+>            // 方法体
 >         }
->     }
->                                                                                     
+>      }
+>                         
 >     // 属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
 >             // 方法体
->         }
+>        }
 >         public static int fn(int a, int b) {
->             // 方法体
+>            // 方法体
 >         }
->     }
+>      }
 >     ```
 >
-> **方法的参数传递**
->
+
+### 方法的参数传递
+
 > - 基本类型
 >
 >   - ==对于基本数据类型的参数，形式参数的改变，不影响实际参数的值==
 >
 >   - ```java
->     public class argsDemo01 {
+>    public class argsDemo01 {
 >         public static void main(String[] args) {
 >             int number = 100;
 >             syso("调用change方法前：" + number);	// number = 100
 >             change(number);
 >             syso("调用change方法后：" + number);	// number = 100
->         }
+>        }
 >         public static void change(int number) {
->             number = 200;
+>            number = 200;
 >         }
 >     }
 >     ```
->
+> 
 > - 引用类型
 >
 >   - ==对于引用类型的参数，形式参数的改变，影响实际参数的值==
 >
 >   - ```java
->     public class argsDemo02 {
+>    public class argsDemo02 {
 >         public static void main(String[] args) {
 >             int[] arr = {10, 20, 30};
 >             syso("调用change方法前：" + arr[1]);	// arr[1] = 20
 >             change(arr);
 >             syso("调用change方法后：" + arr[1]);	// arr[1] = 200
->         }
+>        }
 >         public static void change(int[] arr) {
->             arr[1] = 200;
+>            arr[1] = 200;
 >         }
 >     }
 >     ```
->
+> 
 >     *基本数据类型传递的是栈空间中的值，引用数据类型传递的是堆空间的地址值*
 
-##### Java生成指定范围的随机数
+## Java生成指定范围的随机数
 
 ```java
 public static void main(String[] args) {
@@ -603,7 +616,7 @@ public static void main(String[] args) {
 }
 ```
 
-##### Java中的类与对象
+## Java中的类与对象
 
 > **对象的概念：**
 >
@@ -624,40 +637,41 @@ public static void main(String[] args) {
 >
 > <span style="color: red;text-decoration:underline;">对象是类的实例，类是对象的模板</span>
 >
-> **类的定义：**
->
-> 类是Java程序的基本组成单位
+
+### 类的定义
+
+> **类是Java程序的基本组成单位**
 >
 > 类的组成：属性和行为
 >
 > - 属性：在类中铜卦成员变量来体现(勒种方法外的变量)
-> - 行为：在勒种铜卦成员方法来体现(和前面的方法相比去掉static关键字即可)
->
-> ==类的定义步骤==
->
-> 格式：
->
-> ```java
+>- 行为：在勒种铜卦成员方法来体现(和前面的方法相比去掉static关键字即可)
+> 
+>==类的定义步骤==
+> 
+>格式：
+> 
+>```java
 > // 定义类
 > public class 类名{
->     // 编写类的成员变量
+>    // 编写类的成员变量
 >     变量1的数据类型 变量1;
->     变量2的数据类型 变量2;
+>    变量2的数据类型 变量2;
 >     ...
->     // 编写类的成员方法
+>    // 编写类的成员方法
 >     方法1;
->     方法2;
+>    方法2;
 >     ...
-> }
+>}
 > ```
 >
 > 范例：
->
-> ```java
+> 
+>```java
 > public class Phone{
->     // 成员变量
+>    // 成员变量
 >     String brand;
->     int price;
+>    int price;
 >     // 成员方法
 >     public void call() {
 >         System.out.println("打电话");
@@ -667,64 +681,68 @@ public static void main(String[] args) {
 >     }
 > }
 > ```
->
-> **对象的使用**
->
+> 
+
+### 对象的使用
+
 > ==创建对象==
 >
 > - 格式：<span style="color: red;">类名</span> <span style="color: #329BDC;">对象名</span> = <span style="color: #8163BD;">new</span> <span style="color: red;">类名</span>();
-> - 范例：<span style="color: red;">Phone</span> <span style="color: #329BDC;">p</span> = <span style="color: #8163BD;">new</span> <span style="color: red;">Phone</span>();
->
-> ==使用对象==
->
-> 使用成员变量：
->
-> - 格式：<span style="color: red;">对象名</span>.<span style="color: #329BDC;">变量名</span> 
+>- 范例：<span style="color: red;">Phone</span> <span style="color: #329BDC;">p</span> = <span style="color: #8163BD;">new</span> <span style="color: red;">Phone</span>();
+> 
+>==使用对象==
+> 
+>使用成员变量：
+> 
+>- 格式：<span style="color: red;">对象名</span>.<span style="color: #329BDC;">变量名</span> 
 > - 范例：<span style="color: red;">p</span>.<span style="color: #329BDC;">brand</span> 
 >
 > 使用成员方法：
->
-> - 格式：<span style="color: red;">对象名</span>.<span style="color: #329BDC;">方法名</span>()
+> 
+>- 格式：<span style="color: red;">对象名</span>.<span style="color: #329BDC;">方法名</span>()
 > - 范例：<span style="color: red;">p</span>.<span style="color: #329BDC;">call</span>()
 >
 > ```java
-> public class PhoneDemo{
+>public class PhoneDemo{
 > 	publie static main(String[] args){
->         // 创建对象
+>        // 创建对象
 >         Phone p = new Phone();
->         // 使用成员变量
+>        // 使用成员变量
 >         System.out.println(p.brand); // null
->         System.out.println(p.price); // 0
+>        System.out.println(p.price); // 0
 >         // 给成员变量赋值
 >         p.brand = "小米";
->         p.price = 2999;
+>        p.price = 2999;
 >         System.out.println(p.brand); // 小米
->         System.out.println(p.price); // 2999
+>        System.out.println(p.price); // 2999
 >         // 使用成员方法
->         p.call(); // 打电话
+>        p.call(); // 打电话
 >         p.sendMessage(); // 发短信
 >     }
 > }
 > ```
->
+> 
 > *Java堆内存中的成员变量有默认值*
->
-> **成员变量和局部变量**
->
+> 
+
+### 成员变量和局部变量
+
 > - 成员变量(全局变量)：类中方法外的变量
-> - 局部变量：方法中的变量
->
-> ==成员变量和局部变量的区别==
->
-> |      区别      |                  成员变量                  |                    局部变量                    |
+>- 局部变量：方法中的变量
+> 
+>==成员变量和局部变量的区别==
+> 
+>|      区别      |                  成员变量                  |                    局部变量                    |
 > | :------------: | :----------------------------------------: | :--------------------------------------------: |
-> |  类中位置不同  |                 类中方法外                 |              方法内或者方法声明上              |
+>|  类中位置不同  |                 类中方法外                 |              方法内或者方法声明上              |
 > | 内存中位置不同 |                   堆内存                   |                     栈内存                     |
-> |  生命周期不同  | 随着对象的存在而存在，随着对象的消失而消失 | 随着方法的调用而存在，随着方法的调用完毕而消失 |
+>|  生命周期不同  | 随着对象的存在而存在，随着对象的消失而消失 | 随着方法的调用而存在，随着方法的调用完毕而消失 |
 > |  初始化值不同  |              有默认的初始化值              | 没有默认的初始化值，必须先定义，复制，才能使用 |
 >
 
-##### 类的关键字
+### 类的关键字
+
+#### private
 
 > <span style="color: red;">private关键字</span>(<span style="color: #329BDC;">私有</span>)：
 >
@@ -765,18 +783,27 @@ public static void main(String[] args) {
 > }
 > ```
 >
+
+#### default
+
 > <span style="color: red;">default关键字</span>(<span style="color: #329BDC;">默认</span>)：
 >
 > - 是一个权限修饰符，如果成员和类不写权限修饰符，默认使用此关键字
 > - 可以修饰成员(成员变量和成员方法)
 > - default修饰的属性和方法，只能在本包下使用，其他包的子类继承本包的父类也不能在其他包中使用
 >
+
+#### protected
+
 > <span style="color: red;">protected关键字</span>(<span style="color: #329BDC;">保护</span>)：
 >
 > - 是一个权限修饰符
 > - 可以修饰成员(成员变量和成员方法)
 > - protected修饰的属性和方法，在不同包的子类中可以被使用，但在无继承关系的两个类中不能使用
 >
+
+#### public
+
 > <span style="color: red;">public关键字</span>(<span style="color: #329BDC;">公共</span>)：
 >
 > - 是一个权限修饰符
@@ -797,6 +824,9 @@ public static void main(String[] args) {
 > - public 类可以在任意地方被访问
 > - default 类只可以被同一个包内部的类访问
 >
+
+#### this
+
 > <span style="color: red;">this关键字</span>：
 >
 > ```java
@@ -830,14 +860,16 @@ public static void main(String[] args) {
 >         public static void main(String[] args) {
 >             Student s1 = new Student();
 >             s1.setName("王狗蛋"); // setName 方法中的 this 代表 s1 这个对象
->                                     
+>                         
 >             Student s2 = new Student();
 >             s2.setName("李铁蛋"); // setName 方法中的 this 代表 s2 这个对象
 >         }
 >     }
 >     ```
 >
->
+
+#### super
+
 > <span id="Super" style="color: red;">super关键字</span>：
 >
 > <span style="color: red;">super</span>关键字的用法和<span style="color: red;">this</span>关键字的用法相似
@@ -872,6 +904,9 @@ public static void main(String[] args) {
 > }
 > ```
 >
+
+#### static
+
 > <span style="color: red;">static关键字</span>：
 >
 > - <span style="color: red;">static</span> 关键字是静态的意思，可以修饰成员方法，成员变量
@@ -911,7 +946,9 @@ public static void main(String[] args) {
 > - 能访问静态的成员方法
 >
 > *静态成员方法只能访问静态成员，非静态成员可以访问静态内容*
->
+
+#### final
+
 > <span style="color: red;">final关键字</span>(<span style="color: #329BDC;">最终态</span>)：
 >
 > <span style="color: red;">final</span> 关键字是最终的意思，可以修饰成员方法，成员变量，类
@@ -922,7 +959,7 @@ public static void main(String[] args) {
 > - 修饰变量：表明该变量是常量，<span style="color: red;">不能再次被赋值</span>
 > - 修饰类：表明该类是最终类，<span style="color: red;">不能被继承</span>
 
-##### 类的封装
+### 类的封装
 
 > **封装概述**
 >
@@ -952,8 +989,9 @@ public static void main(String[] args) {
 > - 通过方法来控制成员变量的操作，提高了代码的安全性
 > - 把代码用方法进行封装，提高了代码的复用性
 >
-> **构造方法**
->
+
+#### 构造方法
+
 > 在类的实例过程中，需要构造对象，这时就需要使用到构造方法
 >
 > 构造方法是一种特殊的方法
@@ -963,63 +1001,65 @@ public static void main(String[] args) {
 > - 格式：
 >
 >   ```java
->   public class 类名 {
+>  public class 类名 {
 >       修饰符 类名(参数) {
 >       }
 >   }
 >   ```
->
-> - 范例：
->
+> 
+>   - 范例：
+> 
 >   ```java
->   public class Student {
+>     public class Student {
 >       public Student() {
 >           // 构造方法内书写的内容
 >       }
->   }
+>  }
 >   ```
 >
 > - 功能：主要是完成对象数据的初始化
->
-> ```java
+> 
+>```java
 > public class Student {
->     private String name;
+>    private String name;
 >     private int age;
->     // 构造方法
+>    // 构造方法
 >     public Student() {
->         System.out.println("无参构造方法");
+>        System.out.println("无参构造方法");
 >     }
->     public void show() {
+>    public void show() {
 >         System.out.println(name + "，" + age);
->     }
+>    }
 > }
 > ```
->
-> **构造方法的注意事项**
->
+> 
+
+#### 构造方法的注意事项
+
 > 1. 构造方法的创建
->    1. 如果没有定义构造方法，系统将给出一个<span style="color: red;">默认</span>的<span style="color: red;">无参数构造方法</span>
+>   1. 如果没有定义构造方法，系统将给出一个<span style="color: red;">默认</span>的<span style="color: red;">无参数构造方法</span>
 >    2. 如果定义了构造方法，系统将不再提供默认的构造方法
-> 2. 构造方法的重载
+>2. 构造方法的重载
 >    1. 如果自定义了带参构造方法，还要使用无参构造方法，就必须再写一个无参数构造方法
-> 3. 推荐的使用方式
+>3. 推荐的使用方式
 >    1. <span style="color: red;">无论是否使用，都手工书写无参数构造方法</span>
 >
-> **标准类的制作**
->
+
+#### 标准类的制作
+
 > 1. 成员变量
->    1. 使用<span style="color: red;">private</span>修饰
+>   1. 使用<span style="color: red;">private</span>修饰
 > 2. 构造方法
->    1. 提供一个无参构造方法
+>   1. 提供一个无参构造方法
 >    2. 提供一个带多个参数的构造方法
-> 3. 成员方法
+>3. 成员方法
 >    1. 提供每一个成员变量对应的<span style="color: red;">setXxx()/getXxx()</span>
->    2. 提供一个现实对象信息的<span style="color: red;">show()</span>
+>   2. 提供一个现实对象信息的<span style="color: red;">show()</span>
 > 4. 创建对象并为其成员变量赋值的两种方式
->    1. 无参构造方法创建对象后使用<span style="color: red;">setXxx()</span>赋值
+>   1. 无参构造方法创建对象后使用<span style="color: red;">setXxx()</span>赋值
 >    2. 使用带参构造方法直接创建带有属性值的对象
 
-##### 类的继承
+### 类的继承
 
 > **继承的概述**
 >
@@ -1030,115 +1070,100 @@ public static void main(String[] args) {
 > - 一个子类只能有一个父类
 > - 一个父类可以派生出多个子类
 >
-> **继承的格式**
->
+
+#### 继承的格式
+
 > <span style="color: #E25B51;">public class</span> <span style="color: #329BDC;">子类名</span> <span style="color: red;">extends</span> <span style="color: #329BDC;">父类名</span>{}
 >
 > ```java
-> public class Zi extends Fu{}
+>public class Zi extends Fu{}
 > ```
 >
 > - Fu：是父类，也被称为基类、超类
 > - Zi：是子类，也被称为派生类
 >
-> **继承的注意事项**
->
-> 在子类方法中访问一个变量
->
-> 1. 先从子类局部范围找
-> 2. 再从子类成员范围找
-> 3. 最后从父类成员范围找
-> 4. 如果都没有就报错(不考虑父类的父类)
->
-> 在子类方法中访问一个方法
->
-> 1. 先从子类成员范围找
-> 2. 再从父类成员范围找
-> 3. 如果都没有就报错(不考虑父类的父类)
->
-> 子类继承父类：只能继承父类中非私有的属性和方法
->
-> 构造方法不能被继承
->
-> **继承的好处和弊端**
->
+
+#### 继承的好处和弊端
+
 > ==好处==
 >
 > - 提高了代码的<span style="color: red; font-weight: bold;">复用性</span>(多个类相同的成员可以放到同一个类中)
-> - 提高了代码的<span style="color: red; font-weight: bold;">维护性</span>(如果方法的代码需要修改，修改一处即可)
->
-> ==弊端==
->
+>- 提高了代码的<span style="color: red; font-weight: bold;">维护性</span>(如果方法的代码需要修改，修改一处即可)
+> 
+>==弊端==
+> 
 > - 继承让类与类之间产生了关系，类的耦合性增强了，当父类发生变化时子类实现也不得不跟着变化，削弱了子类的独立性
 >
-> **什么时候使用继承**
->
+
+#### 什么时候使用继承
+
 > - 继承体现的关系：<span style="color: red;">is a</span>
-> - 假设法：我有两个类A和B，如果他们满足A是B的一种，或者B是A的一种，就说明他们存在继承关系，这个时候就可以考虑使用继承来体现，否则就不能滥用继承
+>- 假设法：我有两个类A和B，如果他们满足A是B的一种，或者B是A的一种，就说明他们存在继承关系，这个时候就可以考虑使用继承来体现，否则就不能滥用继承
 > - 举例：苹果和水果(可以使用继承，水果为父类)，猫和动物(可以使用继承，动物为父类)，猫和狗(不可以使用继承)
 >
-> **继承中构造方法的访问特点**
->
+
+#### 继承中构造方法的访问特点
+
 > ==子类中所有的构造方法默认都会访问父类中无参的构造方法==
 >
 > ```java
-> public class Fu {
+>public class Fu {
 >     public Fu() {
->         System.out.printLn("Fu中的无参构造方法被调用");
+>        System.out.printLn("Fu中的无参构造方法被调用");
 >     }
 > 
->     public Fu(int age) {
+>    public Fu(int age) {
 >         System.out.printLn("Fu中的带参构造方法被调用");
->     }
+>    }
 > }
-> 
+>
 > public class Zi extends Fu {
 >     public Zi() {
 >         System.out.printLn("Zi中的无参构造方法被调用");
->     }
+>    }
 > 
 >     public Zi(int age) {
->         System.out.printLn("Zi中的带参构造方法被调用");
+>        System.out.printLn("Zi中的带参构造方法被调用");
 >     }
-> }
+>}
 > 
-> public class Demo {
+>public class Demo {
 >     public static void main(String[] args) {
 >         Zi z = new Zi();	// Fu中的无参构造方法被调用
 >         					// Zi中的无参构造方法被调用
 > 
->         Zi z2 = new Zi(20);	// Fu中的无参构造方法被调用
+>        Zi z2 = new Zi(20);	// Fu中的无参构造方法被调用
 >         					// Zi中的带参构造方法被调用
->     }
+>    }
 > }
 > ```
->
-> - 因为子类会继承父类中的数据，可能还会使用父类的数据，所有，子类初始化之前，一定要先完成父类数据的初始化
+> 
+>- 因为子类会继承父类中的数据，可能还会使用父类的数据，所有，子类初始化之前，一定要先完成父类数据的初始化
 > - 每一个子类构造方法的第一条语句默认都是：[super()](#Super)
 >
 > ==如果父类中没有无参构造方法，只有带参构造方法==
 >
 > - 通过使用 super 关键字去显示的调用父类的带参构造方法
-> - 在父类中自己提供一个无参构造方法
->
-> <span style="color: red;">推荐：自己给出无参构造方法</span>
->
-> ```java
-> public class Fu {
->     public Fu() {
->         System.out.printLn("Fu中的无参构造方法被调用");
->     }
+>- 在父类中自己提供一个无参构造方法
 > 
+><span style="color: red;">推荐：自己给出无参构造方法</span>
+> 
+> ```java
+>public class Fu {
+>     public Fu() {
+>        System.out.printLn("Fu中的无参构造方法被调用");
+>     }
+>
 >     public Fu(int age) {
->         System.out.printLn("Fu中的带参构造方法被调用");
+>        System.out.printLn("Fu中的带参构造方法被调用");
 >     }
 > }
 > 
-> public class Zi extends Fu {
+>public class Zi extends Fu {
 >     public Zi() {
->         System.out.printLn("Zi中的无参构造方法被调用");
+>        System.out.printLn("Zi中的无参构造方法被调用");
 >     }
-> 
+>
 >     public Zi(int age) {
 >         super(20);
 >         System.out.printLn("Zi中的带参构造方法被调用");
@@ -1155,11 +1180,12 @@ public static void main(String[] args) {
 >     }
 > }
 > ```
->
+> 
 > *注意：如果使用父类带参构造方法，调用父类构造方法必须放在第一行*
->
-> **方法重写**
->
+> 
+
+#### 方法重写
+
 > ==方法重写的概念==
 >
 > 子类出现了和父类中一模一样的方法声明(方法名相同，参数列表相同)，返回值相同，访问权限不得严于父类
@@ -1167,59 +1193,59 @@ public static void main(String[] args) {
 > ==方法重写的注意事项==
 >
 > *需要重写的父类的方法访问权限不能是 private*
->
-> 子类方法访问权限不能更低(public > 默认 >private)
->
-> - 父类方法的访问权限为 default 时，子类重写方法的权限不能低于 default
+> 
+>子类方法访问权限不能更低(public > 默认 >private)
+> 
+>- 父类方法的访问权限为 default 时，子类重写方法的权限不能低于 default
 > - [权限修饰符层级表](#Ptable)
 >
 > ==方法重写的使用==
->
+> 
 > 当子类需要父类功能，而功能主体有子类特有的内容时，可以重写父类方法，这样就沿袭了父类的功能，又定义了子类特有的内容
 >
 > ```java
 > // 手机类
-> public class Phone {
+>public class Phone {
 > 	public void call(String name) {
-> 		System.out.println("给" + name + "打电话");
+>		System.out.println("给" + name + "打电话");
 > 	}
-> }
+>}
 > 
 > // 新手机类
 > public class NewPhone extends Phone {
 > 	public void call(String name) {
-> 		System.out.println("开启视频功能");
+>		System.out.println("开启视频功能");
 > //		System.out.println("给" + name + "打电话");
-> 		super.call(name);
+>		super.call(name);
 > 	}
 > }
 > 
-> // 测试类
+>// 测试类
 > public class PhomeDemo {
-> 	public static void main(String[] args) {
+>	public static void main(String[] args) {
 > 		// 创建对象，调用方法
-> 		Phone p = new Phone();
+>		Phone p = new Phone();
 > 		p.call("李狗蛋");		// 给李狗蛋打电话
-> 		System.out.println("-------");
+>		System.out.println("-------");
 > 
-> 		NewPhone np = new NewPhone();
+>		NewPhone np = new NewPhone();
 > 		np.call("李狗蛋");		// 开启视频功能
 > 							  // 给李狗蛋打电话
-> 	}
+>	}
 > }
-> ```
->
-> ==@Override 注解==
->
-> 用来检测当前的方法，是否为重写方法，如果不是就报出异常
->
+>```
+> 
+>==@Override 注解==
+> 
+>用来检测当前的方法，是否为重写方法，如果不是就报出异常
+> 
 > ```java
 > // 手机类
-> public class Phone {
+>public class Phone {
 > 	public void call(String name) {
-> 		System.out.println("给" + name + "打电话");
+>		System.out.println("给" + name + "打电话");
 > 	}
-> }
+>}
 > 
 > // 新手机类
 > public class NewPhone extends Phone {
@@ -1231,7 +1257,7 @@ public static void main(String[] args) {
 > 	}
 > }
 > ```
->
+> 
 > ```java
 > // 手机类
 > public class Phone {
@@ -1250,103 +1276,121 @@ public static void main(String[] args) {
 > 	}
 > }
 > ```
->
-> **继承的注意事项**
->
-> - Java中类只支持单继承，不支持多继承
->
->   ```java
->   public class Father {
->       public void smoke() {
->           System.out.println("爸爸爱抽烟");
->       }
->   }
->   public class Mother {
->       public void dance() {
->           System.out.println("妈妈爱跳舞");
->       }
->   }
->   public class Son extends Father, Mother {
->       // 报错，Java中类只支持单继承，不支持多继承
->   }
->   ```
->
-> - Java中类支持多层继承
->
->   ```java
->   public class Grandad {
->       public void drink() {
->           System.out.println("爷爷爱喝酒");
->       }
->   }
->   public class Father extends Grandad {
->       public void smoke() {
->           System.out.println("爸爸爱抽烟");
->       }
->   }
->   public class Son extends Father {
->       // 可以使用 drink()，Java中类支持多层继承
->   }
->   ```
+> 
 
-##### 类的抽象
+#### 继承的注意事项
+
+> **在子类方法中访问一个变量**
+>
+> 1. 先从子类局部范围找
+> 2. 再从子类成员范围找
+> 3. 最后从父类成员范围找
+> 4. 如果都没有就报错(不考虑父类的父类)
+>
+> **在子类方法中访问一个方法**
+>
+> 1. 先从子类成员范围找
+> 2. 再从父类成员范围找
+> 3. 如果都没有就报错(不考虑父类的父类)
+>
+> **子类继承父类：只能继承父类中非私有的属性和方法，构造方法不能被继承**
+>
+> **Java中类只支持单继承，不支持多继承**
+>
+> ```java
+> public class Father {
+>     public void smoke() {
+>         System.out.println("爸爸爱抽烟");
+>     }
+> }
+> public class Mother {
+>     public void dance() {
+>         System.out.println("妈妈爱跳舞");
+>     }
+> }
+> public class Son extends Father, Mother {
+>     // 报错，Java中类只支持单继承，不支持多继承
+> }
+> ```
+>
+> **Java中类支持多层继承**
+>
+> ```java
+> public class Grandad {
+>     public void drink() {
+>         System.out.println("爷爷爱喝酒");
+>     }
+> }
+> public class Father extends Grandad {
+>     public void smoke() {
+>         System.out.println("爸爸爱抽烟");
+>     }
+> }
+> public class Son extends Father {
+>     // 可以使用 drink()，Java中类支持多层继承
+> }
+> ```
+
+### 类的抽象
 
 > **抽象的概念**
 >
 > 在Java中，一个没有方法体的方法应该定义为抽象方法，而类中如果有抽象方法，该类必须定义为抽象类
 >
-> **抽象类和抽象方法的格式**
->
+
+#### 抽象类和抽象方法的格式
+
 > - 格式：使用 <span style="color: red;">abstract</span> 修饰的类和方法就是抽象类和抽象方法
 >
 > - 范例：
 >
 > ```java
-> // 用abstract修饰的类，叫作抽象类
+>// 用abstract修饰的类，叫作抽象类
 > public abstract class MotoVehicle() {
->     // 用abstract修饰的方法，叫作抽象方法
+>    // 用abstract修饰的方法，叫作抽象方法
 >     public abstract void calcRent(int day);
-> }
+>}
 > ```
->
+> 
 > <span style="color: red;">抽象类中可以没有抽象方法，但是有抽象方法的类必须是一个抽象类</span>
->
-> **抽象的注意事项**
->
+> 
+
+#### 抽象的注意事项
+
 > - 抽象类不能被初始化，只能被继承
 >
 > - 抽象方法在子类中必须重写，除非子类是一个抽象类
->   - 在抽象子类中，可以不实现父类的抽象方法
+>  - 在抽象子类中，可以不实现父类的抽象方法
 >   - 但是最终的子类也必须去实现所有父类的抽象方法
 >
 > ```java
-> //用abstract修饰的类,叫做抽象类
+>//用abstract修饰的类,叫做抽象类
 > public abstract class MotoVehicle {
-> 
+>
 > 	private String no;
-> 	
+> 
 > 	public MotoVehicle() {
 > 		// TODO Auto-generated constructor stub
 > 	}
 > 	public MotoVehicle(String no){
 > 		this.no = no;
-> 	}
+>	}
 > 	public String getNo() {
-> 		return no;
+>		return no;
 > 	}
-> 	public void setNo(String no) {
+>	public void setNo(String no) {
 > 		this.no = no;
-> 	}
+>	}
 > 	//在父类中的方法,因为概念模糊化,没有具体操作,需要将方法设置为抽象方法,使子类中必须重写
 > 	//用abstract修饰的方法为抽象方法,抽象方法没有方法体
 > 	public abstract int calcRent(int day);
-> }
+>}
 > 
 > public abstract class HuoChe extends MotoVehicle {
 > 		//在抽象子类中,可以不实现父类的抽象方法
-> 	
+> 
 > 		public abstract void lahuo();
-> }
+> 	}
 > 
 > public class HuoCheZi extends HuoChe {
 > 	//但是最终的子类也必须去实现,所有父类的抽象方法
@@ -1358,12 +1402,12 @@ public static void main(String[] args) {
 > 	@Override
 > 	public void lahuo() {
 > 		// TODO Auto-generated method stub
-> 		
+> 
 > 	}
 > }
 > ```
 
-##### 类的多态
+### 类的多态
 
 > **多态的概念**
 >
@@ -1380,65 +1424,67 @@ public static void main(String[] args) {
 >
 > *提高代码的复用率，增加代码的灵活性*
 >
-> **多态的前提和体现**
->
+
+#### 多态的前提和体现
+
 > - 有继承/实现关系
-> - 有方法重现
+>- 有方法重现
 > - 有父类引用指向子类对象
->   - 动物 animal = new 猫();
+>  - 动物 animal = new 猫();
 >     - 动物 animal：父类引用
->     - new 猫()：子类对象
->
+>    - new 猫()：子类对象
+> 
 > 范例：
 >
 > ```java
-> public class Animal {
+>public class Animal {
 >     public void eat() {
->         System.out.println("动物吃东西");
+>        System.out.println("动物吃东西");
 >     }
-> }
+>}
 > public class Cat extends Animal {
->     @Override
+>    @Override
 >     public void eat() {
 >         System.out.println("猫吃鱼");
 >     }
 > }
 > public class AnimalDemo {
 >     public static void main(String[] args) {
->         //  有父类引用指向子类对象
+>        //  有父类引用指向子类对象
 >         Animal a = new Cat();
->     }
+>    }
 > }
 > ```
->
-> **多态的使用**
->
+> 
+
+#### 多态的使用
+
 > 使用父类作为形参时，根据实参来决定执行哪个子类中的方法(*根据传入的参数不同，同一个父类的方法表现出不同的状态*)
 >
 > ```java
-> public abstract class Pet {
+>public abstract class Pet {
 > 	public abstract void eat(String food);
-> }
+>}
 > 
 > public class Penguin extends Pet {
-> 	@Override
+>	@Override
 > 	public void eat(String food) {
-> 		System.out.println("企鹅吃" + food);
+>		System.out.println("企鹅吃" + food);
 > 	}
-> }
+>}
 > 
-> public class Dog extends Pet {
+>public class Dog extends Pet {
 > 	@Override
-> 	public void eat(String food) {
+>	public void eat(String food) {
 > 		System.out.println("狗吃" + food);
 > 	}
 > }
 > 
 > public class Master {
 >     public void feed(Pet pet, String food){
-> 		pet.eat(food);
+>		pet.eat(food);
 > 	}
-> }
+>}
 > 
 > public class PetDemo {
 > 	public static void main(String[] args) {
@@ -1451,35 +1497,36 @@ public static void main(String[] args) {
 >     }
 > }
 > ```
->
-> **多态中成员访问特点**
->
+> 
+
+#### 多态中成员访问特点
+
 > - 成员变量：编译看左边，执行看左边
-> - 成员方法：编译看左边，执行看右边
->
-> ```java
+>- 成员方法：编译看左边，执行看右边
+> 
+>```java
 > public class Animal {
-> 	public int age = 40;
+>	public int age = 40;
 > 
 > 	public void eat() {
-> 		System.out.println("动物吃东西");
+>		System.out.println("动物吃东西");
 > 	}
-> }
+>}
 > 
-> public class Cat extends Animal {
+>public class Cat extends Animal {
 > 	public int age = 20;
-> 	public int weight = 10;
+>	public int weight = 10;
 > 
-> 	@Override
+>	@Override
 > 	public void eat() {
 > 		System.out.println("猫吃鱼");
 > 	}
 > 
 > 	public void playGame() {
 > 		System.out.println("猫捉迷藏");
-> 	}
+>	}
 > }
-> 
+>
 > public class AnimalDemo {
 > 	public static void main(String[] args) {
 > 	//  有父类引用指向子类对象
@@ -1493,45 +1540,47 @@ public static void main(String[] args) {
 > 	}
 > }
 > ```
->
+> 
 > 为什么成员变量和成员方法的访问不一样
->
+> 
 > - 因为成员方法有重写，而成员变量没有
->
-> **多态的好处和弊端**
->
+> 
+
+#### 多态的好处和弊端
+
 > - 好处：提高了程序的扩展性
->   - 具体体现：定义方法的时候，使用父类型作为参数，将来在使用的时候，使用具体的子类型参与操作
+>  - 具体体现：定义方法的时候，使用父类型作为参数，将来在使用的时候，使用具体的子类型参与操作
 > - 弊端：不能使用子类的特有功能
 >
-> **多态中的转型**
->
+
+#### 多态中的转型
+
 > - 向上转型
->   - 从子到父
+>  - 从子到父
 >   - 父类引用指向子类对象
-> - 向下转型
+>- 向下转型
 >   - 从父到子
->   - 父类引用转为子类对象
+>  - 父类引用转为子类对象
 >   - 当需要使用到子类对象中特有的方法及属性时,将父类类型重新还原为子类类型,才可以调用子类中特有的方法和属性
->
-> ```java
-> public class Animal {
-> 	public void eat() {
-> 		System.out.println("动物吃东西");
-> 	}
-> }
 > 
+>```java
+> public class Animal {
+>	public void eat() {
+> 		System.out.println("动物吃东西");
+>	}
+> }
+>
 > public class Cat extends Animal {
-> 	@Override
+>	@Override
 > 	public void eat() {
 > 		System.out.println("猫吃鱼");
 > 	}
 > 
 > 	public void playGame() {
 > 		System.out.println("猫捉迷藏");
-> 	}
+>	}
 > }
-> 
+>
 > public class AnimalDemo {
 > 	public static void main(String[] args) {
 > 	// 父类引用指向子类对象
@@ -1545,10 +1594,9 @@ public static void main(String[] args) {
 > 	c.playGame();	// 猫捉迷藏
 > }
 > ```
->
 > 
 
-##### Java接口
+### Java接口
 
 > **接口的概述**
 >
@@ -1556,18 +1604,19 @@ public static void main(String[] args) {
 >
 > Java中的接口更多的体现在对行为的抽象，提出标准(功能)
 >
-> **接口的特点**
->
+
+#### 接口的特点
+
 > - 接口用关键字<span style="color: red;">interface</span>修饰
 >
 >   - public <span style="color: red;">interface</span> 接口名 {}
 >
 >     ```java
->     public interface USBInterfase {
+>      public interface USBInterfase {
 >         // USB的标准是提供服务
->         // 在接口中因为默认都是抽象方法，所以 abstract 可以省略，
+>        // 在接口中因为默认都是抽象方法，所以 abstract 可以省略，
 >         public void service();
->     }
+>      }
 >     ```
 >
 > - 类实现接口用<span style="color: red;">implements</span>表示
@@ -1577,26 +1626,28 @@ public static void main(String[] args) {
 >     ```java
 >     public class UDisk implements USBInterfase {
 >         @Override
->     	public void service() {
->     		System.out.println("USB插入，交换数据");
->     	}
+>
+>    	public void service() {
+>    		System.out.println("USB插入，交换数据");
+>    	}
 >     }
->     public class USBSan implements USBInterfase {
+>    public class USBSan implements USBInterfase {
 >         @Override
 >     	public void service() {
 >     		System.out.println("USB插入，风扇转起来了");
 >     	}
 >     }
->                     
+>
 >     public class USBDemo{
 >         public static void main(String[] args) {
 >             USBInterfase usb = new USBSan();
 >             usb.service(); // USB插入，交换数据
->                     
+>
 >             USBInterfase usb = new UDisk();
 >             usb.service(); // USB插入，风扇转起来了
->         }
+>                                   }
 >     }
+>
 >     ```
 >
 > - 接口不能实例化
@@ -1608,19 +1659,20 @@ public static void main(String[] args) {
 >
 > - 接口的实现类
 >
->   - 要么重写接口中的所有抽象方法
+>  - 要么重写接口中的所有抽象方法
 >   - 要么是抽象类
 >
-> **接口的成员特点**
->
+
+#### 接口的成员特点
+
 > - 成员变量
->   - 只能是常量
+>  - 只能是常量
 >   - 默认修饰符：<span style="color: red;">public static final</span>
-> - 构造方法
+>- 构造方法
 >   - 结构没有构造方法，因为接口主要是对行为进行抽象的，是没有具体存在
->   - 一个类如果没有父类，默认继承自Object类
+>  - 一个类如果没有父类，默认继承自Object类
 > - 成员方法
->   - 只能是抽象方法
+>  - 只能是抽象方法
 >   - 默认修饰符：public abstract
 >
 > **JDK1.8之后提供的实体方法**
@@ -1629,88 +1681,90 @@ public static void main(String[] args) {
 >   - 使用default修饰，不可省略，供子类调用或重写
 > - 静态方法
 >   - 使用static修饰，供接口直接调用
->
+> 
 > ```java
 > public interface USBInterfase {
->     // 默认方法
+>    // 默认方法
 >     public default void show() {
-> 		System.out.println("这是接口的默认方法");
+>		System.out.println("这是接口的默认方法");
 > 	}
->     // 静态方法
+>    // 静态方法
 >     public static void print() {
 > 		System.out.println("这是可以被接口直接调用的方法");
 > 	}
 > }
 > ```
->
-> **类和接口的关系**
->
+> 
+
+#### 类和接口的关系
+
 > - 类和类的关系
->   - 继承关系，只能单继承，但是可以多层继承
+>  - 继承关系，只能单继承，但是可以多层继承
 > - 类和接口的关系
->   - 实现关系，可以单实现，也可以多实现，还可以在继承一个类的同时实现多个接口
+>  - 实现关系，可以单实现，也可以多实现，还可以在继承一个类的同时实现多个接口
 > - 接口和接口的关系
->   - 继承关系，可以单继承，也可以多继承
->
-> 被实现的接口可以视为类内自带的方法，当使用该类的数组时，所有数组内的成员均持有该方法，并且方法内的属性使用的是对应数组成员的属性
->
-> ```java
+>  - 继承关系，可以单继承，也可以多继承
+> 
+>被实现的接口可以视为类内自带的方法，当使用该类的数组时，所有数组内的成员均持有该方法，并且方法内的属性使用的是对应数组成员的属性
+> 
+>```java
 > public interface ShowNum {
->     // 默认方法
+>    // 默认方法
 >     public void show();
 > }
 > 
 > public class Num implements ShowNum {
 >    private int n;
->    
+> 
 >    public Num() {
->    }
->    
->    public Num(int n) {
+>   }
+> 
+>   public Num(int n) {
 >        this.n = n;
->    }
->     
+>   }
+> 
 >    public int getNum() {
 > 		return id;
 >    }
->     
+> 
 >    public int setNum(int n) {
 > 		this.n = n;
 >    }
->     
+> 
 >    @Override
 > 	public void show() {
 > 		System.out.println(n);
 > 	}
-> }
+>                           }
 > 
 > public class NumDemo {
 >     public static void main(String[] args) {
 >         Num[] nums = new Num[3];
->         for(int i = 0; i < 3; i++)
+>                                   for(int i = 0; i < 3; i++)
 >             nums[i] = new Num(i);
->         
+> 
 >         nums[0].show();	// 0
 >         nums[1].show();	// 1
 >         nums[2].show();	// 2
->     }
+>    }
 > }
-> ```
->
-> **抽象类和接口的区别**
->
-> - 成员区别
->   - 抽象类：变量，常量；有构造方法；有抽象方法，也有非抽象方法
->   - 接口：常量；抽象方法
-> - 关系区别
->   - 类与类：继承，单继承
->   - 类与接口：实现，可以单实现，也可以多实现
->   - 接口与接口：继承，单继承，多继承
-> - 设计理念区别
->   - 抽象类：对类抽象，包括属性、行为
->   - 接口：对行为抽象，主要是行为
+>```
+> 
 
-##### 重载和重写的区别
+#### 抽象类和接口的区别
+
+> - 成员区别
+>  - 抽象类：变量，常量；有构造方法；有抽象方法，也有非抽象方法
+>   - 接口：常量；抽象方法
+>- 关系区别
+>   - 类与类：继承，单继承
+>  - 类与接口：实现，可以单实现，也可以多实现
+>   - 接口与接口：继承，单继承，多继承
+>- 设计理念区别
+>   - 抽象类：对类抽象，包括属性、行为
+>  - 接口：对行为抽象，主要是行为
+
+## 重载和重写的区别
 
 > ~~方法重载（overload）实现的是编译时的多态性（也称为前绑定），而方法重写（override）实现的是运行时的多态性（也称为后绑定）。运行时的多态是面向对象最精髓的东西，要实现多态需要做两件事：1. 方法重写（子类继承父类并重写父类中已有的或抽象的方法）~~
 >
@@ -1718,7 +1772,7 @@ public static void main(String[] args) {
 >
 > <span style="color: #329BDC;">在同一个类中，方法名相同，参数列表不同，重载；在子类和父类之间，方法名相同，参数列表相同，返回值相同，子类权限修饰符不严于父类，重写</span>
 
-##### 设计模式
+## 设计模式
 
 > **设计模式的概述**
 >
@@ -1728,120 +1782,123 @@ public static void main(String[] args) {
 >
 > *设计模式主要掌握：单例设计模式，简单工厂设计模式，抽象工厂模式，工厂方法模式，模板设计模式，代理设计模式*
 >
-> **单例设计模式**
->
+
+#### 单例设计模式
+
 > 确保只有一个实例,且该实例向整个系统提供,这种设计的类叫做单例类,该类创建的实例也就叫做单例.单例模式是一种对象的创建模式
 >
-> ==懒汉式单例设计模式==
->
+
+##### 懒汉式单例设计模式
+
 > 该模式只在你需要对象时才会生成单例对象
 >
-> ==懒汉式单例设计模式的格式==
->
+> **懒汉式单例设计模式的格式**
+> 
 > - 将构造方法设置为私有的
 >
 >   ```java
->   private LazySingle() {}
+>  private LazySingle() {}
 >   ```
 >
 > - 声明本类类型，并设置为static
 >
 >   ```java
->   private static LazySingle ls = null;
+>  private static LazySingle ls = null;
 >   ```
 >
 > - 设置一个可被外部访问获取实例的静态方法
 >
 >   ```java
->   public static LazySingle getExample() {
+>    public static LazySingle getExample() {
 >       if(ls == null)
 >           ls = new LazySingle();
 >       return ls;
->   }
+>    }
 >   ```
 >
 > ```java
 > public class LazySingle {
 >     private String name;
->     
+>
 >     public void setName(String name) {
->         this.name = name;
+>        this.name = name;
 >     }
 >     public String getName() {
 >         return name;
 >     }
->     
+> 
 >     private LazySingle() {}
 >     private static LazySingle ls = null;
->     public static LazySingle getExample() {
+>    public static LazySingle getExample() {
 >         if(ls == null)
 >             ls = new LazySingle();
 >         return ls;
-> 	}
->     
+>     	}
+> 
 >     public void print() {
 >         System.out.println(name + "说：今天天气不错");
 >     }
 > }
 > 
-> public class LazySingleDemo {
+>     public class LazySingleDemo {
 >     public static void main(String[] args) {
 >         LazySingle lazy = LazySingle.getExample();
 >         lazy.setName("张三");
 >         lazy.print();	//  张三说：今天天气不错
->         
+> 
 >         // 再次创建一个对象，判断两个对象是否相等
 >         LazySingle lisi = LazySingle.getExample();
->         lisi.setName("李四");
+>             lisi.setName("李四");
 >         lisi.print();	//  李四说：今天天气不错
->         
+> 
 >         System.out.println(lazy == lisi);	// true
 >     }
 > }
 > ```
->
-> ==饿汉式单例设计模式==
->
+> 
+
+##### 饿汉式单例设计模式
+
 > 该模式在类被加载时就会实例化一个对象
 >
-> ==饿汉式单例设计模式的格式==
->
+> **饿汉式单例设计模式的格式**
+> 
 > - 将构造方法设置为私有的
 >
 >   ```java
->   private HungrySingle() {}
+>  private HungrySingle() {}
 >   ```
 >
 > - 创建对象，需要将对象设置为私有的，并将对象设置为最终的对象
 >
 >   ```java
->   private static final HungrySingle hs = new HungrySingle();
+>  private static final HungrySingle hs = new HungrySingle();
 >   ```
 >
 > - 设置获取实例的静态方法
 >
 >   ```java
->   public static HungrySingle getExample() {
+>    public static HungrySingle getExample() {
 >       return hs;
 >   }
 >   ```
 >
 > ```java
-> /**
+>/**
 > * 饿汉式单例模式：在声明时就需要创建的一种方式
 > */
 > public class HungrySingle {
->     private String name;
->     
->     public void setName(String name) {
+>    private String name;
+> 
+>    public void setName(String name) {
 >         this.name = name;
 >     }
 >     public String getName() {
 >         return name;
 >     }
->     
+> 
 >     private HungrySingle() {}
->     private static final HungrySingle hs = new HungrySingle();
+>    private static final HungrySingle hs = new HungrySingle();
 >     public static HungrySingle getExample() {
 >         return hs;
 >     }
@@ -1852,23 +1909,24 @@ public static void main(String[] args) {
 > }
 > 
 > public class HungrySingleDemo {
->     public static void main(String[] args) {
+>         public static void main(String[] args) {
 >         HungrySingle hungry = HungrySingle.getExample();
 >         hungry.setName("张三");
 >         hungry.print();	//  张三说：今天天气不错
->         
+> 
 >         // 再次创建一个对象，判断两个对象是否相等
 >         HungrySingle lisi = HungrySingle.getExample();
 >         lisi.setName("李四");
->         lisi.print();	//  李四说：今天天气不错
->         
+>             lisi.print();	//  李四说：今天天气不错
+> 
 >         System.out.println(hungry == lisi);	// true
 >     }
 > }
 > ```
->
-> ==饿汉式与懒汉式的区别==
->
+> 
+
+##### 饿汉式与懒汉式的区别
+
 > 饿汉式
 >
 > - 类一旦加载，就把单例初始化完成，保证获取的时候单例是已经存在的
@@ -1878,51 +1936,52 @@ public static void main(String[] args) {
 > 懒汉式
 >
 > - 只有当调用的时候，才会去初始化单例对象
-> - 本身线程是不安全的，为了实现线程安全，需要控制线程的进入
+>- 本身线程是不安全的，为了实现线程安全，需要控制线程的进入
 > - 懒汉式会延迟加载对象，在第一次调用单例对象时，在调用的时候才初始化对象，第一次调用对象时会慢，后续跟饿汉式一样
 >
-> **工厂设计模式**
->
+
+#### 工厂设计模式
+
 > 工厂模式是我们最常用的实例化对象模式了，是用工厂方法代替new操作的一种模式
 >
 > *工厂模式就相当于创建实例对象的new*
->
+> 
 > 工厂模式让对象的使用者无需了解具体实现，只需要通过对象工厂直接拿过来用就行了
->
-> ==简单工厂设计模式==
->
+
+##### 简单工厂设计模式
+
 > 简单工厂模式是指由一个工厂对象决定创建出哪一种产品类的实例
 >
 > 负责实现创建所有实例的内部逻辑，并提供外部所调用的方法，创建所需要的对象
->
+> 
 > ```java
-> // 设计生产线模型
+>// 设计生产线模型
 > public interface Product {
->     public void intro();
+>    public void intro();
 > }
-> public class ColaProduct implements Product {
+>public class ColaProduct implements Product {
 > 	@Override
-> 	public void intro() {
+>	public void intro() {
 > 		System.out.println("机器轰隆隆响,可乐慢慢生产出来....");
-> 	}
+>	}
 > }
-> public class SpriteProduct implements Product {
+>public class SpriteProduct implements Product {
 > 	@Override
-> 	public void intro() {
+>	public void intro() {
 > 		System.out.println("机器轰隆隆响,雪碧慢慢生产出来....");
-> 	}
+>	}
 > }
 > // 负责实现创建所有实例的内部逻辑，并提供外部所调用的方法，创建所需要的对象
 > public class SimpleFactory {
->     // 通过不同的参数，获取到不同的结果
+>    // 通过不同的参数，获取到不同的结果
 >     public static Product getProduct(String type) {
->         switch(type) {
+>        switch(type) {
 >         case "c":
 >         	return new ColaProduct();
 >         case "s":
->         	return new SpriteProduct();
+>        	return new SpriteProduct();
 >         }
->         return null;
+>        return null;
 >     }
 > }
 > 
@@ -1930,57 +1989,58 @@ public static void main(String[] args) {
 >      public static void main(String[] args) {
 >         System.out.println("Cola raw materials");
 > 		Product cola = SimpleFactory.create("c");
-> 		cola.intro();	// 机器轰隆隆响,可乐慢慢生产出来....
+>		cola.intro();	// 机器轰隆隆响,可乐慢慢生产出来....
 > 		System.out.println("Sprite raw materials");
 > 		Product sprite = SimpleFactory.create("s");
 > 		sprite.intro();	// 机器轰隆隆响,雪碧慢慢生产出来....
+>     
 > 
->          
 >      }
 > }
 > ```
->
+> 
 > - 特点：
->   - 它是一个具体的类,非接口,抽象类,有一个重要的方法create()的方法,利用if或者switch创建不同对象返回
+>       - 它是一个具体的类,非接口,抽象类,有一个重要的方法create()的方法,利用if或者switch创建不同对象返回
 >   - Create()一般是静态方法,所以也称之为静态工厂
 > - 缺点：
 >   - 扩展性差(我想要增加一种芬达,除了新增芬达类,还要修改工厂方法)
 >   - 不同产品需要不同的额外参数进行创建,不支持自动化
->
-> **抽象工厂模式**
->
+> 
+
+##### 抽象工厂模式
+
 > 提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类
 >
 > ==何时使用==
->
+> 
 > 系统的产品有多于一个的产品族，而系统只消费其中某一族的产品
 >
 > ==格式==
 >
 > ```java
-> public interface Product {
+>public interface Product {
 >     // 生产流水线标准
-> 	public void intro();
+>	public void intro();
 > }
-> public class ColaProduct implements Product {
+>public class ColaProduct implements Product {
 > 	@Override
-> 	public void intro() {
+>	public void intro() {
 > 		System.out.println("机器轰隆隆响,可乐慢慢生产出来....");
-> 	}
+>	}
 > }
-> 
+>
 > public abstract class Packing {
 > 	// 包装流水线标准
 > 	public abstract void doPack();
-> }
+>}
 > public class NormalPack extends Packing {
-> 	@Override
+>	@Override
 > 	public void doPack() {
 > 		System.out.println("对商品进行简易包装...");
 > 	}
-> }
+>}
 > public class HigherPack extends Packing {
-> 	@Override
+>	@Override
 > 	public void doPack() {
 > 		System.out.println("对商品进行豪华礼盒包装...");
 > 	}
@@ -1988,18 +2048,18 @@ public static void main(String[] args) {
 > /**
 >  * 工厂设计,既有商品,还要包装
 >  */
-> public interface ProductFactory {
+>public interface ProductFactory {
 > 
 > 	public Product getProduct();
-> 	
-> 	public Packing getPack();
+> 
+>     	public Packing getPack();
 > }
 > public class NormalFactory implements ProductFactory {
 > 	@Override
 > 	public Product getProduct() {
 > 		//普通工厂主动创建生产线对象
 > 		return new ColaProduct(); 
-> 	}
+>     	}
 > 	@Override
 > 	public Packing getPack() {
 > 		//创建包装线对象
@@ -2007,7 +2067,7 @@ public static void main(String[] args) {
 > 	}
 > }
 > public class HigherFactory implements ProductFactory {
-> 	@Override
+>     	@Override
 > 	public Product getProduct() {
 > 		return new ColaProduct();
 > 	}
@@ -2018,27 +2078,35 @@ public static void main(String[] args) {
 > }
 > 
 > public class FactoryDemo {
-> 
+>         
 > 	public static void main(String[] args) {
 > 		//普通工厂进行商品的生产与简单包装
 > 		ProductFactory pf = new NormalFactory();
 > 		pf.getProduct().intro();	// 机器轰隆隆响,可乐慢慢生产出来....
-> 		pf.getPack().doPack();		// 对商品进行简易包装...
+>         		pf.getPack().doPack();		// 对商品进行简易包装...
 > 		//高级工厂生产商品,并豪华包装
 > 		ProductFactory hf = new HigherFactory();
 > 		hf.getProduct().intro();	// 机器轰隆隆响,可乐慢慢生产出来....
 > 		hf.getPack().doPack();		// 对商品进行豪华礼盒包装...
-> 	}
+>	}
 > }
-> ```
->
-> **工厂方法模式**
->
-> **模板设计模式**
->
-> **代理设计模式**
+>```
+> 
 
-##### 代码块
+#### 工厂方法模式
+
+> 
+
+#### 模板设计模式
+
+> 
+
+#### 代理设计模式
+
+> 
+>
+
+## 代码块
 
 > <span style="color: #329BDC;">代码块分为</span>：
 >
@@ -2094,7 +2162,7 @@ public static void main(String[] args) {
 >     - 该类不管创建多少个对象，静态代码块只会执行一次
 >     - 静态代码块，只能为静态属性赋值
 
-##### 内部类
+## 内部类
 
 > **内部类概述**
 >
@@ -2335,7 +2403,7 @@ public static void main(String[] args) {
 >
 > 
 
-##### 常用类
+## 常用类
 
 > **String类**
 >
@@ -2627,7 +2695,7 @@ public static void main(String[] args) {
 > | <span style="color: #329BDC;">min(int a, int b)</span> | 获取两个值中的最小值               |
 > | <span style="color: #329BDC;">random</span>            | 获取一个0到1之间的小数(不包含0和1) |
 
-##### 异常处理
+## 异常处理
 
 > **编译时异常和运行时异常的区别**
 >
@@ -2744,7 +2812,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println(date);
 >   }
->       
+>                         
 >   private static Date format(String str) throws ParseException {	// 仅抛出异常
 >       DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 >       // 因为异常已经抛出,所以当前不需要处理异常
@@ -2807,7 +2875,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println("验明正身");
 >   }
->       
+>                         
 >   //想要抛出一个实例,方法后还得抛出一个对应的类型
 >   public static void checkSex(String sex) throws Exception {
 >       if ("男".equals(sex) || "女".equals(sex))
@@ -2853,94 +2921,101 @@ public static void main(String[] args) {
 >
 > 
 
-##### 集合
+## 集合
 
 > 集合的特点：提供一种存储空间可变的存储模型，存储的数据容量可以随时发生改变
 >
 > 集合体系结构
 >
-> **Collection**
->
+
+### Collection
+
 > 概述：
 >
 > - 是单例集合的顶层接口，它表示一组对象，这些对象称之为<span style="color: red;">Collection元素</span>，统一存储Object对象
 > - JDK不提供此接口的任何直接实现，它提供更具体的子接口(List和Set)实现
 >
-> 子接口：
+
+#### List
+
+> - 概述：有序集合，用户可以精确控制列表中每个元素的插入位置，也可以通过索引访问具体元素，并搜索列表中的元素
 >
-> - **List**
+> - 特点：
 >
->   - 概述：有序集合，用户可以精确控制列表中每个元素的插入位置，也可以通过索引访问具体元素，并搜索列表中的元素
+>   - 有索引
+>   - 可以存储重复元素
+>   - 元素取值有序
 >
->   - 特点：
+> - List集合下有两个子类实现类：
 >
->     - 有索引
->     - 可以存储重复元素
->     - 元素取值有序
+>   - ArrayList(动态数组集合)
+>   - LinkedList(链式集合)
+
+##### ArrayList(动态数组集合)
+
+>   变相的数组，和数组一样可以存储多个元素，但集合没有固定长度，集合中的每一个元素类型为Object类型
 >
->   - List集合下有两个子类实现类
+>   - 格式：
 >
->     - ArrayList(动态数组集合)：变相的数组，和数组一样可以存储多个元素，但集合没有固定长度，集合中的每一个元素类型为Object类型
+>     ```java
+>     List 集合名 = new ArrayList();
+>     ```
 >
->       - 格式：
+>   - 常用方法：
 >
->         ```java
->         List 集合名 = new ArrayList();
->         ```
+>     |                  方法名                  | 说明                         |
+>     | :--------------------------------------: | ---------------------------- |
+>     | add(元素)，add(下标, 元素)，addAll(集合) | 添加元素                     |
+>     |            set(下标, 元素)，             | 修改对应下标元素             |
+>     |        remove(下标)，remove(元素)        | 删除对应元素(整数默认为下标) |
+>     |                get(下标)                 | 获取对应下标元素             |
+>     |                  size()                  | 获取元素的个数               |
+
+##### LinkedList(链式集合)
+
+>   是List集合的子类实现类，是一种链式的动态数组，与ArrayList集合相似，但是
 >
->       - 常用方法：
+>   - 格式
 >
->         |                  方法名                  | 说明                         |
->         | :--------------------------------------: | ---------------------------- |
->         | add(元素)，add(下标, 元素)，addAll(集合) | 添加元素                     |
->         |            set(下标, 元素)，             | 修改对应下标元素             |
->         |        remove(下标)，remove(元素)        | 删除对应元素(整数默认为下标) |
->         |                get(下标)                 | 获取对应下标元素             |
->         |                  size()                  | 获取元素的个数               |
+>     ```java
+>     LinkedList 集合名 = new LinkedList();
+>     ```
 >
->     - LinkedList(链式集合)：是List集合的子类实现类，是一种链式的动态数组，与ArrayList集合相似，但是
+>   - 常用方法：
 >
->       - 格式
+>     |                  方法名                  | 说明             |
+>     | :--------------------------------------: | ---------------- |
+>     | add(元素)，add(下标, 元素)，addAll(集合) | 添加元素         |
+>     |              addFirst(元素)              | 添加元素到开头   |
+>     |                get(下标)                 | 获取对应下标元素 |
+>     |                getFirst()                | 获取第一个元素   |
+>     |                getLast()                 | 获取最后一个元素 |
+>     |              removeFirst()               | 删除第一个元素   |
+>     |               removeLast()               | 删除最后一个元素 |
 >
->         ```java
->         LinkedList 集合名 = new LinkedList();
->         ```
+>   - 遍历集合
 >
->       - 常用方法：
+>     ```java
+>     LinkedList ll = new LinkedList();
+>     ll.add("1");
+>     ll.add("2");
+>     ...
+>     ll.add("100");
+>     for(Object object : ll)
+>         System.out.println(object);
+>     ```
 >
->         |                  方法名                  | 说明             |
->         | :--------------------------------------: | ---------------- |
->         | add(元素)，add(下标, 元素)，addAll(集合) | 添加元素         |
->         |              addFirst(元素)              | 添加元素到开头   |
->         |                get(下标)                 | 获取对应下标元素 |
->         |                getFirst()                | 获取第一个元素   |
->         |                getLast()                 | 获取最后一个元素 |
->         |              removeFirst()               | 删除第一个元素   |
->         |               removeLast()               | 删除最后一个元素 |
->
->       - 遍历集合
->
->         ```java
->         LinkedList ll = new LinkedList();
->         ll.add("1");
->         ll.add("2");
->         ...
->         ll.add("100");
->         for(Object object : ll)
->             System.out.println(object);
->         ```
->
-> - 使用List集合存储学生对象
+>   - 使用List集合存储学生对象
 >
 >   ```java
 >   public class StudentDemo {
 >   	public static void main(String[] args) {
 >   		List studentList = new ArrayList();
->
+>   
 >   		studentList.add(new Student(1, "123", "男", 25));
 >   		studentList.add(new Student(2, "456", "男", 23));
 >   		studentList.add(new Student(3, "789", "男", 22));
->
+>   
 >   		for (Object object : studentList) {
 >   			Student stu = (Student) object;
 >   			System.out.println(
@@ -2949,275 +3024,255 @@ public static void main(String[] args) {
 >   	}
 >   }
 >   ```
+
+#### Set
+
+>概述：Set集合继承于Collection，是一种无序且唯一的集合
+
+##### HashSet 
+
+>**HashSet 是 Set 集合接口的子类实现类**
 >
-> - **Set**
+>- HashSet 的特点：
+>- 不能保证数据的顺序
+> - 集合元素可以是 null，但是只能有一个
+> - HashSet 不是线程安全的
 >
->   - 概述：Set集合继承于Collection，是一种无序且唯一的集合
+>**格式**
 >
->   - HashSet 是 Set 集合接口的子类实现类
+>```java
+>Set 集合名 = new HashSet;
+>```
 >
->     - HashSet 的特点：
->
->       - 不能保证数据的顺序
->       - 集合元素可以是 null，但是只能有一个
->       - HashSet 不是线程安全的
->
->     - 格式：
->
->       ```java
->       Set 集合名 = new HashSet;
->       ```
->
->     - 常用方法：
->
->       |    方法名    | 说明                 |
->       | :----------: | -------------------- |
->       |  add(元素)   | 添加元素             |
->       |    size()    | 获取元素的个数       |
->       | remove(元素) | 删除对应元素         |
->       |  iterator()  | 迭代器，用于遍历集合 |
->
->     - Iterator 迭代器
->
->       - Iterator迭代器,承载集合中元素,用于遍历集合,迭代器本身不能存储数据,但是能通过迭代器删除集合底层元素
->
->       - 循环遍历迭代器：
->
->         ```java
->         Set set = new HashSet();
->                         
->         set.add("1");
->         ll.add("2");
->         ...
->         ll.add("100");
->         // 遍历集合，因为Set集合没有下标，故此不能使用for循环遍历，这时候需要使用迭代器
->         Iterator it = set.iterator();
->         // 循环遍历迭代器
->         // 判断迭代器中是否还有下一个元素，如果没有就返回false
->         while(it.hasNext()) {
->             // 有就取出
->             Object obj = it.next();
->             System.out.println(obj);
->         }
->         // forEach循环遍历集合，也不需要下标
->         for(Object object : set)
->             System.out.println(object);
->         ```
->
-> **Map**
->
-> 概述：map集合是一种键对应值的集合,键采用set集合方式存储,value采用collection集合方式存储
->
-> - Interface Map<K,V>
->   - K：键的类型，使用Set存储，无序且唯一
->   - V：值的类型，使用Collection存储，可重复
-> - 将键映射到值的对象；不能包含重复的键；每个键可以映射到最多一个值
-> - 举例：学生的学号和姓名
->   - itheima001	李狗蛋
->   - itheima002	王铁蛋
->   - itheima003	张钢蛋
->
-> 创建Map集合的对象
->
-> - 多态的方式
->
-> - 具体的实现类HashMap
->
->   ```java
->   Map map = new HashMap();
->   ```
->
-> 特点：
->
-> - 键值对映射关系
-> - 一个键对应一个值
-> - 键不能重复,值可以重复
-> - 元素存取无序
->
-> 常用方法：
->
-> |      方法名      | 说明            |
-> | :--------------: | --------------- |
-> | put(key, value); | 添加元素        |
-> |  putAll(Map m);  | 添加Map集合     |
-> |     keySet()     | 返回所有的key值 |
-> |     get(key)     | 根据key来获取值 |
-> |      size()      | 获取元素个数    |
-> |     clear()      | 移除所有键值对  |
-> |   remove(key)    | 通过key删除元素 |
-> | containsKey(key) | 判断键是否存在  |
->
-> 遍历Map集合
->
-> ```java
-> Map map = new HashMap();
-> map.put(key1, value1);
-> map.put(key2, value2);
-> ...
-> map.put(key10, value10);
+>**常用方法**
 > 
-> // 获取到所有的键
-> Set set = map.keySet();
-> for(Object key : set){
->     // map.get(键)得到对应的value值
->     System.out.println(key+"对应的值有:"+map.get(key));
-> }
-> ```
+> |    方法名    | 说明                 |
+> | :----------: | -------------------- |
+> |  add(元素)   | 添加元素             |
+>|    size()    | 获取元素的个数       |
+> | remove(元素) | 删除对应元素         |
+> |  iterator()  | 迭代器，用于遍历集合 |
+> 
+> - *Iterator 迭代器*
+> 
+> - *Iterator 迭代器*，承载集合中元素,用于遍历集合,迭代器本身不能存储数据,但是能通过迭代器删除集合底层元素
 >
-> **泛型**
->
-> 概述：本质是参数化类型，就是将类型由原来的具体的类型参数化，然后在使用/调用时传入具体的类型
->
-> - 解决元素存储的安全性问题
-> - 解决获取元素时，需要类型强制转换的问题
->
-> 泛型使用：
->
-> **<T> **：
->
-> - 泛型使用<>来表示泛型，在<>中规定泛型的对应类型
->
-> - 声明式泛型，采用T，E来表示一个占位,等待具体赋予指定类型
->
-> - <span style="color: red;">注意：T或E只能是类，不能使用基本数据类型；若要使用基本数据类型，需要转换成 Integer 类 </span>
->
-> - 范例：
+>- 循环遍历迭代器：
 >
 >   ```java
->   // 在JDK1.7之前对象中的<>内也必须填写泛型，JDK1.7之后默认为前方类型
->   List<Student> list = new ArrayList<>();
->   // list.add("zhangsan");	// 报错，泛型规定list中只能放Student类型对象
->   list.add(new Student(1, "123", "男", 25));
->   // 遍历集合不需要任何强转
->   for(Student stu : list){
->       // 默认规定只能存储类型，所以不需要任何强转
->       System.out.println(stu.toString());
+>  Set set = new HashSet();
+>   
+>  set.add("1");
+>   ll.add("2");
+>   ...
+>         ll.add("100");
+>   // 遍历集合，因为Set集合没有下标，故此不能使用for循环遍历，这时候需要使用迭代器
+>   Iterator it = set.iterator();
+>   // 循环遍历迭代器
+>   // 判断迭代器中是否还有下一个元素，如果没有就返回false
+>   while(it.hasNext()) {
+>       // 有就取出
+>       Object obj = it.next();
+>       System.out.println(obj);
 >   }
+>   // forEach循环遍历集合，也不需要下标
+>   for(Object object : set)
+>       System.out.println(object);
 >   ```
->
-> Map集合使用泛型：
->
-> *值对应的类型是一个集合，就需要放置集合类型，集合中也需要泛型*
->
-> - 格式：
->
->   ```java
->   Map<String, List<String>> map = new HashMap<>();
->   ```
->
-> - 范例：
->
->   ```java
->   public class MapCityDemo {
->       
->   	public static void main(String[] args) {
->   		//创建map集合,一般key使用String类型,值可以是任意类型
->   		//值对应的类型是一个集合,就需要放置集合类型,集合中也需要泛型
->   		Map<String, List<String>> map = new HashMap<>();
->   		//广东省
->   		List<String> list = new ArrayList<>();
->   		list.add("广州市");
->   		list.add("深圳市");
->   		list.add("佛山市");
->   		//广西省
->   		List<String> list1 = new ArrayList<>();
->   		list1.add("南宁市");
->   		list1.add("桂林市");
->   		list1.add("玉林市");
->   		list1.add("柳州市");
->       
->   		map.put("广东省", list);
->   		map.put("广西省", list1);
->       
->   		//获取到所有的键
->   		Set<String> set = map.keySet();
->   		for (String key : set) {
->   			//map.get(键)得到对应的value值
->   			System.out.println(key+"对应的值有:");
->   			for (String city : map.get(key)) {
->   				System.out.println(city);
->   			}
->   		}
->   		System.out.println("集合中是否有广东这个key:"+map.containsKey("广东省"));
->   	}
->   }
->   ```
->
-> **Collections 集合工具类**
->
-> 集合工具类，针对集合封装了很多集合工具方法
->
-> 常用方法：
->
-> |     方法      | 描述                     |
-> | :-----------: | ------------------------ |
-> |  sort(list)   | 集合升序排序             |
-> | reverse(list) | 反转指定列表中的元素顺序 |
-> | shuffle(list) | 使用默认的随机源随机排列 |
->
-> **Java中线程安全的集合**
->
-> 线程不安全的集合普遍比线程安全的集合效率高的多
->
-> - Vector：就比Arraylist多了个同步化机制（线程安全）。
->
->
-> - Hashtable：就比Hashmap多了个线程安全。
->
->
-> - ConcurrentHashMap:是一种高效但是线程安全的集合。
->
->
-> - Stack：栈，也是线程安全的，继承于Vector
-> - List item
-> - java.util.concurrent 包下所有的集合类
->   - ArrayBlockingQueue
->   - ConcurrentHashMap
->   - ConcurrentLinkedQueue
->   - ConcurrentLinkedDeque
 
-##### IO流
+### Map
 
-> **字节流**
+>概述：map集合是一种键对应值的集合,键采用set集合方式存储,value采用collection集合方式存储
 >
-> *概述*：
+>- Interface Map<K,V>
+>  - K：键的类型，使用Set存储，无序且唯一
+>  - V：值的类型，使用Collection存储，可重复
+>- 将键映射到值的对象；不能包含重复的键；每个键可以映射到最多一个值
+>- 举例：学生的学号和姓名
+>  - itheima001	李狗蛋
+>  - itheima002	王铁蛋
+>  - itheima003	张钢蛋
 >
-> - IO：输入/输出(Input/Output)
-> - 流：是一种抽象概念，是对数据传输的总称。也就是说数据在设备间的传输称为流，流的本质是数据传输
-> - IO流就是用来处理设备间数据传输问题的
->   - 常见的应用：文件复制；文件上传；文件下载
-> - IO流是一组有顺序，有起点和终点的字节集合，是对于数据传输的一种总称。即数据在设备与设备之间的传输都称之为流
+
+#### 创建Map集合的对象
+
+>- 多态的方式
 >
-> *文件流*：
+>- 具体的实现类HashMap
 >
+>  ```java
+>  Map map = new HashMap();
+>  ```
+>
+
+#### 特点
+
+>- 键值对映射关系
+>- 一个键对应一个值
+>- 键不能重复,值可以重复
+>- 元素存取无序
+>
+>常用方法：
+>
+>|      方法名      | 说明            |
+>| :--------------: | --------------- |
+>| put(key, value); | 添加元素        |
+>|  putAll(Map m);  | 添加Map集合     |
+>|     keySet()     | 返回所有的key值 |
+>|     get(key)     | 根据key来获取值 |
+>|      size()      | 获取元素个数    |
+>|     clear()      | 移除所有键值对  |
+>|   remove(key)    | 通过key删除元素 |
+>| containsKey(key) | 判断键是否存在  |
+>
+
+#### 遍历Map集合
+
+>```java
+>Map map = new HashMap();
+>map.put(key1, value1);
+>map.put(key2, value2);
+>...
+>map.put(key10, value10);
+>
+>// 获取到所有的键
+>Set set = map.keySet();
+>for(Object key : set){
+>    // map.get(键)得到对应的value值
+>    System.out.println(key+"对应的值有:"+map.get(key));
+>}
+>```
+>
+
+### 泛型
+
+>概述：本质是参数化类型，就是将类型由原来的具体的类型参数化，然后在使用/调用时传入具体的类型
+>
+>- 解决元素存储的安全性问题
+>- 解决获取元素时，需要类型强制转换的问题
+>
+>泛型使用：
+>
+>**<T> **：
+>
+>- 泛型使用<>来表示泛型，在<>中规定泛型的对应类型
+>
+>- 声明式泛型，采用T，E来表示一个占位,等待具体赋予指定类型
+>
+>- <span style="color: red;">注意：T或E只能是类，不能使用基本数据类型；若要使用基本数据类型，需要转换成 Integer 类 </span>
+>
+>- 范例：
+>
+>  ```java
+>  // 在JDK1.7之前对象中的<>内也必须填写泛型，JDK1.7之后默认为前方类型
+>  List<Student> list = new ArrayList<>();
+>  // list.add("zhangsan");	// 报错，泛型规定list中只能放Student类型对象
+>  list.add(new Student(1, "123", "男", 25));
+>  // 遍历集合不需要任何强转
+>  for(Student stu : list){
+>      // 默认规定只能存储类型，所以不需要任何强转
+>      System.out.println(stu.toString());
+>  }
+>  ```
+>
+
+#### Map集合使用泛型
+
+>*值对应的类型是一个集合，就需要放置集合类型，集合中也需要泛型*
+>
+>- 格式：
+>
+>  ```java
+>  Map<String, List<String>> map = new HashMap<>();
+>  ```
+>
+>- 范例：
+>
+>  ```java
+>  public class MapCityDemo {
+>  
+>  	public static void main(String[] args) {
+>  		//创建map集合,一般key使用String类型,值可以是任意类型
+>  		//值对应的类型是一个集合,就需要放置集合类型,集合中也需要泛型
+>  		Map<String, List<String>> map = new HashMap<>();
+>  		//广东省
+>  		List<String> list = new ArrayList<>();
+>  		list.add("广州市");
+>  		list.add("深圳市");
+>  		list.add("佛山市");
+>  		//广西省
+>  		List<String> list1 = new ArrayList<>();
+>  		list1.add("南宁市");
+>  		list1.add("桂林市");
+>  		list1.add("玉林市");
+>  		list1.add("柳州市");
+>  
+>  		map.put("广东省", list);
+>  		map.put("广西省", list1);
+>  
+>  		//获取到所有的键
+>  		Set<String> set = map.keySet();
+>  		for (String key : set) {
+>  			//map.get(键)得到对应的value值
+>  			System.out.println(key+"对应的值有:");
+>  			for (String city : map.get(key)) {
+>  				System.out.println(city);
+>  			}
+>  		}
+>  		System.out.println("集合中是否有广东这个key:"+map.containsKey("广东省"));
+>  	}
+>  }
+>  ```
+>
+
+### Collections 集合工具类
+
+>集合工具类，针对集合封装了很多集合工具方法
+>
+>常用方法：
+>
+>|     方法      | 描述                     |
+>| :-----------: | ------------------------ |
+>|  sort(list)   | 集合升序排序             |
+>| reverse(list) | 反转指定列表中的元素顺序 |
+>| shuffle(list) | 使用默认的随机源随机排列 |
+>
+>**Java中线程安全的集合**
+>
+>线程不安全的集合普遍比线程安全的集合效率高的多
+>
+>- Vector：就比Arraylist多了个同步化机制（线程安全）。
+>
+>
+>- Hashtable：就比Hashmap多了个线程安全。
+>
+>
+>- ConcurrentHashMap:是一种高效但是线程安全的集合。
+>
+>
+>- Stack：栈，也是线程安全的，继承于Vector
+>- List item
+>- java.util.concurrent 包下所有的集合类
+>  - ArrayBlockingQueue
+>  - ConcurrentHashMap
+>  - ConcurrentLinkedQueue
+>  - ConcurrentLinkedDeque
+
+## IO流
+
+### 文件流
+
 > 文件：是存储或记录在一起的一个数据集合，叫作文件
->
-> *IO流的分类*：
->
-> - 按照数据的流向
->   - 输入流：读数据
->   - 输出流：写数据
-> - 按照数据类型来分
->   - 字节流
->     - 字节输入流；字节输出流
->   - 字符流
->     - 字符输入流；字符输出流
->   - 一般来说，我们说IO流的分类是按照<span style="color: red;">数据类型</span>来分的
->   - 如果数据通过Window自带的记事本软件打开，我们还可以读懂里面的内容，就是用字符流；否则是用字节流。如果你不知道该使用哪种类型的流，就是用字节流
-> - 按对象分：
->   - 高端流：字符流
->   - 低端流：字节流
->   - 一般来说后缀带reader或writer的为高端流,但是有个例外**printStream**是一个高端流(*所有的低端流都是字节流，所有的高端流是字符流*)
->
-> *File类访问文件属性*
->
-> 格式：
+
+### File类访问文件属性
+
+> **格式**：
 >
 > ```java
 > File file = new File(文件路径);
 > ```
 >
-> 常用方法：
+> **常用方法**：
 >
 > | 方法名称                 | 说明                                                 |
 > | ------------------------ | ---------------------------------------------------- |
@@ -3233,7 +3288,7 @@ public static void main(String[] args) {
 > | boolean mkdirs()         | 创建文件夹，包含其父目录                             |
 > | boolean delete()         | 删除文件或目录                                       |
 >
-> 寻找文件的方法：
+> **寻找文件的方法**：
 >
 > ```java
 > public long showFile(File file) {
@@ -3259,14 +3314,46 @@ public static void main(String[] args) {
 > }
 > ```
 >
-> *字节流写数据*：
+
+### IO流的分类
+
+> - 按照数据的流向
+>   - 输入流：读数据
+>   - 输出流：写数据
+> - 按照数据类型来分
+>   - 字节流
+>     - 字节输入流；字节输出流
+>   - 字符流
+>     - 字符输入流；字符输出流
+>   - 一般来说，我们说IO流的分类是按照<span style="color: red;">数据类型</span>来分的
+>   - 如果数据通过Window自带的记事本软件打开，我们还可以读懂里面的内容，就是用字符流；否则是用字节流。如果你不知道该使用哪种类型的流，就是用字节流
+> - 按对象分：
+>   - 高端流：字符流
+>   - 低端流：字节流
+>   - 一般来说后缀带reader或writer的为高端流,但是有个例外**printStream**是一个高端流(*所有的低端流都是字节流，所有的高端流是字符流*)
+
+### 字节流
+
+> **概述**：
 >
+> - IO：输入/输出(Input/Output)
+>- 流：是一种抽象概念，是对数据传输的总称。也就是说数据在设备间的传输称为流，流的本质是数据传输
+> - IO流就是用来处理设备间数据传输问题的
+>   - 常见的应用：文件复制；文件上传；文件下载
+> - IO流是一组有顺序，有起点和终点的字节集合，是对于数据传输的一种总称。即数据在设备与设备之间的传输都称之为流
+> 
+
+#### 字节流写数据
+
 > 字节流抽象基类
 >
 > - InputStream：这个抽象类是表示字节输入流的所有类的超类
 > - OutputStream：这个抽象类是表示字节输出流的所有类的超类
 > - 子类名特点：子类名称都是其父类名作为子类名的后缀
 >
+
+##### FileOutputStream
+
 > <span style="color: red;">FileOutputStream</span>：文件输出流用于将数据写入File
 >
 > - FileOutputStream(String name)：创建文件输出流以指定的名称写入文件
@@ -3301,8 +3388,9 @@ public static void main(String[] args) {
 >   - 调用字节输出流对象的写数据方法
 >   - 释放资源(关闭此文件输出流并释放与此流相关联的任何系统资源)
 >
-> 字节流写数据的3种方式
->
+
+##### 字节流写数据的3种方式
+
 > |                 方法名                 | 说明                                                         |
 > | :------------------------------------: | ------------------------------------------------------------ |
 > |           void write(int b)            | 将指定的字节写入此文件输出流；一次写一个字节数据             |
@@ -3343,8 +3431,9 @@ public static void main(String[] args) {
 >   - public FileOutputStream(String name, boolean append)
 >   - 创建文件输出流以指定的名称写入文件。如果第二个参数为true，则字节将写入文件的末尾而不是开头
 >
-> 字节流写数据加异常处理
->
+
+##### 字节流写数据加异常处理
+
 > <span style="color: red;">finally</span>：在异常处理时提供<span style="color: red;">finally</span>块来执行所有清除操作。比如说IO流中的释放资源
 >
 > 特点：被<span style="color: red;">finally</span>控制的语句一定会执行，除非JVM退出
@@ -3372,8 +3461,13 @@ public static void main(String[] args) {
 > }
 > ```
 >
-> *字节流读数据*
->
+
+#### 字节流读数据
+
+> InputStream：字节流读数据的所有类的超类
+
+##### FileInputStream
+
 > <span style="color: red;">FileInputStream</span>：从文件系统中的文件获取输入字节
 >
 > - FileInputStream(String name)：通过打开与实际文件的连接来创建一个FileInputStream，该文件由文件系统中的路径名name命名
@@ -3411,8 +3505,9 @@ public static void main(String[] args) {
 > }
 > ```
 >
-> 字节流读数据的3种方式
->
+
+##### 字节流读数据的3种方式
+
 > |              方法名              | 说明                                                         |
 > | :------------------------------: | ------------------------------------------------------------ |
 > |              read()              | 从指定的文件中读取输入流；一次读一个字节数据                 |
@@ -3434,7 +3529,10 @@ public static void main(String[] args) {
 > System.out.println((char)bys[1]); // a
 > ```
 >
-> *字节流复制图片*案例
+
+#### 字节流复制图片
+
+> 案例
 >
 > ```java
 > public class StreamCopy {
@@ -3486,15 +3584,17 @@ public static void main(String[] args) {
 > }
 > ```
 >
-> *字节缓冲流*
->
+
+#### 字节缓冲流
+
 > - BufferedOutputStream：
 >   - 该类实现缓冲输出流。通过设置这样的输出流，应用程序可以向底层输出流写入字节，而不必为写入的每个字节导致底层系统的调用
 > - BufferedInputStream：
 >   - 创建BufferedInputStream将创建一个内部缓冲区数组。当从流中读取或跳过字节时，内部缓冲区将根据需要从所包含的输入流中重新填充，一次很多字节
 >
-> 构造方法
->
+
+##### 构造方法
+
 > - 字节缓冲输出流：<span style="color: red;">BufferedOutputStream</span>(<span style="color: #329BDC;">OutputStream out</span>)
 >
 >   ```java
@@ -3509,98 +3609,101 @@ public static void main(String[] args) {
 >
 > - 字节缓冲流<span style="color: red;">仅仅提供缓冲区</span>，而真正的读写数据还得依靠基本的字节流对象进行操作
 >
-> 字节缓冲输出流写数据
->
-> ```java
-> BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("myByteStream\\bos.txt"));
-> // 写数据
-> bos.write("hello\r\n".getBytes());
-> bos.write("world\r\n".getBytes());
-> // 释放资源
-> bos.close();
-> ```
->
-> 字节缓冲输入流读数据
->
-> ```java
-> BufferedInputStream bis = new BufferedInputStream(new FileInputStream("myByteStream\\bos.txt"));
-> // 一次读取一个字节数据
-> int by;
-> while((by = bis.read()) != -1) {
->     System.out.print((char)by);
-> }
-> // 一次读取一个字节数组的数据
-> byte[] bys = new byte[1024];
-> int len;
-> while((len = bis.read(bys)) != -1) {
->     System.out.print(new String(bys, 0, len));
-> }
-> // 释放资源
-> bos.close();
-> ```
->
-> 字节缓冲流复制视频
->
-> ```java
-> public static void method() {
->     BufferedInputStream bis = null;
->     BufferedOutputStream bos = null;
->     try {
->         // 准备文件
->         bis = new BufferedInputStream(new FileInputStream("E:/copy/source/字节输出流.mp4"));
->         bos = new BufferedOutputStream(new FileOutputStream("E:/copy/target/字节输出流.mp4"));
-> 		//准备一个自定义的存储数组,为读取时设置一个自定义缓冲区
->         byte[] bys = new byte[1024];
->         //每次读取的长度
->         int len;
-> 		// 开始拷贝
->         while ((len = bis.read(bys)) != -1) {
->             bos.write(bys, 0, len);
->         }
->         System.out.println("文件复制成功!");
->         // 清空缓存
-> 		bos.flush();
->     } catch (IOException e) {
->         e.printStackTrace();
->     } finally {
->         try {
->             if (bos != null)
->                 bos.close();
->             if (bis != null)
->                 bis.close();
->         } catch (IOException e) {
->             e.printStackTrace();
->         }
->     }
-> }
-> ```
->
-> **字符流**
->
+
+##### 字节缓冲输出流写数据
+
+```java
+BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("myByteStream\\bos.txt"));
+// 写数据
+bos.write("hello\r\n".getBytes());
+bos.write("world\r\n".getBytes());
+// 释放资源
+bos.close();
+```
+
+##### 字节缓冲输入流读数据
+
+```java
+BufferedInputStream bis = new BufferedInputStream(new FileInputStream("myByteStream\\bos.txt"));
+// 一次读取一个字节数据
+int by;
+while((by = bis.read()) != -1) {
+    System.out.print((char)by);
+}
+// 一次读取一个字节数组的数据
+byte[] bys = new byte[1024];
+int len;
+while((len = bis.read(bys)) != -1) {
+    System.out.print(new String(bys, 0, len));
+}
+// 释放资源
+bos.close();
+```
+
+##### 字节缓冲流复制视频
+
+```java
+public static void method() {
+    BufferedInputStream bis = null;
+    BufferedOutputStream bos = null;
+    try {
+        // 准备文件
+        bis = new BufferedInputStream(new FileInputStream("E:/copy/source/字节输出流.mp4"));
+        bos = new BufferedOutputStream(new FileOutputStream("E:/copy/target/字节输出流.mp4"));
+		//准备一个自定义的存储数组,为读取时设置一个自定义缓冲区
+        byte[] bys = new byte[1024];
+        //每次读取的长度
+        int len;
+		// 开始拷贝
+        while ((len = bis.read(bys)) != -1) {
+            bos.write(bys, 0, len);
+        }
+        System.out.println("文件复制成功!");
+        // 清空缓存
+		bos.flush();
+    } catch (IOException e) {
+        e.printStackTrace();
+    } finally {
+        try {
+            if (bos != null)
+                bos.close();
+            if (bis != null)
+                bis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### 字符流
+
 > 概述：由于字节流操作中文不是特别的方便，所以Java就提供字符流
 >
 > - <span style="color: red;">字符流</span> = <span style="color: red;">字节流</span> + <span style="color: red;">编码表</span>
 >
 > 用字节流复制文本文件时，文本文件也会有中文，但是没有问题，原因是最终底层操作会自动进行字节拼接成中文，如何识别是中文的呢？
->
+> 
 > - 汉字在存储的时候，无论选择哪种编码存储，第一个字节都是负数
->
-> *字符串中的编码解码*
->
+> 
+
+#### 字符串中的编码解码
+
 > 编码：
 >
 > - <span style="color: #329BDC;">byte[] getBytes()</span>：使用平台的默认字符集将该String编码为一系列字节，将结果存储到新的字节数组中
-> - <span style="color: #329BDC;">byte[] getBytes(String charsetName)</span>：使用指定的字符集将该String编码为一系列字节，将结果存储到新的字节数组中
->
+>- <span style="color: #329BDC;">byte[] getBytes(String charsetName)</span>：使用指定的字符集将该String编码为一系列字节，将结果存储到新的字节数组中
+> 
 > 解码：
->
+> 
 > - <span style="color: #329BDC;">String(byte[] bytes)</span>：通过使用平台的默认字符集解码指定的字节数组来构造新的String
 > - <span style="color: #329BDC;">String(byte[] bytes, String charsetName)</span>：通过指定的字符集解码指定的字节数组来构造新的String
 >
 > <span style="color: red;">注意：编码和解码所使用的编码表必须相同</span>
 >
-> *字符流中的编码解码问题*
->
+
+#### 字符流中的编码解码问题
+
 > 字符流抽象基类
 >
 > 字符输入流与字节输入流类似，但运行的单元更大，且只能用于读取文本
@@ -3611,45 +3714,48 @@ public static void main(String[] args) {
 > 字符流中和编码解码问题相关的两个类：
 >
 > - InputStreamReader
->
->   ```java
->   // 使用默认的字符编码
->   FileInputStream fis= new FileInputStream("myCharStream/osw.txt");
->   InputStreamReader isr = new InputStreamReader(fis);
->   int ch;
->   while((ch = isr.read()) != -1){
->       System.out.print((char)ch);
->   }
->   isr.close();
->   
->   // 使用自定义的字符编码
->   FileInputStream fis= new FileInputStream("myCharStream/osw.txt");
->   InputStreamReader isr = new InputStreamReader(fis, "GBK");
->   int ch;
->   while((ch = isr.read()) != -1){
->       System.out.print((char)ch);
->   }
->   isr.close();
->   ```
->
 > - OutputStreamWriter
->
->   ```java
->   // 使用默认的字符编码
->   FileOutputStream fos = new FileOutputStream("myCharStream/osw.txt");
->   OutputStreamWriter osw = new OutputStreamWriter(fos);
->   osw.write("中国");
->   osw.close();
->     
->   // 使用自定义的字符编码
->   FileOutputStream fos = new FileOutputStream("myCharStream/osw.txt");
->   OutputStreamWriter osw = new OutputStreamWriter(fos, "GBK");
->   osw.write("中国");
->   osw.close();
->   ```
->
-> *字符流写数据的5中方式*
->
+
+##### InputStreamReader
+
+> ```java
+> // 使用默认的字符编码
+> FileInputStream fis= new FileInputStream("myCharStream/osw.txt");
+> InputStreamReader isr = new InputStreamReader(fis);
+> int ch;
+> while((ch = isr.read()) != -1){
+>     System.out.print((char)ch);
+> }
+> isr.close();
+> 
+> // 使用自定义的字符编码
+> FileInputStream fis= new FileInputStream("myCharStream/osw.txt");
+> InputStreamReader isr = new InputStreamReader(fis, "GBK");
+> int ch;
+> while((ch = isr.read()) != -1){
+>     System.out.print((char)ch);
+> }
+> isr.close();
+> ```
+
+##### OutputStreamWriter
+
+> ```java
+> // 使用默认的字符编码
+> FileOutputStream fos = new FileOutputStream("myCharStream/osw.txt");
+> OutputStreamWriter osw = new OutputStreamWriter(fos);
+> osw.write("中国");
+> osw.close();
+> 
+> // 使用自定义的字符编码
+> FileOutputStream fos = new FileOutputStream("myCharStream/osw.txt");
+> OutputStreamWriter osw = new OutputStreamWriter(fos, "GBK");
+> osw.write("中国");
+> osw.close();
+> ```
+
+#### 字符流写数据的5中方式
+
 > |                  方法名                   | 说明                 |
 > | :---------------------------------------: | -------------------- |
 > |             void write(int c)             | 写一个字符           |
@@ -3673,8 +3779,9 @@ public static void main(String[] args) {
 > osw.close();	// 关闭文件前先进行刷新
 > ```
 >
-> *字符流读数据的2种方式*
->
+
+#### 字符流读数据的2种方式
+
 > |        方法名         | 说明                   |
 > | :-------------------: | ---------------------- |
 > |      int read()       | 一次读一个字符数据     |
@@ -3699,7 +3806,10 @@ public static void main(String[] args) {
 > isr.close();
 > ```
 >
-> *字符流复制文件*
+
+#### 字符流复制文件
+
+> 案例：
 >
 > ```java
 > public class StreamCopy {
@@ -3778,13 +3888,15 @@ public static void main(String[] args) {
 > }
 > ```
 >
-> *字符缓冲流*
->
+
+#### 字符缓冲流
+
 > - BufferedWriter：将文本写入字符输出流，缓冲字符，以提供单个字符，数组和字符串的高效写入，可以指定缓冲区大小，或者可以使用默认大小。默认值足够大，可用于大多数用途
 > - BufferedReader：从字符输入流读取文本，缓冲字符，以提供字符，数组和行的高效读取，可以指定缓冲区大小，或者可以使用默认大小。默认值足够大，可用于大多数用途
 >
-> 构造方法：
->
+
+##### 构造方法
+
 > - BufferedWriter(Writer out)
 >
 >   ```java
@@ -3809,8 +3921,9 @@ public static void main(String[] args) {
 >
 > <span style="color: #329BDC;">缓冲流的默认值大小均为8192</span>
 >
-> *字符缓冲流特有功能*
->
+
+##### 字符缓冲流特有功能
+
 > BufferedWriter：
 >
 > - void newLine()：写一个行分隔符，行分隔符字符串由系统属性定义
@@ -3831,17 +3944,18 @@ public static void main(String[] args) {
 >
 > *字符流只能赋值文本数据，有5种方式，一般采用字符缓冲流的特有功能*
 >
-> **特殊操作流**
->
-> *标准输入输出流*
->
+
+#### 特殊操作流
+
+##### 标准输入输出流
+
 > System类中有两个静态的成员变量：
 >
 > - public static final InputStream in：标准输入流。通常该流对应于键盘输入或由主机环境或用户指定的另一个输入源
 >
 >   ```java
 >   InputStream is = System.in;
->   
+>
 >   int by;
 >   while((by = is.read()) != -1) {
 >       System.out.print((char)by);
@@ -3876,8 +3990,9 @@ public static void main(String[] args) {
 >   ps.println("100");	// ---> System.out.println
 >   ```
 >
-> *打印流*
->
+
+##### 打印流
+
 > 打印流分类：
 >
 > - 字节打印流：PrintSteam
@@ -3940,8 +4055,9 @@ public static void main(String[] args) {
 > br.close();
 > ```
 >
-> *对象序列化流与对象反序列化流*
->
+
+##### 对象序列化流与对象反序列化流
+
 > 对象序列化:就是将对象保存到磁盘中,或者在网络中传输对象
 >
 > 这种机制就是使用一个字节序列表示一个对象,该字节序列包含：对象类型，对象数据和对象存储的属性等信息
@@ -3951,83 +4067,87 @@ public static void main(String[] args) {
 > 反之,该字节序列还可以从文件中读取回来,重构对象,这种叫做反序列化
 >
 > 要实现序列化和反序列化就要使用对象序列化流和对象反序列化流
+
+###### 对象序列化流
+
+> **对象序列化流**：<span style="color: red;">ObjectOutputStream</span>
 >
-> - **对象序列化流**：<span style="color: red;">ObjectOutputStream</span>
+> - 将Java对象的原始数据类型和图形写入OutputStream。可以使用ObjectInputStream读取(重构)对象。可以通过使用流的文件来实现对象的持久存储。如果流是网络套接字流，则可以在另一个主机上火另一个进程中重构对象
 >
->   - 将Java对象的原始数据类型和图形写入OutputStream。可以使用ObjectInputStream读取(重构)对象。可以通过使用流的文件来实现对象的持久存储。如果流是网络套接字流，则可以在另一个主机上火另一个进程中重构对象
+> - 构造方法：<span style="color: red;">ObjectOutputStream</span>(<span style="color: #329BDC;">OutputStream out</span>)：创建一个写入指定的OutputStream的ObjectOutputStream
 >
->   - 构造方法：<span style="color: red;">ObjectOutputStream</span>(<span style="color: #329BDC;">OutputStream out</span>)：创建一个写入指定的OutputStream的ObjectOutputStream
+> - 序列化对象的方法：<span style="color: red;">void writeObject</span>(<span style="color: #329BDC;">Object obj</span>)：将指定的对象写入ObjectOutputStream
 >
->   - 序列化对象的方法：<span style="color: red;">void writeObject</span>(<span style="color: #329BDC;">Object obj</span>)：将指定的对象写入ObjectOutputStream
+>   ```java
+>   public class Student implements Serializable{
+>   	private String name;
+>   	private int age;
 >
->     ```java
->     public class Student implements Serializable{
->     	private String name;
->     	private int age;
->     
->     	public Student() {
->     	}
->     
->     	public Student(String name, int age) {
->     		super();
->     		this.name = name;
->     		this.age = age;
->     	}
->     
->     	public String getName() {
->     		return name;
->     	}
->     
->     	public void setName(String name) {
->     		this.name = name;
->     	}
->     
->     	public int getAge() {
->     		return age;
->     	}
->     
->     	public void setAge(int age) {
->     		this.age = age;
->     	}
->     }
->     
->     public class StudentDemo {
->     	public static void main(String[] args) throws IOException {
->     		// 创建一个写入指定的OutputStream的ObjectOutputStream
->     		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("myOtherStream/oos.txt"));
->     		// 创建对象
->     		Student s = new Student("林青霞", 30);
->     		// 将指定的对象写入ObjectOutputStream
->     		oos.writeObject(s);
->     		// 释放资源
->     		oos.close();
->     	}
->     }
->     ```
+>   	public Student() {
+>   	}
 >
->   - <span style="color: red;">注意</span>：
+>   	public Student(String name, int age) {
+>   		super();
+>   		this.name = name;
+>   		this.age = age;
+>   	}
 >
->     - 一个对象要想被序列化，该对象所属的类必须必须实现<span style="color: red;">Serializable</span>接口
->     - <span style="color: red;">Serializable</span>是一个<span style="color: red;">标记接口</span>，实现该接口，不需要重写任何方法(*实现该接口表示该类可以被序列化和反序列化*)
+>   	public String getName() {
+>   		return name;
+>   	}
 >
-> - **对象反序列化流**：<span style="color: red;">ObjectInputStream</span>
+>   	public void setName(String name) {
+>   		this.name = name;
+>   	}
 >
->   - **使用ObjectInputStream反序列化，需使用先前ObjectOutputStream编写的原始数据和对象**
+>   	public int getAge() {
+>   		return age;
+>   	}
 >
->   - 构造方法：<span style="color: red;">ObjectInputStream</span>(<span style="color: #329BDC;">InputStream in</span>)：创建从指定的InputStream读取的ObjectInputStream
+>   	public void setAge(int age) {
+>   		this.age = age;
+>   	}
+>   }
 >
->   - 反序列化对象的方法：<span style="color: red;">Object readObject</span>()：从ObjectInputStream读取一个对象
+>   public class StudentDemo {
+>   	public static void main(String[] args) throws IOException {
+>   		// 创建一个写入指定的OutputStream的ObjectOutputStream
+>   		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("myOtherStream/oos.txt"));
+>   		// 创建对象
+>   		Student s = new Student("林青霞", 30);
+>   		// 将指定的对象写入ObjectOutputStream
+>   		oos.writeObject(s);
+>   		// 释放资源
+>   		oos.close();
+>   	}
+>   }
+>   ```
 >
->     ```java
->     // 创建从指定的InputStream读取的ObjectInputStream
->     ObjectInputStream ois = new ObjectInputStream(new FileInputStream("myOtherStream/oos.txt"));
->     Object obj = ois.readObject();
->     // 输出对象
->     Student s = (Student) obj;
->     System.out.println(s.getName() + "," + s.getAge());
->     // 释放资源
->     ois.close();
->     ```
+> - <span style="color: red;">注意</span>：
+>
+>   - 一个对象要想被序列化，该对象所属的类必须必须实现<span style="color: red;">Serializable</span>接口
+>   - <span style="color: red;">Serializable</span>是一个<span style="color: red;">标记接口</span>，实现该接口，不需要重写任何方法(*实现该接口表示该类可以被序列化和反序列化*)
+
+###### 对象反序列化流
+
+> **对象反序列化流**：<span style="color: red;">ObjectInputStream</span>
+>
+> - **使用ObjectInputStream反序列化，需使用先前ObjectOutputStream编写的原始数据和对象**
+>
+> - 构造方法：<span style="color: red;">ObjectInputStream</span>(<span style="color: #329BDC;">InputStream in</span>)：创建从指定的InputStream读取的ObjectInputStream
+>
+> - 反序列化对象的方法：<span style="color: red;">Object readObject</span>()：从ObjectInputStream读取一个对象
+>
+>   ```java
+>   // 创建从指定的InputStream读取的ObjectInputStream
+>   ObjectInputStream ois = new ObjectInputStream(new FileInputStream("myOtherStream/oos.txt"));
+>   Object obj = ois.readObject();
+>   // 输出对象
+>   Student s = (Student) obj;
+>   System.out.println(s.getName() + "," + s.getAge());
+>   // 释放资源
+>   ois.close();
+>   ```
 >
 > - 给一个成员变量加上<span style="color: red;">transient</span>关键字修饰，该关键字标记的成员变量不参与序列化过程
 >
@@ -4037,7 +4157,7 @@ public static void main(String[] args) {
 >   	private transient int age;
 >       ...
 >   }
->   
+>
 >   Student s = new Student("林青霞", 30);
 >   序列化。。。
 >   反序列化。。。
@@ -4049,59 +4169,60 @@ public static void main(String[] args) {
 >   - **serialVersionUID**用于给序列化的对象一个固定的UID，以防止用对象序列化流序列化对象后，修改对象所属的类文件，读取数据出现<span style="color: red;">InvalidClassException</span>异常
 >   - 显式声明**serialVersionUID**后，序列化运行时将使用此值，而不是根据序列化规范计算该类各个方面以生成的默认的**serialVersionUID**值
 >
-> 序列化存储集合
->
-> ```java
-> public class StudentStreamDemo {
-> 	/*
-> 	 * 创建集合,添加3到5个学生
-> 	 * 将集合序列化到文件
-> 	 * 再次放文件反序列化处理,并添加2个学生
-> 	 * 最后再序列化到文件
-> 	 */
-> 	public static void main(String[] args) {
-> 		List<Student> stus = new ArrayList<>();
-> 		stus.add(new Student(1,"zhangsan",20,"男"));
-> 		stus.add(new Student(2,"lisi",18,"女"));
-> 		stus.add(new Student(3,"wangwu",20,"男"));
-> 		//调用序列方法,序列化
-> 		try {
-> 			//序列初始化
-> 			outStream(stus,"d:/java/Student.txt");
-> 			//反序列化得到集合
-> 			stus = inStream("d:/java/Student.txt");
-> 			//添加数据
-> 			stus.add(new Student(4, "wanghong", 18, "女"));
-> 			stus.add(new Student(5, "tiantian", 18, "女"));
-> 			//再次序列化,参数1为序列化内容,参数2为序列化地址
-> 			outStream(stus,"d:/java/Student.txt");
-> 			stus = inStream("d:/java/Student.txt");
-> 			for (Student stu : stus) {
-> 				System.out.println(stu.toString());
-> 			}
-> 		} catch (Exception e) {
-> 			e.printStackTrace();
-> 		}
-> 		
-> 	}
-> 	//序列化方法
-> 	public static void outStream(Object obj,String path) throws Exception{
-> 		 ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path));
-> 		 oos.writeObject(obj);
-> 		 oos.close();
-> 	}
-> 	//反序列化方法
-> 	public static List<Student> inStream(String path) throws Exception{
-> 		List<Student> list = null;
-> 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path));
-> 		list = (List<Student>) ois.readObject();
-> 		return list;
-> 	}
-> }
-> ```
->
-> *Properties*
->
+
+###### 序列化存储集合
+
+```java
+public class StudentStreamDemo {
+	/*
+	 * 创建集合,添加3到5个学生
+	 * 将集合序列化到文件
+	 * 再次放文件反序列化处理,并添加2个学生
+	 * 最后再序列化到文件
+	 */
+	public static void main(String[] args) {
+		List<Student> stus = new ArrayList<>();
+		stus.add(new Student(1,"zhangsan",20,"男"));
+		stus.add(new Student(2,"lisi",18,"女"));
+		stus.add(new Student(3,"wangwu",20,"男"));
+		//调用序列方法,序列化
+		try {
+			//序列初始化
+			outStream(stus,"d:/java/Student.txt");
+			//反序列化得到集合
+			stus = inStream("d:/java/Student.txt");
+			//添加数据
+			stus.add(new Student(4, "wanghong", 18, "女"));
+			stus.add(new Student(5, "tiantian", 18, "女"));
+			//再次序列化,参数1为序列化内容,参数2为序列化地址
+			outStream(stus,"d:/java/Student.txt");
+			stus = inStream("d:/java/Student.txt");
+			for (Student stu : stus) {
+				System.out.println(stu.toString());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	//序列化方法
+	public static void outStream(Object obj,String path) throws Exception{
+		 ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path));
+		 oos.writeObject(obj);
+		 oos.close();
+	}
+	//反序列化方法
+	public static List<Student> inStream(String path) throws Exception{
+		List<Student> list = null;
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path));
+		list = (List<Student>) ois.readObject();
+		return list;
+	}
+}
+```
+
+##### Properties
+
 > 概述：
 >
 > - 是一个Map体系的集合类
@@ -4122,8 +4243,9 @@ public static void main(String[] args) {
 > }
 > ```
 >
-> Properties作为集合的特有方法：
->
+
+###### Properties作为集合的特有方法
+
 > |                    方法名                    | 说明                                                         |
 > | :------------------------------------------: | ------------------------------------------------------------ |
 > | Object setProperty(String key, String value) | 设置集合的键和值，都是String类型，底层调用Hashtable方法put   |
@@ -4147,8 +4269,9 @@ public static void main(String[] args) {
 > }
 > ```
 >
-> *properties和IO流相结合使用*
->
+
+###### properties和IO流相结合使用
+
 > |                    方法名                     | 说明                                                         |
 > | :-------------------------------------------: | ------------------------------------------------------------ |
 > |        void load(InputStream inStream)        | 从输入字节流读取属性列表(键和元素对)                         |
@@ -4189,7 +4312,7 @@ public static void main(String[] args) {
 > 		// 通过properties设置属性,键值对应,设置后可以被键搜索
 > 		prop.setProperty("username", "root");
 > 		prop.setProperty("password", "123456");
-> 		
+> 
 > 		//降属性保存到jdbc.properties的文件中
 > 		Writer out = new FileWriter("jdbc.properties");
 > 		//属性集合properties集合将流写出
@@ -4199,19 +4322,19 @@ public static void main(String[] args) {
 > }
 > ```
 
-##### 复制对象和复制引用的区别
+## 复制对象和复制引用的区别
 
 > 
 
-##### 深拷贝和浅拷贝
+## 深拷贝和浅拷贝
 
 > 
 
-##### final、finally、finalize 有什么区别
+## final、finally、finalize 有什么区别
 
 > 
 
-##### spring mvc 和 struts 的区别是什么
+## spring mvc 和 struts 的区别是什么
 
 > 
 
