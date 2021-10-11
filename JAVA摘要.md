@@ -143,5 +143,59 @@
 
 ##### 如何避免 SQL 注入
 
-> 
+> **什么是SQL注入**
+>
+> SQL注入是在程序运行过程中，通过特殊的手段，为SQL注入特殊的语句，达到任意查询
+>
+> ```java
+> Class.forName("com.mysql.jdbc.Driver");
+> String url = "jdbc:mysql://localhost:3306/test?characterEncoding=utf-8";
+> Connection conn = DriverManager.getConnection(url, "root", "root");
+> // 登录操作，注入密码sql
+> String name="admin";
+> String pwd = "123456 or 1=1";
+> // sql注入 在sql中注入 or 1=1，在拼接时，不是将该语句认为是一个值，而是拼接成了语句。1=1 表示条件恒成立
+> // 注入 or 1=1，会将表内所有的数据查询出来(select * from users where 1=1 相当于 select * from users)
+> String sql = "select * from users where name='"+ name +"' and password=" + pwd;
+> Statement st = conn.createStatement();
+> ResultSet rs = st.executeQuery(sql);
+> while(rs.next()){
+>  System.out.println("登录成功!用户ID:"+rs.getInt(1)+", 用户名为:"+rs.getString("name")+", 密码为:"+rs.getString(3));
+> }
+> ```
+>
+> **如何避免**
+>
+> MySQL 中使用 PreparedStatement 接口
+>
+> - 是 Statement 接口的子接口，解决在 sql 拼接时造成的 sql 注入问题，这时候设置的值不会呈现结构的方式
+> - PreparedStatement 接口以预编译 sql 的方式解决拼接的问题，每一个参数的地方使用 ？作为占位符
+> - 再使用setXXX()方法设置对应类型对应位置的值，下标位置从1开始
+>
+> ```java
+> // 加载驱动
+> Class.forName("com.mysql.jdbc.Driver");
+> // 获取连接字符串对象
+> String url = "jdbc:mysql://localhost:3306/test?characterEncoding=utf-8";
+> Connection conn = DriverManager.getConnection(url, "root", "root");
+> // 准备SQL
+> String name = "admin";
+> String pwd = "123456 or 1=1";
+> String sql = "select * from users where name=? and password=?";
+> // 通过conn获取到执行对象，并预编译sql语句
+> PreparedStatement pst = conn.prepareStatement(sql);
+> // 为占位符赋值，有占位符就赋值，没有就不需要赋值
+> pst.setString(1, name);
+> pst.setString(2, pwd);
+> // 执行sql，并得到结果
+> rs = pst.executeQuery();
+> // 循环遍历结果集，如果明确知道最多只有一个结果，可以使用判断
+> if(rs.next()){
+>      System.out.println("登录成功!用户ID:"+rs.getInt(1)+", 用户名为:"+rs.getString("name")+", 密码为:"+rs.getString(3));
+> }else{
+>     System.out.println("登录失败");
+> }
+> ```
+
+
 

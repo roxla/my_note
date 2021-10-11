@@ -509,24 +509,24 @@ public static void quickSortCore(int[] array, int left, int right) {
 >            // 调用方法
 >             int result = sum( a: 10, b: 20);
 >            System.out.println(result);		// 30
->             
+>                   
 >             int result2 = sum( a: 10.0, b: 20.0);
 >             System.out.println(result2);	// 30.0
->             
+>                   
 >             int result3 = sum( a: 10, b: 20, c: 30);
 >            System.out.println(result3);	// 60
 >         }
->            
+>                  
 >         // 需求1：求两个 int 类型数据和的方法
 >        public static int sum(int a, int b) {
 >             return a + b;
 >         }
->             
+>                   
 >         // 需求2：求两个 double 类型数据和的方法
 >         public static double sum(double a, double b) {
 >            return a + b;
 >         }
->            
+>                  
 >         // 需求3：求三个 int 类型数据和的方法
 >         public static int sum(int a, int b, int c) {
 >             return a + b + c;
@@ -550,7 +550,7 @@ public static void quickSortCore(int[] array, int left, int right) {
 >            // 方法体
 >         }
 >      }
->                         
+>                                     
 >     // 属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
@@ -860,7 +860,7 @@ public static void main(String[] args) {
 >         public static void main(String[] args) {
 >             Student s1 = new Student();
 >             s1.setName("王狗蛋"); // setName 方法中的 this 代表 s1 这个对象
->                         
+>                                     
 >             Student s2 = new Student();
 >             s2.setName("李铁蛋"); // setName 方法中的 this 代表 s2 这个对象
 >         }
@@ -1501,8 +1501,8 @@ public static void main(String[] args) {
 
 #### 多态中成员访问特点
 
-> - 成员变量：编译看左边，执行看左边
->- 成员方法：编译看左边，执行看右边
+> - 成员变量：**编译看左边，执行看左边**
+>- 成员方法：**编译看左边，执行看右边**
 > 
 >```java
 > public class Animal {
@@ -1532,35 +1532,35 @@ public static void main(String[] args) {
 > 	//  有父类引用指向子类对象
 >         Animal a = new Cat();
 > 
->         System.out.println(a.age);	// 40
->         System.out.println(a.weight);	// 编译不通过
+>         System.out.println(a.age);	// 40 (执行看 Animal)
+>         System.out.println(a.weight);	// 编译不通过 (编译看 Animal)
 > 
->         a.eat();	// 猫吃鱼
->         a.playGame();	// 编译不通过
+>         a.eat();	// 猫吃鱼 (执行看 Cat)
+>         a.playGame();	// 编译不通过 (编译看 Animal)
 > 	}
 > }
 > ```
 > 
-> 为什么成员变量和成员方法的访问不一样
+> *为什么成员变量和成员方法的访问不一样*
 > 
-> - 因为成员方法有重写，而成员变量没有
+> - **因为成员方法有重写，而成员变量没有**
 > 
 
 #### 多态的好处和弊端
 
-> - 好处：提高了程序的扩展性
->  - 具体体现：定义方法的时候，使用父类型作为参数，将来在使用的时候，使用具体的子类型参与操作
-> - 弊端：不能使用子类的特有功能
+> - 好处：**提高了程序的扩展性**
+>  - 具体体现：**定义方法的时候，使用父类型作为参数，将来在使用的时候，使用具体的子类型参与操作**
+> - 弊端：**不能使用子类的特有功能**
 >
 
 #### 多态中的转型
 
 > - 向上转型
->  - 从子到父
->   - 父类引用指向子类对象
+>    - *从子到父*
+>     - **父类引用指向子类对象**
 >- 向下转型
->   - 从父到子
->  - 父类引用转为子类对象
+>   - *从父到子*
+>    - **父类引用转为子类对象**
 >   - 当需要使用到子类对象中特有的方法及属性时,将父类类型重新还原为子类类型,才可以调用子类中特有的方法和属性
 > 
 >```java
@@ -1626,54 +1626,51 @@ public static void main(String[] args) {
 >     ```java
 >     public class UDisk implements USBInterfase {
 >         @Override
->
->    	public void service() {
->    		System.out.println("USB插入，交换数据");
->    	}
+>         public void service() {
+>     		System.out.println("USB插入，交换数据");
+>         }
 >     }
->    public class USBSan implements USBInterfase {
->         @Override
+>     
+>     public class USBSan implements USBInterfase {
+>     	@Override
 >     	public void service() {
 >     		System.out.println("USB插入，风扇转起来了");
 >     	}
 >     }
->
+>     
 >     public class USBDemo{
->         public static void main(String[] args) {
->             USBInterfase usb = new USBSan();
->             usb.service(); // USB插入，交换数据
->
->             USBInterfase usb = new UDisk();
->             usb.service(); // USB插入，风扇转起来了
->                                   }
+>     	public static void main(String[] args) {
+>     		USBInterfase usb = new USBSan();
+>     		usb.service(); // USB插入，交换数据
+>     		USBInterfase usb = new UDisk();
+>     		usb.service(); // USB插入，风扇转起来了
+>     	}
 >     }
 >
->     ```
->
-> - 接口不能实例化
+> - **接口不能实例化**
 >
 >   - 接口如何实例化
->     - 参照多态的方式，铜卦实现类对象实例化，这叫接口多态
+>     - 参照多态的方式，通过实现类对象实例化，这叫接口多态
 >     - 多态的形式：具有类多态，抽象类多态，接口多态
 >     - 多态的前提：有继承或者实现关系；有方法重写；有父(类/接口)引用指向(子/实现)类对象
 >
 > - 接口的实现类
 >
->  - 要么重写接口中的所有抽象方法
->   - 要么是抽象类
+>    - 要么重写接口中的所有抽象方法
+>     - 要么是抽象类
 >
 
 #### 接口的成员特点
 
 > - 成员变量
->  - 只能是常量
->   - 默认修饰符：<span style="color: red;">public static final</span>
+>    - 只能是常量
+>     - 默认修饰符：<span style="color: red;">public static final</span>
 >- 构造方法
->   - 结构没有构造方法，因为接口主要是对行为进行抽象的，是没有具体存在
->  - 一个类如果没有父类，默认继承自Object类
+>   - 接口没有构造方法，因为接口主要是对行为进行抽象的，是没有具体存在
+>    - 一个类如果没有父类，默认继承自Object类
 > - 成员方法
->  - 只能是抽象方法
->   - 默认修饰符：public abstract
+>    - 只能是抽象方法
+>     - 默认修饰符：<span style="color: red;">public abstract</span>
 >
 > **JDK1.8之后提供的实体方法**
 >
@@ -1699,11 +1696,11 @@ public static void main(String[] args) {
 #### 类和接口的关系
 
 > - 类和类的关系
->  - 继承关系，只能单继承，但是可以多层继承
+>    - **继承关系，只能单继承，但是可以多层继承**
 > - 类和接口的关系
->  - 实现关系，可以单实现，也可以多实现，还可以在继承一个类的同时实现多个接口
+>    - **实现关系，可以单实现，也可以多实现，还可以在继承一个类的同时实现多个接口**
 > - 接口和接口的关系
->  - 继承关系，可以单继承，也可以多继承
+>    - **继承关系，可以单继承，也可以多继承**
 > 
 >被实现的接口可以视为类内自带的方法，当使用该类的数组时，所有数组内的成员均持有该方法，并且方法内的属性使用的是对应数组成员的属性
 > 
@@ -1753,16 +1750,16 @@ public static void main(String[] args) {
 
 #### 抽象类和接口的区别
 
-> - 成员区别
->  - 抽象类：变量，常量；有构造方法；有抽象方法，也有非抽象方法
->   - 接口：常量；抽象方法
->- 关系区别
+> - **成员区别**
+>    - 抽象类：变量，常量；有构造方法；有抽象方法，也有非抽象方法
+>     - 接口：常量；抽象方法
+>- **关系区别**
 >   - 类与类：继承，单继承
->  - 类与接口：实现，可以单实现，也可以多实现
->   - 接口与接口：继承，单继承，多继承
->- 设计理念区别
+>    - 类与接口：实现，可以单实现，也可以多实现
+>     - 接口与接口：继承，单继承，多继承
+>- **设计理念区别**
 >   - 抽象类：对类抽象，包括属性、行为
->  - 接口：对行为抽象，主要是行为
+>    - 接口：对行为抽象，主要是行为
 
 ## 重载和重写的区别
 
@@ -2174,8 +2171,8 @@ public static void main(String[] args) {
 >
 > ```java
 > public class 类名 {
->  修饰符 class 类名 {
->  }
+>  	修饰符 class 类名 {
+>  	}
 > }
 > ```
 >
@@ -2183,8 +2180,8 @@ public static void main(String[] args) {
 >
 > ```java
 > public class Outer {
->  public class Inner {
->  }
+>  	public class Inner {
+>  	}
 > }
 > ```
 >
@@ -2209,39 +2206,40 @@ public static void main(String[] args) {
 > }
 > ```
 >
-> **成员内部类**
->
+
+### 成员内部类
+
 > 按照内部类在类中定义的位置不同，可以分为如下两种形式
 >
 > - 在类的成员位置：成员内部类
-> - 在类的局部位置：局部内部类
->
-> 成员内部类，外界创建对象使用的格式
->
-> - 格式：<span style="color: red;">外部类名</span>.<span style="color: #329BDC;">内部类名</span> 对象名 = <span style="color: red;">外部类对象</span>.<span style="color: #329BDC;">内部类对象</span>;
+>- 在类的局部位置：局部内部类
+> 
+>成员内部类，外界创建对象使用的格式
+> 
+>- 格式：<span style="color: red;">外部类名</span>.<span style="color: #329BDC;">内部类名</span> 对象名 = <span style="color: red;">外部类对象</span>.<span style="color: #329BDC;">内部类对象</span>;
 > - 范例：<span style="color: red;">Outer</span>.<span style="color: #329BDC;">Inner</span> oi = <span style="color: red;">new Outer()</span>.<span style="color: #329BDC;">new Inner()</span>;
->
-> ```java
-> public class Outer {
+> 
+>  ```java
+>  public class Outer {
 >     private int num = 10;
 > 
->     public class Inner {
+>    public class Inner {
 >         public void show() {
->             System.out.println(num);	// 10
+>            System.out.println(num);	// 10
 >         }
 >     }
-> }
-> public class InneerDemo {
+>  }
+>  public class InneerDemo {
 >     public static void main(String[] args) {
 >         // 创建内部类对象，并调用方法
->       	Outer.Inner oi = new Outer().new Inner();
+>      	Outer.Inner oi = new Outer().new Inner();
 >         oi.show();	// 10
->     }
+>    }
 > }
-> ```
+>  ```
 >
 > ==常用的内部类的定义格式和使用==
->
+> 
 > ```java
 > public class Outer {
 >     private int num = 10;
@@ -2255,54 +2253,56 @@ public static void main(String[] args) {
 >     public void method() {
 >         Inner i = new Inner();
 >         i.show();
->     }
+>    }
 > }
-> 
+>
 > public class InneerDemo {
->     public static void main(String[] args) {
+>    public static void main(String[] args) {
 >       	Outer.o = new Outer();
 >         o.method;	// 10
->     }
+>    }
 > }
-> ```
->
-> **局部内部类**
->
+>```
+> 
+
+### 局部内部类
+
 > 局部内部类是在方法中定义的类，所以外界是无法直接使用，需要在方法内部创建对象并使用
 >
 > 该类可以直接访问外部类的成员，也可以访问方法内的局部变量
 >
 > ```java
-> public class Outer {
+>public class Outer {
 >     private int num = 10;
-> 
+>
 >     public void method() {
 >         int num2 = 20;
->         class Inner {
->         	public void show() {
+>          class Inner {
+>          	public void show() {
 >                 // 访问外部类的成员
 >             	System.out.println(num);	// 10
->                 // 访问方法内的局部变量
+>                // 访问方法内的局部变量
 >                 System.out.println(num2);	
->         	}
+>        	}
 >         }
 >         // 在方法内部创建对象并使用
->         Inner i = new Inner();
->         i.show();
+>          Inner i = new Inner();
+>          i.show();
 >     }
 > }
-> 
+>
 > public class OuterDemo {
->     public static void main(String[] args) {
+>    public static void main(String[] args) {
 >       	Outer.o = new Outer();
 >         o.method;	// 10
->         			// 20
+>        			// 20
 >     }
 > }
 > ```
->
-> **匿名内部类**
->
+> 
+
+### 匿名内部类
+
 > 匿名内部类属于一种特殊的局部内部类
 >
 > *前提：存在一个类或者接口，这里的类可以是具体类也可以是抽象类*
@@ -2310,28 +2310,28 @@ public static void main(String[] args) {
 > - 格式：
 >
 >   ```java
->   new 类名或者接口名(){
+>  new 类名或者接口名(){
 >       重写方法;
 >   }
 >   ```
->
+>  
 > - 范例：
->
->   ```java
+> 
+>  ```java
 >   new Inter() {
->       public void show(){
+>      public void show(){
 >       }
 >   }
->   ```
->
+>  ```
+>  
 > <span style="color: red;">匿名内部类的本质：是一个继承了该类或者实现了该接口的子类匿名对象</span>
->
-> 单次调用：
->
-> ```java
+> 
+>单次调用：
+> 
+>```java
 > public class Outer {
 >     public void method() {
->        new Inter() {
+>       new Inter() {
 >            @Override
 >            public void show() {
 >                System.out.println("匿名内部类");
@@ -2351,15 +2351,15 @@ public static void main(String[] args) {
 > 多次调用：
 >
 > ```java
-> public interface Inter {
+>public interface Inter {
 >     void show();
 > }
-> 
+>
 > public class Outer {
-> 
+>
 >     public void method() {
 >        Inter i = new Inter() {
->            @Override
+>           @Override
 >            public void show() {
 >                System.out.println("匿名内部类");
 >            }
@@ -2377,42 +2377,43 @@ public static void main(String[] args) {
 >     }
 > }
 > ```
->
-> *注意：匿名内部类中不能出现抽象⽅法，也不能出现静态成员*
->
-> **静态内部类**
->
+> 
+>*注意：匿名内部类中不能出现抽象⽅法，也不能出现静态成员*
+> 
+
+### 静态内部类
+
 > 创建内部类对象，静态内部类不需要依靠外部类的实例，跟普通类是一样的
 >
 > ```java
-> // 外部类
+>// 外部类
 > public class Outer {
->     // 静态内部类
+>    // 静态内部类
 >     public static class Inner {
->     	System.out.println("这是一个静态内部类");
+>    	System.out.println("这是一个静态内部类");
 >     }
 > }
-> 
-> public class OuterDemo {
+>  
+>  public class OuterDemo {
 >     public static void main(String[] args) {
 >       	Inner in = new Inner();
->         in.show();
+>        in.show();
 >     }
-> }
+>}
 > ```
->
 > 
+>  
 
 ## 常用类
 
-> **String类**
->
+### String类
+
 > 字符串类属于四大基本引用类型之一，该类用于创建和操作字符串
 >
 > 常用的方法：
 >
 > | 方法名                | 说明                                                         |
-> | --------------------- | ------------------------------------------------------------ |
+>| --------------------- | ------------------------------------------------------------ |
 > | charAt()              | 通过指定位置，返回对应字符                                   |
 > | indexOf()             | 通过查找字符，返回第一次出现字符的位置                       |
 > | lastIndexOf()         | 通过末尾开始查找，返回第一次出现字符的位置                   |
@@ -2424,39 +2425,41 @@ public static void main(String[] args) {
 > | trim()                | 去掉字符串前后空格                                           |
 > | replace(str, str)     | 通过查找字符，将该字符替换为指定的字符                       |
 > | toCharArray()         | 将内容转换为字符数组                                         |
->
+> 
 > <span style="color: red;">String对象的特点</span>
 >
 > 1. 通过new创建的字符串对象，每一次new都会申请一个内存空间，虽然内容相同，但是地址值不同
 >
 >    ```java
->    String a = new String("helloworld");
+>     String a = new String("helloworld");
 >    String b = new String("helloworld");
 >    Systen.out.println(a == b); // false
 >    ```
->
+> 
 > 2. 以“”方式给出的字符串，只要字符序列相同(顺序和大小写)，无论在程序代码中出现几次，JVM都只会建立一个String对象，并在字符串池中维护
 >
 >    ```java
->    String a = "helloworld";
+>     String a = "helloworld";
 >    String b = "hello"+"world";
 >    Systen.out.println(a == b); // true
 >    ```
->
-> **StringBuffer类**
->
+> 
+
+### StringBuffer类
+
 > 概述：线程安全的一个可变长度字符序列。 字符串缓冲区就像一个String，但可以修改。初始容量为16个字符
 >
 > |       方法名        | 说明                                   |
-> | :-----------------: | -------------------------------------- |
+>| :-----------------: | -------------------------------------- |
 > | new StringBuffer()  | 构造方法                               |
-> |    append(元素);    | 添加元素到末尾                         |
+>|    append(元素);    | 添加元素到末尾                         |
 > |     indexOf();      | 通过查找字符，返回第一次出现字符的位置 |
 > | insert(下标, 元素); | 在指定位置插入元素                     |
 > |     reverse();      | 倒转字符串                             |
->
-> **StringBuilder类**
->
+> 
+
+### StringBuilder类
+
 > 概述：StringBuilder是一个可变字符串类，我们可以把它看成是一个容器(这里的可变指的是StringBuilder对象中的内容是可变的)
 >
 > 此类的方法与StringBuffer相同，但不保证线程安全。 此类设计用作简易替换为StringBuffer在正在使用由单个线程字符串缓冲区的地方（如通常是这种情况）
@@ -2465,9 +2468,9 @@ public static void main(String[] args) {
 >
 > - String：内容是不可变的
 > - StringBuilder：内容是可变的
->
+> 
 > **String、StringBuffer、StringBuilder之间的区别**
->
+> 
 > - String
 >   - 效率最低
 >   - 在操作字符串过程中,会舍弃原有空间开辟新的空间
@@ -2476,19 +2479,20 @@ public static void main(String[] args) {
 >   - 效率略高
 >   - 这是一个字符串缓冲区,所有字符操作在同一空间,所有效率略高
 >   - 有做线程安全
-> - StringBuilder
+>- StringBuilder
 >   - 效率最高
->   - 和StringBuffer是在同一空间
+>  - 和StringBuffer是在同一空间
 >   - 没有做线程安全
 >
-> **System类**
->
+
+### System类
+
 > System包含几个有用的类字段和方法，它不能被实例化，这个类为我们提供了一些与工具或系统交互的方法
 >
 > **exit**	终止当前运行java虚拟机，非零表示异常终止
 >
 > ```java
-> public static void main(String[] args) {
+>public static void main(String[] args) {
 >     for(int i=0;i<100000;i++){
 >         System.out.println("第"+(i+1)+"次");	// 第50001次
 > 		if(i==50000){
@@ -2498,41 +2502,43 @@ public static void main(String[] args) {
 >     }
 > }
 > ```
->
+> 
 > **currentTimeMillis**	获取当前时间毫秒数
->
+> 
 > ```java
-> public static void main(String[] args) {
+>public static void main(String[] args) {
 >     //获取开始时间
->     long start = System.currentTimeMillis();
+>    long start = System.currentTimeMillis();
 >     for(int i=0;i<100000;i++)
-> 		System.out.println("第"+(i+1)+"次");	// 进行100000次循环总共用时692毫秒
+>		System.out.println("第"+(i+1)+"次");	// 进行100000次循环总共用时692毫秒
 >     //获取结束时间
 > 	long end = System.currentTimeMillis();
 > 	System.out.println("总共耗时:"+(end-start));	// 总共耗时:692
 > }
 > ```
 >
-> **Date类**
->
+
+### Date类
+
 > Date代表了一个特定的时间，精确到毫秒
 >
 > 构造方法：
 >
 > |        构造方法        | 说明                                                         |
-> | :--------------------: | ------------------------------------------------------------ |
+>| :--------------------: | ------------------------------------------------------------ |
 > |     public Date()      | 分配一个 `Date`对象，并初始化它，以便它代表它被分配的时间，测量到最近的毫秒 |
 > | public Date(long date) | 分配一个 `Date`对象，并将其初始化为表示从标准基准时间起指定的毫秒数 |
->
+> 
 > 常用的方法：
->
+> 
 > |             方法名             | 说明                                                 |
 > | :----------------------------: | ---------------------------------------------------- |
 > |     public long getTime()      | 获取的是日期对象从1970年1月1日00:00:00到现在的毫秒数 |
 > | public void setTime(long time) | 设置时间，给的是毫秒值                               |
->
-> **DateFormat类**
->
+> 
+
+### DateFormat类
+
 > DateFormat类是日期/时间格式化子类的抽象类，它以语言无关的方式格式化和分析日期或时间。可以通过指定格式将日期转换为字符串,字符串转换为日期
 >
 > DateFormat有一个子类实现类叫做SimpleDateFormat,这个子类实现类中提供了转换的方法
@@ -2570,11 +2576,13 @@ public static void main(String[] args) {
 >       	public static void main(String[] args) {
 >               Date date = new Date();
 >       		// 创建一个格式化对象,并设定格式
->       		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SS");
->       		String time = df.format(date);
->       		System.out.println(time);	// 2021-09-26 10:42:19 587
->       	}
->       }
+>
+>      		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SS");
+>      		String time = df.format(date);
+>      		System.out.println(time);	// 2021-09-26 10:42:19 587
+>      	}
+>      }
+>
 >       ```
 >
 > 2. 解析(从 String 到 Date)：
@@ -2582,20 +2590,23 @@ public static void main(String[] args) {
 >    1. public Date <span style="color: red;">parse(String source)</span>：从给定字符串的开始解析文本以生成日期
 >
 >       ```java
->       public class DateFormatDemo {
+>        public class DateFormatDemo {
 >       	public static void main(String[] args) {
->               // 设定日期字符串
+>              // 设定日期字符串
 >       		String str = "2008年10月01日 20时18分52秒";
->               df = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
+>              df = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
 >               //将字符串转换为日期
->               Date d = df.parse(str);
+>              Date d = df.parse(str);
 >               System.out.println(d);	// Wed Oct 01 20:18:52 CST 2008
->       	}
+>    
+>      	}
 >       }
+>    
 >       ```
 >
-> **Calendar日历类**
->
+
+### Calendar日历类
+
 > Calendar为特定瞬间与一组日历字段之间的转换提供一系列操作方法
 >
 > Calendar提供一个类方法getInstance用于获取当前日期的日历对象
@@ -2603,13 +2614,14 @@ public static void main(String[] args) {
 > 使用方法获取到日历或操作日历
 >
 > 常用方法:
->
+> 
 > - get(日历字段);
 > - set(year,month,date);
 > - add();
->
-> **Integer 包装类**
->
+> 
+
+### Integer 包装类
+
 > 包装类是基本数据类型封装成对象，为该数据类型提供丰富的操作方法
 >
 > 常用方法：基本数据类型与字符串之间的转换
@@ -2626,59 +2638,61 @@ public static void main(String[] args) {
 > | double   | Double    |
 > | char     | Character |
 > | boolean  | Boolean   |
->
+> 
 > Integer类(常用)：包装一个对象中的原始类型int值
->
-> 可以使用方法: Integer(int value) Integer(String 数字) parseInt(String 数字) ValueOf(String 数字)
->
-> ```java
+> 
+>可以使用方法: Integer(int value) Integer(String 数字) parseInt(String 数字) ValueOf(String 数字)
+> 
+>```java
 > public class IntegerDemo {
-> 	public static void main(String[] args) {
+>	public static void main(String[] args) {
 > 		//通过包装类,将原始数据类型转换为包装类
 > 		int num = 34;
 > 		//将原始数据包装
 > 		Integer i = new Integer(num);
 > 		//通过构造方法将字符串转换为数字
-> 		Integer s = new Integer("15");
+>		Integer s = new Integer("15");
 > 		//通过parseInt将字符串转换为数字
-> 		Integer s1 = Integer.parseInt("23");
+>		Integer s1 = Integer.parseInt("23");
 > 		//通过valueOf()将字符串转换为数字
 > 		Integer s2 = Integer.valueOf("28");
 > 
 > 		Integer num1 = 35;   //直接将数字赋值给包装类,这种方式叫做包装类的自动装箱
 > 		int num2 = num1;		//直接将包装类数据变为原始数据,这种叫做包装类的自动拆箱
-> 
+>
 > 		Double d = new Double("32.5"); //字符串转换小数
-> 		System.out.println(i+s);		// 49
+>		System.out.println(i+s);		// 49
 > 		System.out.println(i+s+s1);		// 72
-> 		System.out.println(i+s+s1+s2);	// 100
+>		System.out.println(i+s+s1+s2);	// 100
 > 	}
 > }
 > ```
->
-> *int和String的相互转换*
->
-> ```java
-> // int ---> String
-> int number = 100;
-> String s = "" + number;
 > 
-> // String ---> int
+> *int和String的相互转换*
+> 
+> ```java
+>// int ---> String
+> int number = 100;
+>String s = "" + number;
+> 
+>// String ---> int
 > String s = "100";
-> Integer i = Integer.valueof(s);
+>Integer i = Integer.valueof(s);
 > int x = i.intValue();
-> System.out.println
+>System.out.println
 > ```
->
-> **Object类**
->
+> 
+
+### Object类
+
 > Object类是所有类的基类，所有类都直接或间接的继承自Object类
 >
 > - toString方法是属于Object类的方法，其他类使用的toString是重写Object的方法
-> - equals方法是属于Object类的方法，其他类使用时，也是重写的Object类的方法
->
-> **Math类**
->
+>- equals方法是属于Object类的方法，其他类使用时，也是重写的Object类的方法
+> 
+
+### Math类
+
 > 数学类
 >
 > 包含执行基本数字运算方法，方法为静态方法
@@ -2740,20 +2754,21 @@ public static void main(String[] args) {
 >
 > 如果程序出现了问题，我们需要自己来处理，有两种方案：**try--catch**和**throws**
 >
-> **try--catch**
->
+
+### try--catch
+
 > - 格式
 >
 >   ```java
->   try {
+>    try {
 >       可能出现异常的代码;
->   } catch(异常类名 变量名) {
+>    } catch(异常类名 变量名) {
 >       异常的处理代码;
 >   }
->   ```
->
+>  ```
+> 
 > - 范例
->
+> 
 >   ```java
 >   try {
 >       System.out.println("pls input num1:");
@@ -2764,39 +2779,40 @@ public static void main(String[] args) {
 >   } catch (Exception e) {
 >       System.out.println(e.getMessage());
 >   }
->   ```
->
+>  ```
+> 
 > - 执行流程：
->
+> 
 >   - 程序从try里面的代码开始执行
 >   - 出现异常，会自动生成一个异常类对象，该异常对象将被提交给Java运行时系统
 >   - 当Java运行时系统接收到异常对象时，会到catch中去找匹配的异常类，找到后进行异常的处理
 >   - 执行完毕之后，程序还可以继续往下执行
->
-> **throws**
->
+> 
+
+### throws
+
 > - 格式
 >
 >   ```java
->   throws 异常类名;
+>  throws 异常类名;
 >   ```
 >
 >   <span style="color: red;">注意：</span>这个格式是跟在方法的括号后面的
->
-> - 范例
->
+> 
+>- 范例
+> 
 >   ```java
 >   public static void method() throws ArrayIndexOutOfBoundsException {
 >       int[] arr = {1, 2, 3};
 >       System.out.println(arr[3]);
 >   }
 >   ```
->
+> 
 >   - <span style="color: red;">编译时异常必须要进行处理</span>，两种处理方案：**try--catch**和**throws**，如果采用**throws**这种方案，将来谁调用谁处理
 >   - <span style="color: red;">运行时异常可以不处理</span>，出现问题后，需要我们回来修改代码
->
+> 
 > - 使用
->
+> 
 >   ```java
 >   public static void main(String[] args) {
 >       Scanner in = new Scanner(System.in);
@@ -2812,45 +2828,49 @@ public static void main(String[] args) {
 >       }
 >       System.out.println(date);
 >   }
->                         
+>       
 >   private static Date format(String str) throws ParseException {	// 仅抛出异常
 >       DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
->       // 因为异常已经抛出,所以当前不需要处理异常
+>      // 因为异常已经抛出,所以当前不需要处理异常
 >       return df.parse(str);
->   }
+>    }
 >   ```
 >
 > ![][1]
 >
+
+### Throwable
+
 > **Throwable的成员方法**
 >
 > |            方法名             |               说明                |
-> | :---------------------------: | :-------------------------------: |
+>| :---------------------------: | :-------------------------------: |
 > |  public String getMessage()   | 返回此 throwable 的详细消息字符串 |
-> |   public String toString()    |      返回此可抛出的简短描述       |
+>|   public String toString()    |      返回此可抛出的简短描述       |
 > | public void printStackTrace() |   把异常的错误信息输出在控制台    |
->
-> - <span style="color: red;">异常的体系结构</span>
->
+> 
+>- <span style="color: red;">异常的体系结构</span>
+> 
 >   - **Throwable  所有异常和错误的父类**
 >   - **Error错误 这种错误,程序本身无法解决**
 >   - **Exception     所有异常的父类 包含运行时异常(RuntimeException)和非运行时异常**
->
+> 
 >   ![][2]
->
-> **自定义异常**
->
+> 
+
+### 自定义异常
+
 > - 格式：
 >
 >   ```java
->   public class 异常类名 extends Exception {
+>  public class 异常类名 extends Exception {
 >       无参构造
->       带参构造
+>      带参构造
 >   }
 >   ```
 >
 > - 范例：
->
+> 
 >   ```java
 >   public class ScoreException extends Exception {
 >       public ScoreException() {}
@@ -2859,9 +2879,9 @@ public static void main(String[] args) {
 >       }
 >   }
 >   ```
->
+> 
 > - 使用：
->
+> 
 >   ```java
 >   public static void main(String[] args) {
 >       Scanner in = new Scanner(System.in);
@@ -2875,51 +2895,57 @@ public static void main(String[] args) {
 >       }
 >       System.out.println("验明正身");
 >   }
->                         
+>       
 >   //想要抛出一个实例,方法后还得抛出一个对应的类型
 >   public static void checkSex(String sex) throws Exception {
 >       if ("男".equals(sex) || "女".equals(sex))
 >           System.out.println("性别为:"+sex);
->       else {
+>      else {
 >           //throw 抛出一个异常的实例,构造方法填写异常的信息
->           throw new Exception("性别必须是'男'或者'女'！");
+>          throw new Exception("性别必须是'男'或者'女'！");
 >       }
->   }
+>    }
 >   ```
 >
 > *throw抛出的是异常的实例*
->
+> 
 > ![][3]
->
+> 
 > - throws和throw的区别
->
+> 
 >   |                      throws                      |               throw                |
->   | :----------------------------------------------: | :--------------------------------: |
+>    | :----------------------------------------------: | :--------------------------------: |
 >   |         用在方法声明后面，跟的是异常类名         |   用在方法体内，跟的是异常对象名   |
->   |       表示抛出异常，由该方法的调用者来处理       | 表示抛出异常，由方法体内的语句处理 |
+>    |       表示抛出异常，由该方法的调用者来处理       | 表示抛出异常，由方法体内的语句处理 |
 >   | 表示出现异常的一种可能性，并不一定会发生这些异常 |    执行throw一定抛出了某种异常     |
->
-> **finally**
->
+> 
+
+### finally
+
 > <span style="color: red;">finally语句块总是会被执行</span>。它主要用于回收在try块里打开的物力资源(如数据库连接、网络连接和磁盘文件)。只有finally块，执行完成之后，才会回来执行try或者catch块中的return或者throw语句，如果finally中使用了return或者throw等终止方法的语句，则就不会跳回执行，直接停止
 >
 > ```java
 > public static void main(String[] args) {
->     Scanner in = new Scanner(System.in);
->     System.out.println("请输入学生性别:");
->     String sex = in.next();
->     try {
->         checkSex(sex);
->     } catch (Exception e) {
->         // 此处处理的异常为自定义异常
->         System.out.println(e.getMessage());	// 性别必须是'男'或者'女'！
->     } finally {
->         System.out.println("验明正身");
->     }
+>  Scanner in = new Scanner(System.in);
+> System.out.println("请输入学生性别:");
+>  String sex = in.next();
+>  try {
+>     checkSex(sex);
+>  } catch (Exception e) {
+>      // 此处处理的异常为自定义异常
+>      System.out.println(e.getMessage());	// 性别必须是'男'或者'女'！
+>  } finally {
+>      System.out.println("验明正身");
+>  }
 > }
 > ```
 >
-> 
+> **至少有两种情况下finally语句是不会被执行**
+>
+> - *try语句没有被执行到，如在try语句之前就返回了，这样finally语句就不会执行，这也说明了finally语句被执行的必要而非充分条件是：相应的try语句一定被执行到*
+> - *在try块中有System.exit(0);这样的语句，System.exit(0);是终止Java虚拟机JVM的，连JVM都停止了，所有都结束了，当然finally语句也不会被执行到*
+>
+> **finally语句是在try的return语句执行之后，return返回之前执行**
 
 ## 集合
 
@@ -2933,12 +2959,12 @@ public static void main(String[] args) {
 > 概述：
 >
 > - 是单例集合的顶层接口，它表示一组对象，这些对象称之为<span style="color: red;">Collection元素</span>，统一存储Object对象
-> - JDK不提供此接口的任何直接实现，它提供更具体的子接口(List和Set)实现
+> - **JDK不提供此接口的任何直接实现，它提供更具体的子接口(List和Set)实现**
 >
 
 #### List
 
-> - 概述：有序集合，用户可以精确控制列表中每个元素的插入位置，也可以通过索引访问具体元素，并搜索列表中的元素
+> - 概述：*有序集合，用户可以精确控制列表中每个元素的插入位置，也可以通过索引访问具体元素，并搜索列表中的元素*
 >
 > - 特点：
 >
@@ -3035,8 +3061,8 @@ public static void main(String[] args) {
 >
 >- HashSet 的特点：
 >- 不能保证数据的顺序
-> - 集合元素可以是 null，但是只能有一个
-> - HashSet 不是线程安全的
+>- 集合元素可以是 null，但是只能有一个
+>- HashSet 不是线程安全的
 >
 >**格式**
 >
@@ -3045,40 +3071,41 @@ public static void main(String[] args) {
 >```
 >
 >**常用方法**
-> 
-> |    方法名    | 说明                 |
-> | :----------: | -------------------- |
-> |  add(元素)   | 添加元素             |
+>
+>|    方法名    | 说明                 |
+>| :----------: | -------------------- |
+>|  add(元素)   | 添加元素             |
 >|    size()    | 获取元素的个数       |
-> | remove(元素) | 删除对应元素         |
-> |  iterator()  | 迭代器，用于遍历集合 |
-> 
-> - *Iterator 迭代器*
-> 
-> - *Iterator 迭代器*，承载集合中元素,用于遍历集合,迭代器本身不能存储数据,但是能通过迭代器删除集合底层元素
+>| remove(元素) | 删除对应元素         |
+>|  iterator()  | 迭代器，用于遍历集合 |
+>
+>- *Iterator 迭代器*
+>
+>- *Iterator 迭代器*，承载集合中元素,用于遍历集合,迭代器本身不能存储数据,但是能通过迭代器删除集合底层元素
 >
 >- 循环遍历迭代器：
 >
->   ```java
->  Set set = new HashSet();
->   
->  set.add("1");
->   ll.add("2");
->   ...
->         ll.add("100");
->   // 遍历集合，因为Set集合没有下标，故此不能使用for循环遍历，这时候需要使用迭代器
->   Iterator it = set.iterator();
->   // 循环遍历迭代器
->   // 判断迭代器中是否还有下一个元素，如果没有就返回false
->   while(it.hasNext()) {
->       // 有就取出
->       Object obj = it.next();
->       System.out.println(obj);
->   }
->   // forEach循环遍历集合，也不需要下标
->   for(Object object : set)
->       System.out.println(object);
->   ```
+>  ```java
+> Set set = new HashSet();
+>
+> set.add("1");
+>  ll.add("2");
+>  ...
+>        ll.add("100");
+>  // 遍历集合，因为Set集合没有下标，故此不能使用for循环遍历，这时候需要使用迭代器
+>  Iterator it = set.iterator();
+>  // 循环遍历迭代器
+>  // 判断迭代器中是否还有下一个元素，如果没有就返回false
+>  while(it.hasNext()) {
+>      // 有就取出
+>      Object obj = it.next();
+>      System.out.println(obj);
+>  }
+>  // forEach循环遍历集合，也不需要下标
+>  for(Object object : set)
+>      System.out.println(object);
+>
+>  ```
 
 ### Map
 
@@ -3138,8 +3165,8 @@ public static void main(String[] args) {
 >// 获取到所有的键
 >Set set = map.keySet();
 >for(Object key : set){
->    // map.get(键)得到对应的value值
->    System.out.println(key+"对应的值有:"+map.get(key));
+>    	// map.get(键)得到对应的value值
+>    	System.out.println(key+"对应的值有:"+map.get(key));
 >}
 >```
 >
@@ -3225,6 +3252,30 @@ public static void main(String[] args) {
 >  ```
 >
 
+####　静态方法使用泛型
+
+> **static <T> 表示将该方法声明为泛型方法**
+>
+> 以下写法不能通过编译
+>
+> ```java
+> public static List<T> getList() {}
+> ```
+>
+> 需要改成如下写法
+>
+> ```java
+> public static <T> List<T> getList() {}
+> ```
+>
+> 对于静态泛型方法的调用
+>
+> ```java
+> 
+> ```
+>
+> 
+
 ### Collections 集合工具类
 
 >集合工具类，针对集合封装了很多集合工具方法
@@ -3293,24 +3344,24 @@ public static void main(String[] args) {
 > ```java
 > public long showFile(File file) {
 > 	long num = 0
->     // 1.通过目录获取到目录中所有内容
->     File[] files = file.listFiles();
->     // 2.判断该文件目录下是否为null，不为null才可以操作
->     if(files != null){
->         // 3.循环遍历当前文件夹下的所有内容
->         for(File fi : files) {
->             // 4.判断每个内容是否为目录
->             if(fi.isDirectory()) {
->                 // 如果是文件夹，就调用自己这个方法，将当前文件夹作为根，继续向下遍历
->                 num += showFile(fi);
->             }else {
->                 // 如果是文件，数量加1，并输出
->                 num++;
->                 System.out.println(fi.getPath());
+>         // 1.通过目录获取到目录中所有内容
+>         File[] files = file.listFiles();
+>         // 2.判断该文件目录下是否为null，不为null才可以操作
+>         if(files != null){
+>             // 3.循环遍历当前文件夹下的所有内容
+>             for(File fi : files) {
+>                 // 4.判断每个内容是否为目录
+>                 if(fi.isDirectory()) {
+>                     // 如果是文件夹，就调用自己这个方法，将当前文件夹作为根，继续向下遍历
+>                     num += showFile(fi);
+>                 }else {
+>                     // 如果是文件，数量加1，并输出
+>                     num++;
+>                     System.out.println(fi.getPath());
+>                 }
 >             }
->         }
->     }
->     return num;
+>        }
+>     	return num;
 > }
 > ```
 >
