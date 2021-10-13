@@ -509,24 +509,24 @@ public static void quickSortCore(int[] array, int left, int right) {
 >            // 调用方法
 >             int result = sum( a: 10, b: 20);
 >            System.out.println(result);		// 30
->                   
+>                           
 >             int result2 = sum( a: 10.0, b: 20.0);
 >             System.out.println(result2);	// 30.0
->                   
+>                           
 >             int result3 = sum( a: 10, b: 20, c: 30);
 >            System.out.println(result3);	// 60
 >         }
->                  
+>                          
 >         // 需求1：求两个 int 类型数据和的方法
 >        public static int sum(int a, int b) {
 >             return a + b;
 >         }
->                   
+>                           
 >         // 需求2：求两个 double 类型数据和的方法
 >         public static double sum(double a, double b) {
 >            return a + b;
 >         }
->                  
+>                          
 >         // 需求3：求三个 int 类型数据和的方法
 >         public static int sum(int a, int b, int c) {
 >             return a + b + c;
@@ -550,7 +550,7 @@ public static void quickSortCore(int[] array, int left, int right) {
 >            // 方法体
 >         }
 >      }
->                                     
+>                                                     
 >     // 属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
@@ -725,6 +725,10 @@ public static void main(String[] args) {
 > *Java堆内存中的成员变量有默认值*
 > 
 
+#### 匿名对象
+
+> 
+
 ### 成员变量和局部变量
 
 > - 成员变量(全局变量)：类中方法外的变量
@@ -860,7 +864,7 @@ public static void main(String[] args) {
 >         public static void main(String[] args) {
 >             Student s1 = new Student();
 >             s1.setName("王狗蛋"); // setName 方法中的 this 代表 s1 这个对象
->                                     
+>                                                     
 >             Student s2 = new Student();
 >             s2.setName("李铁蛋"); // setName 方法中的 this 代表 s2 这个对象
 >         }
@@ -1630,14 +1634,14 @@ public static void main(String[] args) {
 >     		System.out.println("USB插入，交换数据");
 >         }
 >     }
->     
+>             
 >     public class USBSan implements USBInterfase {
 >     	@Override
 >     	public void service() {
 >     		System.out.println("USB插入，风扇转起来了");
 >     	}
 >     }
->     
+>             
 >     public class USBDemo{
 >     	public static void main(String[] args) {
 >     		USBInterfase usb = new USBSan();
@@ -2828,7 +2832,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println(date);
 >   }
->       
+>               
 >   private static Date format(String str) throws ParseException {	// 仅抛出异常
 >       DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 >      // 因为异常已经抛出,所以当前不需要处理异常
@@ -2895,7 +2899,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println("验明正身");
 >   }
->       
+>               
 >   //想要抛出一个实例,方法后还得抛出一个对应的类型
 >   public static void checkSex(String sex) throws Exception {
 >       if ("男".equals(sex) || "女".equals(sex))
@@ -2946,6 +2950,12 @@ public static void main(String[] args) {
 > - *在try块中有System.exit(0);这样的语句，System.exit(0);是终止Java虚拟机JVM的，连JVM都停止了，所有都结束了，当然finally语句也不会被执行到*
 >
 > **finally语句是在try的return语句执行之后，return返回之前执行**
+
+## final、finally、finalize 有什么区别
+
+> - final：是修饰符，如果修饰类，此类不能被继承；如果修饰方法和变量，则表示此方法和此变量不能在被改变，只能使用。
+> - finally：是 try{}     catch{} finally{} 最后一部分，表示不论发生任何情况都会执行，finally 部分可以省略，但如果 finally 部分存在，则一定会执行 finally 里面的代码。
+> - finalize： 是 Object 类的一个方法，在垃圾收集器执行的时候会调用被回收对象的此方法。
 
 ## 集合
 
@@ -4373,6 +4383,512 @@ public class StudentStreamDemo {
 > }
 > ```
 
+## 多线程
+
+> **什么是进程**
+>
+> 当程序开始运行时,它就是一个进程,进程包括运行中的程序和程序所使用到的内存和资源.而**一个进程至少有一个线程**
+> 进程就是当程序被CPU加载时，根据程序每一行代码做出相应动作，形成一个动态的过程，那么这个过程就是进程
+> 进程运行时，所申请的空间，都是在运行内存上，关机之后，进程消失了
+>
+> **什么是线程**
+>
+> 程序中执行的一个流,每个线程都有自己专属寄存器(栈指针,程序计数器等),但是代码区是共享,即不同的线程可以执行同样的函数(方法)
+>
+> **多线程**
+>
+> 一个进程中有多个执行路径,共同执行同一个代码源.
+>
+> **Java中的守护线程**
+>
+> 非人力特意执行的线程,由JVM执行的线程就是守护线程
+
+### 线程的创建
+
+> **实现多线程的三种方式**
+>
+> 1. 通过<span style="color: red;">继承Thread类</span>，并<span style="color: red;">重写run方法</span>的方式来实现多线程
+> 2. 通过<span style="color: red;">实现Runnable接口</span>，将<span style="color: red;">接口实例放入Thread</span>中的形式来实现多线程
+> 3. 通过<span style="color: red;">实现Callable接口</span>的方式来实现多线程
+
+#### Thread类
+
+> **实现多线程的方式**
+>
+> - 定义一个类MyThread继承Thread类
+>
+>   ```java
+>   public class MyThread extends Thread {}
+>   ```
+>
+> - 在MyThread类中重写run()方法
+>
+>   ```java
+>   public class MyThread extends Thread {
+>   	//线程的运行体
+>   	@Override
+>   	public void run() {
+>   		for (int i = 0; i < 100; i++) {
+>   			System.out.println("第"+(i+1)+"次,好好学习,天天向上!");
+>   		}
+>       }
+>   }
+>   ```
+>
+> - 创建MyThread类的对象
+>
+>   ```java
+>   public class MyThreadDemo {
+>   
+>   	public static void main(String[] args) {
+>   		//创建线程对象
+>   		Thread t = new MyThread();
+>   		Thread t1 = new MyThread();
+>   		Thread t2 = new MyThread();
+>   	}
+>   }
+>   ```
+>
+> - 启动线程
+>
+>   - void start()：使此线程开始执行；Java虚拟机调用此线程的 run 方法
+>
+>   ```java
+>   public class MyThreadDemo {
+>     
+>   	public static void main(String[] args) {
+>   		//创建线程对象
+>   		Thread t = new MyThread();
+>   		Thread t1 = new MyThread();
+>   		Thread t2 = new MyThread();
+>           //调用start方法,启动线程
+>   		t.start();
+>   		t1.start();
+>   		t2.start();
+>   	}
+>   }
+>   ```
+>
+> *两个小问题*
+>
+> - 为什么要重写 run() 方法
+>   - 因为 run() 是用来封装被线程执行的代码
+> - run() 方法和 start() 方法的区别
+>   - run()：封装线程执行的代码，直接调用，相当于普通方法的调用
+>   - start()：启动线程；然后由JVM调用此线程的 run() 方法
+>
+> **设置和获取线程名称**
+>
+> Thread类中设置和获取线程名称的方法
+>
+> - void setName(String name)：将此线程的名称更改为等于参数 name
+>
+>   ```java
+>   public class MyThreadDemo {
+>   
+>   	public static void main(String[] args) {
+>   		//创建线程对象
+>   		Thread t = new MyThread();
+>   		Thread t1 = new MyThread();
+>   		Thread t2 = new MyThread();
+>   		//设置线程名称
+>   		t.setName("小明线程-----");
+>   		t1.setName("小文线程----");
+>   		t2.setName("小林线程----");
+>   		//调用start方法,启动线程
+>   		t.start();
+>   		t1.start();
+>   		t2.start();
+>   	}
+>   }
+>   ```
+>
+> - String getName()：返回此线程的名称
+>
+>   ```java
+>   public class MyThread extends Thread {
+>   	//线程的运行体
+>   	@Override
+>   	public void run() {
+>   		for (int i = 0; i < 100; i++) {
+>   			System.out.println(this.getName()+"第"+(i+1)+"次,好好学习,天天向上!");
+>   		}
+>   	}
+>   }
+>   ```
+
+#### Runnable接口
+
+> **实现多线程的方式**
+>
+> - 创建 MyRunnable 类实现 Runnable 接口
+>
+>   ```java
+>   public class MyRunnable implements Runnable {}
+>   ```
+>
+> - 重写run方法
+>
+>   - Runnable 只是接口，无法通过 this.getName() 来获取当前线程名称
+>   - 在 MyRunnable 类中使用 Thread.currentThread().getName() 来获取当前线程名称
+>     - Thread.currentThread()：线程类中的一个静态方法,用于获取当前线程
+>
+>   ```java
+>   public class MyRunnable implements Runnable {
+>   	@Override
+>   	public void run() {
+>   		for (int i = 0; i <100; i++) {
+>   			//获取线程名称currentThread线程类中的一个静态方法,用于获取当前线程
+>   			System.out.println(Thread.currentThread().getName()+":"+i);
+>   		}
+>   	}
+>   }
+>   ```
+>
+> - 创建 MyRunnable 类的对象
+>
+>   ```java
+>   public class RunnableDemo {
+>   	public static void main(String[] args) {
+>   		//创建子类实现类对象
+>   		Runnable r = new MyRunnable();
+>   	}
+>   }
+>   ```
+>
+> - 创建 Thread 类对象,将 MyRunnable 类的对象放入到线程对象中执行
+>
+>   ```java
+>   public class RunnableDemo {
+>   	public static void main(String[] args) {
+>   		//创建子类实现类对象
+>   		Runnable r = new MyRunnable();
+>   		//创建线程对象
+>   		Thread t = new Thread(r, "小林线程");
+>   		Thread t1 = new Thread(r, "张三线程");
+>   		Thread t2 = new Thread(r, "文杰线程");
+>   	}
+>   }
+>   ```
+>
+> - 调用start方法启动线程
+>
+>   ```java
+>   public class RunnableDemo {
+>   	public static void main(String[] args) {
+>   		//创建子类实现类对象
+>   		Runnable r = new MyRunnable();
+>   		//创建线程对象
+>   		Thread t = new Thread(r, "小林线程");
+>   		Thread t1 = new Thread(r, "张三线程");
+>   		Thread t2 = new Thread(r, "文杰线程");
+>   		//启动线程
+>   		t.start();
+>   		t1.start();
+>   		t2.start();
+>   	}
+>   }
+>   ```
+
+#### Runnable和Thread的对比
+
+> **相比继承Thread类,实现Runnable接口的好处**
+>
+> - 避免了Java中单继承的问题
+> - 适合于多个相同程序的代码去处理同一个资源的情况,把线程和程序的代码、数据有效分离,较好的体现了面向对象的设计思想
+
+### 线程的优先级
+
+> **线程调度**
+>
+> Java中线程的调度有两种
+>
+> - *分时调度*
+>   - 平均分配CPU资源
+> - *抢占式调度*
+>   - 优先级高的线程优先抢占CPU,如果优先级相同则随机分配,优先级高的线程可能获取CPU时间片段相对多一些
+>
+> **获取线程优先级**
+>
+> ```java
+> // 返回一个int类型(线程优先级数字 范围1~10)
+> 线程对象.getPriority();
+> ```
+>
+> **抢占调度中设置线程优先级的方法**
+>
+> ```java
+> // 设置线程优先级 数字越大，优先级越高 范围1~10 默认5 
+> 线程对象.setPriority(int[常量]);
+> ```
+>
+> 三个常量关键字：
+>
+> - Thread.MAX_PRIORITY	 10
+> - Thread.MIN_PRIORITY     1
+> - Thread.NORM_PRIORITY  5
+
+### 线程控制
+
+> |             方法名             | 说明                                           |
+> | :----------------------------: | ---------------------------------------------- |
+> | static void sleep(long millis) | 使当前正在执行的线程停留(暂停执行)指定的毫秒数 |
+> |          void join()           |                                                |
+> |   void setDaemon(boolean on)   |                                                |
+>
+> 
+
+#### sleep
+
+> 
+
+#### join
+
+> 
+
+#### setDaemon
+
+> 
+
+### 线程的生命周期
+
+> 
+
+### 线程计数器
+
+> 
+
+### 线程同步
+
+> **为什么要线程同步**
+>
+> 当我们有多个线程要同时访问一个变量或对象时，如果这些线程中既有读又有写操作时，就会导致变量值或对象的状态出现混乱，从而导致程序异常。举个例子，如果一个银行账户同时被两个线程操作，一个取100块，一个存钱100块。假设账户原本有0块，如果取钱线程和存钱线程同时发生，会出现什么结果呢？取钱不成功，账户余额是100.取钱成功了，账户余额是0.那到底是哪个呢？很难说清楚。因此多线程同步就是要解决这个问题
+>
+> 注：**同步是一种高开销的操作，因此应该尽量减少同步的内容。通常没有必要同步整个方法，使用 synchronized 代码块同步关键代码即可**
+
+#### 同步锁(互斥锁)
+
+> **关键字**：<span style="color: red;">synchronized</span> 是一种同步锁。它修饰的对象有以下几种
+>
+> - 修饰一个代码块，被修饰的代码块称为同步语句块，其作用的范围是大括号{}括起来的代码，作用的对象是调用这个代码块的对象
+> - 修饰一个方法，被修饰的方法称为同步方法，其作用的范围是整个方法，作用的对象是调用这个方法的对象
+> - 修改一个静态的方法，其作用的范围是整个静态方法，作用的对象是这个类的所有对象
+> - 修改一个类，其作用的范围是synchronized后面括号括起来的部分，作用主的对象是这个类的所有对象
+
+##### 同步代码块
+
+> 被<span style="color: red;">synchronized</span>修饰的语句块会自动被加上内置锁，从而实现同步
+>
+> 锁多条语句操作共享数据，可以使用同步代码块实现
+>
+> **格式**
+>
+> ```java
+> synchronized(任意对象) {
+>         多条语句操作共享数据的代码
+> }
+> ```
+>
+> **同步代码块的锁对象**
+>
+> - synchronized块：直接锁定指定的对象，该对象在多个地方的同步锁定块，只能多线程同时执行其中一个
+>
+> **同步的好处和弊端**
+>
+> - 好处：解决了多线程的数据安全问题
+> - 弊端：当线程很多时，因为每个线程都会去判断同步上的锁，这是很耗费资源的，无形中会降低程序的运行效率
+>
+> **关于 synchronized 中传入的对象**
+>
+> - 传入的对象其实就是**synchronized**的“锁”，*该“锁”作为锁定代码块的对象，在代码块执行完毕之前都会被占用，不能被其他的线程访问*
+>
+> - 对于使用相同“锁”的**synchronized**，**synchronized**中的**代码块**不能同时运行
+>
+>   ```java
+>   synchronized (obj) {
+>       ...
+>   }
+>   ```
+>
+> - 如果把锁改成**Thread.currentThread().getName()**，因为每一个线程的名字不一样，所以“锁”就不一样，就会导致同步锁失效
+>
+>   ```java
+>   synchronized (Thread.currentThread().getName()) {
+>       ...
+>   }
+>   ```
+>
+> - 如果要同步就要保证“锁”是一样的，或者说地址一样
+>
+> - *传入参数为this时，表示的是该代码块所在的类的实例；如果该类有多个实例，则访问不同实例的资源也不会同步*
+
+##### 同步方法
+
+> 就是把<span style="color: red;">synchronized</span>关键字加到方法上
+>
+> java的每个对象都有一个内置锁，当用<span style="color: red;">synchronized</span>关键字修饰方法时，内置锁会保护整个方法。在调用该方法前，需要获得内置锁，否则就处于阻塞状态
+>
+> **格式**
+>
+> ```java
+> 修饰符 synchronized 返回值类型 方法名(方法参数) {
+>      方法体
+> }
+> ```
+>
+> **同步方法的锁对象**
+>
+> - <span style="color: red;">this</span>(当前对象)
+>   - 一次只能有一个线程进入这个方法
+> - synchronized 修饰非静态方法：锁定的是该类的实例 同一实例在多线程中调用才会触发同步锁定 所以，多个被synchronized修饰的非静态方法在同一实例下，只能多线程同时调用一个
+>
+> **同步静态方法**
+>
+> 就是把 synchronized 关键字加到静态方法上
+>
+> **格式**
+>
+> ```java
+> 修饰符 static synchronized 返回值类型 方法名(方法参数) {
+>     方法体
+> }
+> ```
+>
+> **同步方法的锁对象**
+>
+> - <span style="color: red;">类名.class</span>
+> - synchronized 修饰静态方法：锁定的是类本身，而不是实例,  同一个类中的所有被 synchronized 修饰的静态方法，多线程只能同时调用一个
+
+#### Lock锁
+
+> 虽然我们可以理解同步代码块和同步方法的锁对象问题，但是我们没有直接看到代码加锁，在哪里释放锁，为了清晰展示锁，这采用对象锁Lock
+>
+> **Lock是接口，不能实例化，这里采用它的实现类ReentrantLock来实例化**
+>
+> *格式*
+>
+> ```java
+> Lock lock = new ReentrantLock();
+> ```
+>
+> **主要方法**：
+>
+> - lock()：
+> - unlock()：
+>
+> ```java
+> public class Ticket implements Runnable {
+> 	// 准备100张票
+> 	private int ticket = 100;
+> 	// Lock锁,它是一个接口,只能实例化子类实现类
+> 	Lock lo = new ReentrantLock();
+> 
+> 	@Override
+> 	public void run() {
+> 		/*
+> 		 * ticket = 100 张票 有 3个窗口 假设窗口1抢到CPU资源后,其他线程等待
+> 		 */
+> 		while (true) {
+> 			// 让多线程安全化,只有一个线程进入票源,lock对lock与unlock之间的代码进行锁定
+> 			lo.lock(); 
+> 			// 窗口1进入,就会把这段代码锁起来
+> 			if (ticket > 0) {
+> 				try {
+> 					Thread.sleep(200);
+> 				} catch (InterruptedException e) {
+> 					e.printStackTrace();
+> 				}
+> 				System.out.println(Thread.currentThread().getName() + "正在售出第" + (ticket--) + "张票");
+> 			} else {
+> 				break;
+> 			}
+> 			// 当窗口1执行完后,重新释放锁,使用unlock 
+> 			lo.unlock();
+> 		}
+> 	}
+> }
+> ```
+
+#### 死锁
+
+> 不同的线程分别占用对方需要的同步资源不放弃，都在等待对方放弃自己需要的同步资源，就形成了线程的死锁
+>
+> ```java
+> public class DeadLock extends Thread {
+> 	//创建出两个静态对象,使运行中对象统一
+> 	private static Object boge = new Object();
+> 	private static Object wenjie = new Object();
+> 	private boolean flag;
+> 	public DeadLock(boolean flag) {
+> 		this.flag = flag;
+> 	}
+> 	@Override
+> 	public void run() {
+> 		if(flag){
+> 			while (true) {
+> 				//线程1执行boge对象后需要获取到wenjie对象,但是wenjie对象还未执行完成,未释放锁
+> 				synchronized (boge) {
+> 					System.out.println("对文杰说:嘿,小子赶紧还我500万,我就请你吃黄焖鸡...");
+> 					synchronized (wenjie) {
+> 						System.out.println("对波哥说:哥,你先请我吃黄焖鸡,我就把500万还给你...");
+> 					}
+> 				}
+> 			}
+> 		}else{
+> 			while (true) {
+> 				//线程2执行wenjie对象后,需要获取到boge对象,但是boge对象还未执行完成,未释放锁
+> 				synchronized (wenjie) {
+> 					System.out.println("对波哥说:哥,你先请我吃黄焖鸡,我就把500万还给你...");
+> 					synchronized (boge) {
+> 						System.out.println("对文杰说:嘿,小子赶紧还我500万,我就请你吃黄焖鸡...");
+> 					}
+> 				}
+> 			}
+> 		}
+> 	}
+> }
+> 
+> public class DeadLockDemo {
+> 
+> 	public static void main(String[] args) {
+> 		//该线程执行上半部分
+> 		DeadLock d1 = new DeadLock(true);
+> 		//该线程执行下半部分
+> 		DeadLock d2 = new DeadLock(false);
+> 		d1.start();
+> 		d2.start();
+> 	}
+> }
+> ```
+>
+> 传入的对象其实就是**synchronized**的“锁”，*该“锁”作为锁定代码块的对象，在代码块执行完毕之前都会被占用，不能被其他的线程访问*
+
+### 线程通信(生产者与消费者)
+
+> **概述**
+>
+> 为了体现生产和消费过程中的等待和唤醒，Java就提供了几个方法供我们使用，这几个方法在Object类中
+>
+> **Object类的古代和唤醒方法**
+>
+> |      方法名      | 说明                             |
+> | :--------------: | -------------------------------- |
+> |   void wait()    |                                  |
+> |  void notify()   | 唤醒正在等待对象监视器的单个线程 |
+> | void notifyAll() | 唤醒正在等待对象监视器的所有线程 |
+>
+> 
+
+### 线程池
+
+> 
+
+## 网络编程
+
+> 
+
+
+
 ## 复制对象和复制引用的区别
 
 > 
@@ -4381,9 +4897,7 @@ public class StudentStreamDemo {
 
 > 
 
-## final、finally、finalize 有什么区别
 
-> 
 
 ## spring mvc 和 struts 的区别是什么
 
