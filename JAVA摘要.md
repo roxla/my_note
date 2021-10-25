@@ -98,9 +98,9 @@
 
 ### final、finally、finalize 有什么区别
 
-> - final：是修饰符，如果修饰类，此类不能被继承；如果修饰方法和变量，则表示此方法和此变量不能在被改变，只能使用。
-> - finally：是 try{}     catch{} finally{} 最后一部分，表示不论发生任何情况都会执行，finally 部分可以省略，但如果 finally 部分存在，则一定会执行 finally 里面的代码。
-> - finalize： 是 Object 类的一个方法，在垃圾收集器执行的时候会调用被回收对象的此方法。
+> - **final**：是修饰符，如果修饰类，此类不能被继承；如果修饰方法和变量，则表示此方法和此变量不能在被改变，只能使用。
+> - **finally**：是 try{} catch{} finally{} 最后一部分，表示不论发生任何情况都会执行，finally 部分可以省略，但如果 finally 部分存在，则一定会执行 finally 里面的代码。
+> - **finalize**： 是 Object 类的一个方法，在垃圾收集器执行的时候会调用被回收对象的此方法。
 
 ### Integer的值范围-128~127
 
@@ -135,7 +135,36 @@
 
 > 操作字符串的类有：<span style="color: red;">String、StringBuffer、StringBuilder</span>。
 >
-> 
+> **String**：
+>
+> String 是只读字符串，也就意味着String 引用的字符串内容是不能被改变的。str 仅仅是一个引用对象，它指向一个字符串对象“abc”。第
+> 二行代码的含义是让str 重新指向了一个新的字符串“bcd”对象，而“abc”对象并没有任何改变，只不过该对象已
+> 经成为一个不可及对象罢了。
+>
+> **StringBuffer**：
+>
+> StringBuffer/StringBuilder 表示的字符串对象可以直接进行修改
+>
+> **StringBuilder**：
+>
+> StringBuilder 是Java5 中引入的，它和StringBuffer 的方法完全相同，区别在于它是在单线程环境下使用的，因为它的所有方法都没有被synchronized 修饰，因此它的效率理论上也比StringBuffer 要高
+
+### Java异常
+
+> java中，异常可以分为三大类: Error，运行时异常，非运行时异常。抛出自定义异常用 throw 语句，在方法中抛出异常采用 throws 语句。
+
+### throw 和throws 的区别
+
+> **throw**：
+>
+> 1. throw 语句用在方法体内，表示抛出异常，由方法体内的语句处理。
+> 2. throw 是具体向外抛出异常的动作，所以它抛出的是一个异常实例，执行throw 一定是抛出了某种异常。
+>
+> **throws**：
+>
+> 1. throws 语句是用在方法声明后面，表示如果抛出异常，由该方法的调用者来进行异常的处理。
+> 2. throws 主要是声明这个方法会抛出某种类型的异常，让它的使用者要知道需要捕获的异常的类型。
+> 3. throws 表示出现异常的一种可能性，并不一定会发生这种异常
 
 ### spring mvc 和 struts 的区别是什么
 
@@ -199,7 +228,7 @@
 
 ### 接口声明中有____________和____________
 
-> 
+> 接口声明中有**变量**和**抽象方法**
 
 ### jdbc提供的主要接口有哪几个
 

@@ -35,7 +35,7 @@
 > - short（短整数）	2字节	-32768 ~ 32767
 > - int（整数）	4字节	-2147483648 ~ 2147483647	java默认的整数数据类型
 > - long（长整数）	8字节	-2^63^ ~ 2^63^-1
-> - float（单精度）	4字节	---
+> - float（单精度）	4字节
 > - double（双精度）	8字节	---	java默认的小数数据类型
 > - char（字符）	2字节	0 ~ 65535(ASCII表对比)
 > - boolean（布尔值）	1字节	true，false
@@ -364,61 +364,62 @@ public static void quickSortCore(int[] array, int left, int right) {
 >
 >   格式：
 >
->   - ```java
->    public static void 方法名(){
->       	// 方法体
->     }
->     ```
-> 
+>   ```java
+>   public static void 方法名(){
+>    	// 方法体
+>   }
+>   ```
+>
 >   范例：
 >
 >   ```java
->  public static void isEvenNumber(){
+>    public static void isEvenNumber(){
 >   	// 方法体
 >   }
 >   ```
-> 
+>
 > - <span style='color: purple; text-decoration:underline;'>有参数</span>：
 >
 >   - 格式：
 >
->   - ```java
->    public static void 方法名(数据类型 变量名1, 数据类型 变量名2, ...){
+>      ```java
+>      public static void 方法名(数据类型 变量名1, 数据类型 变量名2, ...){
 >       	// 方法体
->     }
->     ```
-> 
+>      }
+>      ```
+>
 >   - 范例：
 >
->   - ```java
->    public static void isEvenNumber(int num1, int num2, ...){
+>      ```java
+>      public static void isEvenNumber(int num1, int num2, ...){
 >       	// 方法体
->     }
->     ```
-> 
+>      }
+>      ```
+>
 >   - 注意：
 >
 >     - 方法定义时，参数中的数据类型与变量名都不能缺少，缺少任意一个程序将报错
+>     
 >    - 方法定义时，多个参数之间使用逗号(，)分隔
-> 
+>
 > - <span style='color: purple; text-decoration:underline;'>有返回值</span>：
 >
 >   - 格式：
 >
->   - ```java
->    public static 数据类型 方法名(参数){
+>      ```java
+>      public static 数据类型 方法名(参数){
 >         return 数据;
->     }
->     ```
-> 
+>      }
+>      ```
+>
 >   - 范例：
 >
->   - ```java
->    public static boolean isEvenNumber(int number){
+>      ```java
+>      public static boolean isEvenNumber(int number){
 >         return true;
->     }
->     ```
-> 
+>      }
+>      ```
+>
 >   - 注意：
 >
 >     - 方法定义时return后面的返回值与方法定义上的数据类型要匹配，否则程序将报错
@@ -509,24 +510,24 @@ public static void quickSortCore(int[] array, int left, int right) {
 >            // 调用方法
 >             int result = sum( a: 10, b: 20);
 >            System.out.println(result);		// 30
->                                           
+>                                                   
 >             int result2 = sum( a: 10.0, b: 20.0);
 >             System.out.println(result2);	// 30.0
->                                           
+>                                                   
 >             int result3 = sum( a: 10, b: 20, c: 30);
 >            System.out.println(result3);	// 60
 >         }
->                                          
+>                                                  
 >         // 需求1：求两个 int 类型数据和的方法
 >        public static int sum(int a, int b) {
 >             return a + b;
 >         }
->                                           
+>                                                   
 >         // 需求2：求两个 double 类型数据和的方法
 >         public static double sum(double a, double b) {
 >            return a + b;
 >         }
->                                          
+>                                                  
 >         // 需求3：求三个 int 类型数据和的方法
 >         public static int sum(int a, int b, int c) {
 >             return a + b + c;
@@ -550,7 +551,7 @@ public static void quickSortCore(int[] array, int left, int right) {
 >            // 方法体
 >         }
 >      }
->                                                                                     
+>                                                                                                     
 >     // 属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
@@ -864,7 +865,7 @@ public static void main(String[] args) {
 >         public static void main(String[] args) {
 >             Student s1 = new Student();
 >             s1.setName("王狗蛋"); // setName 方法中的 this 代表 s1 这个对象
->                                                                                     
+>                                                                                                     
 >             Student s2 = new Student();
 >             s2.setName("李铁蛋"); // setName 方法中的 this 代表 s2 这个对象
 >         }
@@ -1634,14 +1635,14 @@ public static void main(String[] args) {
 >     		System.out.println("USB插入，交换数据");
 >         }
 >     }
->                             
+>                                     
 >     public class USBSan implements USBInterfase {
 >     	@Override
 >     	public void service() {
 >     		System.out.println("USB插入，风扇转起来了");
 >     	}
 >     }
->                             
+>                                     
 >     public class USBDemo{
 >     	public static void main(String[] args) {
 >     		USBInterfase usb = new USBSan();
@@ -1958,7 +1959,7 @@ public static void main(String[] args) {
 > ```java
 >// 设计生产线模型
 > public interface Product {
->    public void intro();
+>    	public void intro();
 > }
 >public class ColaProduct implements Product {
 > 	@Override
@@ -1974,31 +1975,29 @@ public static void main(String[] args) {
 > }
 > // 负责实现创建所有实例的内部逻辑，并提供外部所调用的方法，创建所需要的对象
 > public class SimpleFactory {
->    // 通过不同的参数，获取到不同的结果
->     public static Product getProduct(String type) {
->        switch(type) {
->         case "c":
->         	return new ColaProduct();
->         case "s":
->        	return new SpriteProduct();
->         }
->        return null;
->     }
+>    	// 通过不同的参数，获取到不同的结果
+>    	public static Product getProduct(String type) {
+>    		switch(type) {
+>    			case "c":
+>    				return new ColaProduct();
+>    			case "s":
+>    				return new SpriteProduct();
+>    		}
+>    		return null;
+>    	}
 > }
 > 
 > public class FactoryDemo {
->      public static void main(String[] args) {
->         System.out.println("Cola raw materials");
-> 		Product cola = SimpleFactory.create("c");
+>    	public static void main(String[] args) {
+>    		System.out.println("Cola raw materials");
+> 		Product cola = SimpleFactory.getProduct("c");
 >		cola.intro();	// 机器轰隆隆响,可乐慢慢生产出来....
 > 		System.out.println("Sprite raw materials");
-> 		Product sprite = SimpleFactory.create("s");
+> 		Product sprite = SimpleFactory.getProduct("s");
 > 		sprite.intro();	// 机器轰隆隆响,雪碧慢慢生产出来....
->     
-> 
->      }
+>     	}
 > }
-> ```
+>    ```
 > 
 > - 特点：
 >       - 它是一个具体的类,非接口,抽象类,有一个重要的方法create()的方法,利用if或者switch创建不同对象返回
@@ -2013,35 +2012,38 @@ public static void main(String[] args) {
 > 提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类
 >
 > ==何时使用==
-> 
+>
 > 系统的产品有多于一个的产品族，而系统只消费其中某一族的产品
 >
 > ==格式==
 >
 > ```java
->public interface Product {
->     // 生产流水线标准
->	public void intro();
+> public interface Product {
+>  // 生产流水线标准
+> 	public void intro();
 > }
->public class ColaProduct implements Product {
+> 
+> public class ColaProduct implements Product {
 > 	@Override
->	public void intro() {
+> 	public void intro() {
 > 		System.out.println("机器轰隆隆响,可乐慢慢生产出来....");
->	}
+> 	}
 > }
->
+> 
 > public abstract class Packing {
 > 	// 包装流水线标准
 > 	public abstract void doPack();
->}
+> }
+> 
 > public class NormalPack extends Packing {
->	@Override
+> 	@Override
 > 	public void doPack() {
 > 		System.out.println("对商品进行简易包装...");
 > 	}
->}
+> }
+> 
 > public class HigherPack extends Packing {
->	@Override
+> 	@Override
 > 	public void doPack() {
 > 		System.out.println("对商品进行豪华礼盒包装...");
 > 	}
@@ -2049,26 +2051,26 @@ public static void main(String[] args) {
 > /**
 >  * 工厂设计,既有商品,还要包装
 >  */
->public interface ProductFactory {
-> 
+> public interface ProductFactory {
 > 	public Product getProduct();
-> 
->     	public Packing getPack();
+> 	public Packing getPack();
 > }
+> 
 > public class NormalFactory implements ProductFactory {
 > 	@Override
 > 	public Product getProduct() {
 > 		//普通工厂主动创建生产线对象
 > 		return new ColaProduct(); 
->     	}
+>     }
 > 	@Override
 > 	public Packing getPack() {
 > 		//创建包装线对象
 > 		return new NormalPack();
 > 	}
 > }
+> 
 > public class HigherFactory implements ProductFactory {
->     	@Override
+>     @Override
 > 	public Product getProduct() {
 > 		return new ColaProduct();
 > 	}
@@ -2079,20 +2081,20 @@ public static void main(String[] args) {
 > }
 > 
 > public class FactoryDemo {
->         
+> 
 > 	public static void main(String[] args) {
 > 		//普通工厂进行商品的生产与简单包装
 > 		ProductFactory pf = new NormalFactory();
 > 		pf.getProduct().intro();	// 机器轰隆隆响,可乐慢慢生产出来....
->         		pf.getPack().doPack();		// 对商品进行简易包装...
+>         pf.getPack().doPack();		// 对商品进行简易包装...
 > 		//高级工厂生产商品,并豪华包装
 > 		ProductFactory hf = new HigherFactory();
 > 		hf.getProduct().intro();	// 机器轰隆隆响,可乐慢慢生产出来....
 > 		hf.getPack().doPack();		// 对商品进行豪华礼盒包装...
->	}
+> 	}
 > }
->```
-> 
+> ```
+>
 
 #### 工厂方法模式
 
@@ -2318,21 +2320,21 @@ public static void main(String[] args) {
 >       重写方法;
 >   }
 >   ```
->  
+>
 > - 范例：
-> 
+>
 >  ```java
 >   new Inter() {
 >      public void show(){
 >       }
 >   }
 >  ```
->  
+>
 > <span style="color: red;">匿名内部类的本质：是一个继承了该类或者实现了该接口的子类匿名对象</span>
-> 
->单次调用：
-> 
->```java
+>
+> **单次调用**
+>
+> ```java
 > public class Outer {
 >     public void method() {
 >       new Inter() {
@@ -2352,15 +2354,15 @@ public static void main(String[] args) {
 > }
 > ```
 >
-> 多次调用：
+> **多次调用**
 >
 > ```java
->public interface Inter {
+> public interface Inter {
 >     void show();
 > }
->
+> 
 > public class Outer {
->
+> 
 >     public void method() {
 >        Inter i = new Inter() {
 >           @Override
@@ -2381,9 +2383,27 @@ public static void main(String[] args) {
 >     }
 > }
 > ```
-> 
->*注意：匿名内部类中不能出现抽象⽅法，也不能出现静态成员*
-> 
+>
+> **匿名内部类不可以定义构造器(没有类名)**
+>
+> - 匿名内部类中的构造代码块充当了构造器的作用
+>
+> - 如果需要定义有参数构造器，只需要在小括号中传参就可以了
+>
+>   ```java
+>    new Inter(int id) {
+>       public void show(){
+>        }
+>    }
+>   ```
+>
+> **在使用匿名内部类的过程中，我们需要注意如下几点**
+>
+> - 匿名内部类中不能存在任何的静态成员变量和静态方法
+> - 匿名内部类不能是抽象的，它必须要实现继承的类或者实现的接口的所有抽象方法
+> - 使用匿名内部类时，我们必须是继承一个类或者实现一个接口，但是两者不可兼得，同时也只能继承一个类或者实现一个接口
+> - 匿名内部类中是不能定义构造函数的
+> - 匿名内部类为局部内部类，所以局部内部类的所有限制同样对匿名内部类生效
 
 ### 静态内部类
 
@@ -2489,6 +2509,24 @@ public static void main(String[] args) {
 >   - 没有做线程安全
 >
 
+### Java 中操作字符串都有哪些类？它们之间有什么区别？
+
+> 操作字符串的类有：<span style="color: red;">String、StringBuffer、StringBuilder</span>。
+>
+> **String**：
+>
+> String 是只读字符串，也就意味着String 引用的字符串内容是不能被改变的。str 仅仅是一个引用对象，它指向一个字符串对象“abc”。第
+> 二行代码的含义是让str 重新指向了一个新的字符串“bcd”对象，而“abc”对象并没有任何改变，只不过该对象已
+> 经成为一个不可及对象罢了。
+>
+> **StringBuffer**：
+>
+> StringBuffer/StringBuilder 表示的字符串对象可以直接进行修改
+>
+> **StringBuilder**：
+>
+> StringBuilder 是Java5 中引入的，它和StringBuffer 的方法完全相同，区别在于它是在单线程环境下使用的，因为它的所有方法都没有被synchronized 修饰，因此它的效率理论上也比StringBuffer 要高
+
 ### System类
 
 > System包含几个有用的类字段和方法，它不能被实例化，这个类为我们提供了一些与工具或系统交互的方法
@@ -2580,33 +2618,28 @@ public static void main(String[] args) {
 >       	public static void main(String[] args) {
 >               Date date = new Date();
 >       		// 创建一个格式化对象,并设定格式
->
->      		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SS");
->      		String time = df.format(date);
->      		System.out.println(time);	// 2021-09-26 10:42:19 587
->      	}
->      }
->
->       ```
+>               DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SS");
+>       		String time = df.format(date);
+>       		System.out.println(time);	// 2021-09-26 10:42:19 587
+>       	}
+>       }
 >
 > 2. 解析(从 String 到 Date)：
 >
 >    1. public Date <span style="color: red;">parse(String source)</span>：从给定字符串的开始解析文本以生成日期
 >
 >       ```java
->        public class DateFormatDemo {
+>       public class DateFormatDemo {
 >       	public static void main(String[] args) {
->              // 设定日期字符串
+>       		// 设定日期字符串
 >       		String str = "2008年10月01日 20时18分52秒";
->              df = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
->               //将字符串转换为日期
->              Date d = df.parse(str);
->               System.out.println(d);	// Wed Oct 01 20:18:52 CST 2008
->    
->      	}
+>       		df = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
+>       		//将字符串转换为日期
+>       		Date d = df.parse(str);
+>       		System.out.println(d);	// Wed Oct 01 20:18:52 CST 2008
+>       	}
 >       }
 >    
->       ```
 >
 
 ### Calendar日历类
@@ -2769,29 +2802,28 @@ public static void main(String[] args) {
 >    } catch(异常类名 变量名) {
 >       异常的处理代码;
 >   }
->  ```
-> 
+>
 > - 范例
-> 
+>
 >   ```java
 >   try {
->       System.out.println("pls input num1:");
->       int num1 = in.nextInt();
->       System.out.println("pls input num2:");
->       int num2 = in.nextInt();
->       System.out.println(num1 / num2);
->   } catch (Exception e) {
->       System.out.println(e.getMessage());
->   }
->  ```
-> 
+>         System.out.println("pls input num1:");
+>         int num1 = in.nextInt();
+>         System.out.println("pls input num2:");
+>         int num2 = in.nextInt();
+>         System.out.println(num1 / num2);
+>     } catch (Exception e) {
+>         System.out.println(e.getMessage());
+>     }
+>   ```
+>
 > - 执行流程：
-> 
+>
 >   - 程序从try里面的代码开始执行
 >   - 出现异常，会自动生成一个异常类对象，该异常对象将被提交给Java运行时系统
 >   - 当Java运行时系统接收到异常对象时，会到catch中去找匹配的异常类，找到后进行异常的处理
 >   - 执行完毕之后，程序还可以继续往下执行
-> 
+>
 
 ### throws
 
@@ -2832,7 +2864,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println(date);
 >   }
->                               
+>                                       
 >   private static Date format(String str) throws ParseException {	// 仅抛出异常
 >       DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 >      // 因为异常已经抛出,所以当前不需要处理异常
@@ -2900,7 +2932,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println("验明正身");
 >   }
->                               
+>                                       
 >   //想要抛出一个实例,方法后还得抛出一个对应的类型
 >   public static void checkSex(String sex) throws Exception {
 >       if ("男".equals(sex) || "女".equals(sex))
@@ -2925,23 +2957,36 @@ public static void main(String[] args) {
 >   | 表示出现异常的一种可能性，并不一定会发生这些异常 |    执行throw一定抛出了某种异常     |
 > 
 
+### throw 和 throws 的区别
+
+> **throw**：
+>
+> 1. throw 语句用在方法体内，表示抛出异常，由方法体内的语句处理。
+> 2. throw 是具体向外抛出异常的动作，所以它抛出的是一个异常实例，执行throw 一定是抛出了某种异常。
+>
+> **throws**：
+>
+> 1. throws 语句是用在方法声明后面，表示如果抛出异常，由该方法的调用者来进行异常的处理。
+> 2. throws 主要是声明这个方法会抛出某种类型的异常，让它的使用者要知道需要捕获的异常的类型。
+> 3. throws 表示出现异常的一种可能性，并不一定会发生这种异常
+
 ### finally
 
-> <span style="color: red;">finally语句块总是会被执行</span>。它主要用于回收在try块里打开的物力资源(如数据库连接、网络连接和磁盘文件)。只有finally块，执行完成之后，才会回来执行try或者catch块中的return或者throw语句，如果finally中使用了return或者throw等终止方法的语句，则就不会跳回执行，直接停止
+> <span style="color: red;">finally语句块总是会被执行</span>。它主要用于回收在try块里打开的物理资源(如数据库连接、网络连接和磁盘文件)。只有finally块执行完成之后，才会回来执行try或者catch块中的return或者throw语句，如果finally中使用了return或者throw等终止方法的语句，则就不会跳回执行，直接停止
 >
 > ```java
 > public static void main(String[] args) {
->  Scanner in = new Scanner(System.in);
-> System.out.println("请输入学生性别:");
->  String sex = in.next();
->  try {
->     checkSex(sex);
->  } catch (Exception e) {
->      // 此处处理的异常为自定义异常
->      System.out.println(e.getMessage());	// 性别必须是'男'或者'女'！
->  } finally {
->      System.out.println("验明正身");
->  }
+>  	Scanner in = new Scanner(System.in);
+> 	System.out.println("请输入学生性别:");
+>  	String sex = in.next();
+>  	try {
+>    		checkSex(sex);
+>  	} catch (Exception e) {
+>    		// 此处处理的异常为自定义异常
+>    		System.out.println(e.getMessage());	// 性别必须是'男'或者'女'！
+>  	} finally {
+>    		System.out.println("验明正身");
+>  	}
 > }
 > ```
 >
@@ -2954,9 +2999,9 @@ public static void main(String[] args) {
 
 ## final、finally、finalize 有什么区别
 
-> - final：是修饰符，如果修饰类，此类不能被继承；如果修饰方法和变量，则表示此方法和此变量不能在被改变，只能使用。
-> - finally：是 try{}     catch{} finally{} 最后一部分，表示不论发生任何情况都会执行，finally 部分可以省略，但如果 finally 部分存在，则一定会执行 finally 里面的代码。
-> - finalize： 是 Object 类的一个方法，在垃圾收集器执行的时候会调用被回收对象的此方法。
+> - **final**：是修饰符，如果修饰类，此类不能被继承；如果修饰方法和变量，则表示此方法和此变量不能在被改变，只能使用。
+> - **finally**：是 try{} catch{} finally{} 最后一部分，表示不论发生任何情况都会执行，finally 部分可以省略，但如果 finally 部分存在，则一定会执行 finally 里面的代码。
+> - **finalize**： 是 Object 类的一个方法，在垃圾收集器执行的时候会调用被回收对象的此方法。
 
 ## 集合
 
@@ -3416,9 +3461,9 @@ public static void main(String[] args) {
 
 > 字节流抽象基类
 >
-> - InputStream：这个抽象类是表示字节输入流的所有类的超类
-> - OutputStream：这个抽象类是表示字节输出流的所有类的超类
-> - 子类名特点：子类名称都是其父类名作为子类名的后缀
+> - **InputStream**：这个抽象类是表示字节输入流的所有类的超类
+> - **OutputStream**：这个抽象类是表示字节输出流的所有类的超类
+> - **子类名特点**：子类名称都是其父类名作为子类名的后缀
 >
 
 ##### FileOutputStream
@@ -3468,7 +3513,6 @@ public static void main(String[] args) {
 >
 > ```java
 > FileOutputStream fos = new FileOutputStream("myByteStream\\fos.txt");
-> 
 > // void write(byte[] b)
 > byte[] bys = {97, 98, 99, 100, 101};
 > fos.write(bys);	// abcde
@@ -3478,28 +3522,28 @@ public static void main(String[] args) {
 > // void write(byte[] b, int off, int len)
 > fos.write(bys, 1, 3); // bcd
 > ```
->
-> 字节流写数据的两个小问题
->
-> - 字节流写数据如何实现换行
->
->   - 写完数据后，加换行符
->
->     - windows: \r\n
->
->     - linux: \n
->
->     - mac: \r
->
->       ```java
+> 
+>字节流写数据的两个小问题
+> 
+>- 字节流写数据如何实现换行
+> 
+>  - 写完数据后，加换行符
+> 
+>    - windows: \r\n
+> 
+>    - linux: \n
+> 
+>    - mac: \r
+> 
+>      ```java
 >       fos.write("hello\n".getBytes());	// hello<br/>
 >       ```
->
-> - 字节流写数据如何实现追加写入
->
->   - public FileOutputStream(String name, boolean append)
+> 
+>- 字节流写数据如何实现追加写入
+> 
+>  - public FileOutputStream(String name, boolean append)
 >   - 创建文件输出流以指定的名称写入文件。如果第二个参数为true，则字节将写入文件的末尾而不是开头
->
+> 
 
 ##### 字节流写数据加异常处理
 
@@ -3521,19 +3565,17 @@ public static void main(String[] args) {
 >             if(fos != null) {
 >                 try {
 >                     fos.close();
->                 }  catch (IOException e) {
->                     e.printStackTrace();
->                 }
+>                 } catch (IOException e) {
+>    					e.printStackTrace();
+>    				}
 > 			}
->         }
+>    		}
 > 	}
 > }
 > ```
 >
 
 #### 字节流读数据
-
-> InputStream：字节流读数据的所有类的超类
 
 ##### FileInputStream
 
@@ -3833,7 +3875,7 @@ public static void method() {
 > |          void write(String str)           | 写一个字符串         |
 > | void write(String str, int off, int len)  | 写一个字符串的一部分 |
 >
-> 字符流写数据范例
+> **字符流写数据范例**
 >
 > ```java
 > OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream("myCharStream/osw.txt"));
@@ -4024,8 +4066,7 @@ public static void method() {
 >
 >   ```java
 >   InputStream is = System.in;
->
->   int by;
+>  int by;
 >   while((by = is.read()) != -1) {
 >       System.out.print((char)by);
 >   }
@@ -4037,10 +4078,10 @@ public static void method() {
 >   String line = br.readLine();
 >   System.out.print(line);
 >   ```
->
->   简化
->
->   ```java
+>   
+>  简化
+>   
+>  ```java
 >   BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 >   String line = br.readLine();
 >   System.out.print(line);
@@ -4048,17 +4089,17 @@ public static void method() {
 >   int i = Integer.parseInt(br.readLine());
 >   System.out.print(i);
 >   ```
->
->   Java提供的类Scanner就进行了以上的过程来实现键盘录入
->
-> - public static final PrintStream out：标准输出流。通常该流对应于显示输出或由主机环境或用户指定的另一个输出目标
->
->   ```java
+>   
+>  Java提供的类Scanner就进行了以上的过程来实现键盘录入
+>   
+>- public static final PrintStream out：标准输出流。通常该流对应于显示输出或由主机环境或用户指定的另一个输出目标
+> 
+>  ```java
 >   PrintStream ps = System.out;
 >   ps.println("hello");	// ---> System.out.println
 >   ps.println("100");	// ---> System.out.println
 >   ```
->
+> 
 
 #### 打印流
 
@@ -4463,7 +4504,7 @@ public class StudentStreamDemo {
 >
 >   ```java
 >   public class MyThreadDemo {
->                     
+>                             
 >   	public static void main(String[] args) {
 >   		//创建线程对象
 >   		Thread t = new MyThread();
@@ -4643,6 +4684,8 @@ public class StudentStreamDemo {
 > | static void sleep(long millis) | 使当前正在执行的线程停留(暂停执行)指定的毫秒数               |
 > |          void join()           | 等待这个线程死亡                                             |
 > |   void setDaemon(boolean on)   | 将此线程编辑为守护线程，当运行的线程都是守护线程时，Java虚拟机将退出 |
+> |        void interrupt()        | 中断此线程                                                   |
+> |      static void yield()       | 让出cpu，让其他线程执行，但礼让的时间不确定，所以也不一定礼让成功 |
 >
 
 #### sleep
@@ -4698,7 +4741,7 @@ public class StudentStreamDemo {
 > 		Thread t3 = new ThreadDemo();
 > 		
 > 		t1.start();
->         t1.join(); // t1执行完毕后再执行t2和t3
+>         	t1.join(); // t1执行完毕后再执行t2和t3
 > 		t2.start();
 > 		t3.start();
 > 	}
@@ -4729,6 +4772,43 @@ public class StudentStreamDemo {
 >         
 > 		t1.start();
 > 		t2.start(); // t2运行完毕后，java虚拟机退出
+> 	}
+> }
+> ```
+
+#### interrupt
+
+> **中断线程**(中断的线程为*调用该方法的Thread实例所代表的线程*)
+>
+> 线程的thread.interrupt()方法是中断线程，将会设置该线程的中断状态位，即设置为true，中断的结果线程是死亡、还是等待新的任务或是继续运行至下一步，就取决于这个程序本身。线程会不时地检测这个中断标示位，以判断线程是否应该被中断（中断标示值是否为true）。它并不像stop方法那样会中断一个正在运行的线程
+>
+> **示例：interrupt中断线程的休眠**
+>
+> ```java
+> public class ThreadDemo extends Thread {
+> 	@Override
+> 	public void run() {
+> 		for (int i = 0; i < 100; i++) {
+> 			System.out.println(this.getName() + " 第" + i + "次");
+> 			try {
+> 				this.sleep(10000);
+> 			} catch (InterruptedException e) {
+> 				e.printStackTrace();
+> 			}
+> 		}
+> 	}
+> }
+> 
+> public class ThreadTest {
+> 	public static void main(String[] args) {
+> 		Thread t1 = new ThreadDemo();
+> 
+> 		t1.start();
+>         for(int i = 0; i < 5; i++){
+>             Thread.sleep(100);	// 主线程(main)休眠
+>             System.out.println("hi " + i);
+>         }
+>         t1.interrupt(); // 中断t1线程的休眠
 > 	}
 > }
 > ```
@@ -5185,39 +5265,152 @@ public class StudentStreamDemo {
 >
 > InterAddress：此类表示Internet协议(IP)地址
 >
-> | 方法名 | 说明 |
-> | :----: | ---- |
-> |        |      |
-> |        |      |
-> |        |      |
+> |                  方法名                   | 说明                                                         |
+> | :---------------------------------------: | ------------------------------------------------------------ |
+> | static InetAddress getByName(string host) | 确定主机名称的ip地址，主机名称可以是机器名称，也可以是ip地址 |
+> |           String getHostName()            | 获取此ip地址的主机名                                         |
+> |          String getHostAddress()          | 返回文本显示中的ip地址字符串                                 |
 >
-> 
 
 ### 端口和协议
 
-> 
-
 #### 端口
 
-> 
+> **端口**：*设备上应用程序的唯一标识*
+>
+> **端口号**：用两个字节表示的整数，*它的取值范围是0 ~ 65535.其中，0 ~ 1023之间的端口号用于一些知名网络服务和应用，普通的应用程序需要使用1024以上的端口号*。如果端口号被另外一个服务或应用所占用，会导致当前程序启动失败
 
-#### TCP通信协议
+#### 协议
 
-> 详细解释TCP
+> 计算机网络中，连接和同学的规则被称为网络通信协议
 >
-> TCP协议全称: 传输控制协议
+> 常用的协议有：**TCP通信协议**和**UDP通信协议**
+
+##### UDP通信协议
+
+> **概念**
 >
-> TCP需要经过三次握手建立连接, 四次挥手断开连接
+> 用户数据报协议(User Datagram Protocol)
 >
-> 三次握手：
+> **UDP是一种无连接通信协议，就是在数据传输时，数据的发送端和接收不用建立逻辑连接**。简单来说，当一台计算机向另外一台计算机发送数据时，发送端不会确认接收端是否存在，就会发出数据，同样接收端在收到数据时，也不会向发送端反馈是否收到数据。
 >
-> 1. 第一次：客户端 ——> 服务器 此时服务器知道了客户端要建立连接了
-> 2. 第二次：客户端 <—— 服务器 此时客户端知道服务器收到连接请求了
-> 3. 第三次：客户端 ——> 服务器 此时服务器知道客户端收到了自己的回应
+> **由于使用UDP协议消耗资源小，通信效率高，所以通常都会用于音频，视频和普通数据的传输**
+>
+> 例如视频会议通常采用UDP协议，因为这种情况即使偶尔丢失一两个数据包，也不会对接受结果产生太大影响。但是在使用UDP协议传输数据时，由于UDP的面向无连接性，不能保证数据的完整性，因此在传输重要数据时不建议使用UDP协议
+>
+> **UDP通信原理**
+>
+> UDP协议是一种不可靠的网络协议，它在通信的两端各建立一个 Socket 对象，但是这两个  Socket 只是发送，接收数据的对象
+>
+> 因此对于基于UDP协议的通信双方而言，没有所谓的客户端和服务器的概念
+>
+> Java提供了 DatagramSocket 类作为基于 UDP 协议的 Socket
+>
+> **UDP发送数据**
+>
+> 发送数据的步骤
+>
+> 1. 创建发送端的Socket对象(DatagramSocket)
+>
+>    ```java
+>    // DatagramSocket() 构造数据报套接字并将其绑定到本地主机上的任何可用端口
+>    DatagramSocket ds = new DatagramSocket();
+>    ```
+>
+> 2. 创建数据，并把数据打包
+>
+>    ```java
+>    // DatagramPacket(byte[] buf, int length, InetAddress address, int port)
+>    // 构造一个数据包，发送长度为length的数据包到指定主机上的指定端口号
+>    byte[] buf = "hello world".getBytes();
+>    int length = buf.length;
+>    InetAddress address = InetAddress.getByName("127.0.0.1");
+>    int port = 10086;
+>    DatagramPacket dp = new DatagramPacket(buf, length, address, port);
+>    // 优化
+>    DatagramPacket dp2 = new DatagramPacket(buf, buf.length, InetAddress.getByName("127.0.0.1"), 10086);
+>    ```
+>
+> 3. 调用DatagramSocket对象的方法发送数据
+>
+>    ```java
+>    // void send(DatagramPacket p)从此套接字发送数据报包
+>    ds.send(dp);
+>    ```
+>
+> 4. 关闭发送端
+>
+>    ```java
+>    // void close() 关闭此数据报套接字
+>    ds.close();
+>    ```
+>
+> **UDP接收数据**
+>
+> 接收数据的步骤
+>
+> 1. 创建接收端的Socket对象(DatagramSocket)
+>
+>    ```java
+>    // DatagramSocket(int port) 构造数据报套接字并将其绑定到本地主机上的指定端口
+>    DatagramSocket ds = new DatagramSocket(10086);
+>    ```
+>
+> 2. 创建一个数据包，用于接收数据
+>
+>    ```java
+>    // DatagramPacket(byte[] buf, int length) 构造一个DatagramPacket用于接收长度为length的数据包
+>    byte[] buf = new byte[1024];
+>    DatagramPacket dp = new DatagramPacket(buf, buf.length);
+>    ```
+>
+> 3. 调用DatagramSocket对象的方法接收数据
+>
+>    ```java
+>    ds.receive(dp);
+>    ```
+>
+> 4. 解析数据包，并把数据在控制台显示
+>
+>    ```java
+>    // byte[] getData() 返回数据缓冲区
+>    byte[] datas = dp.getData();
+>    // int getLength() 返回要发送的数据的长度或接收到的数据的长度
+>    int len = dp.getLength();
+>    String dataString = new String(datas, 0, len);
+>    System.out.println("数据是：" + dataString);
+>    // 优化
+>    System.out.println("数据是：" + new String(dp.getData(), 0, dp.getLength()));
+>    ```
+>
+> 5. 关闭接收端
+>
+>    ```java
+>    // void close() 关闭此数据报套接字
+>    ds.close();
+>    ```
+>
+> **运行时需要先开启接收端，再开启发送端**
+
+##### TCP通信协议
+
+> **概念**
+>
+> 传输控制协议(Transmission Control Protocol)
+>
+> TCP协议是**面向连接**的通信协议，即传输数据之前，在发送端课接收端建立逻辑连接，然后再传输数据，它提供了两台计算机之间**可靠无差错**的数据传输。在TCP连接中必须要明确客户端与服务器端，由客户端向服务端发出连接请求，每次连接的创建都需要经过“三次握手”
+>
+> **TCP需要经过三次握手建立连接, 四次挥手断开连接**
+>
+> **三次握手**：
+>
+> 1. 第一次：**客户端向服务器端发出连接请求**，此时服务器知道了客户端要建立连接了
+> 2. 第二次：**服务器端向客户端回送一个响应**，此时客户端知道服务器收到连接请求了
+> 3. 第三次：**客户端再次向服务器端发送确认信息**，确认连接
 >
 > 刚开始, 客户端和服务器都处于 CLOSE 状态。此时, 客户端向服务器主动发出连接请求, 服务器被动接受连接请求。
 >
-> 四次挥手：
+> **四次挥手**：
 >
 > 1. 客户端 向 服务器 发出 FIN 包，表示自己没有数据要发送了
 > 2. 服务器 收到 FIN 包，回复 FIN ACK，表示收到了 客户端 的 FIN 包，不会再接收 客户端 的数据了
@@ -5225,30 +5418,148 @@ public class StudentStreamDemo {
 > 4. 服务器 发完了数据，也发出 FIN 包，告诉 客户端 自己的数据发完了，不再发送数据了
 > 5. 客户端 收到了 服务器 的 FIN 包，知道 服务器 也没有数据要发送了，回复 FIN ACK。此时，连接可以断开了
 >
-> 确认应答机制(ACK机制)
+> **确认应答机制(ACK机制)**
 >
-> 超时重传机制
+> **超时重传机制**
 >
-> 
->
-> TCP/IP协议有几层
+> **TCP/IP协议有几层**
 >
 > 在TCP/IP协议有四层
 >
-> - 1. 应用层：应用层是TCP/IP协议的第一层，是直接为应用进程提供服务的。
->   2. 运输层：作为TCP/IP协议的第二层，运输层在整个TCP/IP协议中起到了中流砥柱的作用。且在运输层中，TCP和UDP也同样起到了中流砥柱的作用。
->   3. 网络层：网络层在TCP/IP协议中的位于第三层。在TCP/IP协议中网络层可以进行网络连接的建立和终止以及IP地址的寻找等功能。 
->   4. 网络接口层：在TCP/IP协议中，网络接口层位于第四层。由于网络接口层兼并了物理层和数据链路层所以，网络接口层既是传输数据的物理媒介，也可以为网络层提供一条准确无误的线路。
-
-#### UDP通信协议
-
-> **概念**
+> 1. 应用层：应用层是TCP/IP协议的第一层，是直接为应用进程提供服务的。
+> 2. 运输层：作为TCP/IP协议的第二层，运输层在整个TCP/IP协议中起到了中流砥柱的作用。且在运输层中，TCP和UDP也同样起到了中流砥柱的作用。
+> 3. 网络层：网络层在TCP/IP协议中的位于第三层。在TCP/IP协议中网络层可以进行网络连接的建立和终止以及IP地址的寻找等功能。 
+> 4. 网络接口层：在TCP/IP协议中，网络接口层位于第四层。由于网络接口层兼并了物理层和数据链路层所以，网络接口层既是传输数据的物理媒介，也可以为网络层提供一条准确无误的线路。
 >
-> 用户数据报协议(User Datagram Protocol)
+> **TCP通信原理**
 >
-> **UDP是一种无连接通信协议，就是在数据传输时，数据的发送端和接收不用建立逻辑连接**
+> TCP通信协议是一种可靠的网络协议，它在通信的两端各建立一个Socket对象，从而在通信的两端形成网络虚拟链路，一旦建立了虚拟的网络链路，两端的程序就可以通过虚拟链路进行通信
+>
+> Java对基于TCP协议的网络提供了良好的封装，使用Socket对象来代表两端的通信端口，并通过Socket产生IO流来进行网络通信
+>
+> Java为客户端提供了Socket类，为服务器端提供了ServerSocket类
+>
+> **TCP发送数据**
+>
+> 发送数据的步骤
+>
+> 1. 创建客户端的Socket对象(Socket)
+>
+>    ```java
+>    // Socket(InetAddress address, int port) 创建流套接字并将其连接到指定IP地址的指定端口号
+>    Socket s = new Socket(InetAddress.getByName("127.0.0.1"), 10000);
+>    // Socket(String host, int port) 创建流套接字并将其连接到指定IP地址的指定端口号
+>    Socket s = new Socket("127.0.0.1", 10000);
+>    ```
+>
+> 2. 获取输出流，写数据
+>
+>    ```java
+>    // OutputStream getOutputStream() 返回此套接字的输出流
+>    OutputStream out = s.getOutputStream();
+>    out.write("Hello,TCP,我想建立连接...".getBytes());
+>    ```
+>
+> 3. 释放资源
+>
+>    ```java
+>    s.close();
+>    ```
+>
+> **TCP接收数据**
+>
+> 1. 创建服务器端的Socket对象(ServerSocket)
+>
+>    ```java
+>    // ServerSocket(int port) 创建绑定到指定端口的服务器套接字
+>    ServerSocket ss = new ServerSocket(10000);
+>    // Socket accept() 监听要连接到此套接字并接受它
+>    Socket s = ss.accept();
+>    ```
+>
+> 2. 获取输入流，读数据，并把数据显示在控制台
+>
+>    ```java
+>    InputStream in = s.getInputStream();
+>    byte[] buf = new byte[1024];
+>    int len = in.read(buf);
+>    String data = new String(buf, 0, len);
+>    System.out.println("数据是：" + data);
+>    ```
+>
+> 3. 释放资源
+>
+>    ```java
+>    s.close();
+>    ss.close();
+>    ```
+>
+> **运行时需要先开启接收端，再开启发送端**
 
-URL资源访问
+#### URL资源访问
+
+> **概述**
+>
+> URL(Uniform Resource Locator),这是一个资源访问类,可以通过给定的地址找到指定的资源.这个资源可以是简单的作为一个文件或目录,或是一个搜索引擎等
+>
+> **最简单理解** 
+>
+> URL就是一个网址,如：http://www.baidu.com/xxx.html
+>
+> **URL解析**
+>
+> - http://：超文本传输协议
+> - [www.baidu.com](http://www.baidu.com)：主机名或域名，表示资源主机
+> - xxx.html：资源地址。表示一个资源，这个资源是一个网页
+>
+> **示例**
+>
+> ```java
+> public class HttpURLDemo {
+> 
+> 	public static void main(String[] args) throws Exception {
+> 		//创建一个URL对象,访问网络资源
+> 		URL url = new URL("http://39.105.177.58:8888/www_hcq_cn");
+> 		System.out.println(url.getHost());
+> 		System.out.println(url.getPort());
+> 		System.out.println(url.getProtocol());
+> 		String result = login(url,"rf3dsxcd","285c57b1");
+> 		System.out.println("login result:"+result);
+> 	}
+> 
+> 	private static String login(URL url, String name, String pwd) throws Exception {
+> 		//建立http连接
+> 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+> 		//设置连接参数
+> 		connection.setDoOutput(true);   //打开输出流(可以发送数据到服务器)
+> 		connection.setDoInput(true);  	//打开输入流(可以接收服务器数据)
+> 		//web请求方式两种  :  get   和 post请求方式      get快捷,携带量小,数据不安全
+> 		connection.setRequestMethod("POST");
+> 		
+> 		//发送参数
+> 		OutputStream out = connection.getOutputStream();
+> 		String content = "username="+name+"&password="+pwd;
+> 		out.write(content.getBytes());
+> 		out.flush();
+> 		
+> 		String result = null;
+> 		InputStream in = null;
+> 		//获取访问状态码  200表示成功   404表示路径未找到    500表述数据处理异常
+> 		int code = connection.getResponseCode();   //response 响应      request请求
+> 		if(code==200){
+> 			byte[] bs = new byte[1024];
+> 			in = connection.getInputStream();
+> 			int len = in.read(bs);
+> 			result = new String(bs, 0, len);
+> 		}else{
+> 			System.out.println("异常编号为:"+code);
+> 		}
+> 		return result;
+> 	}
+> }
+> ```
+>
+> 
 
 ## 反射
 
