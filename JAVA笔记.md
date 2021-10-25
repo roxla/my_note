@@ -446,25 +446,25 @@ public static void quickSortCore(int[] array, int left, int right) {
 
 > - 方法不能嵌套定义
 >
->   - ```java
->    // 错误的定义方式
->     public static void methodOne() {
->        // 代码片段1
->         public static void methodTwo() {
->             // 代码片段2
->         }
->     }
->     ```
+>   ```java
+>   // 错误的定义方式
+>   public static void methodOne() {
+>      // 代码片段1
+>       public static void methodTwo() {
+>           // 代码片段2
+>       }
+>   }
+>   ```
 >
 > - void 表示无返回值，可以省略 return，也可以单独的书写 return，后面不加数据
 >
->   - ```java
->     // 错误的返回值书写
->     public static void methodOne() {
->         // 代码片段
->         return 100;
->      }
->     ```
+>   ```java
+>   // 错误的返回值书写
+>   public static void methodOne() {
+>       // 代码片段
+>       return 100;
+>   }
+>   ```
 >
 
 ### 方法的通用格式
@@ -473,8 +473,8 @@ public static void quickSortCore(int[] array, int left, int right) {
 >
 > ```java
 >public static 返回值类型 方法名(参数) {
->     方法体
->    return 数据;
+>    	方法体
+>    	return 数据;
 > }
 > ```
 > 
