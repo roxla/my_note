@@ -11,24 +11,6 @@
 > <span style="color: green;">JVM：</span>
 >  java运行虚拟机
 
-## Java面向对象编程的特性
-
-### 封装
-
-> **通常认为封装是把数据和操作数据的方法绑定起来，对数据的访问只能通过已定义的接口。面向对象的本质就是将现实世界描绘成一系列完全自治、封闭的对象。我们在类中编写的方法就是对实现细节的一种封装；我们编写一个类就是对数据和数据操作的封装。可以说，封装就是隐藏一切可隐藏的东西，只向外界提供最简单的编程接口。**
-
-### 继承
-
-> **继承是从已有类得到继承信息创建新类的过程。提供继承信息的类被称为父类（超类、基类）；得到继承信息的类被称为子类（派生类）。继承让变化中的软件系统有了一定的延续性，同时继承也是封装程序中可变因素的重要手段。**
-
-### 多态
-
-> **多态性是指允许不同子类型的对象对同一消息作出不同的响应。简单的说就是用同样的对象引用调用同样的方法但是做了不同的事情。多态性分为编译时的多态性和运行时的多态性。如果将对象的方法视为对象向外界提供的服务，那么运行时的多态性可以解释为：当A 系统访问B 系统提供的服务时，B系统有多种提供服务的方式， 但一切对A 系统来说都是透明的。方法重载（overload）实现的是编译时的多态性（也称为前绑定），而方法重写（override）实现的是运行时的多态性（也称为后绑定）。运行时的多态是面向对象最精髓的东西，要实现多态需要做两件事：1. 方法重写（子类继承父类并重写父类中已有的或抽象的方法）；2. 对象造型（用父类型引用引用子类型对象，这样同样的引用调用同样的方法就会根据子类对象的不同而表现出不同的行为）。**
-
-### 抽象
-
-> **抽象是将一类对象的共同特征总结出来构造类的过程，包括数据抽象和行为抽象两方面。抽象只关注对象有哪些属性和行为，并不关注这些行为的细节是什么。**
-
 ## Java中的八大基本数据类型
 
 > - byte（位）	1字节	-128 ~ 127
@@ -510,38 +492,37 @@ public static void quickSortCore(int[] array, int left, int right) {
 >            // 调用方法
 >             int result = sum( a: 10, b: 20);
 >            System.out.println(result);		// 30
->                                                   
+>                                                           
 >             int result2 = sum( a: 10.0, b: 20.0);
 >             System.out.println(result2);	// 30.0
->                                                   
+>                                                           
 >             int result3 = sum( a: 10, b: 20, c: 30);
 >            System.out.println(result3);	// 60
 >         }
->                                                  
+>                                                          
 >         // 需求1：求两个 int 类型数据和的方法
 >        public static int sum(int a, int b) {
 >             return a + b;
 >         }
->                                                   
+>                                                           
 >         // 需求2：求两个 double 类型数据和的方法
 >         public static double sum(double a, double b) {
 >            return a + b;
 >         }
->                                                  
+>                                                          
 >         // 需求3：求三个 int 类型数据和的方法
 >         public static int sum(int a, int b, int c) {
 >             return a + b + c;
 >         }
 >     }
->    ```
-> 
->- 特点：
-> 
+>   
+> - 特点：
+>
 >   - 重载仅对应方法的定义，与方法的调用无关，调用方式参照标准格式
->
->   - 重载仅针对同一类中方法的名称与参数进行识别，与返回值无关，换句话说不能通过返回值来判定两个方法是否相互构成重载
->
->   - ```java
+> 
+>  - 重载仅针对同一类中方法的名称与参数进行识别，与返回值无关，换句话说不能通过返回值来判定两个方法是否相互构成重载
+> 
+>  - ```java
 >    // 不属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
@@ -551,8 +532,8 @@ public static void quickSortCore(int[] array, int left, int right) {
 >            // 方法体
 >         }
 >      }
->                                                                                                     
->     // 属于方法重载
+>              
+>                                                                                                     // 属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
 >             // 方法体
@@ -561,8 +542,8 @@ public static void quickSortCore(int[] array, int left, int right) {
 >            // 方法体
 >         }
 >      }
->     ```
->
+>    ```
+> 
 
 ### 方法的参数传递
 
@@ -616,6 +597,24 @@ public static void main(String[] args) {
 	}
 }
 ```
+
+## Java面向对象编程的特性
+
+### 封装
+
+> **通常认为封装是把数据和操作数据的方法绑定起来，对数据的访问只能通过已定义的接口。面向对象的本质就是将现实世界描绘成一系列完全自治、封闭的对象。我们在类中编写的方法就是对实现细节的一种封装；我们编写一个类就是对数据和数据操作的封装。可以说，封装就是隐藏一切可隐藏的东西，只向外界提供最简单的编程接口。**
+
+### 继承
+
+> **继承是从已有类得到继承信息创建新类的过程。提供继承信息的类被称为父类（超类、基类）；得到继承信息的类被称为子类（派生类）。继承让变化中的软件系统有了一定的延续性，同时继承也是封装程序中可变因素的重要手段。**
+
+### 多态
+
+> **多态性是指允许不同子类型的对象对同一消息作出不同的响应。简单的说就是用同样的对象引用调用同样的方法但是做了不同的事情。多态性分为编译时的多态性和运行时的多态性。如果将对象的方法视为对象向外界提供的服务，那么运行时的多态性可以解释为：当A 系统访问B 系统提供的服务时，B系统有多种提供服务的方式， 但一切对A 系统来说都是透明的。方法重载（overload）实现的是编译时的多态性（也称为前绑定），而方法重写（override）实现的是运行时的多态性（也称为后绑定）。运行时的多态是面向对象最精髓的东西，要实现多态需要做两件事：1. 方法重写（子类继承父类并重写父类中已有的或抽象的方法）；2. 对象造型（用父类型引用引用子类型对象，这样同样的引用调用同样的方法就会根据子类对象的不同而表现出不同的行为）。**
+
+### 抽象
+
+> **抽象是将一类对象的共同特征总结出来构造类的过程，包括数据抽象和行为抽象两方面。抽象只关注对象有哪些属性和行为，并不关注这些行为的细节是什么。**
 
 ## Java中的类与对象
 
@@ -728,7 +727,22 @@ public static void main(String[] args) {
 
 #### 匿名对象
 
-> 
+> 匿名对象：没有名字的对象
+>
+> **匿名对象其实就是定义对象的简写格式**
+>
+> 不使用匿名对象
+>
+> ```java
+> Car c = new Car();
+> c.run();
+> ```
+>
+> 使用匿名对象
+>
+> ```java
+> new Car().run();
+> ```
 
 ### 成员变量和局部变量
 
@@ -865,7 +879,7 @@ public static void main(String[] args) {
 >         public static void main(String[] args) {
 >             Student s1 = new Student();
 >             s1.setName("王狗蛋"); // setName 方法中的 this 代表 s1 这个对象
->                                                                                                     
+>                                                                                                                 
 >             Student s2 = new Student();
 >             s2.setName("李铁蛋"); // setName 方法中的 this 代表 s2 这个对象
 >         }
@@ -873,7 +887,7 @@ public static void main(String[] args) {
 >     ```
 >
 
-#### super
+#### <span name="Super">super</span>
 
 > <span id="Super" style="color: red;">super关键字</span>：
 >
@@ -1635,14 +1649,14 @@ public static void main(String[] args) {
 >     		System.out.println("USB插入，交换数据");
 >         }
 >     }
->                                     
+>                                           
 >     public class USBSan implements USBInterfase {
 >     	@Override
 >     	public void service() {
 >     		System.out.println("USB插入，风扇转起来了");
 >     	}
 >     }
->                                     
+>                                           
 >     public class USBDemo{
 >     	public static void main(String[] args) {
 >     		USBInterfase usb = new USBSan();
@@ -1785,12 +1799,12 @@ public static void main(String[] args) {
 > *设计模式主要掌握：单例设计模式，简单工厂设计模式，抽象工厂模式，工厂方法模式，模板设计模式，代理设计模式*
 >
 
-#### 单例设计模式
+### 单例设计模式
 
 > 确保只有一个实例,且该实例向整个系统提供,这种设计的类叫做单例类,该类创建的实例也就叫做单例.单例模式是一种对象的创建模式
 >
 
-##### 懒汉式单例设计模式
+#### 懒汉式单例设计模式
 
 > 该模式只在你需要对象时才会生成单例对象
 >
@@ -1859,7 +1873,7 @@ public static void main(String[] args) {
 > ```
 > 
 
-##### 饿汉式单例设计模式
+#### 饿汉式单例设计模式
 
 > 该模式在类被加载时就会实例化一个对象
 >
@@ -1942,7 +1956,7 @@ public static void main(String[] args) {
 > - 懒汉式会延迟加载对象，在第一次调用单例对象时，在调用的时候才初始化对象，第一次调用对象时会慢，后续跟饿汉式一样
 >
 
-#### 工厂设计模式
+### 工厂设计模式
 
 > 工厂模式是我们最常用的实例化对象模式了，是用工厂方法代替new操作的一种模式
 >
@@ -1950,7 +1964,7 @@ public static void main(String[] args) {
 > 
 > 工厂模式让对象的使用者无需了解具体实现，只需要通过对象工厂直接拿过来用就行了
 
-##### 简单工厂设计模式
+#### 简单工厂设计模式
 
 > 简单工厂模式是指由一个工厂对象决定创建出哪一种产品类的实例
 >
@@ -2007,7 +2021,7 @@ public static void main(String[] args) {
 >   - 不同产品需要不同的额外参数进行创建,不支持自动化
 > 
 
-##### 抽象工厂模式
+#### 抽象工厂模式
 
 > 提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类
 >
@@ -2096,15 +2110,15 @@ public static void main(String[] args) {
 > ```
 >
 
-#### 工厂方法模式
+### 工厂方法模式
 
 > 
 
-#### 模板设计模式
+### 模板设计模式
 
 > 
 
-#### 代理设计模式
+### 代理设计模式
 
 > 
 >
@@ -2864,7 +2878,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println(date);
 >   }
->                                       
+>                                             
 >   private static Date format(String str) throws ParseException {	// 仅抛出异常
 >       DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 >      // 因为异常已经抛出,所以当前不需要处理异常
@@ -2897,17 +2911,19 @@ public static void main(String[] args) {
 
 ### 自定义异常
 
+> **用于开发者手动抛出自定义异常**
+>
 > - 格式：
 >
 >   ```java
 >  public class 异常类名 extends Exception {
->       无参构造
+>      无参构造
 >      带参构造
 >   }
 >   ```
 >
 > - 范例：
-> 
+>
 >   ```java
 >   public class ScoreException extends Exception {
 >       public ScoreException() {}
@@ -2916,9 +2932,9 @@ public static void main(String[] args) {
 >       }
 >   }
 >   ```
-> 
+>
 > - 使用：
-> 
+>
 >   ```java
 >   public static void main(String[] args) {
 >       Scanner in = new Scanner(System.in);
@@ -2932,7 +2948,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println("验明正身");
 >   }
->                                       
+>   
 >   //想要抛出一个实例,方法后还得抛出一个对应的类型
 >   public static void checkSex(String sex) throws Exception {
 >       if ("男".equals(sex) || "女".equals(sex))
@@ -2945,17 +2961,17 @@ public static void main(String[] args) {
 >   ```
 >
 > *throw抛出的是异常的实例*
-> 
+>
 > ![][3]
-> 
+>
 > - throws和throw的区别
-> 
+>
 >   |                      throws                      |               throw                |
 >    | :----------------------------------------------: | :--------------------------------: |
 >   |         用在方法声明后面，跟的是异常类名         |   用在方法体内，跟的是异常对象名   |
 >    |       表示抛出异常，由该方法的调用者来处理       | 表示抛出异常，由方法体内的语句处理 |
 >   | 表示出现异常的一种可能性，并不一定会发生这些异常 |    执行throw一定抛出了某种异常     |
-> 
+>
 
 ### throw 和 throws 的区别
 
@@ -3237,7 +3253,7 @@ public static void main(String[] args) {
 
 #### 泛型使用
 
->**<T> **：
+>**\<T> **：
 >
 >- 泛型使用<>来表示泛型，在<>中规定泛型的对应类型
 >
@@ -3537,7 +3553,7 @@ public static void main(String[] args) {
 > 
 >      ```java
 >       fos.write("hello\n".getBytes());	// hello<br/>
->       ```
+>      ```
 > 
 >- 字节流写数据如何实现追加写入
 > 
@@ -4066,7 +4082,7 @@ public static void method() {
 >
 >   ```java
 >   InputStream is = System.in;
->  int by;
+>    int by;
 >   while((by = is.read()) != -1) {
 >       System.out.print((char)by);
 >   }
@@ -4088,7 +4104,7 @@ public static void method() {
 >   // 字符串转换为整数
 >   int i = Integer.parseInt(br.readLine());
 >   System.out.print(i);
->   ```
+>  ```
 >   
 >  Java提供的类Scanner就进行了以上的过程来实现键盘录入
 >   
@@ -4098,7 +4114,7 @@ public static void method() {
 >   PrintStream ps = System.out;
 >   ps.println("hello");	// ---> System.out.println
 >   ps.println("100");	// ---> System.out.println
->   ```
+>  ```
 > 
 
 #### 打印流
@@ -4182,7 +4198,7 @@ public static void method() {
 
 > **对象序列化流**：<span style="color: red;">ObjectOutputStream</span>
 >
-> - 将Java对象的原始数据类型和图形写入OutputStream。可以使用ObjectInputStream读取(重构)对象。可以通过使用流的文件来实现对象的持久存储。如果流是网络套接字流，则可以在另一个主机上火另一个进程中重构对象
+> - 将Java对象的原始数据类型和图形写入OutputStream。可以使用ObjectInputStream读取(重构)对象。可以通过使用流的文件来实现对象的持久存储。如果流是网络套接字流，则可以在另一个主机上或另一个进程中重构对象
 >
 > - 构造方法：<span style="color: red;">ObjectOutputStream</span>(<span style="color: #329BDC;">OutputStream out</span>)：创建一个写入指定的OutputStream的ObjectOutputStream
 >
@@ -4504,7 +4520,7 @@ public class StudentStreamDemo {
 >
 >   ```java
 >   public class MyThreadDemo {
->                             
+>                                   
 >   	public static void main(String[] args) {
 >   		//创建线程对象
 >   		Thread t = new MyThread();
