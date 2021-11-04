@@ -492,24 +492,24 @@ public static void quickSortCore(int[] array, int left, int right) {
 >            // 调用方法
 >             int result = sum( a: 10, b: 20);
 >            System.out.println(result);		// 30
->                                                           
+>                                                               
 >             int result2 = sum( a: 10.0, b: 20.0);
 >             System.out.println(result2);	// 30.0
->                                                           
+>                                                               
 >             int result3 = sum( a: 10, b: 20, c: 30);
 >            System.out.println(result3);	// 60
 >         }
->                                                          
+>                                                              
 >         // 需求1：求两个 int 类型数据和的方法
 >        public static int sum(int a, int b) {
 >             return a + b;
 >         }
->                                                           
+>                                                               
 >         // 需求2：求两个 double 类型数据和的方法
 >         public static double sum(double a, double b) {
 >            return a + b;
 >         }
->                                                          
+>                                                              
 >         // 需求3：求三个 int 类型数据和的方法
 >         public static int sum(int a, int b, int c) {
 >             return a + b + c;
@@ -532,7 +532,7 @@ public static void quickSortCore(int[] array, int left, int right) {
 >            // 方法体
 >         }
 >      }
->              
+>                    
 >                                                                                                     // 属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
@@ -879,7 +879,7 @@ public static void main(String[] args) {
 >         public static void main(String[] args) {
 >             Student s1 = new Student();
 >             s1.setName("王狗蛋"); // setName 方法中的 this 代表 s1 这个对象
->                                                                                                                 
+>                                                                                                                         
 >             Student s2 = new Student();
 >             s2.setName("李铁蛋"); // setName 方法中的 this 代表 s2 这个对象
 >         }
@@ -1649,14 +1649,14 @@ public static void main(String[] args) {
 >     		System.out.println("USB插入，交换数据");
 >         }
 >     }
->                                           
+>                                               
 >     public class USBSan implements USBInterfase {
 >     	@Override
 >     	public void service() {
 >     		System.out.println("USB插入，风扇转起来了");
 >     	}
 >     }
->                                           
+>                                               
 >     public class USBDemo{
 >     	public static void main(String[] args) {
 >     		USBInterfase usb = new USBSan();
@@ -2878,7 +2878,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println(date);
 >   }
->                                             
+>                                                 
 >   private static Date format(String str) throws ParseException {	// 仅抛出异常
 >       DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 >      // 因为异常已经抛出,所以当前不需要处理异常
@@ -2903,7 +2903,7 @@ public static void main(String[] args) {
 > 
 >   - **Throwable  所有异常和错误的父类**
 >   - **Error错误 这种错误,程序本身无法解决**
->   - **Exception 所有异常的父类 包含运行时异常(RuntimeException)和非运行时异常**
+>   - **Exception 所有异常的父类 包含运行时异常(RuntimeException)和非运行时异常。可以由程序捕捉、处理**
 > 
 >   ![][2]
 > 
@@ -2948,7 +2948,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println("验明正身");
 >   }
->   
+>       
 >   //想要抛出一个实例,方法后还得抛出一个对应的类型
 >   public static void checkSex(String sex) throws Exception {
 >       if ("男".equals(sex) || "女".equals(sex))
@@ -4184,13 +4184,13 @@ public static void method() {
 
 #### 对象序列化流与对象反序列化流
 
-> 对象序列化:就是将对象保存到磁盘中,或者在网络中传输对象
+> 对象序列化：就是将对象保存到磁盘中,或者在网络中传输对象
 >
 > 这种机制就是使用一个字节序列表示一个对象,该字节序列包含：对象类型，对象数据和对象存储的属性等信息
 >
 > 字节序列写到文件之后，相当于文件中持久保存了一个对象信息
 >
-> 反之,该字节序列还可以从文件中读取回来,重构对象,这种叫做反序列化
+> 反之，该字节序列还可以从文件中读取回来,重构对象，这种叫做反序列化
 >
 > 要实现序列化和反序列化就要使用对象序列化流和对象反序列化流
 
@@ -4520,7 +4520,7 @@ public class StudentStreamDemo {
 >
 >   ```java
 >   public class MyThreadDemo {
->                                   
+>                                       
 >   	public static void main(String[] args) {
 >   		//创建线程对象
 >   		Thread t = new MyThread();
