@@ -586,6 +586,52 @@
 > ```
 >
 
+#### 使用注解实现
+
+> ```java
+> @WebServlet("/http")
+> public class Http extends HttpServlet {
+>     @Override
+>     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+>         System.out.println("hello....");
+>     }
+> }
+> ```
+>
+> @WebServlet("/http") 注解相当于实现了下列代码
+>
+> ```xml
+> <servlet>
+>     <!--给servlet起一个别名 -->
+>     <servlet-name>Http</servlet-name>
+>     <!--servlet的实现类-->
+>     <servlet-class>com.roxla.serlvet.Http</servlet-class>
+> </servlet>
+> <servlet-mapping>
+>     <!--servlet-name的作用是告诉tomcat服务器，当前的Hello给哪个servlet使用的-->
+>     <servlet-name>Http</servlet-name>
+>     <!-- web服务器解析web.xml的时候，请求过来就会匹配 /hello -->
+>     <url-pattern>/http</url-pattern>
+> </servlet-mapping>
+> ```
+
+#### @WebServlet注解
+
+> **属性**
+>
+> |       属性        |      类型      | 是否必须 | 说明                                        |
+> | :---------------: | :------------: | :------: | ------------------------------------------- |
+> |  asyncSupported   |    boolean     |    否    | 指定 Servlet 是否支持异步操作模式           |
+> |    displayName    |     String     |    否    | 指定 Servlet 显示名称                       |
+> |    initParams     | WebInitParam[] |    否    | 配置初始化参数                              |
+> |   loadOnStartup   |      int       |    否    | 标记容器是否在应用启动时就加载这个 Servlet  |
+> |       name        |     String     |    否    | 指定  Servlet 名称                          |
+> | urlPatterns/value |    String[]    |    否    | 这两个属性作用相同，指定 Servlet 处理的 url |
+>
+> 可以通过配置 @WebServlet 来实现不同的功能
+>
+> 
+
 ### servlet执行流程(重点)
 
 > **流程**
@@ -782,8 +828,8 @@
 >
 > ```xml
 > <context-param>
->     <param-name>boss</param-name>
->     <param-value>张三</param-value>
+> <param-name>boss</param-name>
+> <param-value>张三</param-value>
 > </context-param>
 > ```
 
@@ -979,6 +1025,306 @@
 > **概述**
 >
 > Session 是服务器端技术，利用这个技术，服务器在运行时为每一个用户的浏览器创建一个**独享的 session 对象。由于 session 为用户浏览器独享，所有用户在访问服务器的时候，可以把各自的数据放在各自的 session 中，当用户再次访问服务器中的 web 资源的时候，其他 web 资源再从用户各自的 session 中取出数据为用户服务**
+
+#### Session
+
+> 
+
+#### Session的运行原理
+
+> 
+
+## Filter(重点)
+
+> filter 是用来过滤请求使用的，可以在请求到达之前或之后作处理，也是 web 三大组件之一
+>
+> web 开发人员通过 Filter 技术，对 web 服务器所管理的资源(jsp，servlet，静态图片或静态html文件)进行拦截，从而实现一些特殊的功能
+>
+> filter 就是过滤从客户端向服务器发送的请求
+
+### Filter的原理
+
+> **当在 web.xml 中注册了一个 Filter 来对某个 Servlet 程序进行拦截处理时，这个Filter 就成了 Tomcat 与该 Servlet 程序的通信线路上的一道关卡，该 Filter 可以对Servlet 容器发送给 Servlet 程序的请求和 Servlet 程序回送给 Servlet 容器的响应进行拦截，可以决定是否将请求继续传递给 Servlet 程序，以及对请求和相应信息是否进行修改**
+>
+> 在一个 web 应用程序中可以注册多个 Filter 程序，每个 Filter 程序都可以对一个或一组 Servlet 程序进行拦截。
+>
+> 若有多个 Filter 程序对某个 Servlet 程序的访问过程进行拦截，当针对该 Servlet 的访问请求到达时，web 容器将把这多个 Filter 程序组合成一个 Filter 链(过滤器链)。Filter 链中各个 Filter 的拦截顺序与它们在应用程序的 web.xml 中映射的顺序一致
+
+### Filter的实现方式
+
+> - 写一个类实现Filter接口
+>
+>   - web.xml
+>
+>   ```xml
+>   <filter>
+>       <filter-name>TestFilter</filter-name>
+>       <filter-class>com.roxla.filter.TestFilter</filter-class>
+>   </filter>
+>   
+>   <filter-mapping>
+>   	<filter-name>TestFilter</filter-name>
+>       <url-pattern>/*</url-pattern>
+>   </filter-mapping>
+>   ```
+>
+>   - java
+>
+>   ```java
+>   public class TestFilter implements Filter {
+>       public void destroy() {
+>       }
+>   
+>       public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
+>           System.out.println("**************1*************");
+>           req.setCharacterEncoding("utf-8");
+>           resp.setContentType("text/html;charset=utf-8");
+>           chain.doFilter(req, resp);
+>           System.out.println("**************3*************");
+>       }
+>   
+>       public void init(FilterConfig config) throws ServletException {
+>   
+>       }
+>   }
+>   ```
+>
+> - 写注解@WebFilter("/*")
+>
+>   ```java
+>   @WebFilter("/*")
+>   public class TestFilter implements Filter {
+>       public void destroy() {
+>       }
+>
+>       public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
+>           System.out.println("Filter执行了...");
+>       }
+>   
+>       public void init(FilterConfig config) throws ServletException {
+>       }
+>   }
+> ```
+>
+> *因为没有实现过滤器的放行，所以过滤器会将所有内容拦截。看到的页面会是一片空白*
+>
+> **过滤器的放行**
+>
+> 使用方法中的参数**chain**
+>
+> ```java
+> @WebFilter("/*")
+> public class TestFilter implements Filter {
+>     public void destroy() {
+>     }
+> 
+>     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
+>         System.out.println("Filter执行了...");
+>         req.setCharacterEncoding("utf-8");
+>         resp.setContentType("text/html;charset=utf-8");
+>         chain.doFilter(req, resp);
+>         System.out.println("Filter执行结束了...");
+>     }
+> 
+>     public void init(FilterConfig config) throws ServletException {
+>     }
+> }
+> ```
+
+### Filter的生命周期
+
+> 1. 在服务器启动时，filter 被创建并初始化，执行 init() 方法。
+> 2. 请求通过 filter 时执行 doFilter 方法。
+> 3. 服务器停止时，调用 destroy 方法。
+
+### FilterChain对象
+
+> **概述**
+>
+> FilterChain 过滤器链：在一个 web 应用中，可以开发编写多个 Filter，这些 Filter 组合起来称为是一个过滤器链
+>
+> Web 服务器根据 Filter 在web.xml 文件中的注册顺序(mapping 的配置顺序)觉得先调用哪个 Filter。一次调用后面的过滤器，如果没有下一个过滤器，调用目标资源
+
+#### FilterChain中Filter的执行顺序
+
+> 浏览器向服务器请求某个资源，在发送请求时会经过复数个 Filter 过滤器，此时经过的 Filter 过滤器的顺序为
+>
+> 1. Filter1
+> 2. Filter2
+> 3. Filter3
+> 4. ...FilterN
+>
+> 当服务器响应请求时，也会经过复数个 Filter 过滤器，此时经过的 Filter 过滤器的顺序为
+>
+> 1. FilterN...
+> 2. Filter3
+> 3. Filter2
+> 4. Filter1
+
+### @WebFilter注解
+
+> **属性**
+>
+> |      属性      |      类型      | 描述                                                         |
+> | :------------: | :------------: | ------------------------------------------------------------ |
+> |   filterName   |     String     | 指定过滤器的 name 属性，等价于<filter-name>                  |
+> |     value      |    String[]    | 该属性等价于 urlPatterns 属性。但是两者不应该同时使用        |
+> |  urlPatterns   |    String[]    | 指定一组过滤器的 URL 匹配模式。等价于<url-pattern>           |
+> |  servletNames  |    String[]    | 指定过滤器将应用于哪些 Servlet。取值是 @WebServlet中的 name属性的取值，或者是 web.xml 中 <servlet-name>的取值 |
+> | dispatcherType | DispatcherType | 指定过滤器的转发模式。具体取值包括：ASYNC、ERROR、FORWARD、INCLUDE、REQUEST |
+> |   initParams   | WebInitParam[] | 指定一组过滤器初始化参数，等价于<init-param>                 |
+> | asyncSupported |    boolean     | 声明过滤器是否支持异步操作模式，等价于<async-supported>      |
+> |  description   |     String     | 该过滤器的描述信息，等价于<description>                      |
+> |  displayName   |     String     | 该过滤器的显示名，通常配合工具使用，等价于<display-name>     |
+>
+> 如果想要**控制filer的执行顺序**可以通过**控制filter的文件名**来控制
+>
+> 比如：
+>
+> UserLoginFilter.java 和 ApiLog.java 这两个文件里面分别是“用户登录检查过滤器”和“接口日志过滤器”，因为这两个文件的 首字母A排U之前 ，导致每次执行的时候都是先执行“接口日志过滤器”再执行“用户登录检查过滤器”，所以我们现在修改两个文件的名称分别为
+>
+> - Filter0_UserLogin.java
+>
+> - Filter1_ApiLog.java
+>
+> 这样就能先执行“用户登录检查过滤器”再执行“接口日志过滤器”
+
+### FilterConfig对象
+
+> **概述**
+>
+> 用来获得 Filter 的相关的配置的对象
+
+### FilterConfig对象的API
+
+> |         方法名          | 描述 |
+> | :---------------------: | ---- |
+> |     getFilterName()     |      |
+> |   getInitParameter()    |      |
+> | getInitParameterNames() |      |
+> |   getServletContext()   |      |
+
+#### getFilterName()
+
+> 
+
+#### getInitParameter()
+
+> 
+
+#### getInitParameterNames()
+
+> 
+
+#### getServletContext()
+
+> 
+
+### 过滤器的相关配置
+
+#### url-pattern
+
+> **url-pattern 是配置 filter 过滤哪些请求的。主要有以下几种配置**
+>
+> web.xml 中配置的/都是以当前项目路径为根路径的
+>
+> - 精确匹配
+>   - /index.jsp /user/login 会在请求/index.jsp、/user/login 的时候执行过滤方法
+> - 路径匹配
+>   - /user/* /* 凡是路径为/user/下的所有请求都会被拦截，/*表示拦截系统的所有请求，包括静态资源文件
+> - 扩展匹配
+>   - *.jsp *.action 凡是后缀名为.jsp .action 的请求都会被拦截
+> - 多重 url-pattern 配置
+>   - 上面的三种形式比较有局限性，但是 url-pattern 可以配置多个，这样这三种组合基本就能解决所有问题了
+>
+> *注意：*
+>
+> - /login/\*.jsp 这种写法是错误的，只能是上述三种的任意一种形式。不能组合新形式
+> - *jsp 也是错误的，扩展匹配必须是后缀名
+
+#### servlet-name
+
+> 专门以 servlet 的配置的名称拦截 servlet
+>
+> 可以使用 url-pattern 来替代
+
+#### dispatcher
+
+> 默认的情况下过滤器会拦截请求。如果进行转发(需要拦截这次转发)。
+>
+> **dispatcher的取值**
+>
+> - ASYNC(Servlet3.0新增)
+>   - 页面异步处理的时候进行拦截
+> - ERROR
+>   - 页面出现全局错误页面跳转的时候进行拦截
+> - FORWARD
+>   - 页面转发的时候进行拦截
+> - INCLUDE
+>   - 页面包含的时候进行拦截
+> - REQUEST(默认值)
+>   - 默认过滤器拦截的就是请求
+>
+> ```xml
+> <filter>
+>     <filter-name>FilterDemo</filter-name>
+>     <filter-class>com.roxla.filter.FilterDemo</filter-class>
+> </filter>
+> 
+> <filter-mapping>
+> 	<filter-name>FilterDemo</filter-name>
+>     <url-pattern>/*</url-pattern>
+>     <dispatcher>REQUEST</dispatcher>
+>     <dispatcher>FORWARD</dispatcher>
+> </filter-mapping>
+> ```
+
+### 权限验证过滤
+
+> **使用过滤器进行访问权限验证**
+>
+> ```java
+> @WebFilter("*.action")
+> public class RoleFilter implements Filter {
+>     public void destroy() {
+>     }
+> 
+>     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
+>         //强转
+>         HttpServletRequest request = (HttpServletRequest)req;
+>         HttpServletResponse response = (HttpServletResponse)resp;
+>         //获取请求
+>         String servletPath = request.getServletPath();
+>         //判断
+>         if(servletPath.equals("/login.action")){
+>             chain.doFilter(req,resp);//放行
+>         }else{
+>             //获取session
+>             HttpSession session = request.getSession();
+>             //从session中取用户信息
+>             User user = (User) session.getAttribute("user");
+>             //判断用户是否为空
+>             if(user != null){
+>                 //放行
+>                 chain.doFilter(req,resp);
+>             }else{
+>                 response.setContentType("text/html;charset=utf-8");
+>                 //提示
+>                 response.getWriter().println("请登录后再操作...");
+>                 //刷新
+>                 response.setHeader("refresh","3;url=index.jsp");
+>                 response.getWriter().println("<a href='index.jsp'>登录</a>");
+>             }
+>         }
+> 
+>     }
+> 
+>     public void init(FilterConfig config) throws ServletException {
+> 
+>     }
+> 
+> }
+> ```
 
 
 
