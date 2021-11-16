@@ -801,6 +801,26 @@
 
 ### ServletConfig
 
+> **概述**
+>
+> ServletConfig 用来获得 Servlet 的相关的配置的对象
+>
+> **获得ServletConfig对象**
+>
+> ```java
+> // 获取当前类的ServletConfig
+> ServletConfig config = this.getServletConfig();
+> ```
+>
+> **ServletConfig对象的API**
+>
+> |            方法名             | 描述 |
+> | :---------------------------: | ---- |
+> | getInitParameter(String name) |      |
+> |    getInitParameterNames()    |      |
+> |      getServletContext()      |      |
+> |       getServletName()        |      |
+>
 > 
 
 ### ServletContext(重点)
@@ -821,6 +841,7 @@
 > |       getAttribute(String name)        | 取值              |
 > |      removeAttribute(String name)      | 在context移除name |
 > |        getServletContextName()         |                   |
+> |          getServletContext()           |                   |
 >
 > **域对象的存储的有效时间为：tomcat提供时一直有效，tomcat停止服务，就没有值了**
 >
@@ -854,6 +875,10 @@
 > 
 
 #### getServletContextName()
+
+> 
+
+#### getServletContext()
 
 > 
 
@@ -1145,14 +1170,14 @@
 
 #### FilterChain中Filter的执行顺序
 
-> 浏览器向服务器请求某个资源，在发送请求时会经过复数个 Filter 过滤器，此时经过的 Filter 过滤器的顺序为
+> **浏览器向服务器请求某个资源，在发送请求时会经过复数个 Filter 过滤器，此时经过的 Filter 过滤器的顺序为**
 >
 > 1. Filter1
 > 2. Filter2
 > 3. Filter3
 > 4. ...FilterN
 >
-> 当服务器响应请求时，也会经过复数个 Filter 过滤器，此时经过的 Filter 过滤器的顺序为
+> **当服务器响应请求时，也会经过复数个 Filter 过滤器，此时经过的 Filter 过滤器的顺序为**
 >
 > 1. FilterN...
 > 2. Filter3
@@ -1332,14 +1357,40 @@
 
 ## 监听器
 
-> 
+> **概述**
+>
+> 监听器就是一个实现类特定接口的 Java 类，这个 Java 类用于监听另一个 Java类的方法调用或者属性的改变。当被监听对象发生上述事件后，监听器某个方法将会立即被执行
+>
+> **用途**
+>
+> 用来监听其他对象的变化的。主要应用于图形化界面开发上。
+>
+> - Java 中 GUI，Android
+>
+> **术语**
+>
+> - 事件源：指的是被监听对象(气车)
+> - 监听器：指的是监听的对象(报警器)
+> - 事件源和监听器绑定：在汽车上安装报警器
+> - 事件：指的是事件源对象的改变(踹了气车一脚)
+>   - 主要功能：获得事件源对象
+>
+> **Servlet中的监听器**
+>
+> 在 Servlet 中定义了多种类型的监听器，它们用于监听的事件源分别是**ServletContext**、**HttpSession**和**ServletRequest**这三个域对象
+>
+> **Servlet中的监听器的分类**
+>
+> - 监听三个域对象的创建和销毁的监听器(三个)
+> - 监听桑域对象的属性变更(属性添加、溢出、替换)的监听器(三个)
+> - 监听 HttpSession 中 JavaBean 的状态改变(钝化、活化、绑定、解除绑定)的监听(两个)
 
 ### 监听器的实现方式
 
 > 1. 写一个类实现监听器的接口
 >
 >    ```java
->    public class implements ServletContextListener{
+>    public class ListenerDemo implements HttpSessionListener{
 >    }
 >    ```
 >
@@ -1348,22 +1399,27 @@
 >    - XML配置
 >
 >      ```xml
->      
+>      <web-app>
+>      	...
+>          <listener>
+>              <listener-class>com.roxla.listener.ListenerDemo</listener-class>
+>          </listener>
+>      </web-app>
 >      ```
 >
 >    - 注解配置
 >
 >      ```java
->      @WebListener()
->      public class implements ServletContextListener{
+>      @WebListener
+>      public class ListenerDemo implements HttpSessionListener{
 >      }
 >      ```
 >
-> 3. 重写
+> 3. 重写监听器的方法
 >
 >    ```java
->    @WebListener()
->    public class {
+>    @WebListener
+>    public class ListenerDemo implements HttpSessionListener{
 >        public void sessionCreated(HttpSessionEvent se) {
 >        }
 >        public void sessionDestroyed(HttpSessionEvent se) {
@@ -1371,35 +1427,86 @@
 >    }
 >    ```
 >
->    
+> 
 
-#### 监听session的创建和销毁事件
+#### HttpSessionListener
 
-> **使用监听器实现在线人数的统计**
->
 > 
 >
 > *session监听器*
 >
 > ```java
-> @WebListener()
-> public class {
+>@WebListener
+> public class ListenerDemo implements HttpSessionListener{
 >     // 当session对象被创建的时候，就会通知此监听器
 >     public void sessionCreated(HttpSessionEvent se) {
->         
+>            
+>        }
+>             // 当session对象被销毁的时候，就会通知此监听器
+>        public void sessionDestroyed(HttpSessionEvent se) {
+>            
+>        }
+>         }
+>    ```
+> 
+> 
+
+#### HttpSessionAttributeListener
+
+> 
+>
+> ```java
+> @WebListener
+> public class ListenerDemo implements HttpSessionAttributeListener{
+>     // 
+>     public void attributeAdded(HttpSessionBindingEvent sbe) {
+>       /* This method is called when an attribute 
+>          is added to a session.
+>       */
 >     }
->     // 当session对象被销毁的时候，就会通知此监听器
->     public void sessionDestroyed(HttpSessionEvent se) {
->         
+> 	// 
+>     public void attributeRemoved(HttpSessionBindingEvent sbe) {
+>       /* This method is called when an attribute
+>          is removed from a session.
+>       */
+>     }
+> 	// 
+>     public void attributeReplaced(HttpSessionBindingEvent sbe) {
+>       /* This method is invoked when an attribute
+>          is replaced in a session.
+>       */
 >     }
 > }
 > ```
 >
 > 
 
-#### 监听request请求的创建和销毁
+#### ServletContextListener
 
-#### 监听上下文的创建和销毁
+> **用来监听 ServletContext 域对象的创建和销毁**
+>
+> - 创建：在服务器启动的时候，为每个 web 应用创建单独的 ServletContext 对象
+> - 销毁：在服务器关闭的时候，或者项目从 web 服务器中移除的时候
+>
+> ```java
+> @WebListener
+> public class ListenerDemo implements ServletContextListener {
+>     // 监听 ServletContext 对象的创建
+>     public void contextInitialized(ServletContextEvent sce) {
+>         System.out.println("ServletContext对象被创建了...");
+>     }
+> 	// 监听 ServletContext 对象的销毁
+>     public void contextDestroyed(ServletContextEvent sce) { 
+>         System.out.println("ServletContext对象被销毁了...");
+>     }
+> }
+> ```
+>
+> **用途**
+>
+> - 加载框架的配置文件
+>   - Spring 框架提供了一个核心监听器 ContextLoaderListener
+> - 定时任务调度
 
 ## 文件上传下载
 
@@ -1407,13 +1514,238 @@
 
 > 
 >
+> *注意：java EE 6 不支持文件的上传，需要使用 java EE 8 来创建项目*
+
+#### 实现代码
+
+> **使用监听器来判断文件夹是否创建**
+>
+> ```java
+> @WebListener
+> public class ContextpathListener implements ServletContextListener {
+>     public void contextInitialized(ServletContextEvent sce) {
+>         ServletContext context = sce.getServletContext();
+>         // idea里面的tomcat路径下 E:\work_idea\out\artifacts\upload_war_exploded
+>         String realPath = context.getRealPath("/upload");
+>         // 文件实例
+>         File file = new File(realPath);
+>         // 判断是否存在 upload 这个文件夹
+>         if (!file.exists()){
+>             // 如果不存在则创建
+>             file.mkdir();
+>         }else {
+>             System.out.println("已创建好保存路径...");
+>         }
+>     }
+> 
+>     public void contextDestroyed(ServletContextEvent sce) {
+>     }
+> }
+> ```
+>
+> **文件上传实现代码**
+>
+> ```java
+> @javax.servlet.annotation.WebServlet("/upload")
+> @MultipartConfig //这个注解用来支持文件上传
+> public class Upload extends javax.servlet.http.HttpServlet {
+>     @Override
+>     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+>         // 接收上传的文件
+>         Part part = req.getPart("file");
+>         // 文件类型
+>         System.out.println("name: " + part.getName());
+>         // 文件大小
+>         System.out.println("size: " + part.getSize());
+>         // 提交的文件名
+>         System.out.println("提交的文件名: " + part.getSubmittedFileName());
+>         // 当前系统的盘符  win：\，linux：/
+>         System.out.println("当前系统盘符: " + File.separator);
+>         // 文件名
+>         String fileName = part.getSubmittedFileName();
+>         // 找地方把文件保存一下
+>         ServletContext context = req.getServletContext();
+>         String realPath = context.getRealPath("/upload");
+> 		// 打印保存路径
+>         System.out.println("保存路径: " + realPath);
+>         // 保存 调用write 保存文件的路径 = realpath+盘符+提交的文件名
+>         part.write(realPath + File.separator + fileName);
+>     }
+> }
+> ```
+>
+> **jsp页面代码**
+>
+> ```jsp
+> <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+> <html>
+> <head>
+>     <title>$Title$</title>
+> </head>
+> <body>
+>     <form method="post" action="upload" enctype="multipart/form-data">
+>         <input type="file" name="file"><br/>
+>         <input type="submit" value="上传">
+>     </form>
+> </body>
+> </html>
+> ```
 
 ### 文件下载
 
 > 
 >
+> 可以在上面文件上传模块的基础上添加文件下载模块，模块的文件结构为
+>
+> - com.roxla.listener
+>   - ContextpathListener
+> - com.roxla.servlet
+>   - Upload
+>   - ViewFileList
+>   - Download
+> - web
+>   - index.jsp
+>
+> *注意：java EE 6 不支持文件的下载，需要使用 java EE 8 来创建项目*
 
-## jsp
+#### 实现代码
+
+> **使用监听器来判断文件夹是否创建**
+>
+> ```java
+> @WebListener
+> public class ContextpathListener implements ServletContextListener {
+>     public void contextInitialized(ServletContextEvent sce) {
+>         ServletContext context = sce.getServletContext();
+>         // idea里面的tomcat路径下 E:\work_idea\out\artifacts\upload_war_exploded
+>         String realPath = context.getRealPath("/upload");
+>         // 文件实例
+>         File file = new File(realPath);
+>         // 判断是否存在 upload 这个文件夹
+>         if (!file.exists()){
+>             // 如果不存在则创建
+>             file.mkdir();
+>         }else {
+>             System.out.println("已创建好保存路径...");
+>         }
+>     }
+> 
+>     public void contextDestroyed(ServletContextEvent sce) {
+>     }
+> }
+> ```
+>
+> **页面显示所有上传的文件**
+>
+> ```java
+> @WebServlet("/filelist")
+> public class ViewFileList extends HttpServlet {
+>     @Override
+>     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+>         // 设置响应类型和编码
+>         resp.setContentType("text/html;charset=utf-8");
+>         // 输出流
+>         PrintWriter out = resp.getWriter();
+>         // 获取保存路径
+>         ServletContext context = req.getServletContext();
+>         String realPath = context.getRealPath("/upload");
+>         // file实例
+>         File file = new File(realPath);
+>         // 调用listFiles返回文件数组
+>         File[] files = file.listFiles();
+>         out.println("***文件列表***<br/>");
+>         // 循环
+>         for (File f : files) {
+>             out.println("<a href='download?filename=" + f.getName() + "'>" + file.getName() + "</a><br>");
+>         }
+>     }
+> }
+> ```
+>
+> **文件下载实现代码**
+>
+> ```java
+> @WebServlet("/download")
+> public class Download extends HttpServlet {
+>     @Override
+>     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+>         /*
+>           1设置响应头
+>           2 读取图片资源
+>           3 读写（循环） try...with...resources:把IO流对象放入try(小括号）里面，这个流对象是自动关闭，离开"}"括号以后就自动关闭，是实现了AutoCloseAble接口的类才有效
+>             好处是不再需要手动写finally关闭（极容易忘记写关闭）
+>          */
+>         resp.setCharacterEncoding("utf-8");
+>         resp.setContentType("text/html;charset=UTF-8");
+>         // 获取文件名
+>         String filename = req.getParameter("filename");
+>         System.out.println("filename: " + filename);
+>         try {
+>             /*
+>               content-disposition:内容保存路径
+>               attachment:附件，告诉浏览这个附件
+>               filename=w.jpg 下载文件的名字
+>              */
+>             resp.setHeader("content-disposition", "attachment;filename=" + changeCharset(req, filename));
+>         } catch (Exception e) {
+>             e.printStackTrace();
+>         }
+>         // 获取文件真实路径
+>         String realPath = req.getServletContext().getRealPath("/upload");
+>         // 字节流下载文件
+>         try (InputStream is = new FileInputStream(realPath + File.separator + filename);
+>              ServletOutputStream out = resp.getOutputStream()) {
+>             int len = 0;
+>             byte[] bytes = new byte[1024];
+>             while ((len = is.read(bytes)) > 0) {
+>                 out.write(bytes, 0, len);
+>             }
+>             System.out.println("写出文件成功...");
+>         } catch (IOException e) {
+>             e.printStackTrace();
+>         }
+>     }
+> }
+> ```
+>
+> **编写静态方法处理中文文件名乱码**
+>
+> ```java
+> // 文件名处理
+> static String changeCharset(HttpServletRequest request, String filename) throws Exception {
+>     // 客户端的浏览器
+>     String bwname = null;
+>     String client = request.getHeader("User-agent");
+>     // 判断
+>     if (client != null && client.indexOf("MSIE") > 0) {
+>         System.out.println("微软浏览器IE");
+>         bwname = URLEncoder.encode(filename, "UTF-8");
+>     } else {
+>         bwname = new String(filename.getBytes("UTF-8"), "iso-8859-1");
+>     }
+>     return bwname;
+> }
+> ```
+>
+> **jsp页面代码**
+>
+> ```jsp
+> <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+> <html>
+> <head>
+>     <title>$Title$</title>
+> </head>
+> <body>
+>     <form method="post" action="upload" enctype="multipart/form-data">
+>         <input type="file" name="file"><br/>
+>         <input type="submit" value="上传">
+>     </form>
+>     <a href="filelist">下载文件列表</a>
+> </body>
+> </html>
+> ```
+
+## JSP
 
 > 
 >
