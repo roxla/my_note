@@ -1096,25 +1096,24 @@
 >   public class TestFilter implements Filter {
 >       public void destroy() {
 >       }
->
+>    
 >       public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
 >           System.out.println("Filter执行了...");
 >       }
->   
+>       
 >       public void init(FilterConfig config) throws ServletException {
 >       }
 >   }
-> ```
->
+> 
 > *因为没有实现过滤器的放行，所以过滤器会将所有内容拦截。看到的页面会是一片空白*
->
-> **过滤器的放行**
->
-> 使用方法中的参数**chain**
->
-> ```java
+> 
+>**过滤器的放行**
+> 
+>使用方法中的参数**chain**
+> 
+>```java
 > @WebFilter("/*")
-> public class TestFilter implements Filter {
+>public class TestFilter implements Filter {
 >     public void destroy() {
 >     }
 > 
@@ -1129,7 +1128,6 @@
 >     public void init(FilterConfig config) throws ServletException {
 >     }
 > }
-> ```
 
 ### Filter的生命周期
 
@@ -1281,6 +1279,12 @@
 
 ### 权限验证过滤
 
+> **需求**
+>
+> 现在一个网站上需妻有登录的功能，在登录成功后,重定向到后台的成功页面《后台的页面有很多)。如果现在没有登录直接在地址栏上输入后台页面地址。
+>
+> 编写一个过滤器：可以对没有登录的用户进行拦截。(没有登录，回到登录页面。如果已经登录，放行)
+>
 > **使用过滤器进行访问权限验证**
 >
 > ```java
@@ -1326,19 +1330,93 @@
 > }
 > ```
 
+## 监听器
 
+> 
 
+### 监听器的实现方式
 
+> 1. 写一个类实现监听器的接口
+>
+>    ```java
+>    public class implements ServletContextListener{
+>    }
+>    ```
+>
+> 2. 配置XML或者注解
+>
+>    - XML配置
+>
+>      ```xml
+>      
+>      ```
+>
+>    - 注解配置
+>
+>      ```java
+>      @WebListener()
+>      public class implements ServletContextListener{
+>      }
+>      ```
+>
+> 3. 重写
+>
+>    ```java
+>    @WebListener()
+>    public class {
+>        public void sessionCreated(HttpSessionEvent se) {
+>        }
+>        public void sessionDestroyed(HttpSessionEvent se) {
+>        }
+>    }
+>    ```
+>
+>    
 
+#### 监听session的创建和销毁事件
 
+> **使用监听器实现在线人数的统计**
+>
+> 
+>
+> *session监听器*
+>
+> ```java
+> @WebListener()
+> public class {
+>     // 当session对象被创建的时候，就会通知此监听器
+>     public void sessionCreated(HttpSessionEvent se) {
+>         
+>     }
+>     // 当session对象被销毁的时候，就会通知此监听器
+>     public void sessionDestroyed(HttpSessionEvent se) {
+>         
+>     }
+> }
+> ```
+>
+> 
 
+#### 监听request请求的创建和销毁
 
+#### 监听上下文的创建和销毁
 
+## 文件上传下载
 
+### 文件上传
 
+> 
+>
 
+### 文件下载
 
+> 
+>
 
+## jsp
+
+> 
+>
 
 
 
