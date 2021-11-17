@@ -82,6 +82,10 @@
 >
 > **500**：服务器内部错误
 
+### Web开发流程
+
+> 
+
 ## Tomcat服务器
 
 > **概述**
@@ -1121,11 +1125,11 @@
 >   public class TestFilter implements Filter {
 >       public void destroy() {
 >       }
->    
+>      
 >       public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
 >           System.out.println("Filter执行了...");
 >       }
->       
+>         
 >       public void init(FilterConfig config) throws ServletException {
 >       }
 >   }
@@ -1523,23 +1527,23 @@
 > ```java
 > @WebListener
 > public class ContextpathListener implements ServletContextListener {
->     public void contextInitialized(ServletContextEvent sce) {
->         ServletContext context = sce.getServletContext();
->         // idea里面的tomcat路径下 E:\work_idea\out\artifacts\upload_war_exploded
->         String realPath = context.getRealPath("/upload");
->         // 文件实例
->         File file = new File(realPath);
->         // 判断是否存在 upload 这个文件夹
->         if (!file.exists()){
->             // 如果不存在则创建
->             file.mkdir();
->         }else {
->             System.out.println("已创建好保存路径...");
->         }
->     }
+>        public void contextInitialized(ServletContextEvent sce) {
+>            ServletContext context = sce.getServletContext();
+>            // idea里面的tomcat路径下 E:\work_idea\out\artifacts\upload_war_exploded
+>            String realPath = context.getRealPath("/upload");
+>            // 文件实例
+>            File file = new File(realPath);
+>            // 判断是否存在 upload 这个文件夹
+>            if (!file.exists()){
+>                // 如果不存在则创建
+>                file.mkdir();
+>            }else {
+>                System.out.println("已创建好保存路径...");
+>            }
+>        }
 > 
->     public void contextDestroyed(ServletContextEvent sce) {
->     }
+>        public void contextDestroyed(ServletContextEvent sce) {
+>        }
 > }
 > ```
 >
@@ -1549,28 +1553,28 @@
 > @javax.servlet.annotation.WebServlet("/upload")
 > @MultipartConfig //这个注解用来支持文件上传
 > public class Upload extends javax.servlet.http.HttpServlet {
->     @Override
->     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
->         // 接收上传的文件
->         Part part = req.getPart("file");
->         // 文件类型
->         System.out.println("name: " + part.getName());
->         // 文件大小
->         System.out.println("size: " + part.getSize());
->         // 提交的文件名
->         System.out.println("提交的文件名: " + part.getSubmittedFileName());
->         // 当前系统的盘符  win：\，linux：/
->         System.out.println("当前系统盘符: " + File.separator);
->         // 文件名
->         String fileName = part.getSubmittedFileName();
->         // 找地方把文件保存一下
->         ServletContext context = req.getServletContext();
->         String realPath = context.getRealPath("/upload");
-> 		// 打印保存路径
->         System.out.println("保存路径: " + realPath);
->         // 保存 调用write 保存文件的路径 = realpath+盘符+提交的文件名
->         part.write(realPath + File.separator + fileName);
->     }
+>        @Override
+>        protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+>            // 接收上传的文件
+>            Part part = req.getPart("file");
+>            // 文件类型
+>            System.out.println("name: " + part.getName());
+>            // 文件大小
+>            System.out.println("size: " + part.getSize());
+>            // 提交的文件名
+>            System.out.println("提交的文件名: " + part.getSubmittedFileName());
+>            // 当前系统的盘符  win：\，linux：/
+>            System.out.println("当前系统盘符: " + File.separator);
+>            // 文件名
+>            String fileName = part.getSubmittedFileName();
+>            // 找地方把文件保存一下
+>            ServletContext context = req.getServletContext();
+>            String realPath = context.getRealPath("/upload");
+>         // 打印保存路径
+>            System.out.println("保存路径: " + realPath);
+>            // 保存 调用write 保存文件的路径 = realpath+盘符+提交的文件名
+>            part.write(realPath + File.separator + fileName);
+>        }
 > }
 > ```
 >
@@ -1615,23 +1619,23 @@
 > ```java
 > @WebListener
 > public class ContextpathListener implements ServletContextListener {
->     public void contextInitialized(ServletContextEvent sce) {
->         ServletContext context = sce.getServletContext();
->         // idea里面的tomcat路径下 E:\work_idea\out\artifacts\upload_war_exploded
->         String realPath = context.getRealPath("/upload");
->         // 文件实例
->         File file = new File(realPath);
->         // 判断是否存在 upload 这个文件夹
->         if (!file.exists()){
->             // 如果不存在则创建
->             file.mkdir();
->         }else {
->             System.out.println("已创建好保存路径...");
+>         public void contextInitialized(ServletContextEvent sce) {
+>             ServletContext context = sce.getServletContext();
+>             // idea里面的tomcat路径下 E:\work_idea\out\artifacts\upload_war_exploded
+>             String realPath = context.getRealPath("/upload");
+>             // 文件实例
+>             File file = new File(realPath);
+>             // 判断是否存在 upload 这个文件夹
+>             if (!file.exists()){
+>                 // 如果不存在则创建
+>                 file.mkdir();
+>             }else {
+>                 System.out.println("已创建好保存路径...");
+>             }
 >         }
->     }
 > 
->     public void contextDestroyed(ServletContextEvent sce) {
->     }
+>         public void contextDestroyed(ServletContextEvent sce) {
+>         }
 > }
 > ```
 >
@@ -1640,25 +1644,25 @@
 > ```java
 > @WebServlet("/filelist")
 > public class ViewFileList extends HttpServlet {
->     @Override
->     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
->         // 设置响应类型和编码
->         resp.setContentType("text/html;charset=utf-8");
->         // 输出流
->         PrintWriter out = resp.getWriter();
->         // 获取保存路径
->         ServletContext context = req.getServletContext();
->         String realPath = context.getRealPath("/upload");
->         // file实例
->         File file = new File(realPath);
->         // 调用listFiles返回文件数组
->         File[] files = file.listFiles();
->         out.println("***文件列表***<br/>");
->         // 循环
->         for (File f : files) {
->             out.println("<a href='download?filename=" + f.getName() + "'>" + file.getName() + "</a><br>");
->         }
->     }
+>        @Override
+>        protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+>            // 设置响应类型和编码
+>            resp.setContentType("text/html;charset=utf-8");
+>            // 输出流
+>            PrintWriter out = resp.getWriter();
+>            // 获取保存路径
+>            ServletContext context = req.getServletContext();
+>            String realPath = context.getRealPath("/upload");
+>            // file实例
+>            File file = new File(realPath);
+>            // 调用listFiles返回文件数组
+>            File[] files = file.listFiles();
+>            out.println("***文件列表***<br/>");
+>            // 循环
+>            for (File f : files) {
+>                out.println("<a href='download?filename=" + f.getName() + "'>" + file.getName() + "</a><br>");
+>            }
+>        }
 > }
 > ```
 >
@@ -1667,44 +1671,44 @@
 > ```java
 > @WebServlet("/download")
 > public class Download extends HttpServlet {
->     @Override
->     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
->         /*
+>        @Override
+>        protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+>            /*
 >           1设置响应头
 >           2 读取图片资源
 >           3 读写（循环） try...with...resources:把IO流对象放入try(小括号）里面，这个流对象是自动关闭，离开"}"括号以后就自动关闭，是实现了AutoCloseAble接口的类才有效
 >             好处是不再需要手动写finally关闭（极容易忘记写关闭）
 >          */
->         resp.setCharacterEncoding("utf-8");
->         resp.setContentType("text/html;charset=UTF-8");
->         // 获取文件名
->         String filename = req.getParameter("filename");
->         System.out.println("filename: " + filename);
->         try {
->             /*
+>            resp.setCharacterEncoding("utf-8");
+>            resp.setContentType("text/html;charset=UTF-8");
+>            // 获取文件名
+>            String filename = req.getParameter("filename");
+>            System.out.println("filename: " + filename);
+>            try {
+>                /*
 >               content-disposition:内容保存路径
 >               attachment:附件，告诉浏览这个附件
 >               filename=w.jpg 下载文件的名字
 >              */
->             resp.setHeader("content-disposition", "attachment;filename=" + changeCharset(req, filename));
->         } catch (Exception e) {
->             e.printStackTrace();
->         }
->         // 获取文件真实路径
->         String realPath = req.getServletContext().getRealPath("/upload");
->         // 字节流下载文件
->         try (InputStream is = new FileInputStream(realPath + File.separator + filename);
->              ServletOutputStream out = resp.getOutputStream()) {
->             int len = 0;
->             byte[] bytes = new byte[1024];
->             while ((len = is.read(bytes)) > 0) {
->                 out.write(bytes, 0, len);
->             }
->             System.out.println("写出文件成功...");
->         } catch (IOException e) {
->             e.printStackTrace();
->         }
->     }
+>                resp.setHeader("content-disposition", "attachment;filename=" + changeCharset(req, filename));
+>            } catch (Exception e) {
+>                e.printStackTrace();
+>            }
+>            // 获取文件真实路径
+>            String realPath = req.getServletContext().getRealPath("/upload");
+>            // 字节流下载文件
+>            try (InputStream is = new FileInputStream(realPath + File.separator + filename);
+>                 ServletOutputStream out = resp.getOutputStream()) {
+>                int len = 0;
+>                byte[] bytes = new byte[1024];
+>                while ((len = is.read(bytes)) > 0) {
+>                    out.write(bytes, 0, len);
+>                }
+>                System.out.println("写出文件成功...");
+>            } catch (IOException e) {
+>                e.printStackTrace();
+>            }
+>        }
 > }
 > ```
 >
@@ -1747,8 +1751,223 @@
 
 ## JSP
 
+> **概述**
+>
 > 
 >
+> **由来**
+>
+> 
+>
+> **运行原理**
+>
+> JSP 在执行时，会被服务器翻译为 Servlet 编译执行，JSP就是一个 Servlet
+
+### JSP脚本元素
+
+> **<%! %>** 
+>
+> - jsp声明 翻译成 Servlet 成员部分的内容
+>
+> - 声明方法，成员变量，内部类
+>
+> **<% %>**
+>
+> 脚本 声明局部变量，局部内部类
+>
+> **<%=%>**
+>
+> 翻译 out.println()，在 Servlet 方法内部
+>
+> 用于生成 HTML页面源码
+
+### JSP里面的循环
+
+> 将 servlet 中的循环输出的操作反向实现
+>
+> **循环实现99乘法表**
+>
+> ```jsp
+> <%--  99乘法表  --%>
+> <table border="1">
+>     <%
+>         for (int i = 0; i < 10; i++) {
+>     %>
+>     <tr>
+>         <%
+>             for (int j = 1; j <= i; j++) {
+>         %>
+>         <td><%=i%>*<%=j%>=<%=i * j%>
+>         </td>
+>         <%
+>             }%>
+>     </tr>
+>     <%
+>         }%>
+> </table>
+> ```
+>
+> 
+
+### 三大指令
+
+#### page指令
+
+> 
+
+#### include包含指令
+
+> 
+
+#### 导入标签库指令
+
+> 
+
+### 六个常用动作
+
+#### userBean
+
+> **代码格式**
+>
+> ```jsp
+> <jsp:userBean id="u" class="com.roxla.bean.User" />
+> ```
+>
+> - id：设置实例对象的别名
+> - class：实例对象的类
+>
+> *上面这行代码相当于 User u = new User();*
+
+#### setProperty
+
+> **代码格式**
+>
+> ```jsp
+> <jsp:setProperty name="u" property="id" value=1 />
+> ```
+>
+> - name：实例对象的别名
+> - property：调用 u.setId() 方法
+> - value：给 id 赋值为1
+>
+> **userBean 和 setProperty 的组合相当于实现如下的 Java 代码**
+>
+> *JSP代码*
+>
+> ```jsp
+> <jsp:userBean id="u" class="com.roxla.bean.User" />
+> <jsp:setProperty name="u" property="id" value=1 />
+> ```
+>
+> *Java代码*
+>
+> ```java
+> User u = new User();
+> u.setId(1);
+> ```
+>
+> 
+
+#### getProperty
+
+> **代码格式**
+>
+> ```jsp
+> <jsp:getProperty name="u" property="id" />
+> ```
+>
+> - name：实例对象的别名
+> - property：调用 u.getId() 方法
+>
+> **setProperty 相当于实现如下的 Java 代码**
+>
+> ```java
+> u.getId(1);
+> ```
+>
+> 
+
+#### forward
+
+> **代码格式**
+>
+> ```jsp
+> <jsp:forward page="login.jsp"></jsp:forward>
+> ```
+>
+> 
+
+#### param
+
+> *该动作只能写在`<jsp:forward>`标签内*
+>
+> **代码格式**
+>
+> ```jsp
+> <jsp:forward page="login.jsp">
+> 	<jsp:param name="name" value="jack" />
+>     <jsp:param name="password" value="123" />
+> </jsp:forward>
+> ```
+>
+> **在 login.jsp 页面获取传递过来的参数**
+>
+> *login.jsp*
+>
+> ```jsp
+> <%=request.getParameter("name")%>
+> <%=request.getParameter("password")%>
+> ```
+>
+> 
+
+#### include
+
+> **代码格式**
+>
+> ```jsp
+> <jsp:include page="top.jsp" />
+> ```
+>
+> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
