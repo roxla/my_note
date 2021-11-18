@@ -240,7 +240,7 @@
 >            <welcome-file>index.jsp</welcome-file>
 >        </welcome-file-list>
 >    </web-app>
->       ```
+>    ```
 >    
 > 5. 点击`tomcat/bin/startup.bat` 
 >
@@ -823,13 +823,75 @@
 >
 > **ServletConfig对象的API**
 >
-> |            方法名             | 描述 |
-> | :---------------------------: | ---- |
-> | getInitParameter(String name) |      |
-> |    getInitParameterNames()    |      |
-> |      getServletContext()      |      |
-> |       getServletName()        |      |
+> |            方法名             | 描述                      |
+> | :---------------------------: | ------------------------- |
+> | getInitParameter(String name) | 获得 Servlet 的初始化参数 |
+> |    getInitParameterNames()    | 获得所有初始化参数的名称  |
+> |      getServletContext()      | 获得 ServletContext 对象  |
+> |       getServletName()        | 获得 Servlet 的名称       |
 >
+> *要演示 ServletConfig 的 API，需要先在 web.xml中配置 Servlet 的初始化参数*
+>
+> ```xml
+> <servlet>
+> 	<servlet-name>XXXX</servlet-name>
+>     <servlet-class>XXXX</servlet-class>
+>     <init-param>
+>         <param-name>username</param-name>
+>         <param-value>root</param-value>
+>     </init-param>
+>     <init-param>
+>         <param-name>password</param-name>
+>         <param-value>abc</param-value>
+>     </init-param>
+> </servlet>
+> ```
+
+#### getInitParameter()
+
+> 获得对应名称的初始化参数的值
+>
+> **格式**
+>
+> ```java
+> ServletConfig config = this.getServletConfig();
+> String username = config.getInitParameter("username");
+> String password = config.getInitParameter("password");
+> System.out.println(username+"    "+password);
+> ```
+>
+> **结果**
+>
+> *root    abc*
+
+#### getInitParameterNames()
+
+> 获得所有初始化参数的名称
+>
+> **格式**
+>
+> ```java
+> ServletConfig config = this.getServletConfig();
+> Enumeration<String> names = config.getInitParameterNames();
+> while(names.hasMoreElements) {
+>     String name = names.nextElement();
+>     String value = config.getInitParameter(name);
+>     System.out.println(name+"    "+value);
+> }
+> ```
+>
+> **结果**
+>
+> *username    root*
+>
+> *password    abc*
+
+#### getServletContext()
+
+> 
+
+#### getServletName()
+
 > 
 
 ### ServletContext(重点)(未完成)
@@ -1129,11 +1191,11 @@
 >   public class TestFilter implements Filter {
 >       public void destroy() {
 >       }
->          
+>              
 >       public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
 >           System.out.println("Filter执行了...");
 >       }
->             
+>                 
 >       public void init(FilterConfig config) throws ServletException {
 >       }
 >   }
@@ -1516,9 +1578,24 @@
 
 ## 文件上传下载
 
-### 文件上传(未完成)
+### 文件上传
 
-> 
+> **概述**
+>
+> 将本地的文件通过流写入到服务器的过程
+>
+> **技术**
+>
+> - JSPSmartUpload：应用在 JSP 上的文件上传和下载的组件
+> - FileUpload：应用在 Java 环境上的文件上传的功能
+> - Servlet3.0：提供文件上传的功能
+> - struts2：提供文件上传的功能
+>
+> **要素**
+>
+> - 表单的提交方式需要是 POST
+> - 表单中需要有`<input type="file">`元素，需要有 name 属性和值
+> - 表达 enctype="multipart/form-data"
 >
 > *注意：java EE 6 不支持文件的上传，需要使用 java EE 8 来创建项目*
 
@@ -1597,11 +1674,24 @@
 > </html>
 > ```
 
-### 文件下载(未完成)
+### 文件下载
 
-> 
+> **概述**
 >
-> 可以在上面文件上传模块的基础上添加文件下载模块，模块的文件结构为
+> 将服务器上的一个文件，通过流写入到客户端上
+>
+> **方式**
+>
+> - 使用超链接的方式实现文件的下载
+>   - 在`<a href="文件的路径">超链接</a>`
+>   - *注意：超链接的方式，如果浏览器不能识别这种格式的文件，提示下载；如果支持该格式的文件，直接打开*
+> - 通过手动编写代码的方式实现文件的下载
+>   - 设置两个头和一个流
+>     - Content-Type：文件的 MIME 的类型
+>     - Content-Disposition：乱起支持该格式的文件，提示下载
+>     - 设置代表该文件的输入流（输出流是固定 response.getOutputStream()）
+>
+> *可以在上面文件上传模块的基础上添加文件下载模块，模块的文件结构为*
 >
 > - com.roxla.listener
 >   - ContextpathListener
@@ -1772,52 +1862,141 @@
 > **<%! %>** 
 >
 > - jsp声明 翻译成 Servlet 成员部分的内容
->
 > - 声明方法，成员变量，内部类
+>
+> ```jsp
+> <%!
+>     String name = "jack";
+>     public String sayHello(){
+>         return "hello," + name;
+>     }
+>     class Inner{
+>     }
+> %>
+> ```
 >
 > **<% %>**
 >
-> 脚本 声明局部变量，局部内部类
+> - 嵌入 Java 代码，翻译成 servlet 方法内部的代码块
+> - 声明局部变量，局部内部类
+>
+> ```jsp
+> <%
+> 	String color = "yellow";
+> %>
+> ```
 >
 > **<%=%>**
 >
-> 翻译 out.println()，在 Servlet 方法内部
+> - 翻译 out.println()，在 Servlet 方法内部
 >
-> 用于生成 HTML页面源码
+>
+> - 用于生成 HTML页面源码
+>
+> ```jsp
+> name:<%=name%><br/>
+> 调用方法:<%=sayHello()%>
+> ```
 
 ### JSP里面的循环
 
 > 将 servlet 中的循环输出的操作反向实现
 >
-> **循环实现99乘法表**
+> **servlet循环实现99乘法表**
+>
+> ```java
+> @WebServlet("/for")
+> public class For extends HttpServlet {
+>     @Override
+>     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+>         PrintWriter out = resp.getWriter();
+>         out.println("<table border='1'>");
+>         for (int i = 0; i < 10; i++) {
+>             out.println("<tr>");
+>             for (int j = 1; j <= i; j++) {
+>                 out.println("<td>" + i + "*" + j + "=" + i * j + "</td>");
+>             }
+>             out.println("</tr>");
+>         }
+>     }
+> }
+> ```
+>
+> **JSP循环实现99乘法表**
 >
 > ```jsp
 > <%--  99乘法表  --%>
 > <table border="1">
->     <%
->         for (int i = 0; i < 10; i++) {
->     %>
->     <tr>
->         <%
->             for (int j = 1; j <= i; j++) {
->         %>
->         <td><%=i%>*<%=j%>=<%=i * j%>
->         </td>
->         <%
->             }%>
->     </tr>
->     <%
->         }%>
+> <%
+>   for (int i = 0; i < 10; i++) {
+> %>
+> <tr>
+>   <%
+>       for (int j = 1; j <= i; j++) {
+>   %>
+>   <td><%=i%>*<%=j%>=<%=i * j%>
+>   </td>
+>   <%
+>       }%>
+> </tr>
+> <%
+>   }%>
 > </table>
 > ```
 >
-> 
 
-### 三大指令
+### JSP的注释
+
+> **HTML注释**
+>
+> *写法*
+>
+> ```html
+> <!--HTML的注释-->
+> ```
+>
+> **Java代码注释**
+>
+> *写法*
+>
+> ```jsp
+> <% 
+> 	// 单行注释 
+> 	/* 多行注释 */
+> 	/** 文档注释 */
+> %>
+> ```
+>
+> **JSP注释**
+>
+> *写法*
+>
+> ```jsp
+> <%-- JSP的注释 --%>
+> ```
+
+### JSP指令元素
+
+> **作用**
+>
+> - 用于指示 JSP 执行的某些步骤
+> - 用于指示 JSP 表现的特定行为
+>
+> **语法**
+>
+> ```jsp
+> <%@ 指令名称 属性名称=属性的值 属性名称=属性的值%>
+> ```
+>
+> **分类(三大指令)**
+>
+> - page指令
+> - include包含指令
+> - taglib指令
 
 #### page指令
 
-> page 指令可以定义 JSP 页面的属性（大致按照使用的频率列出）
+> page 指令可以定义 JSP 页面设置的属性和行为
 >
 > **格式**
 >
@@ -1844,9 +2023,9 @@
 >
 > - errorPage=""   如果当前页面出错了，将跳转到指定错误页面
 
-#### include包含指令(未完成)
+#### include包含指令
 
-> include 可以包含其它页面，引入进来
+> include 指令用于在 JSP页面中静态白喊一个文件，同时由该 JSP 解析包含的文件内容
 >
 > 这个所包含的jsp不能重复定义的变量，如果重复了会报错。
 >
@@ -1861,14 +2040,27 @@
 >
 > - file="top.jsp"   导入 top.jsp 页面
 
-#### 导入标签库指令(未完成)
+#### taglib(导入标签库)指令
 
-> 
+> taglib 指令用于在 JSP 页面中引入标签库
+>
+> **格式**
+>
+> ```jsp
+> <%@ taglib 属性名=属性值%>
+> ```
+>
+> **属性**
+>
+> - url：引入的标签库的路径
+> - prefix：引入标签库的前缀
 
-### 六个常用动作(未完成)
+### 六个常用动作
 
 #### userBean
 
+> 该动作用于创建对象
+>
 > **代码格式**
 >
 > ```jsp
@@ -1882,6 +2074,8 @@
 
 #### setProperty
 
+> 该动作用于给对象设值
+>
 > **代码格式**
 >
 > ```jsp
@@ -1908,10 +2102,11 @@
 > u.setId(1);
 > ```
 >
-> 
 
 #### getProperty
 
+> 该动作用于获取对象的值
+>
 > **代码格式**
 >
 > ```jsp
@@ -1927,10 +2122,11 @@
 > u.getId(1);
 > ```
 >
-> 
 
 #### forward
 
+> 该动作用于请求转发
+>
 > **代码格式**
 >
 > ```jsp
@@ -1941,6 +2137,8 @@
 
 #### param
 
+> 该动作用于传递参数
+>
 > *该动作只能写在`<jsp:forward>`标签内*
 >
 > **代码格式**
@@ -1948,7 +2146,7 @@
 > ```jsp
 > <jsp:forward page="login.jsp">
 > 	<jsp:param name="name" value="jack" />
->     <jsp:param name="password" value="123" />
+>  <jsp:param name="password" value="123" />
 > </jsp:forward>
 > ```
 >
@@ -1961,17 +2159,16 @@
 > <%=request.getParameter("password")%>
 > ```
 >
-> 
 
 #### include
 
+> 该动作用于包含其它页面（动态包含），引入进来
+>
 > **代码格式**
 >
 > ```jsp
 > <jsp:include page="top.jsp" />
 > ```
->
-> 
 >
 > **jsp:include 和 <%@ include %> 有何区别？**
 >
@@ -2007,6 +2204,11 @@
 > **概述**
 >
 > 在 JSP 页面中，使用标签库代替传统的 Java 片段语言来实现页面的显示逻辑已经不是新技术了，然而，由自定义标签很容易造成重复定义和非标准的实现。鉴于此，出现了 JSTL (JSP Standard Tag Library)。大多数 JSP 页面逻辑提供了实现的 JSTL 技术，该技术本身就是一个标签库。
+>
+> **要使用 JSTL，需要引入 JSTL 的 jar 包**
+>
+> - javax.servlet.jsp.jstl-1.2.1.jar
+> - javax.servlet.jsp.jstl-api-1.2.1.jar
 
 ### EL表达式
 
@@ -2184,43 +2386,564 @@
 > 10%3:$(10%3)<br/>
 > ```
 
+### JSTL标签库
 
+> **JSTL 的标签库总共分成五类**
+>
+> - Core 标签库
+>
+> - XML processing 标签库
+>
+> - I18N formatting标签库
+>
+> - Database access 标签库
+>
+> - Functions 标签库
+>
+> **在使用 JSTL 的标签库时，需要使用 taglib 指令进行导入标签库**
+>
+> ```jsp
+> <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+> ```
+>
+> **标签库的标识符**
+>
+> | 标签库          | URL                                    | 前缀 |
+> | --------------- | -------------------------------------- | ---- |
+> | Core            | http://java.sun.com/jsp/jstl/core      | c    |
+> | XML processing  | http://java.sun.com/jsp/jstl/xml       | x    |
+> | I18N formatting | http://java.sun.com/jsp/jstl/fmt       | fmt  |
+> | Database access | http://java.sun.com/jsp/jstl/sql       | sql  |
+> | Functions       | http://java.sun.com/jsp/jstl/functions | fn   |
 
+#### Core 标签库
 
+> Core 标签库，又被称为核心标签库，该标签库的工作是对于 JSP 页面一般处理的封装。在该标签库中的标签一共有 14 个，被分为了四类，分别是： 
+>
+> - 多用途核心标签：`<c:out>`、`<c:set>`、`<c:remove>`、`<c:catch>`
+> - 条件控制标签：`<c:if>`、`<c:choose>`、`<c:when>`、`<c:otherwise>`
+> - 循环控制标签：`<c:forEach>`、`<c:forToken>`
+> - URL相关标签：`<c:import>`、`<c:url>`、`<c:redirect>`、`<c:param>`
 
+##### 多用途标签
 
+###### \<c:out>
 
+> `<c:out>`标签是一个最常用的标签，用于在 JSP 中显示数据
+>
+> **\<c:out>标签属性和说明**
+>
+> |   属性    | 描述                                                         |
+> | :-------: | ------------------------------------------------------------ |
+> |   value   | 输出到页面的数据，可以是 EL 表达式或常量（必须）             |
+> |  default  | 当 value 为 null 时显示的数据（可选）                        |
+> | escapeXml | 当设置为 true 时会主动更换特殊字符，比如"\&lt;，\&gt;，\&amp;"(可选，默认为true) |
+>
+> **示例代码**
+>
+> ```jsp
+> <c:out value="123" />
+> <c:out value="${value}" default="默认值" />
+> ```
 
+###### \<c:set>
 
+> `<c:set>`标签用于为变量或 JavaBean 中的变量属性赋值
+>
+> *`<c:set>`标签等价于 pageContext.setAttribute(String, Object)*
+>
+> **\<c:set>标签属性和说明**
+>
+> |   属性   | 描述                                                         |
+> | :------: | ------------------------------------------------------------ |
+> |  value   | 值的信息，可以是 EL 表达式或常量                             |
+> |  target  | 被赋值的 JavaBean 实例的名称，若存在该属性则必须存在 property 属性（可选） |
+> | property | JavaBean 实例的变量属性名称（可选）                          |
+> |   var    | 被赋值的变量名（可选）                                       |
+> |  scope   | 变量的作用范围，若没有指定，默认为 page（可选）              |
+>
+> **示例代码**
+>
+> ```jsp
+> <c:set var="value" value="你好，这是c:set设置值"
+> ```
 
+###### \<c:remove>
 
+> `<c:remove>`标签用于删除存在于 scope 中的变量
+>
+> *`<c:remove>`标签等价于 pageContext.removeAttribute(String)*
+>
+> **\<c:remove>标签属性和说明**
+>
+> | 属性  | 描述                                               |
+> | :---: | -------------------------------------------------- |
+> |  var  | 需要被删除的变量名                                 |
+> | scope | 变量的作用范围，若没有指定，默认为全部查找（可选） |
+>
+> **示例代码**
+>
+> ```jsp
+> <c:remove var="value"/>
+> ```
 
+###### \<c:catch>(未完成)
 
+> `<c:catch>`标签允许在 JSP 页面中捕捉异常。
+>
+> 它包含一个 var 属性，是一个描述异常的变量，该变量可选。
+>
+> 若没有 var 属性的定义，那么仅仅捕捉异常而不做任何事情，若定义了 var 属性，则可以利用 var 所定义的异常变量进行判断转发到其他页面或提示报错信息。
+>
+> **示例代码**
+>
+> *index.jsp*
+>
+> ```jsp
+> 
+> ```
+>
+> *error.jsp*
+>
+> ```jsp
+> ```
+>
+> 
 
+##### 条件控制标签
 
+###### \<c:if>
 
+> `<c:if>`标签用于简单的条件语句
+>
+> **\<c:if>标签属性和说明**
+>
+> | 属性  | 描述                                                         |
+> | :---: | ------------------------------------------------------------ |
+> | test  | 需要判断的条件                                               |
+> |  var  | 保存判断结果 true 或 false 的变量名，该变量可供之后的工作使用（可选） |
+> | scope | 变量的作用范围，若没有指定，默认为保存于 page 范围中的变量（可选） |
+>
+> **示例代码**
+>
+> ```jsp
+> <c:set var="age" value="21"/>
+> <c:if test="${age == 20}" var="result">
+>     年龄20了...
+> </c:if>
+> 满20没? ${result}
+> ```
+>
 
+###### \<c:choose>
 
+> `<c:choose>`标签没有属性，可以被认为是父标签
 
+###### \<c:when>
 
+> `<c:when>`标签作为`<c:choose>`标签的子标签使用
+>
+> `<c:when>`标签等价于 "if" 语句，包含一个 test 属性，该属性表示需要判断的条件
+>
+> **示例代码**
+>
+> ```jsp
+> <c:choose>
+> 	<c:when test="${age <20}">好好上学</c:when>
+> </c:choose>
+> ```
+>
 
+###### \<c:otherwise>
 
+> `<c:otherwise>`标签作为`<c:choose>`标签的子标签使用
+>
+> `<c:otherwise>`标签没有属性，它等价于 "else" 语句
+>
+> **示例代码**
+>
+> ```jsp
+> <c:choose>
+> 	<c:when test="${age >= 20 && age <=65}">准备好振兴中华没有？有</c:when>
+>     <c:otherwise>好好退休！感谢</c:otherwise>
+> </c:choose>
+> ```
+>
 
+##### 循环控制标签
 
+###### \<c:forEach>
 
+> `<c:forEach>`为循环控制标签
+>
+> **\<c:forEach>标签属性和说明**
+>
+> |   属性    | 描述                                                         |
+> | :-------: | ------------------------------------------------------------ |
+> |   items   | 进行循环的集合（可选）                                       |
+> |   begin   | 开始条件（可选）                                             |
+> |    end    | 结束条件（可选）                                             |
+> |   step    | 循环的步长，默认为1（可选）                                  |
+> |    var    | 做循环的对象变量名，若存在 items 属性，则表示循环集合中对象的变量名（可选） |
+> | varStatus | 显示循环状态的变量（可选）                                   |
+>
+> **示例代码**
+>
+> *循环作用域中的集合*
+>
+> ```jsp
+> <%
+> 	List<String> list = new ArrayList<>();
+> 	list.add("aa");
+> 	list.add("阿强");
+> 	list.add("阿东");
+> 	list.add("阿猫");
+> 	// 把集合存储到作用域
+> 	request.setAttribute("list", list);
+> %>
+> <!--循环作用域中的集合-->
+> <c:forEach items="${list}" var="string">
+>     ${string}<br/>
+> </c:forEach>
+> ```
+>
+> *循环数字*
+>
+> ```jsp
+> <!--循环数字 1~10-->
+> <c:forEach begin="1" end="10" step="2" var="num">
+>     ${num}<br/>
+> </c:forEach>
+> ```
+>
+> *循环 map集合*
+>
+> ```jsp
+> <%
+> 	Map<String, String> map = new HashMap<>();
+> 	map.put("a", "a_val");
+> 	map.put("a", "b_val");
+> 	map.put("a", "c_val");
+> 	// 存储
+> 	request.setAttribute("map", map);
+> %>
+> <c:forEach items="${map}" var="m">
+> 	${m.key} -- ${m.value}<br/>
+> </c:forEach>
+> ```
 
+###### \<c:forToken>
 
+> `<c:forToken>`标签可以根据某个分隔符分割指定字符串，相当于 java.util.StringTokenizer 类
+>
+> **\<c:forToken>标签属性和说明**
+>
+> |   属性    | 描述                                                         |
+> | :-------: | ------------------------------------------------------------ |
+> |   items   | 进行分隔的 EL 表达式或常量                                   |
+> |  delims   | 分隔符                                                       |
+> |   begin   | 开始条件（可选）                                             |
+> |    end    | 结束条件（可选）                                             |
+> |   step    | 循环的步长，默认为1（可选）                                  |
+> |    var    | 做循环的对象变量名，若存在 items 属性，则表示循环集合中对象的变量名（可选） |
+> | varStatus | 显示循环状态的变量（可选）                                   |
+>
+> **示例代码**
+>
+> ```jsp
+> <c:forTokens items="aa,bb,cc,dd" begin="0" end="2" step="2" delims="," var="avalue">
+> 	${avalue}<br/> <!-- aa<br/>cc<br/> -->
+> </c:forTokens>
+> ```
+>
 
+##### URL相关标签
 
+###### \<c:import>
 
+> `<c:import>`标签允许包含另一个 JSP 页面到本页面来
+>
+> **\<c:import>标签属性和说明**
+>
+> |     属性     | 描述                                                         |
+> | :----------: | ------------------------------------------------------------ |
+> |     url      | 需要导入页面的 URL                                           |
+> |   context    | Web Context 该属性用于在不同的 Context 下导入页面，当出现 context属性时，必须以“/”开头，此时也需要 url 属性以“/”开头（可选） |
+> | charEncoding | 导入页面的字符集（可选）                                     |
+> |     var      | 可以定义导入文本的变量名（可选）                             |
+> |    scope     | 导入文本的变量名作用范围（可选）                             |
+> |  varReader   | 接受文本的 java.io.Reader 类变量名（可选）                   |
+>
+> **示例代码**
+>
+> ```jsp
+> <c:import url="/MyHtml.html" var="thisPage" />
+> <c:import url="/MyHtml.html" context=”/sample2” var="thisPage"/>
+> <c:import url="www.sample.com/MyHtml.html" var="thisPage"/>
+> ```
+>
+> 该示例演示了三种不同的导入方法，第一种是在同一 Context 下的导入，第二种是在不同的 Context 下导入，第三种是导入任意一个 URL
 
+###### \<c:url>
 
+> `<c:url>`标签用于得到一个 URL 地址
+>
+> **\<c:url>标签属性和说明**
+>
+> |     属性     | 描述                                                         |
+> | :----------: | ------------------------------------------------------------ |
+> |    value     | 页面的 URL 地址                                              |
+> |   context    | Web Context 该属性用于在不同的 Context 下导入页面，当出现 context属性时，必须以“/”开头，此时也需要 url 属性以“/”开头（可选） |
+> | charEncoding | URL 的字符集（可选）                                         |
+> |     var      | 存储 URL 的变量名（可选）                                    |
+> |    scope     | 变量名作用范围（可选）                                       |
+>
+> **示例代码**
+>
+> ```jsp
+> <c:url value="/MyHtml.html" var="urlPage" />
+> <a href="${urlPage}">link</a>
+> ```
+>
+> 得到了一个 URL 后，以 EL 表达式放入`<a>`标签的 href 属性，打到链接的目的
 
+###### \<c:redirect>
 
+> `<c:redirect>`用于页面的重定向，该标签的作用相当于 response.setRedirect 方法的工作。
+>
+> 它包含 url 和 context 两个属性，属性含义和`<c:url>`标签相同
+>
+> **示例代码**
+>
+> ```jsp
+> <c:redirect url="/MyHtml.html" />
+> ```
+>
+> 该示例若出现在 JSP 中，则将重定向到当前 Web Context 下的“MyHtml.html”页面，一般会与`<c:if>`等标签一起使用
 
+###### \<c:param>
 
+> `<c:param>`用来为包含或重定向的页面传递参数
+>
+> **\<c:param>标签属性和说明**
+>
+> | 属性  | 描述                 |
+> | :---: | -------------------- |
+> | name  | 传递的参数名         |
+> | value | 传递的参数值（可选） |
+>
+> **示例代码**
+>
+> ```jsp
+> <c:redirect url="/MyHtml.jsp">
+> 	<c:param name="userName" value="RW" />
+> </c:redirect>
+> ```
+>
+> 该示例将为重定向的 "MyHtml.jsp" 传递指定参数 "userName='RW'"
 
+#### XML processing 标签库
 
+> XML processing标签库为程序设计者提供了基本的对 XML 格式文件的操作。在该标签库中的标签一共有 10 个，被分为了三类，分别是：
+>
+> - XML 核心标签：`<x:parse>`、`<x:out>`、`<x:set>` 
+> - XML 流控制标签：`<x:if>`、`<x:choose>`、`<x:when>`、`<x:otherwise>`、`<x:forEach>` 
+> - XML 转换标签：`<x:transform>`、`<x:param>`
+
+#### I18N formatting标签库
+
+> I18N formatting 标签库就是用于在 JSP 页面中做国际化的动作
+>
+> 在该标签库中的标签一共有 12 个，被分为了两类，分别是：
+>
+> - 国际化核心标签：`<fmt:setLocale>`、`<fmt:bundle>`、`<fmt:setBundle>`、`<fmt:message>`、`<fmt:param>`、`<fmt:requestEncoding>`
+> - 格式化标签：`<fmt:timeZone>`、`<fmt:setTimeZone>`、`<fmt:formatNumber>`、`<fmt:parseNumber>`、`<fmt:formatDate>`、`<fmt:parseDate>`
+
+##### 格式化标签
+
+###### \<fmt:formatDate>
+
+> `<fmt:formatDate>`标签用于格式化日期
+>
+> **\<fmt:formatDate>标签属性和说明**
+>
+> |   属性   | 描述                                                       |
+> | :------: | ---------------------------------------------------------- |
+> |  value   | 格式化的日期，该属性的内容应该是 java.util.Date 类型的实例 |
+> |   type   | 格式化的类型                                               |
+> | pattern  | 格式化模式                                                 |
+> |   var    | 结果保存变量                                               |
+> |  scope   | 变量的作用范围                                             |
+> | timeZone | 指定格式化日期的时区                                       |
+>
+> **示例代码**
+>
+> ```jsp
+> <%
+> 	java.util.Date d = new Date();
+> 	request.setAttribute("d",d);
+> %>
+> <fmt:formatDate value="${d}" pattern="yyyy/MM/dd HH:mm:ss"/>
+> ```
+>
+> `<fmt:formatDate>`标签与`<fmt:timeZone>`、`<fmt:setTimeZone>`两组标签的关系密切。若没有指定 timeZone 属性，也可以通过`<fmt:timeZone>`、`<fmt:setTimeZone>`两组标签设定的时区来格式化最后的结果。 
+
+###### \<fmt:formatNumber>
+
+> `<fmt:formatNumber>`标签用于格式化数字
+>
+> **\<fmt:formatNumber>标签属性和说明**
+>
+> |       属性        | 描述                                                         |
+> | :---------------: | ------------------------------------------------------------ |
+> |       value       | 格式化的数字，该数值可以是 String 类型或 java.lang.Number 类型的实例 |
+> |       type        | 格式化的类型                                                 |
+> |      pattern      | 格式化模式                                                   |
+> |        var        | 结果保存变量                                                 |
+> |       scope       | 变量的作用范围                                               |
+> | maxIntegerDigits  | 指定格式化结果的最大值                                       |
+> | minIntegerDigits  | 指定格式化结果的最小值                                       |
+> | maxFractionDigits | 指定格式化结果的最大值，带小数                               |
+> | minFractionDigits | 指定格式化结果的最小值，带小数                               |
+>
+> **示例代码**
+>
+> ```jsp
+> <% request.setAttribute("num", 3.14159265); %>
+> <!--两种写法结果相同-->
+> <fmt:formatNumber value="${num}" pattern="#.##"/>
+> <fmt:formatNumber value="${num}" pattern="0.00"/>
+> ```
+>
+> `<fmt:formatNumber>`标签实际是对应 java.util.NumberFormat 类，type 属性的可能值包括currency（货币）、number（数字）和 percent（百分比）
+>
+> 下面看一个示例
+>
+> ```jsp
+> <fmt:formatNumber value="1000.888" type="currency" var="money"/>
+> ```
+>
+> 该结果将被保存在 "money" 变量中，将根据 Locale 环境显示当地的货币格式
+
+#### Database access 标签库
+
+> Database access 标签库中的标签用来提供在 JSP 页面中可以与数据库进行交互的功能，虽然它的存在对于早期纯 JSP 开发的应用以及小型的开发有着意义重大的贡献，但是对于 MVC 模型来说，它却是违反规范的。因为与数据库交互的工作本身就属于业务逻辑层的工作，所以不应该在 JSP 页面中出现，而是应该在模型层中进行
+>
+> Database access 标签库有以下 6 组标签来进行工作：
+>
+> - `<sql:setDataSource>`
+> - `<sql:query>`
+> - `<sql:update>`
+> - `<sql:transaction>`
+> - `<sql:param>`
+> - `<sql:dateParam>`
+
+##### \<sql:setDataSource>
+
+> `<sql:setDataSource>`标签用于设置数据源
+>
+> **示例代码**
+>
+> ```jsp
+> <sql:setDataSource var="dataSrc" url="jdbc:mysql://localhost:3306/mytest?characterEncoding=utf-8" driver="com.mysql.jdbc.Driver" user="root" password="root" />
+> ```
+>
+> 该示例定义一个数据源并保存在 "dataSrc" 变量内
+
+##### \<sql:query>
+
+> `<sql:query>`标签用于查询数据库，它标签体内可以是一句查询 SQL
+>
+> **示例代码**
+>
+> ```jsp
+> <sql:query var="queryResults" dataSource="${dataSrc}">
+> 	select * from users
+> </sql:query>
+> ```
+>
+> 该示例将从数据源 "dataSrc" 中返回查询的结果到变量 "queryResults" 中，保存的结果是 javax.servlet.jsp.jstl.sql.Result 类型的实例
+>
+> 要取得结果集中的数据可以使用`<c:forEach>`循环来进行
+>
+> **循环取得数据**
+>
+> ```jsp
+> <c:forEach items="${queryResults.rows}" var="row">
+> 	${row}
+> </c:forEach>
+> ```
+
+##### \<sql:update>
+
+> `<sql:update>`标签用于更新数据库，它的标签体内可以是一句更新的 SQL 语句。
+>
+> 其使用和`<sql:query>`标签没有什么不同
+>
+> **示例代码**
+>
+> ```jsp
+> <sql:update dataSource="${dataSrc}" var="row">
+>     insert into users values (null, 'name1', 'pwd1', 0)
+> </sql:update>
+> ```
+>
+> 该示例将从数据源 "dataSrc" 中返回受影响行数到变量 "row" 中
+
+#### Functions 标签库
+
+> 称呼 Functions 标签库为标签库，倒不如称呼其为函数库来得更容易理解些。因为 Functions 标签库并没有提供传统的标签来为 JSP 页面的工作服务，而是被用于 EL 表达式语句中
+>
+> 在 JSP2.0 规范下出现的 Functions 标签库为 EL 表达式语句提供了许多更为有用的功能
+>
+> Functions 标签库分为两大类，共 16 个函数
+>
+> - 长度函数：fn:length
+> - 字符串处理函数：fn:contains、fn:containsIgnoreCase、fn:endsWith、fn:escapeXml、fn:indexOf、fn:join、fn:replace、fn:split、fn:startsWith、fn:substring、fn:substringAfter、fn:substringBefore、fn:toLowerCase、fn:toUpperCase、fn:trim
+
+##### 长度函数
+
+###### fn:length
+
+> 长度函数 fn:length 的出现有重要的意义。在 JSTL1.0 中，有一个功能被忽略了，那就是对集合的长度取值。虽然 java.util.Collection 接口定义了 size 方法，但是该方法不是一个标准的 JavaBean 属性方法（没有 get,set 方法），因此，无法通过 EL 表达式“${collection.size}”来轻松取得。 
+> fn:length 函数正是为了解决这个问题而被设计出来的。它的参数为 input，将计算通过该属性传入的对象长度。该对象应该为集合类型或 String 类型。其返回结果是一个 int 类型的值。
+>
+> **示例代码**
+>
+> ```JSP
+> <%
+>     ArrayList arrayList1 = new ArrayList();
+>     arrayList1.add("aa");
+>     arrayList1.add("bb");
+>     arrayList1.add("cc");
+> %>
+> <%request.getSession().setAttribute("arrayList1", arrayList1);%>
+> ${fn:length(sessionScope.arrayList1)}
+> ```
+>
+> 假设一个 ArrayList 类型的实例 "arrayList1" ，并为其添加三个字符串对象，使用 fn:length 函数后就可以取得返回结果为 "3"
+
+##### 字符串处理函数
+
+###### fn:split
+
+> fn:split 函数用于将一组由分隔符分隔的字符串转换成字符串数组
+>
+> **fn:split 函数**
+>
+> |    参数    | 描述                                 |
+> | :--------: | ------------------------------------ |
+> |   string   | 源字符串。其类型必须为 String 类型   |
+> | delimiters | 指定分隔符。其类型必须为 String 类型 |
+> |  返回结果  | 返回一个 String[]类型的值            |
+>
+> **示例代码**
+>
+> ```jsp
+> ${fn:split("A,B,C",",")}<br>
+> ```
+>
+> 将“A,B,C”字符串转换为数组{A,B,C}
 
 
 
