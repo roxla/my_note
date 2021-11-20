@@ -70,7 +70,7 @@
 >     ```
 >
 
-### 状态码
+### <span id="State">状态码</span>
 
 > **200**：成功响应
 >
@@ -438,18 +438,9 @@
 >
 > **创建一个 xml 文件**
 >
-> *xml 文件的声明*
->
 > ```xml
+> <!-- xml 的声明 -->
 > <?xml version="1.0" encoding="UTF-8"?>
-> ```
->
-> - version：xml 的版本
-> - encoding：xml 文件本身的编码格式
->
-> *xml 文件*
->
-> ```xml
 > <!-- xml 的注释 -->
 > <books>
 > 	<book sn="SN123412123412">
@@ -472,13 +463,128 @@
 > - author：表示作者
 > - price：表示图书价格
 
-#### XML 的注释
+#### XML文件的声明
+
+> ```xml
+> <?xml version="1.0" encoding="UTF-8"?>
+> ```
+>
+> - version：xml 的版本
+> - encoding：xml 文件本身的编码格式
+
+#### XML的注释
 
 > HTML 和 XML 注释一样：<!-- html 的注释 -->
 
-#### XML 的元素
+#### XML的元素
 
-> 
+> XML 元素指的是从 **<**（且包括）开始标签直到 **>**（且包括)结束标签的部分。元素可包含其他元素、文本或者两者的混合物。元素也可以拥有属性
+>
+> ```xml
+> <bookstore>
+>     <book category="CHILDREN">
+>         <title>Harry Potter</title>
+>         <author>J K.Rowling</author>
+>         <year>2005</year>
+>         <price>29.99</price>
+>     </book>
+>     <book category="WEB">
+>         <title>Learning XML</title>
+>         <author>Erik T.Ray</author>
+>         <year>2003</ year>
+>         <price>39.95</price>
+>     </book>
+> </bookstore>
+> ```
+>
+> 在上例中，`<bookstore>`和`<book>`都拥有元素内容，因为它们包含了其他元素。`<author>`只有文本内容，因为它仅包含文本
+>
+> *元素是指从开始标签到结束标签的内容*
+>
+> 例如：`<title>Java编程思想</title>`
+>
+> **元素：我们可以简单的理解为是 标签**
+>
+> 注意：
+>
+> **XML 标签对大小写敏感**
+>
+> **XML 文档必须有根元素（根元素就是顶级元素，没有父标签的元素，而且是唯一一个才行）**
+
+##### XML命名规则
+
+> XML 元素必须遵守以下命名规则
+>
+> - 名称可以含字母、数字以及其他的字符
+>
+>   ```xml
+>   <title_1>Learning XML</title_1>
+>   ```
+>
+> - 名称不能以数字或者标点符号开头
+>
+>   ```xml
+>   <!-- <1book>Learning XML</1book> -->
+>   ```
+>
+> - 名称不能包含空格
+>
+>   ```xml
+>   <!-- <bo ok>Learning XML</bo ok> -->
+>   ```
+
+##### XML中的元素(标签)也分成单标签和双标签
+
+> **单标签**
+>
+> 格式：
+>
+> ```xml
+> <标签名 属性="值" 属性="值" />
+> ```
+>
+> **双标签**
+>
+> 格式：
+>
+> ```xml
+> <标签名 属性="值" 属性="值">...文本数据或子标签</标签名>
+> ```
+>
+> **所有 xml 元素都必须有关闭标签（也就是闭合），不闭合就会报错**
+>
+> **xml 必须正确的嵌套**
+
+#### XML的属性
+
+> xml 的标签属性和 html 的标签属性是非常类似的，**属性可以提供元素的额外信息**
+>
+> 在标签上可以书写属性的规则和标签的书写规则一致
+>
+> 一个标签上可以书写多个属性。**每个属性的值必须使用引号引起来**
+>
+> **属性必须使用引号引起来，不引会报错**
+
+#### XML中的特殊字符
+
+> ```xml
+> <author>&lt;班长&gt;</author>
+> ```
+>
+> - &lt; 特殊字符：\&lt;
+> - &gt; lt; 特殊字符：\&gt;
+
+#### 文本区域（CDATA区）
+
+> CDATA 语法可以告诉 xml 解析器，我 CDATA 里的文本内容，只是纯文本，不需要 xml 语法解析
+>
+> **格式**
+>
+> \<![CDATA[这里可以把你输入的字符原样显示，不会解析 xml]]>
+>
+> ```xml
+> <![CDATA[<<<<<<<<<<<< 123]]>
+> ```
 
 ## Servlet
 
@@ -748,13 +854,13 @@
 
 #### get请求(未完成)
 
-> 超链接 <a href="http">xx< /a>  
+> 超链接 `<a href="http">xx< /a>  `
 >
 > 浏览器输入的地址
 
 #### post请求(未完成)
 
-> 表单提交 <form method="post"> xxxx</form> 
+> 表单提交 `<form method="post"> xxxx</form> `
 
 #### 什么时候调用哪个方法？(笔试里面的选择题)
 
@@ -828,12 +934,66 @@
 >
 > 
 
-### HttpServletResponse(未完成)
+### HttpServletResponse
 
+> **概述**
+>
+> 开发的软件是 B/S 结构的软件，可以通过浏览器访问服务器的软件。从浏览器输入一个地址访问服务器（将这个过程称为是请求)。服务器接收到请求，需要进行处理，处理以后需要将处理结果显示回浏览器端（将这个过程称为是响应)。
+
+#### 设置Response响应的状态码
+
+> ```java
+> response.setStatus(int sc);
+> ```
+>
+> [状态码](#State)
+
+#### HttpServletResponse关于响应头的方法
+
+> **set开头的方法**
+>
+> |                方法名                 | 描述                                                         |
+> | :-----------------------------------: | ------------------------------------------------------------ |
+> | setDateHeader(String name, long date) | 该方法把指定的头名称以及日期设置为响应头信息，其中日期用 long 类型的值表示，其值是从新纪元开始算起的毫秒数 |
+> | setHeader(String name, String value)  | 该方法把指定的头名称以及字符串设置为响应头信息               |
+> |  setIntHeader(String name, intvalue)  | 该方法把指定的头名称以及数字设置为响应头信息                 |
+>
+> *set开头的方法：针对一个 key 对应 一个 value 的情况*
+>
+> - 举例：比如有一个头 content-Type:text/html
+>   - setHeader("content-Type", "text/plain")；
+>   - 最终得到的头结果：content-Type:text/plain
+>
+> **add开头的方法**
+>
+> |                方法名                 | 描述                                                         |
+> | :-----------------------------------: | ------------------------------------------------------------ |
+> | addDateHeader(String name, long date) | 该方法把指定的头名称以及日期添加为响应头信息，不会影响原有的响应头信息 |
+> | addHeader(String name, String value)  | 该方法把指定的头名称以及字符串添加为响应头信息，不会影响原有的响应头信息 |
+> |  addIntHeader(String name, intvalue)  | 该方法把指定的头名称以及数字添加为响应头信息，不会影响原有的响应头信息 |
+>
+> *add开头的方法：针对一个 key 对应 多个 value 的情况*
+>
+> 举例：比如有一个头 content-Type:text/html
+>
+> - setHeader("content-Type", "text/plain")；
+> - 最终得到的头结果：content-Type:text/html, text/plain
+
+#### HttpServletResponse关于响应体的方法
+
+> |      方法名       | 描述 |
+> | :---------------: | ---- |
+> | getOutputStream() |      |
+> |    getWriter()    |      |
+>
 > 
 
 #### HttpServletResponse响应对象(未完成)
 
+> 
+>
+> 
+>
 > 打印流：getWriter()
 >
 > 打印的方法：print/println(Object o)
@@ -1095,6 +1255,8 @@
 
 #### 重定向
 
+> sendRedirect(String location)
+>
 > 状态码 302 重定向
 
 #### 响应
@@ -1284,11 +1446,11 @@
 >   public class TestFilter implements Filter {
 >       public void destroy() {
 >       }
->                  
+>                    
 >       public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
 >           System.out.println("Filter执行了...");
 >       }
->                     
+>                       
 >       public void init(FilterConfig config) throws ServletException {
 >       }
 >   }
