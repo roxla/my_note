@@ -416,6 +416,70 @@
 > 
 > *如果还有乱码，则点击 Help --> Edit Custom VM Options，在打开的文件后面添加 -Dfile.encoding=utf-8，然后重启 IDEA*
 
+## XML
+
+> **概述**
+>
+> xml 是可扩展的标记性语言
+>
+> xml 的主要作用有：
+>
+> - 用来保存数据，而且这些数据具有自我描述性
+> - 可以作为项目或者模块的配置文件
+> - 可以作为网络传输数据的格式（现在以 JSON 为主）
+
+### XML的语法
+
+> - 文档声明
+> - 元素标签
+> - xml 属性
+> - xml 注释
+> - 文本区域（CDATA区）
+>
+> **创建一个 xml 文件**
+>
+> *xml 文件的声明*
+>
+> ```xml
+> <?xml version="1.0" encoding="UTF-8"?>
+> ```
+>
+> - version：xml 的版本
+> - encoding：xml 文件本身的编码格式
+>
+> *xml 文件*
+>
+> ```xml
+> <!-- xml 的注释 -->
+> <books>
+> 	<book sn="SN123412123412">
+>         <name>时间简史</name>
+>         <author>霍金</author>
+>         <price>75</price>
+>     </book>
+>     <book sn="SN123412123412">
+>         <name>Java从入门到放弃</name>
+>         <author>高斯林</author>
+>         <price>105.7</price>
+>     </book>
+> </books>
+> ```
+>
+> - books：表示多个图书信息
+> - book：表示一个图书信息
+>   - sn属性表示图书序列号
+> - name：表示书名
+> - author：表示作者
+> - price：表示图书价格
+
+#### XML 的注释
+
+> HTML 和 XML 注释一样：<!-- html 的注释 -->
+
+#### XML 的元素
+
+> 
+
 ## Servlet
 
 > 是Web的规范
@@ -624,7 +688,7 @@
 > </servlet-mapping>
 > ```
 
-#### @WebServlet注解(未完成)
+#### @WebServlet注解
 
 > **属性**
 >
@@ -637,9 +701,26 @@
 > |       name        |     String     |    否    | 指定  Servlet 名称                          |
 > | urlPatterns/value |    String[]    |    否    | 这两个属性作用相同，指定 Servlet 处理的 url |
 >
-> 可以通过配置 @WebServlet 来实现不同的功能
+> **可以通过配置 @WebServlet 来实现不同的功能**
 >
-> 
+> *通过注解配置 Servlet 响应的 url 和 初始化参数*
+>
+> ```java
+> @WebServlet(urlPatterns = {"/demo"}, initParams = {@WebInitParam(name="class",value = "2171")})
+> /*
+> 	initParams = {@WebInitParam(name="class",value = "2171")}相当于下面的配置
+>     <init-param>
+>         <param-name>class</param-name>
+>         <param-value>2171</param-value>
+>     </init-param>
+> */
+> ```
+>
+> *通过注解配置 Servlet 响应多个 url 的请求*
+>
+> ```java
+> @WebServlet(urlPatterns = {"/addUser.action","/checkName.action"})
+> ```
 
 ### servlet执行流程(重点)
 
@@ -720,20 +801,32 @@
 
 ### MIME类型(未完成)
 
-> 规定的类型在tomcat/conf/web.xml
+> **MIME 是 HTTP协议中数据的类型**
 >
-> **示例**
+> MIME的英文全称是"Multipurpose Internet Mal Extensions”多功能Internet邮件扩充服务。MiIME类型的格式是“大类型小类型”,并与某一种文件的扩展名相对应。
 >
-> - 响应音频：mp3
+> 规定的类型在`tomcat/conf/web.xml`
 >
+> **常见的 MIME 类型**
 >
-> - 视频：mp4
+> | 文件               | 扩展名      | MIE类型                      |
+> | ------------------ | ----------- | ---------------------------- |
+> | 超文本标记语言文本 | .htm，.html | text/html                    |
+> | 普通文本           | .txt        | text/plain                   |
+> | RTF文本            | .rtf        | application/rtf              |
+> | GIF图形            | .gif        | image/gif                    |
+> | JPEG图形           | .jpeg，.jpg | image/jpeg                   |
+> | au声音文件         | .au         | audio/basic                  |
+> | MIDl音乐文件       | .mid，.midi | audio/midi                   |
+> | RealAudio音乐文件  | .ra，.ram   | audio/x-pn-realaudio         |
+> | MPEG文件           | .mpg，.mpeg | video/mpeg                   |
+> | AVI文件            | .avi        | video/x-msvideo              |
+> | GZIP文件           | .gz         | application/x-gzip           |
+> | TAR文件            | .tar        | application/x-tar            |
+> | RAR文件            | .rar        | application/x-rar-compressed |
+> | ZIP文件            | .zip        | application/zip              |
 >
->
-> - word：word
->
->
-> - 电子表格：xls
+> 
 
 ### HttpServletResponse(未完成)
 
@@ -1191,11 +1284,11 @@
 >   public class TestFilter implements Filter {
 >       public void destroy() {
 >       }
->              
+>                  
 >       public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
 >           System.out.println("Filter执行了...");
 >       }
->                 
+>                     
 >       public void init(FilterConfig config) throws ServletException {
 >       }
 >   }
@@ -2944,6 +3037,24 @@
 > ```
 >
 > 将“A,B,C”字符串转换为数组{A,B,C}
+
+## AJAX
+
+> **概述**
+>
+> 
+>
+> **工作原理**
+>
+> 
+
+ajax提交的请求的响应数据由ajax的回调函数接收
+
+form表单提交的请求的响应数据直接打印在页面上
+
+
+
+
 
 
 
