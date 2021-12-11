@@ -288,7 +288,18 @@
 >
 > 
 
+### sleep与wait的异同
 
+> **相同**
+>
+> - 都是用于线程等待
+>
+> **不同**
+>
+> - sleep来自于线程类；wait来自于Object类
+> - sleep睡眠时放弃资源但是没有放弃锁；wait放弃资源和锁
+> - sleep在指定时间后自动唤醒；wait等待后需要notify或notifyAll唤醒
+> - sleep可以在任意地方使用；wait，notify，notifyAll只能在同步方法或同步代码块使用
 
 
 
