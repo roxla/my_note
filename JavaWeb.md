@@ -1764,11 +1764,11 @@
 >   public class TestFilter implements Filter {
 >       public void destroy() {
 >       }
->                                              
+>                                                
 >       public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
 >           System.out.println("Filter执行了...");
 >       }
->                                                 
+>                                                   
 >       public void init(FilterConfig config) throws ServletException {
 >       }
 >   }
@@ -2755,17 +2755,21 @@
 >
 > jsp:include在访问之前，被包含的页面已预先编译，所以同名的变量不会冲突
 
-### 九大内置对象
+### 九大内置对象(面试题)
 
-> - pageContext：当前页面
-> - session：session对象
-> - request：request对象
-> - application：应用上下文
-> - config：配置ServletConfig
-> - out：printWriter 打印对象
+> - **四个作用域对象**
+>   - pageContext：当前页面
+>   - session：session对象
+>   - request：request对象
+>   - application：应用上下文
+> - **两个输出对象**
+>   - response：响应对象
+>   - out：printWriter 打印对象
+> - **一个配置对象**
+>   - config：配置ServletConfig
+> - **一个异常对象**
+>   - exception：异常对象
 > - page：当前实例
-> - response：响应对象
-> - exception：异常对象
 
 ### 四大作用域(面试题)
 

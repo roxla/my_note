@@ -62,7 +62,7 @@
 
 #### 配置 web.xml 文件(未完成)
 
-> 
+> **web.xml**
 >
 > ```xml
 > <?xml version="1.0" encoding="UTF-8"?>
@@ -187,6 +187,20 @@
 
 ### Resuful规范
 
+> 
+
+#### 1
+
+> @PathVariable() 注解
+>
+> ```java
+> @GetMapping("/del/{x}")
+> public String del(@PathVariable("x") int id) {
+>     service.remove(id);
+>     return "redirect:/story/list";
+> }
+> ```
+>
 > 
 
 ### Spring MVC 请求
@@ -601,29 +615,888 @@
 
 > **概述**
 >
+> MyBatis 是一款优秀的**持久层框架**它支持定制化 SQL、存储过程以及高级映射。
+>
+> **MyBatis 避免了几乎所有的 JDBC 代码和手动设置参数以及获取结果集**。
+>
+> MyBatis 可以使用简单的 XML 或注解来配置和映射原生类型、接口和 Java 的 POJO（Plain Old Java Objects，普通老式 Java 对象）为数据库中的记录。
+>
+> MyBatis 本是[apache](https://baike.baidu.com/item/apache/6265)的一个开源项目[iBatis](https://baike.baidu.com/item/iBatis), 2010年这个项目由apache software foundation 迁移到了google code，并且改名为MyBatis 。
+>
+> 2013年11月迁移到Github。  
+
+### 配置MyBatis
+
+#### 搭建数据库
+
+> **sql语句**
+>
+> ```java
+> CREATE DATABASE `mybatis`;
+> 
+> USE `mybatis`;
+> 
+> CREATE TABLE `user`(
+>   `id` INT(20) NOT NULL PRIMARY KEY,
+>   `name` VARCHAR(30) DEFAULT NULL,
+>   `pwd` VARCHAR(30) DEFAULT NULL
+> )ENGINE=INNODB DEFAULT CHARSET=utf8;
+> 
+> INSERT INTO `user`(`id`,`name`,`pwd`) VALUES 
+> (1,'狂神','123456'),
+> (2,'张三','123456'),
+> (3,'李四','123890')
+> ```
+
+#### 新建项目
+
+> 1. 新建一个 Web 项目
+> 2. web/WEB-INF 文件夹下新建文件夹 lib
+> 3. 在 lib 文件夹中拷贝入 mybatis 的 jar 包
+
+#### 编写配置文件
+
+> **src 文件夹下编写 mybatis 的核心配置文件  mybatis-config.xml**
+>
+> ```xml
+> <?xml version="1.0" encoding="UTF-8" ?>
+> <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+> <configuration>
+>     <environments default="development">
+>         <environment id="development">
+>             <transactionManager type="JDBC"/>
+>             <dataSource type="POOLED">
+>                 <property name="driver" value="com.mysql.jdbc.Driver"/>
+>                 <property name="url" value="jdbc:mysql://localhost:3306/mystory?characterEncoding=utf-8"/>
+>                 <property name="username" value="root"/>
+>                 <property name="password" value="root"/>
+>             </dataSource>
+>         </environment>
+>     </environments>
+>     <mappers>
+>         <mapper resource="mapper/PayMapper.xml"/>
+>         <mapper resource="mapper/UserMapper.xml"/>
+>     </mappers>
+> </configuration>
+> ```
+>
+> - property 标签内配置数据库的连接设置
+> - mappers 标签内用于注册自己写的 mapper.xml 文件
+
+#### 编写mybatis工具类
+
+> **MyBatisUtil**
+>
+> ```java
+> public class MyBatisUtil {
+>        // 全局共享
+>        private static SqlSessionFactory sqlSessionFactory = null;
+>        // 定义一个线程变量(供一个线程共享的变量)
+>        private static ThreadLocal<SqlSession> th = new ThreadLocal<>();
+> 
+>        static {
+>            try {
+>                String resource = "config/mybatis-cfg.xml";
+>                InputStream inputStream = Resources.getResourceAsStream(resource);
+>                sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+>            } catch (IOException e) {
+>                e.printStackTrace();
+>                throw new RuntimeException(e);
+>            }
+>        }
+> 
+>        public static SqlSession openSession() {
+>            // 如果线程变量里已经有一个属于自己的 sqlSession，就用回它
+>            if (th.get() != null)
+>                return th.get();
+>            // 如果线程变量没有值，就创建一个新的 sqlSession 放入线程变量，供后续使用
+>            SqlSession sqlSession = sqlSessionFactory.openSession();
+>            th.set(sqlSession);
+>            return sqlSession;
+> 
+>        }
+> 
+>        public static void closeSession() {
+>            SqlSession sqlSession = th.get();
+>            if (sqlSession != null) {
+>                sqlSession.close();
+>                // 删掉关闭了的 sqlSession 的残留
+>                th.remove();
+>            }
+>        }
+> }
+> ```
+>
 > 
 
+### MyBatis动态查询
+
+> mybatis 中对于时间参数进行比较时的一个bug： 如果拿传入的时间类型参数与空字符串''进行对比判断则会引发异常
+
+## Spring
+
+> **Spring框架的原理**
+>
+> *因为IOC，所以AOP*
+>
+> - IOC：负责对象的装配
+>   - 灵活调整(积木一般进行组装)
+>   - 装配方式：xml/注解/java装配
+>   - 可以 (构造函数 数组)
+>   - 改变了我们创建对象的习惯，不要自己 new 对方，等待容器安排，前提是必须注册到容器中
+> - AOP：切面，非常简化
+>   - 用法：配置一个切面类，在IOC配置中说明那些方法需要经过这个切面
+>   - pointcut --> 等效拦截路径配置 --> css选择器
+
+### 控制反转(IOC)
+
+> 
+
+### Spring配置
+
+#### 基于XML的配置
+
+##### 编写实体类
+
+> **编写一个Hello实体类**
+>
+> ```java
+> public class Hello {
+>        private String name;
+> 
+>        public String getName() {
+>            return name;
+>        }
+>        public void setName(String name) {
+>            this.name = name;
+>        }
+> 
+>        public void show(){
+>            System.out.println("Hello,"+ name );
+>        }
+> }
+> ```
+
+##### 编写 spring 文件(applicationContext.xml)
+
+> **applicationContext.xml**
+>
+> ```xml
+> <?xml version="1.0" encoding="UTF-8" ?>
+> <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>           xmlns="http://www.springframework.org/schema/beans"
+>           xmlns:aop="http://www.springframework.org/schema/aop"
+>           xmlns:context="http://www.springframework.org/schema/context"
+>           xmlns:tx="http://www.springframework.org/schema/tx"
+>           xmlns:cache="http://www.springframework.org/schema/cache"
+>           xmlns:p="http://www.springframework.org/schema/p"
+>           xsi:schemaLocation="http://www.springframework.org/schema/beans
+>                               http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+>                               http://www.springframework.org/schema/aop
+>                               http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+>                               http://www.springframework.org/schema/context
+>                               http://www.springframework.org/schema/context/spring-context-4.0.xsd
+>                               http://www.springframework.org/schema/tx
+>                               http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+>                               http://www.springframework.org/schema/cache
+>                               http://www.springframework.org/schema/cache/spring-cache-4.0.xsd">
+>      <!-- 使用spring创建对象，在spring中这些称为bean -->
+>      <bean id="hello" name="hello2 h2,h3;h4" class="com.kuang.pojo.Hello">
+>            <property name="name" value="Spring"/>
+>      </bean>
+> </beans>
+> ```
+>
+> - `<bean>`：就是**java对象**，由 Spring 创建和管理(等价于**Hello hello = new Hello()**)
+>   - **id**是**bean的标识符**，要唯一，如果没有配置**id**，**name**就是**默认标识符**
+>   - 如果配置**id**，又配置了**name**，那么**name**是**别名**
+>   - **name**可以设置**多个别名**,可以**用逗号，分号，空格隔开**
+>   - 如果**不配置id和name**,可以根据**applicationContext.getBean(.class)**获取对象;
+>   - class 是 bean 的**全限定名=包名+类名**
+> - `<property>`：相当于给对象中的属性设置一个值
+>   - **name**：调用该属性的**set方法**(类中要提供该属性的 set 方法)
+>     - **name**属性的值必须该类中的**set方法**的**方法名去掉set后，将首字母变成小写**
+>   - **value**：具体的值，基本数据类型
+>   - **ref**：引用Spring容器中创建好的对象
+>
+> *`<property>`标签简写*
+>
+> ```xml
+> <bean id="hello" name="hello2 h2,h3;h4" class="com.kuang.pojo.Hello" p:name="Spring" />
+> ```
+>
+> - `<property>`标签可以使用`bean`标签中的 **p:** 属性来替代，**p:** 后面的内容为该类中的属性
+> - **p:name**注入的是**value值**，**p:name-ref**注入的是**Spring容器中创建好的对象**
+>
+> 上面的写法等价于
+>
+> ```xml
+> <bean id="hello" name="hello2 h2,h3;h4" class="com.kuang.pojo.Hello">
+>     <property name="name" value="Spring"/>
+> </bean>
+> ```
+
+##### 使用
+
+> **main方法中使用**
+>
+> ```java
+> ApplicationContext context = new ClassPathXmlApplicationContext("config/applicationContext.xml");
+> Hello hello = (Hello) context.getBean("hello");
+> hello.show();
+> ```
+>
+> - ClassPathXmlApplicationContext：
+> - getBean("hello")：
+> - hello.show()：调用 hello 对象中的 show() 方法
+>
+> **结果**
+>
+> ```
+> "Hello,Spring"
+> ```
+>
+> *show() 方法中的 name 的值是通过 xml 文件中 property 的 value 属性注入进去的*
+
+#### 基于注解的配置
+
+##### 编写实体类
+
+> **编写一个Hello实体类**
+>
+> ```java
+> @Component("hello")
+> public class Hello {
+>        private String name;
+> 
+>        public String getName() {
+>            return name;
+>        }
+>        @Value("Spring")
+>        public void setName(String name) {
+>            this.name = name;
+>        }
+> 
+>        public void show(){
+>            System.out.println("Hello,"+ name );
+>        }
+> }
+> ```
+>
+> - @Component 是 Spring 容器中的基本注解，表示容器中的一个组件（bean），可以作用在任何层次
+>   - @Component("hello") 等效于 XML 配置 `<bean id="hello" class="com.kuang.pojo.Hello"/>`
+>   - 在注解后加上**@Component("hello")**时，注册的**这个类的bean的id就是hello**
+> - @Value 将外部的值动态注入到 bean 中
+>   - @Value("Spring") 等效于 XML 配置 `<property name="name" value="Spring"/>`
+
+##### 编写 spring 文件(applicationContext.xml)
+
+> **applicationContext.xml**
+>
+> ```xml
+> <?xml version="1.0" encoding="UTF-8" ?>
+> <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>     xmlns="http://www.springframework.org/schema/beans"
+>     xmlns:aop="http://www.springframework.org/schema/aop"
+>     xmlns:context="http://www.springframework.org/schema/context"
+>     xmlns:tx="http://www.springframework.org/schema/tx"
+>     xmlns:cache="http://www.springframework.org/schema/cache"
+>     xmlns:p="http://www.springframework.org/schema/p"
+>     xsi:schemaLocation="http://www.springframework.org/schema/beans
+>                         http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+>                         http://www.springframework.org/schema/aop
+>                         http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+>                         http://www.springframework.org/schema/context
+>                         http://www.springframework.org/schema/context/spring-context-4.0.xsd
+>                         http://www.springframework.org/schema/tx
+>                         http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+>                         http://www.springframework.org/schema/cache
+>                         http://www.springframework.org/schema/cache/spring-cache-4.0.xsd">
+> 	<!-- 扫描注解 -->
+>     <context:component-scan base-package="com.roxla.it"/>
+> </beans>
+> ```
+>
+> - `<context:component-scan base-package="com.roxla.it"/>`
+>   - 配置完这个标签后，spring就会去**自动扫描base-package对应的路径或者该路径的子包下面的java文件**，如果扫描到文件中**带有@Service，@Component，@Repository，@Controller**等这些注解的类，则把这些类**注册为bean**
+>   - base-package：要扫描的范围，com.roxla.it 表示扫描 it 包下的所有包和类
+>   - 在context中可以使用 resource-pattern 来过滤出特定的类
+>     - `<context:component-scan base-package="cn.lovepi.spring" resource-pattern="anno/*.class"/>`
+
+##### 使用
+
+> **main方法中使用**
+>
+> ```java
+> ApplicationContext context = new ClassPathXmlApplicationContext("config/applicationContext.xml");
+> Hello hello = (Hello) context.getBean("hello");
+> hello.show();
+> ```
+>
+> **结果**
+>
+> ```
+> "Hello,Spring"
+> ```
+
+### 运行流程
+
+> 
+
+### 依赖注入(DI)
+
+autowire 自动注入
+
+### Spring配置AOP
+
+#### 基于XML的配置
+
+##### 编写AOP类
+
+> **编写一个用于打印日志的AOP**
+>
+> ```java
+> public class LogAop implements MethodInterceptor {
+>        @Override
+>        public Object invoke(MethodInvocation inv) throws Throwable {
+>            System.out.println("inv: " + inv);
+>            // inv 指代调用该切面的类的代理
+>            System.out.println("进入方法: " + inv.getThis().getClass().getSimpleName() + "的" + inv.getMethod().getName());
+>            // 调用原装的方法
+>            Object o = inv.proceed();
+>            System.out.println("结束方法: " + inv.getThis().getClass().getSimpleName() + "的" + inv.getMethod().getName() + "返回" + o);
+>            return o;
+>        }
+> }
+> ```
+
+#### 配置applicationContext.xml
+
+> **applicationContext.xml**文件的 beans 中添加如下代码
+>
+> ```xml
+> <bean class="ex02.aop.LogAop" id="logaop"/>
+> <aop:config>
+>  <aop:advisor advice-ref="logaop" pointcut="execution(public * ex02.impl..*Impl.*(..))"/>
+> </aop:config>
+> ```
+>
+> - `<bean>`：
+> - `<aop:config>`：
+> - `<aop:advisor>`：
+>   - advice-ref：执行方法所在的类
+>   - pointcut：表示拦截哪些方法，expression表达式匹配要拦截的方法
+>     - 通过 pointcut 表达式可以选择拦截不同的类和方法
+>
+
+#### 基于注解的配置
+
+##### 编写AOP类
+
+> **编写一个用于打印日志的AOP**
+>
+> ```java
+> @Aspect
+> @Component("logaop") // 相当于 <bean id="logaop" class="" />
+> public class LogAop {
+>     @Around("execution(public * ex03.impl..*Impl.*(..))")
+>        public Object logAop(ProceedingJoinPoint inv) throws Throwable {
+>            System.out.println("进入方法: " + inv.getThis().getClass().getSimpleName() + "的" + inv.getSignature().getName());
+>            // 调用原装的方法
+>            Object o = inv.proceed();
+>            System.out.println("结束方法: " + inv.getThis().getClass().getSimpleName() + "的" + inv.getSignature().getName() + "返回" + o);
+>            return o;
+>        }
+>    }
+> ```
+> 
+> - @Aspect：作用是把当前类标识为一个切面供容器读取
+>- @Component：将类 LogAop 注册到 Spring 容器中
+> - @Around：环绕增强，相当于实现 MethodInterceptor 接口
+
+#### pointcut表达式
+
+> **用于描述哪些类或方法需要被 aop 切入的表达式**
+>
+> - execute 表达式
+> - within 表达式
+> - this 表达式
+> - target 表达式
+> - args 表达式
+>
+> **pointcut表达式详解**
+>
+> https://www.cnblogs.com/itsoku123/p/10744244.html
+
+##### execute表达式
+
+> **表达式组成**
+>
+> ==修饰符（public,private..） 返回类型 包名.类名.方法名(参数列表，不填就是没有)==
+>
+> - **..**：表示有多个
+>   - 写在包名后面表示包含子包；写在参数列表中表示任意参数
+> - \* 的用法
+>   - *package.func  (注意中间没有空格) 这就表示包名可能是不完整的，可能是前缀没有写（任意前缀）
+>   - package*  (注意中间没有空格) 这就表示包名可能是不完整的，可能是后缀没有写（任意后缀）
+>   - \* package.func （中间有空格）这就表示返回的类型是随意的
+>   - ** package.func 这就表示修饰符和返回类型都随意
+>
+> **示例**
+>
+> ```xml
+> public * it.service.impl..*Impl.*(..)
+> ```
+>
+> 含义：拦截**it.service.impl**包或者子包中**以Impl结尾的所有类中**定义的所有的公共方法
+
+###### 拦截任意公共方法
+
+> ```xml
+> execution(public * *(..))
+> ```
+
+###### 拦截以set开头的任意方法
+
+> ```xml
+> execution(* set*(..))
+> ```
+
+###### 拦截类或者接口中的方法
+
+> ```xml
+> execution(* com.xyz.service.AccountService.*(..))
+> ```
+>
+> 拦截**AccountService**(类、接口)中定义的所有方法
+
+###### 拦截包中定义的方法，不包含子包中的方法
+
+> ```xml
+> execution(* com.xyz.service.*.*(..))
+> ```
+>
+> 拦截**com.xyz.service**包中所有类中任意方法，不包含子包中的类
+
+###### 拦截包或者子包中定义的方法
+
+> ```xml
+> execution(* com.xyz.service..*.*(..))
+> ```
+>
+> 拦截**com.xyz.service**包或者子包中定义的所有方法
 
 
 
 
 
+@Resource(name = "flowerService") = @Autowired + @Qualifier("flowerService")
+
+## Maven
+
+> 1
+
+### Maven的配置
+
+> **下载Maven**
+>
+> 官方地址：http://maven.apache.org/download.cgi
+>
+> 
+>
+> **E盘新建文件夹 maven-rep 作为 Maven 仓库，用于存放下载的 jar 包**
+>
+> cmder command
+>
+> ```
+> mkdir E:\maven\maven-rep
+> ```
+>
+> **在 settings.xml 中配置 Maven 仓库的位置**
+>
+> settings.xml 文件在 ？ 中的 conf 文件夹中
+>
+> ```xml
+> <localRepository>E:\maven\maven-rep</localRepository>
+> ```
+>
+> **配置远程仓库的位置**
+>
+> 国内推荐使用**阿里的镜像源**仓库
+>
+> 在 settings.xml 的`<mirrors>`标签中添加如下代码
+>
+> ```xml
+> <mirror>  
+>        <id>nexus-aliyun</id>  
+>        <mirrorOf>central</mirrorOf>    
+>        <name>Nexus aliyun</name>
+>        <!-- 阿里镜像源地址 -->
+>        <url>http://maven.aliyun.com/nexus/content/groups/public</url>  
+> </mirror>
+> ```
+>
+> **调整 maven 工程的 jdk 的版本**
+>
+> 在 settings.xml 的`<profiles>`标签中添加如下代码
+>
+> 在这里配置可以避免后续在工程中多处调整
+>
+> ```xml
+> <profile>  
+>     <id>jdk18</id>  
+>     <activation>  
+>         <activeByDefault>true</activeByDefault>  
+>         <jdk>1.8</jdk>  
+>     </activation>  
+>     <properties>  
+>         <maven.compiler.source>1.8</maven.compiler.source>  
+>         <maven.compiler.target>1.8</maven.compiler.target>  
+>         <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>  
+>     </properties>   
+> </profile>
+> ```
+
+#### 在IntelliJ IDEA中配置maven
+
+> 
+
+https://mvnrepository.com/
 
 
 
+## MyBatisPlus
+
+### MyBatisPlus查询
+
+> **根据数据库的列名进行查询**
+>
+> MyBatisPlus 提供了一种写法，可以避免像 MyBatis 那样对 dao 层进行方法的扩充
+>
+> ```java
+> @Test
+> public void testLogin() {
+>        QueryWrapper<Users> qw = new QueryWrapper<>();
+>        qw.eq("user_loginname", "wangwu").eq("user_loginpwd", "123");
+>        Users u = dao.selectOne(qw);
+>        System.out.println(qw);
+> }
+> ```
+>
+> *实际上是把条件写到了外面自行组装*
+>
+> **根据实体类的字段名进行查询**
+>
+> 这种写法可以根据实体类中的字段名进行查询，你可以不知道数据库的列名
+>
+> ```java
+> @Test
+> public void testLogin() {
+>        QueryWrapper<Users> qw = new QueryWrapper<>();
+>        qw.lambda().eq(Users::getUserLoginname, "wangwu").eq(Users::getUserLoginpwd, "123");
+>        Users u = dao.selectOne(qw);
+>        System.out.println(qw);
+> }
+> ```
+>
+> *如果进行跨表查询的话，这种方式还不行；用列名查询是没有任何问题的*
+
+### MyBatisPlus自动生成mapper.xml
+
+#### 添加 mapper.xml 模板
+
+> **mapper.xml.btl 文件**
+>
+> ```xml
+><?xml version="1.0" encoding="UTF-8"?>
+> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+> <mapper namespace="${package.Mapper}.${table.mapperName}">
+> 
+> <% if(enableCache){ %>
+>  <!-- 开启二级缓存 -->
+>  <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+>    
+>    <% } %>
+> <% if(baseResultMap){ %>
+>  <!-- 通用查询映射结果 -->
+>  <resultMap id="BaseResultMap" type="${package.Entity}.${entity}">
+>    <% for(field in table.fields){ %>
+>    <% /** 生成主键排在第一位 **/ %>
+> <% if(field.keyFlag){ %>
+>         <id column="${field.name}" property="${field.propertyName}" />
+>    <% } %>
+>    <% } %>
+>    <% for(field in table.commonFields){ %>
+>  <% /** 生成公共字段 **/ %>
+>  <result column="${field.name}" property="${field.propertyName}" />
+>    <% } %>
+>    <% for(field in table.fields){ %>
+> <% /** 生成普通字段 **/ %>
+> <% if(!field.keyFlag){ %>
+>         <result column="${field.name}" property="${field.propertyName}" />
+>    <% } %>
+>    <% } %>
+>     </resultMap>
+> <% } %>
+>    <% if(baseColumnList){ %>
+>  <!-- 通用查询结果列 -->
+>  <sql id="Base_Column_List">
+>    <% for(field in table.commonFields){ %>
+>         ${field.name},
+> <% } %>
+>         ${table.fieldNames}
+>  </sql>
+>    
+>    <% } %>
+> 
+> <!-- 每个表不同的 -->
+>  <sql id="fromsql">
+>      from ${table.name}
+>     </sql>
+>     <sql id="selectsql">
+>         select <include refid="Base_Column_List"/>
+>         <include refid="fromsql"/>
+>     </sql>
+>    
+>     <select id="selectById2" resultMap="BaseResultMap">
+>      <include refid="selectsql"/>
+>         where
+>          <% for(field in table.fields){ %>
+>            <% /** 生成主键排在第一位 **/ %>
+>            <% if(field.keyFlag){ %>
+>                 ${field.name}=#{id}
+>            <% } %>
+>         <% } %>
+>     </select>
+>    
+>     <!-- 可以重用的配置 -->
+>  <sql id="wheresql">
+>         <if test="ew!=null">
+>             \${ew.customSqlSegment}
+>         </if>
+>     </sql>
+>     <!-- 查询总行数 -->
+>     <select id="selectCount2" resultType="int">
+>         select count(1)
+>         <include refid="fromsql"/>
+>         <include refid="wheresql"/>
+>     </select>
+>    
+>     <!-- 根据条件查找单个对象 -->
+>  <select id="selectOne2" resultMap="BaseResultMap">
+>         <include refid="selectsql"/>
+>         <include refid="wheresql"/>
+>     </select>
+>     <!-- 根据条件查找一组对象 -->
+>     <select id="selectList2" resultMap="BaseResultMap">
+>         <include refid="selectsql"/>
+>         <include refid="wheresql"/>
+>     </select>
+>     <!-- 根据条件分页查找 -->
+>     <select id="selectPage2" resultMap="BaseResultMap">
+>         <include refid="selectsql"/>
+>         <include refid="wheresql"/>
+>     </select>
+>    
+>     <!-- 查找全部对象 -->
+>  <select id="selectAll2" resultMap="BaseResultMap">
+>         <include refid="selectsql"/>
+>     </select>
+>    
+>    </mapper>
+> ```
+> 
+> 将该文件放到项目中的 resource 文件夹内
+>
+
+#### 修改 CreateCode.java 文件
+
+> *将“输出xml文件”的注释解开*
+>
+> ```java
+>//要想输出xml文件，需要额外自定义添加进去
+> String templatePath = "/mapper.xml.btl";
+> InjectionConfig cfg = new InjectionConfig() {
+>        @Override
+>        public void initMap() {
+>        }
+> };
+>    // 自定义输出配置
+>    List<FileOutConfig> focList = new ArrayList<>();
+> // 自定义配置会被优先输出
+> focList.add(new FileOutConfig(templatePath) {
+>        @Override
+>        public String outputFile(TableInfo tableInfo) {
+>            // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
+>            return projectPath + "/src/main/resources/mapper/" + pc.getModuleName() + "/" + tableInfo.getEntityName() + "Mapper.xml";
+>        }
+> });
+> 
+>    cfg.setFileOutConfigList(focList);
+> mpg.setCfg(cfg);
+> ```
+> 
+>    - templatePath：模板文件所在路径
+> - `projectPath + "/src/main/resources/mapper/" + pc.getModuleName() + "/" + tableInfo.getEntityName() + "Mapper.xml";`
+>      - 生成的 mapper.xml 文件所在的路径
+> 
+
+#### 修改 applicationContext.xml 文件
+
+> *将 mapper.xml 文件配置的注释解开*
+>
+> ```xml
+><property name="mapperLocations" value="classpath:mapper/*.xml"/>
+> ```
+> 
+> **运行 CreateCode.java 的代码，生成文件**
+
+### MyBatisPlus添加外键
+
+#### 在实体类中添加外键
+
+> ```java
+> @TableField(exist = false)
+> private Users users;
+> ```
+>
+> - @TableField(exist = false)
+>   - 注解加在属性上，表示当前属性不是数据库的字段，但在项目中必须使用，这样在新增等使用的时候，mybatis-plus就会忽略这个，不会报错
+
+#### 在 mapper.xml 文件中添加外键
+
+> ```xml
+> <resultMap id="BaseResultMap" type="com.roxla.it.entity.Links">
+>        <id column="link_id" property="linkId"/>
+>        <result column="link_name" property="linkName"/>
+>        <result column="link_phone" property="linkPhone"/>
+>        <result column="link_user_id" property="linkUserId"/>
+>        <association property="users">
+>            <id column="user_id" property="userId" />
+>            <result column="user_nickName" property="userNickname" />
+>            <result column="user_loginName" property="userLoginname" />
+>            <result column="user_loginPwd" property="userLoginpwd" />
+>        </association>
+> </resultMap>
+> ```
+
+#### 修改 mapper.xml 文件中的查询语句
+
+> **使用内连接进行多表查询**
+> 
+> ```xml
+> <!-- 通用查询结果列 -->
+> <sql id="Base_Column_List">
+>        link_id, link_name, link_phone, link_user_id,
+>        user_id, user_nickName, user_loginName, user_loginPwd
+> </sql>
+> 
+> <!-- 每个表不同的 -->
+> <sql id="fromsql">
+>        from links lk join users u on lk.link_user_id=user_id
+> </sql>
+> ```
+>
+> *xml文件里面的方法名如果和内置的方法名相同，xml的优先级高，会覆盖内置的方法*
+
+#### 使用扩充的方法触发 join 表的结果
+
+> **要使用扩充的方法，需要先添加含有扩充方法的几个基类**
+
+1
+
+>**新的 dao 基类 BaseMapper2**
+>
+>```java
+>public interface BaseMapper2<T> extends BaseMapper<T> {
+>        public T selectById2(Serializable id);
+>
+>        public T selectOne2(@Param("ew") Wrapper<T> wrapper);
+>
+>        public List<T> selectAll2();
+>
+>        public List<T> selectList2(@Param("ew") Wrapper<T> wrapper);
+>
+>        public int selectCount2(@Param("ew") Wrapper<T> wrapper);
+>
+>        //带条件的，分页的方法
+>        public IPage<T> selectPage2(IPage<T> page, @Param("ew") Wrapper<T> wrapper);
+>}
+>```
+>
+>
 
 
 
+### MyBatisPlus分页
 
-
-
-
-
-
-
-
-
-
+> **分页代码示例**
+>
+> ```java
+> @GetMapping("/list")
+> public String showList((String findname, 
+>                            String findTel, 
+>                            @RequestParam(value = "page",defaultValue = "1")int page
+>                            Model m) {
+>        QueryWrapper<Links> qw = new QueryWrapper<>();
+>        // 可以设置前置条件，如果成立的话才添加到 where 中
+>        qw.like(findName!=null, "link_name", findname).like(findTel!=null, "link_phone", findTel)
+>            List<Links> list = service.list2(qw);
+>        IPage<Links> iPage = service.page2(new Page<Links>(page, 3), qw);
+>        m.addAttribute("info", iPage);
+>        return "list";
+> }
+> ```
+>
+> *MyBatisPlus 的分页插件有点问题，可能会取不到部分分页的数据*
+>
+> **解决取不到分页数据**
+>
+> *自己扩充一个 MyPage 类，该类继承 Page 类*
+>
+> ```java
+> public class MyPage<T> extends Page<T> {
+>        public boolean getHasNext() {
+>            return this.hasNext();
+>        }
+> 
+>        public boolean getHasPrevious() {
+>            return this.hasPrevious();
+>        }
+> 
+>        public long getPages() {
+>            return super.getPages();
+>        }
+> 
+>        public MyPage() {}
+> 
+>        public MyPage(long current, long size) { super(current, size); }
+> 
+>        public MyPage(long current, long size, long total) { super(current, size, total); }
+> 
+>        public MyPage(long current, long size, boolean isSearchCount) { super(current, size, isSearchCount); }
+> 
+>        public MyPage(long current, long size, long total, boolean isSearchCount) { super(current, size, total, isSearchCount); }
+> }
+> ```
+>
+> *使用我们扩充的类，返回值传到 JSP 界面上的骑士是我们这个扩充的MyPage类对象*
+>
+> ```java
+> @GetMapping("/list")
+> public String showList(String findname, 
+>                           String findTel, 
+>                           @RequestParam(value = "page",defaultValue = "1")int page
+>                           Model m) {
+>        QueryWrapper<Links> qw = new QueryWrapper<>();
+>        // 可以设置前置条件，如果成立的话才添加到 where 中
+>        qw.like(findName!=null, "link_name", findname).like(findTel!=null, "link_phone", findTel)
+>            List<Links> list = service.list2(qw);
+>        IPage<Links> iPage = service.page2(new MyPage<Links>(page, 3), qw);
+>        m.addAttribute("info", iPage);
+>        return "list";
+> }
+> ```
 
 
 
