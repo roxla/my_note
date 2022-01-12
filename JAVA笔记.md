@@ -549,24 +549,24 @@ public static void quickSortCore(int[] array, int left, int right) {
 >            // 调用方法
 >             int result = sum( a: 10, b: 20);
 >            System.out.println(result);		// 30
->                                                                                   
+>                                                                                       
 >             int result2 = sum( a: 10.0, b: 20.0);
 >             System.out.println(result2);	// 30.0
->                                                                                   
+>                                                                                       
 >             int result3 = sum( a: 10, b: 20, c: 30);
 >            System.out.println(result3);	// 60
 >         }
->                                                                                  
+>                                                                                      
 >         // 需求1：求两个 int 类型数据和的方法
 >        public static int sum(int a, int b) {
 >             return a + b;
 >         }
->                                                                                   
+>                                                                                       
 >         // 需求2：求两个 double 类型数据和的方法
 >         public static double sum(double a, double b) {
 >            return a + b;
 >         }
->                                                                                  
+>                                                                                      
 >         // 需求3：求三个 int 类型数据和的方法
 >         public static int sum(int a, int b, int c) {
 >             return a + b + c;
@@ -589,7 +589,7 @@ public static void quickSortCore(int[] array, int left, int right) {
 >            // 方法体
 >         }
 >      }
->                                                  
+>                                                        
 >                                                                                                     // 属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
@@ -936,7 +936,7 @@ public static void main(String[] args) {
 >         public static void main(String[] args) {
 >             Student s1 = new Student();
 >             s1.setName("王狗蛋"); // setName 方法中的 this 代表 s1 这个对象
->                                                                                                                                                                 
+>                                                                                                                                                                         
 >             Student s2 = new Student();
 >             s2.setName("李铁蛋"); // setName 方法中的 this 代表 s2 这个对象
 >         }
@@ -1706,14 +1706,14 @@ public static void main(String[] args) {
 >     		System.out.println("USB插入，交换数据");
 >         }
 >     }
->                                                                   
+>                                                                       
 >     public class USBSan implements USBInterfase {
 >     	@Override
 >     	public void service() {
 >     		System.out.println("USB插入，风扇转起来了");
 >     	}
 >     }
->                                                                   
+>                                                                       
 >     public class USBDemo{
 >     	public static void main(String[] args) {
 >     		USBInterfase usb = new USBSan();
@@ -2174,7 +2174,7 @@ public static void main(String[] args) {
 
 > 
 
-### 代理设计模式(未完成)
+### 代理设计模式(重点)
 
 > 代理模式是一种设计模式，提供了对目标对象额外的访问方式，即通过代理对象访问目标对象，这样可以在不修改原目标对象的前提下，提供额外的功能操作，扩展目标对象的功能
 >
@@ -2182,11 +2182,11 @@ public static void main(String[] args) {
 >
 > 举个例子，我们生活中经常到火车站去买车票，但是人一多的话，就会非常拥挤，于是就有了代售点，我们能从代售点买车票了。这其中就是代理模式的体现，代售点代理了火车站对象，提供购买车票的方法
 
-#### 静态代理
+#### 静态代理(未完成)
 
 > 
 
-#### 动态代理
+#### 动态代理(未完成)
 
 > 
 
@@ -4210,7 +4210,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println(date);
 >   }
->                                                                     
+>                                                                         
 >   private static Date format(String str) throws ParseException {	// 仅抛出异常
 >       DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 >      // 因为异常已经抛出,所以当前不需要处理异常
@@ -4280,7 +4280,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println("验明正身");
 >   }
->                           
+>                               
 >   //想要抛出一个实例,方法后还得抛出一个对应的类型
 >   public static void checkSex(String sex) throws Exception {
 >       if ("男".equals(sex) || "女".equals(sex))
@@ -4304,6 +4304,10 @@ public static void main(String[] args) {
 >    |       表示抛出异常，由该方法的调用者来处理       | 表示抛出异常，由方法体内的语句处理 |
 >   | 表示出现异常的一种可能性，并不一定会发生这些异常 |    执行throw一定抛出了某种异常     |
 >
+
+#### 自定义异常处理(未完成)
+
+> 
 
 ### throw 和 throws 的区别
 
@@ -5870,7 +5874,7 @@ public class StudentStreamDemo {
 >
 >   ```java
 >   public class MyThreadDemo {
->                                                           
+>                                                               
 >   	public static void main(String[] args) {
 >   		//创建线程对象
 >   		Thread t = new MyThread();
