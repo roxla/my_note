@@ -651,7 +651,7 @@
 >
 > @NotNull    验证对象是否不为null, 无法查检长度为0的字符串
 >
-> @NotBlank 检查约束字符串是不是Null还有被Trim的长度是否大于0,只对字符串,且会去掉前后空格.
+> @NotBlank 检查约束字符串是不是Null还有被Trim的长度是否大于0，只对字符串，且会去掉前后空格.
 >
 > @NotEmpty 检查约束元素是否为NULL或者是EMPTY.
 >
@@ -1933,16 +1933,16 @@ https://mvnrepository.com/
 > ```java
 > @GetMapping("/list")
 > public String showList(String findname, 
->                        String findTel, 
->                        @RequestParam(value = "page",defaultValue = "1")int page,
->                        Model m) {
->     QueryWrapper<Links> qw = new QueryWrapper<>();
->     // 可以设置前置条件，如果成立的话才添加到 where 中
->     qw.like(findName!=null, "link_name", findname).like(findTel!=null, "link_phone", findTel);
->     // 参数1：分页条件，参数2：查询条件
->     IPage<Links> iPage = service.page2(new Page<Links>(page, 3), qw);
->     m.addAttribute("info", iPage);
->     return "list";
+>                           String findTel, 
+>                           @RequestParam(value = "page",defaultValue = "1")int page,
+>                           Model m) {
+>        QueryWrapper<Links> qw = new QueryWrapper<>();
+>        // 可以设置前置条件，如果成立的话才添加到 where 中
+>        qw.like(findName!=null, "link_name", findname).like(findTel!=null, "link_phone", findTel);
+>        // 参数1：分页条件，参数2：查询条件
+>        IPage<Links> iPage = service.page2(new Page<Links>(page, 3), qw);
+>        m.addAttribute("info", iPage);
+>        return "list";
 > }
 > ```
 >
@@ -3025,12 +3025,12 @@ https://mvnrepository.com/
 >    ```properties
 >    log4j.logger.com.gec.it.dao=DEBUG,cn
 >    log4j.logger.org.activiti.engine.impl.persistence.entity=DEBUG,cn
->                               
+>                                                 
 >    log4j.appender.cn = org.apache.log4j.ConsoleAppender  
 >    log4j.appender.cn.Target = System.out  
 >    log4j.appender.cn.layout = org.apache.log4j.PatternLayout  
 >    log4j.appender.cn.layout.ConversionPattern = %-d{yyyy-MM-dd HH\:mm\:ss} [%p]-[%c] %m%n
->                               
+>                                                 
 >    #log4j.appender.abc = org.apache.log4j.DailyRollingFileAppender  
 >    #log4j.appender.abc.File = D:/gll_logs/xxx
 >    #log4j.appender.abc.DatePattern = '.'yyyy-MM-dd'.log'
@@ -3570,29 +3570,29 @@ https://mvnrepository.com/
 > // 打开审批列表
 > @GetMapping("/approve/pass")
 > public String pass(int askid, String taskid, Model m) {
->     Asks a = askService.getById2(askid);
->     m.addAttribute("ask", a);
->     List<String> btns = service.findOutComeListByTaskId(taskid);
->     m.addAttribute("btns", btns);// 把输出线的名字输出到jsp页面
->     Task task = service.findTaskById(taskid);
->     m.addAttribute("task", task);
->     return "task_pass";
+>        Asks a = askService.getById2(askid);
+>        m.addAttribute("ask", a);
+>        List<String> btns = service.findOutComeListByTaskId(taskid);
+>        m.addAttribute("btns", btns);// 把输出线的名字输出到jsp页面
+>        Task task = service.findTaskById(taskid);
+>        m.addAttribute("task", task);
+>        return "task_pass";
 > }
 > 
 > @PostMapping("/approve/pass")
 > public String pass(int askid, String taskid, String comment, String result, Model m, @SessionAttribute("emp") Emps emp) {
->     Map<String, Object> map = new HashMap<>();
->     map.put("result", result);// 压入变量是按钮的名字，这样就可以选择不同的去向
->     Task next = service.saveSubmitTask(taskid, emp.getUserKey(), comment, map);
->     // 同步修改asks的状态
->     Asks ask = askService.getById(askid);
->     if (next != null)
->         ask.setState(next.getName());
->     else
->         ask.setState("完成");// 如果没有下一个节点就是完成了
->     askService.updateById(ask);
+>        Map<String, Object> map = new HashMap<>();
+>        map.put("result", result);// 压入变量是按钮的名字，这样就可以选择不同的去向
+>        Task next = service.saveSubmitTask(taskid, emp.getUserKey(), comment, map);
+>        // 同步修改asks的状态
+>        Asks ask = askService.getById(askid);
+>        if (next != null)
+>            ask.setState(next.getName());
+>        // else // 编写监听器后，这部分由监听器完成
+>            // ask.setState("完成"); // 如果没有下一个节点就是完成了
+>        askService.updateById(ask);
 > 
->     return "redirect:/approve/mytask";
+>        return "redirect:/approve/mytask";
 > }
 > ```
 >
@@ -3684,7 +3684,7 @@ https://mvnrepository.com/
 > ```
 > 
 
-#### 总经理审批(未完成)
+#### 总经理审批
 
 > 画流程图的时候，在**总经理审批**任务的属性 *Candidate use...ma separated)* 中编写了内容 **${method.getPower2("报销总经理审批")}** 
 >
@@ -3716,10 +3716,10 @@ https://mvnrepository.com/
 >
 > ```java
 > public interface WorkFlowBrige {
->  // 部门审批用方法
->  List<String> getPower(String type, String userkey);
-> 	// 总经理审批/财务审批用方法
-> 	List<String> getPower2(String type);
+>      // 部门审批用方法
+>      List<String> getPower(String type, String userkey);
+>     // 总经理审批/财务审批用方法
+>     List<String> getPower2(String type);
 > }
 > ```
 >
@@ -3766,9 +3766,9 @@ https://mvnrepository.com/
 >
 > ```java
 > public interface PowersDao extends BaseMapper2<Powers> {
->  List<String> selectPowerByType(@Param("type")String type, @Param("empid")int empId);
+>      List<String> selectPowerByType(@Param("type")String type, @Param("empid")int empId);
 > 
->  List<String> selectPowerByType2(@Param("type")String type);
+>      List<String> selectPowerByType2(@Param("type")String type);
 > }
 > ```
 >
@@ -3779,16 +3779,16 @@ https://mvnrepository.com/
 > ```xml
 > ...
 > <select id="selectPowerByType" resultType="string">
->  select concat(e.emp_id,'_',e.emp_name) from powers p 
->  join emps e on p.power_empid=e.emp_id
->  where p.power_type=#{type} 
->  and p.power_deptid=(select emp_deptid from emps where emp_id=#{empid}) 
+>      select concat(e.emp_id,'_',e.emp_name) from powers p 
+>      join emps e on p.power_empid=e.emp_id
+>      where p.power_type=#{type} 
+>      and p.power_deptid=(select emp_deptid from emps where emp_id=#{empid}) 
 > </select>
 > 
 > <select id="selectPowerByType2" resultType="string">
->  select concat(e.emp_id,'_',e.emp_name) from powers p 
->  join emps e on p.power_empid=e.emp_id
->  where p.power_type=#{type}
+>      select concat(e.emp_id,'_',e.emp_name) from powers p 
+>      join emps e on p.power_empid=e.emp_id
+>      where p.power_type=#{type}
 > </select>
 > ...
 > ```
@@ -3801,6 +3801,88 @@ https://mvnrepository.com/
 > 画流程图的时候，在**财务审批**任务的属性 *Candidate use...ma separated)* 中编写了内容 **${method.getPower2("报销财务审批")}** 
 >
 > 当流程进行到**财务审批**步骤的时候，会自动触发属性中写的**getPower2()**方法
+
+### 设置监听器
+
+> 当工作流中有多个结束节点时，无法分清是在哪个节点结束的，这时可以使用监听器
+>
+> **设置监听器，一旦到达结束节点，自动触发java代码**
+
+#### 监听器类代码
+
+> 使用监听器，需要实现 JavaDelegate 和 Serializable 接口
+>
+> 这两个类写在 com.roxla.it.controller.listener 包下
+>
+> **AgreeEndListener.java**
+>
+> 同意监听器，当程序运行到同意结束节点时，触发这条代码
+>
+> ```java
+> @Service("agreeEndListener")
+> public class AgreeEndListener implements JavaDelegate, Serializable {
+>     @Autowired
+>     private AsksService askService;
+> 
+>     @Override
+>     public void execute(DelegateExecution execution) throws Exception {
+>         System.out.println(execution.getCurrentActivityName()); // 完成/拒绝
+>         System.out.println(execution.getProcessBusinessKey()); // 业务id--askId
+>         int askid = Integer.parseInt(execution.getProcessBusinessKey());
+>         Asks ask = askService.getById(askid);
+>         ask.setWfState("审批通过");
+>         askService.updateById(plan);
+>     }
+> }
+> ```
+>
+> **DeneyEndListener.java**
+>
+> 拒绝监听器，当程序运行到拒绝结束节点时，触发这条代码
+>
+> ```java
+> @Service("deneyEndListener")
+> public class DeneyEndListener implements JavaDelegate, Serializable {
+>     @Autowired
+>     private AsksService askService;
+> 
+>     @Override
+>     public void execute(DelegateExecution execution) throws Exception {
+>         System.out.println(execution.getCurrentActivityName()); // 完成/拒绝
+>         System.out.println(execution.getProcessBusinessKey()); // 业务id--askId
+>         int askid = Integer.parseInt(execution.getProcessBusinessKey());
+>         Asks ask = askService.getById(askid);
+>         ask.setWfState("审批拒绝");
+>         askService.updateById(plan);
+>     }
+> }
+> ```
+
+#### 将这两个监听器注入到配置文件中(未完成)
+
+> **修改applicationContext-activiti.xml**
+>
+> 
+>
+> ```xml
+> 
+> ```
+>
+> **修改applicationContext.xml**
+>
+> 增加扫描注解，扫描那两个监听器所在的包路径
+>
+> ```xml
+> <!-- 扫描注解 -->
+> ...
+> <context:component-scan base-package="com.roxla.it.controller.listener"/>
+> <!-- 引入配置文件 -->
+> ...
+> ```
+
+#### 修改流程图文件(未完成)
+
+> 
 
 ## Shiro
 
@@ -4092,7 +4174,7 @@ https://mvnrepository.com/
 > ```xml
 > <aop:config proxy-target-class="true"></aop:config> <!-- 强制使用cglib动态代理产生切面 -->
 > <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
->     <property name="securityManager" ref="securityManager"/>
+>        <property name="securityManager" ref="securityManager"/>
 > </bean>
 > ```
 
@@ -4190,14 +4272,14 @@ https://mvnrepository.com/
 > ```java
 > @Controller
 > public class EmpController {
-> 	// 不要区分get/post，因为shiro登录不成功的时候也要用它来转回登录页重新登录
->     @RequestMapping("/login")
->     public String login() {
->         // 登录前，首先要登出前一个用户
->         SecurityUtils.getSubject().logout();
->         return "login";
->     }
->     // login不用写post方法，shiro包揽了
+>     // 不要区分get/post，因为shiro登录不成功的时候也要用它来转回登录页重新登录
+>        @RequestMapping("/login")
+>        public String login() {
+>            // 登录前，首先要登出前一个用户
+>            SecurityUtils.getSubject().logout();
+>            return "login";
+>        }
+>        // login不用写post方法，shiro包揽了
 > }
 > ```
 
@@ -4211,10 +4293,10 @@ https://mvnrepository.com/
 >
 > ```java
 > public class MyControllAdvice {
->     @ExceptionHandler(UnauthorizedException.class)
->     public String exLimit(Exception ex) {
->         return "err_limit";
->     }
+>        @ExceptionHandler(UnauthorizedException.class)
+>        public String exLimit(Exception ex) {
+>            return "err_limit";
+>        }
 > }
 > ```
 >
@@ -4236,6 +4318,670 @@ https://mvnrepository.com/
 #### 对访问的权限控制
 
 > 
+
+## Spring Boot
+
+> **入口方法**
+>
+> @SpringBootApplication：拥有此注解的类作为 spring boot 的启动类，程序将从该类中启动
+>
+> 默认的启动类是 WelinkApplication
+>
+> **包依赖**
+>
+> pom.xml中的配置项完成了 spring mvc 中所有的配置项
+>
+> 该项配置拥有多层继承关系(在继承父类的包的基础上进行扩充)
+>
+> ```xml
+> <dependency>
+>     <groupId>org.springframework.boot</groupId>
+>     <artifactId>spring-boot-starter-web</artifactId>
+> </dependency>
+> 
+> <dependency>
+>     <groupId>org.springframework.boot</groupId>
+>     <artifactId>spring-boot-starter-test</artifactId>
+>     <scope>test</scope>
+> </dependency>
+> ```
+>
+> 每个start都导入了一套包，这套包里包含了所有的 spring 依赖包
+>
+> **目录格式**
+>
+> - java
+>   - WelinkApplication：启动类
+> - resources
+>   - static：静态资源文件夹
+>   - templates：模板的位置(jsp的代替品)
+>   - application.properties：整个工程的所有配置都放在这里
+>
+> **启动流程**
+>
+> *Spring Boot 扫描*
+>
+> Spring Boot 扫描默认已经扫描到启动类所在包以及子包
+>
+> 如果需要扫描在启动类所在包以外的文件，可以在启动类中添加@ComponentScan注解来配置扫描路径
+>
+> ```java
+> @SpringBootApplication
+> @ComponentScan({"com.roxla.it.abc","com.roxla.it.welink"})
+> public class WelinkApplication {
+>     public static void main(String[] args) {
+>         SpringApplication.run(WelinkApplication.class, args);
+>     }
+> }
+> ```
+>
+> **设置端口和根目录**
+>
+> Spring Boot 默认端口为 8080，根目录为项目名
+>
+> 修改端口和首页需要配置 application.properties
+>
+> *application.properties*
+>
+> Spring Boot 共用一个配置文件 application.properties，所有的配置都写在这个文件中
+>
+> ```properties
+> server.port=8081
+> server.servlet.context-path=/welink
+> ```
+>
+> server.port：自定义端口号
+>
+> server.servlet.context-path：自定义网站根目录
+
+### 连接数据库
+
+> **application.properties**
+>
+> 连接数据库的内容写在 properties 配置文件中
+>
+> ```properties
+> spring.datasource.url=jdbc:mysql://localhost:3306/link?serverTimezone=GMT%2B8
+> spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+> spring.datasource.username=root
+> spring.datasource.password=123456
+> spring.datasource.tomcat.max-active=100
+> spring.datasource.tomcat.max-idle=200
+> spring.datasource.tomcat.initialSize=20
+> spring.jpa.database-platform=org.hibernate.dialect.MySQL5Dialect
+> spring.jpa.show-sql=true
+> ```
+>
+> url：连接数据库的url
+>
+> driver-class-name：数据库驱动所在包
+>
+> username：用户名
+>
+> password：密码
+
+#### Maven导入Oracle数据库的依赖
+
+> ```xml
+> <dependency>
+>     <groupId>com.oracle.database.jdbc</groupId>
+>     <artifactId>ojdbc6</artifactId>
+>     <version>11.2.0.4</version>
+> </dependency>
+> ```
+
+### 创建实体类
+
+#### Oracle
+
+> **实体类 User**
+>
+> ```java
+> @Entity
+> @Table(name = "LK_USER")
+> public class User {
+>     @Id
+>     @SequenceGenerator(name = "myseq", sequenceName = "seq_lk_user", allocationSize = 1)
+>     @GeneratedValue(generator = "myseq", strategy = GenerationType.SEQUENCE)
+>     @Column(name = "user_id")
+>     private int id;
+> 
+>     @Column(name = "user_nickname")
+>     private String nickName;
+> 
+>     @Column(name = "user_loginname")
+>     private String loginName;
+> 
+>     @Column(name = "user_loginpwd")
+>     private String loginPwd;
+> }
+> ```
+>
+> **注解说明**
+>
+> @Entity：代表是实体类(是JPA需要处理的)
+>
+> @Table：对应的表名
+>
+> @Id：主键
+>
+> @Column：数据库列名(大小写要统一，jpa会自动修改名字)
+>
+> **自增长注解**
+>
+> 这两条用于 id 的自动增长(oracle专用)
+>
+> ```java
+> @SequenceGenerator(name = "myseq", sequenceName = "seq_lk_user", allocationSize = 1)
+> @GeneratedValue(generator = "myseq", strategy = GenerationType.SEQUENCE)
+> ```
+>
+> name 和 generator 绑定，值需要设置成一致的
+>
+> sequenceName：数据库序列名
+>
+> strategy：oracle需要制定序列
+>
+> allocationSize：每次递增1(如果不指定会递增很大的值)
+
+#### MySql
+
+> 
+
+#### 外键查询
+
+>外键对象只要加注解即可，自动生成查询外键的语句
+>
+>**实体类中添加外键**
+>
+>Jpa不能重复映射一个列，需要注释掉原本的外键列的属性
+>
+>Link
+>
+>```java
+>@Id
+>@SequenceGenerator(name = "myseq", sequenceName = "seq_lk_link", allocationSize = 1)
+>@GeneratedValue(generator = "myseq", strategy = GenerationType.SEQUENCE)
+>@Column(name = "link_id")
+>private int id;
+>
+>@Column(name = "link_name")
+>private String name;
+>
+>@Column(name = "link_phone")
+>private String phone;
+>
+>// Jpa不能重复映射一个列，需要注释掉
+>// @Column(name = "link_user_id")
+>// private int userId;
+>
+>// 这个外键来替代注释掉的属性
+>@ManyToOne
+>@JoinColumn(name = "link_user_id")
+>private User user;
+>```
+>
+>@ManyToOne：外键关系为多对一
+>@JoinColumn(name = "link_user_id")：指定外键列是哪一列，name列名
+>
+>**根据外键查询**
+>
+>条件如果需要外键字段，可以跨表起名，使用外键表中的字段名
+>
+>```java
+>List<Link> findByUser_id(int id);
+>```
+>
+>findByUser_id
+>
+>- findBy：关键字
+>- User：实体类 User
+>- id：User 类中的属性 id
+
+### 启动Jpa
+
+> **Maven导入Jpa的依赖包**
+>
+> ```xml
+> <dependency>
+>     <groupId>org.springframework.boot</groupId>
+>     <artifactId>spring-boot-starter-data-jpa</artifactId>
+> </dependency>
+> ```
+>
+> 在入口类中添加 Jpa 启动注解
+>
+> **WelinkApplication**
+>
+> ```java
+> @SpringBootApplication
+> @EntityScan("com.roxla.it.welink.entity")
+> @EnableJpaRepositories("com.roxla.it.welink.dao")
+> public class WelinkApplication {
+>     public static void main(String[] args) {
+>         SpringApplication.run(WelinkApplication.class, args);
+>     }
+> }
+> ```
+>
+> @EntityScan("com.roxla.it.welink.entity")：指引 Jpa 找到实体类(包含了数据库的信息)
+> @EnableJpaRepositories("com.roxla.it.welink.dao")：开启 Jpa，并且指定 dao 的包名，自动生成实现类
+
+### 创建接口
+
+> **userDao**
+>
+> 继承 JpaRepository 接口，内部实现了几乎所有的数据库操作方法
+>
+> ```java
+> public interface UserDao extends JpaRepository<User, Integer> {
+> }
+> ```
+>
+> **添加登录方法**
+>
+> 登录方法不包含在 JpaRepository 接口中，需要自己添加
+>
+> Jpa会自动查询对应类中的属性来提供拼接生成方法所需的字符
+>
+> ```java
+> public interface UserDao extends JpaRepository<User, Integer> {
+>     User findByLoginNameAndLoginPwd(String uname, String pwd);
+> }
+> ```
+>
+> findBy：关键字
+>
+> LoginName：指User类的loginName字段
+>
+> And：并且
+>
+> LoginPwd：指User类的loginPwd字段
+>
+> *拼接了几个字段，就需要传入几个属性*
+>
+> **如果要写sql语句，可以使用注解 @Query**
+>
+> 该sql的查询条件是按照类名来的(面向 Java 类来编写)
+>
+> ```java
+> public interface UserDao extends JpaRepository<User, Integer> {
+>     @Query("select u from User u where u.loginName=?1 and u.loginPwd=?2")
+>     User findByLoginNameAndLoginPwd(String uname, String pwd);
+> }
+> ```
+>
+> 1：代表方法中的第一个参数
+>
+> 2：代表方法中的第二个参数
+
+### 实现登录页面
+
+> **Maven导入html模板的包依赖**
+>
+> 这个依赖可以使 Spring boot 使用 html 文件作为模板，以替代jsp
+>
+> thymeleaf 语法用来替代 jsp 中的 el 表达式
+>
+> ```xml
+> <dependency>
+>     <groupId>org.springframework.boot</groupId>
+>     <artifactId>spring-boot-starter-thymeleaf</artifactId>
+> </dependency>
+> ```
+>
+> **html页面**
+>
+> login.html
+>
+> ```html
+> <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+> <html xmlns:th="http://www.thymeleaf.org">
+>     <head>
+>         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+>         <title>登录</title>
+>         <style>
+>             form span{display:inline-block;width:80px;text-align:right}
+>             #main{margin:100px auto;border:1px solid #ccc;width:350px;padding:0 30px  30px 30px}
+>             form a{font-size:12px;float:right;margin-right:50px;}
+>         </style>
+>     </head>
+>     <body>
+>         <div id="main">
+>             <h2>登录小秘书系统</h2>
+>             <hr color="#ccc"><br>
+>             <form action="" method="post">
+>                 <span>用户名:</span> <input name="uname" type="text"><br><br>
+>                 <span>密码:</span> <input name="pwd" type="password"><br><br>
+>                 <span></span><input value="登录" type="submit">
+>                 <a href="#">注册</a>
+>             </form>
+>             <span th:text="${err}"></span>
+>         </div>
+>     </body>
+> </html>
+> ```
+>
+> xmlns:th="http://www.thymeleaf.org"：导入 thymeleaf 命名空间
+>
+> th:text：显示文本信息
+>
+> **控制登录页面的 Controller 类**
+>
+> UserController
+>
+> ```java
+> @Controller
+> public class UserController {
+>     @Autowired
+>     private UserService service;
+> 
+>     @GetMapping("login")
+>     public String login() {
+>         return "login";
+>     }
+> 
+>     public String login(String uname, String pwd, HttpSession session, Model m) {
+>         User u = service.login(uname, pwd);
+>         if (u != null) {
+>             session.setAttribute("user", u);
+>             return "redirect:/list";
+>         }
+>         m.addAttribute("err", "用户名或密码错误");
+>         return "login";
+>     }
+> }
+> ```
+
+#### 创建对应的服务类
+
+> **UserService**
+>
+> ```java
+> public interface UserService {
+>     User login(String uname, String pwd);
+> }
+> ```
+>
+> **UserServiceImpl**
+>
+> ```java
+> @Service
+> public class UserServiceImpl implements UserService {
+>     @Autowired
+>     private UserDao dao;
+> 
+>     @Override
+>     public User login(String uname, String pwd) {
+>         return dao.findByLoginNameAndLoginPwd(uname, pwd);
+>     }
+> }
+> ```
+
+#### thymeleaf语法
+
+> thymeleaf 语法文档：
+>
+> - https://www.jianshu.com/p/d1370aeb0881
+> - https://www.cnblogs.com/itdragon/p/8724291.html
+>
+> **超链接中需要使用到 thymeleaf 变量的地址需要使用 thymeleaf 语法**
+>
+> **thymeleaf中的地址前面会自动添加工程名**
+
+### 登录拦截
+
+> spring boot 使用类，方法和注解的方式来替代 spring 中的 xml 配置文件的配置
+>
+> 配置类继承 WebMvcConfigurationSupport 类，并重写对应的方法
+>
+> **LoginInterceptor**
+>
+> 登录拦截的功能实现
+>
+> ```java
+> public class LoginInterceptor implements HandlerInterceptor {
+>     @Override
+>     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+>         if (request.getSession().getAttribute("user") != null)
+>             return true;
+>         response.sendRedirect(request.getContextPath() + "/login");
+>         return false;
+>     }
+> }
+> ```
+>
+> **MyWebConfig**
+>
+> 配置要拦截的页面和拦截功能的实现类
+>
+> ```java
+> @Configuration
+> public class MyWebConfig extends WebMvcConfigurationSupport {
+>     @Override
+>     protected void addInterceptors(InterceptorRegistry registry) {
+>         registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/link/**");
+>         super.addInterceptors(registry);
+>     }
+> }
+> ```
+>
+> registry.addInterceptor()：拦截功能的实现类
+>
+> registry.addPathPatterns()：要拦截的url
+
+### 分页查询
+
+> 在Oracle里面,如果用like模糊查询，自动生成的sql语句中包含ecp...函数，空白的字符不能使用，会报错
+>
+> 使用动态查询的包来解决
+>
+> **Maven**
+>
+> ```xml
+> <dependency>
+>     <groupId>com.github.wenhao</groupId>
+>     <artifactId>jpa-spec</artifactId>
+>     <version>3.1.1</version>
+> </dependency>
+> ```
+>
+> **修改dao**
+>
+> 使 dao 层的接口继承接口 JpaRepository 和 JpaSpecificationExecutor 
+>
+> ```java
+> public class LinkDao extends JpaRepository<T, ID>, JpaSpecificationExecutor<T> {
+> }
+> ```
+>
+> JpaSpecificationExecutor 接口扩充了方法，允许带入动态条件
+>
+> **使用扩充的方法**
+>
+> 通过编写 Specifications 类，相当于编写 Mp3 里的 QueryWarper，来进行动态条件的生成
+>
+> ```java
+> @RequestMapping("/list")
+> public String showList(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "findname", defaultValue = "") String findname, Model m, @SessionAttribute("user") User u) {
+>     Pageable pageable = PageRequest.of(page - 1, 2, Sort.by("name").ascending());
+>     Specification<Link> qw = Specifications.<Link>and().eq("user.id", u.getId()).like("name", "%" + findname + "%").build();
+>     // 在Oracle里面，如果用like模糊查询，自动生成的sql语句中包含ecp...函数，空白的字符不能使用，会报错
+>     Page<Link> info = service.findPage(qw, pageable);
+>     m.addAttribute("info", info);
+>     return "list";
+> }
+> ```
+>
+> **将方法添加到Service和ServiceImpl中**
+>
+> 在 ServiceImpl 类中，调用扩充的 findAll方法
+>
+> ```java
+> @Override
+> public Page<Link> findPage(Specification<Link> qw, Pageable pageable) {
+>     return dao.findAll(qw, pageable);
+> }
+> ```
+
+### 提取重复代码集成为基类
+
+> **BaseService**
+>
+> ```java
+> public interface BaseService<T,ID> {
+> void save(T o);
+> void edit(T o);
+> void remove(T o);
+> void removeById(ID id);
+> 
+> /**
+>      * 查询全部
+>      */
+>     List<T> findAll();
+> 
+>     /**
+>      * 根据id查找一个对象
+>      */
+>     T findById(ID id);
+> 
+>     /**
+>      * 根据条件查找一个对象
+>      */
+>     T findOne(Specification<T> qw);
+> 
+>     /**
+>      * 根据条件查找分页数据
+>      */
+>     Page<T> findPage(Specification<T> qw, Pageable pageable);
+> 
+>     /**
+>      * 根据条件查找列表,有排序
+>      */
+>     List<T> findList(Specification<T> qw, Sort sort);
+> 
+>     /**
+>      * 根据条件查找列表
+>      */
+>     List<T> findList(Specification<T> qw);
+> }
+> ```
+>
+> **BaseServiceImpl**
+>
+> ```java
+> public abstract class BaseServiceImpl<T, ID, DAO extends JpaRepository<T, ID> & JpaSpecificationExecutor<T>> implements BaseService<T, ID> {
+>     protected DAO dao;
+> 
+>     @Autowired
+>     public void setDao(DAO dao) {
+>         this.dao = dao;
+>     }
+> 
+>     @Override
+>     @Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT
+>                    , readOnly = false, rollbackFor = RuntimeException.class)
+>     public void save(T o) {
+>         dao.save(o);
+>     }
+> 
+>     @Override
+>     @Transactional
+>     public void edit(T o) {
+>         dao.save(o);
+>     }
+> 
+>     @Override
+>     @Transactional
+>     public void removeById(ID id) {
+>         dao.deleteById(id);
+>     }
+> 
+> 
+>     @Override
+>     @Transactional
+>     public void remove(T o) {
+>         dao.delete(o);
+>     }
+> 
+>     @Override
+>     @Transactional(readOnly = true)
+>     public List<T> findAll() {
+>         return dao.findAll();
+>     }
+> 
+>     @Override
+>     @Transactional(readOnly = true)
+>     public T findById(ID id) {
+>         Optional<T> one = dao.findById(id);
+>         if (one.isPresent())//如果对象不是空的，返回对象
+>             return one.get();
+>         return null;
+>     }
+> 
+> 
+>     @Override
+>     @Transactional(readOnly = true)
+>     public T findOne(Specification<T> qw) {
+>         Optional<T> one = dao.findOne(qw);
+>         if (one.isPresent())//如果对象不是空的，返回对象
+>             return one.get();
+>         return one.get();
+>     }
+> 
+> 
+>     @Override
+>     @Transactional(readOnly = true)
+>     public Page<T> findPage(Specification<T> qw, Pageable pageable) {
+>         return dao.findAll(qw, pageable);
+>     }
+> 
+>     @Override
+>     @Transactional(readOnly = true)
+>     public List<T> findList(Specification<T> qw, Sort sort) {
+>         return dao.findAll(qw, sort);
+>     }
+> 
+>     @Override
+>     @Transactional(readOnly = true)
+>     public List<T> findList(Specification<T> qw) {
+>         return dao.findAll(qw);
+>     }
+> }
+> ```
+>
+> 泛型的多接口限制：接口之间使用**&**符号来连接
+>
+> abstract 用来防止被意外访问
+
+#### 使用
+
+> **LinkService**
+>
+> ```java
+> public interface LinkService extends BaseService<Link, Integer> {
+> }
+> ```
+>
+> **LinkServiceImpl**
+>
+> ```java
+> @Service
+> public class LinkServiceImpl extends BaseServiceImpl<Link, Integer, LinkDao> implements LinkService {
+> }
+> ```
+
+### springBoot整合mybatisPlus3
+
+> https://www.cnblogs.com/liuyj-top/p/12976396.html
+
+
+
+
+
+
+
+
 
 
 
