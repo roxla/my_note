@@ -549,24 +549,24 @@ public static void quickSortCore(int[] array, int left, int right) {
 >            // 调用方法
 >             int result = sum( a: 10, b: 20);
 >            System.out.println(result);		// 30
->                                                                                       
+>                                                                                           
 >             int result2 = sum( a: 10.0, b: 20.0);
 >             System.out.println(result2);	// 30.0
->                                                                                       
+>                                                                                           
 >             int result3 = sum( a: 10, b: 20, c: 30);
 >            System.out.println(result3);	// 60
 >         }
->                                                                                      
+>                                                                                          
 >         // 需求1：求两个 int 类型数据和的方法
 >        public static int sum(int a, int b) {
 >             return a + b;
 >         }
->                                                                                       
+>                                                                                           
 >         // 需求2：求两个 double 类型数据和的方法
 >         public static double sum(double a, double b) {
 >            return a + b;
 >         }
->                                                                                      
+>                                                                                          
 >         // 需求3：求三个 int 类型数据和的方法
 >         public static int sum(int a, int b, int c) {
 >             return a + b + c;
@@ -589,7 +589,7 @@ public static void quickSortCore(int[] array, int left, int right) {
 >            // 方法体
 >         }
 >      }
->                                                        
+>                                                              
 >                                                                                                     // 属于方法重载
 >     public class methodDemo {
 >         public static void fn(int a) {
@@ -936,7 +936,7 @@ public static void main(String[] args) {
 >         public static void main(String[] args) {
 >             Student s1 = new Student();
 >             s1.setName("王狗蛋"); // setName 方法中的 this 代表 s1 这个对象
->                                                                                                                                                                         
+>                                                                                                                                                                                 
 >             Student s2 = new Student();
 >             s2.setName("李铁蛋"); // setName 方法中的 this 代表 s2 这个对象
 >         }
@@ -1706,14 +1706,14 @@ public static void main(String[] args) {
 >     		System.out.println("USB插入，交换数据");
 >         }
 >     }
->                                                                       
+>                                                                           
 >     public class USBSan implements USBInterfase {
 >     	@Override
 >     	public void service() {
 >     		System.out.println("USB插入，风扇转起来了");
 >     	}
 >     }
->                                                                       
+>                                                                           
 >     public class USBDemo{
 >     	public static void main(String[] args) {
 >     		USBInterfase usb = new USBSan();
@@ -2172,7 +2172,12 @@ public static void main(String[] args) {
 
 ### 模板设计模式(未完成)
 
-> 
+> **基于抽象类的，核心是封装算法**
+>
+> - 模板方法定义了一个算法的步骤，并允许子类为一个或多个步骤提供具体实现
+> - 模板（模板方法）模式（Servlet、AQS）
+>   - 在一个方法中定义一个算法的骨架，并将一些具体步骤延迟到子类中实现。
+>   - 模板模式使得子类可以在不改变算法结构的基础上，重新具体定义算法中的某些步骤
 
 ### 代理设计模式(重点)
 
@@ -2184,7 +2189,7 @@ public static void main(String[] args) {
 
 #### 静态代理(未完成)
 
-> 
+> https://www.cnblogs.com/cC-Zhou/p/9525638.html
 
 #### 动态代理(未完成)
 
@@ -2588,54 +2593,57 @@ public static void main(String[] args) {
 >
 > 对类来说的，即一个类应该只负责一项职责。如类 A 负责两个不同职责：职责 1，职责 2。当职责 1 需求变更而改变 A 时，可能造成职责 2 执行错误，所以需要将类 A 的粒度分解为 A1，A2
 >
-> **应用实例**
->
+
+##### 应用实例
+
 > 以交通工具案例讲解
 >
-> 方案一
->
+
+###### 方案一
+
 > ```java
-> public class SingleResponsibility1 {
->        public static void main(String[] args) {
->            Vehicle vehicle = new Vehicle();
->            vehicle.run("摩托车");
->            vehicle.run("汽车");
->            vehicle.run("飞机");
->        }
+>public class SingleResponsibility1 {
+>     public static void main(String[] args) {
+>        Vehicle vehicle = new Vehicle();
+>         vehicle.run("摩托车");
+>        vehicle.run("汽车");
+>         vehicle.run("飞机");
+>    }
 > }
-> /**
+>/**
 >  * 交通工具类
 >  * 方式一
->  * 1. 在方式一的 run 方法中，违反了单一职责原则
->  * 2. 解决的方案非常的简单，根据交通工具运行方法不同，分解成不同类即可
->  */
-> class Vehicle{
->     public void run(String vehicle){
->         System.out.println(vehicle + "在公路上运行...");
+>     * 1. 在方式一的 run 方法中，违反了单一职责原则
+>     * 2. 解决的方案非常的简单，根据交通工具运行方法不同，分解成不同类即可
+>     */
+>    class Vehicle{
+>        public void run(String vehicle){
+>            System.out.println(vehicle + "在公路上运行...");
 >     }
 > }
 > ```
->
-> 方案二
->
-> ```java
-> public class SingleResponsibility2 {
->     public static void main(String[] args) {
->         RoadVehicle roadVehicle = new RoadVehicle();
->         roadVehicle.run("摩托车");
->         roadVehicle.run("汽车");
 > 
->         AirVehicle airVehicle = new AirVehicle();
+
+###### 方案二
+
+> ```java
+>public class SingleResponsibility2 {
+>     public static void main(String[] args) {
+>        RoadVehicle roadVehicle = new RoadVehicle();
+>         roadVehicle.run("摩托车");
+>        roadVehicle.run("汽车");
+> 
+>        AirVehicle airVehicle = new AirVehicle();
 >         airVehicle.run("飞机");
->     }
+>    }
 > }
 > /**
->  * 方案二的分析
->  * 1. 遵守单一职责原则
->  * 2. 这样做的改动很大，即 将类分解，同时修改客户端
->  * 3. 改进：直接修改 Vehicle 类，改动的代码会比较少 => 方案三
->  */
-> class RoadVehicle{
+>     * 方案二的分析
+>     * 1. 遵守单一职责原则
+>     * 2. 这样做的改动很大，即 将类分解，同时修改客户端
+>     * 3. 改进：直接修改 Vehicle 类，改动的代码会比较少 => 方案三
+>     */
+>    class RoadVehicle{
 >     public void run(String vehicle){
 >         System.out.println(vehicle + "在公路运行");
 >     }
@@ -2649,29 +2657,30 @@ public static void main(String[] args) {
 >     public void run(String vehicle){
 >         System.out.println(vehicle + "在水中运行");
 >     }
-> }
+>}
 > ```
 >
-> 方案三
->
+
+###### 方案三
+
 > ```java
-> public class SingleResponsibility3 {
+>public class SingleResponsibility3 {
 >     public static void main(String[] args) {
->         Vehicle2 vehicle2 = new Vehicle2();
+>        Vehicle2 vehicle2 = new Vehicle2();
 >         vehicle2.run("摩托车");
->         vehicle2.runAir("飞机");
+>        vehicle2.runAir("飞机");
 >         vehicle2.runWater("轮船");
->     }
+>    }
 > }
-> /**
+>/**
 >  * 方式三的分析
 >  * 1. 这种修改方法没有对原来的类做大的修改，只是增加方法
->  * 2. 这里虽然没有在类这个级别上遵守单一职责原则，但是在方法级别上，仍然是遵守单一职责
->  */
-> class Vehicle2{
->     public void run(String vehicle){
->         System.out.println(vehicle + "在公路运行...");
->     }
+>     * 2. 这里虽然没有在类这个级别上遵守单一职责原则，但是在方法级别上，仍然是遵守单一职责
+>     */
+>    class Vehicle2{
+>        public void run(String vehicle){
+>            System.out.println(vehicle + "在公路运行...");
+>        }
 >     public void runAir(String vehicle){
 >         System.out.println(vehicle + "在天空运行...");
 >     }
@@ -2680,13 +2689,14 @@ public static void main(String[] args) {
 >     }
 > }
 > ```
->
-> **单一职责原则注意事项和细节**
->
+> 
+
+##### 单一职责原则注意事项和细节
+
 > - 降低类的复杂度，一个类只负责一项职责
-> - 提高类的可读性，可维护性
+>- 提高类的可读性，可维护性
 > - 降低变更引起的风险
-> - 通常情况下，**我们应当遵守单一职责原则**，只有逻辑足够简单，才可以在代码级违反单一职责原则; 只有类中方法数量足够少，可以在方法级别保持单一职责原则
+>- 通常情况下，**我们应当遵守单一职责原则**，只有逻辑足够简单，才可以在代码级违反单一职责原则; 只有类中方法数量足够少，可以在方法级别保持单一职责原则
 
 #### 接口隔离原则
 
@@ -2702,29 +2712,30 @@ public static void main(String[] args) {
 >
 > 将**接口 Interface1**拆分为**独立的几个接口(这里我们拆分成 3 个接口)**，类 A 和类 C 分别与他们需要的接口建立依赖关系。也就是采用接口隔离原则
 >
-> **应用实例**
->
+
+##### 应用实例
+
 > - 类A通过接口Interface1依赖类B，类C通过接口Interface1依赖类D。
 >
->
-> - 没有实现接口隔离原则的代码实现
->
-> - Segregation1
->
->   ```java
+> 
+>- 没有实现接口隔离原则的代码实现
+> 
+>- Segregation1
+> 
+>  ```java
 >   /**
->    * 接口隔离原则
+>   * 接口隔离原则
 >    */
->   public class Segregation1 {
+>  public class Segregation1 {
 >   }
->   // 接口
+>  // 接口
 >   interface Interface1{
->       void operation1();
->       void operation2();
+>      void operation1();
+>      void operation2();
 >       void operation3();
->       void operation4();
+>      void operation4();
 >       void operation5();
->   }
+>  }
 >   class B implements Interface1{
 >       @Override
 >       public void operation1() {
@@ -2791,31 +2802,32 @@ public static void main(String[] args) {
 >           i.operation5();
 >       }
 >   }
->   ```
+>  ```
 > 
->**应传统方法的问题和使用接口隔离原则改进**
-> 
->类A通过接口 Interface1 依赖类 B，类 C 通过接口 Interface1 依赖类 D，如果接口 Interface1 对于类 A 和类 C 来说不是最小接口，那么类 B 和类 D 必须去实现他们不需要的方法
-> 
->将接口 Interface1 拆分为独立的几个接口，类A和类C分别与他们需要的接口建立依赖关系。也就是采用接口隔离原则
-> 
->接口 Interface1 中出现的方法，根据实现情况拆分为三个接口
-> 
->*代码实现*
-> 
->```java
-> /**
+
+##### 应传统方法的问题和使用接口隔离原则改进
+
+> 类A通过接口 Interface1 依赖类 B，类 C 通过接口 Interface1 依赖类 D，如果接口 Interface1 对于类 A 和类 C 来说不是最小接口，那么类 B 和类 D 必须去实现他们不需要的方法
+>
+> 将接口 Interface1 拆分为独立的几个接口，类A和类C分别与他们需要的接口建立依赖关系。也就是采用接口隔离原则
+>
+> 接口 Interface1 中出现的方法，根据实现情况拆分为三个接口
+>
+> **代码实现**
+>
+> ```java
+>/**
 >  * 接口隔离原则 改造后
->  */
+> */
 > public class Segregation1 {
->     public static void main(String[] args) {
+>    public static void main(String[] args) {
 >         A a = new A();
->         a.depend1(new B()); // A类通过接口去依赖B类
->         a.depend2(new B());
+>        a.depend1(new B()); // A类通过接口去依赖B类
+>        a.depend2(new B());
 >         a.depend3(new B());
-> 
+>
 >         C c = new C();
->         c.depend1(new D()); // C类通过接口去依赖D类
+>        c.depend1(new D()); // C类通过接口去依赖D类
 >         c.depend4(new D());
 >         c.depend5(new D());
 >     }
@@ -2905,67 +2917,70 @@ public static void main(String[] args) {
 >
 > - 使用==接口或抽象类==的目的是**制定好规范**，而不涉及任何具体的操作，把==展现细节的任务交给他们的实现类==去完成
 >
-> **应用实例**
->
+
+##### 应用实例
+
 > 编程完成Person 接收消息的功能
 >
-> *依赖倒转原则 改造前*
->
+
+###### 依赖倒转原则 改造前
+
 > ```java
-> /**
+>/**
 >  * 依赖倒转原则
->  */
+> */
 > public class DependencyInversion {
-> 
->     public static void main(String[] args) {
+>
+>    public static void main(String[] args) {
 >         Person person = new Person();
->         person.receive(new Email());
+>        person.receive(new Email());
 >     }
-> }
-> // 邮件类
+>}
+>// 邮件类
 > class Email{
->     public String getInfo(){
->         return "电子邮件信息：Hello，world！";
+>    public String getInfo(){
+>        return "电子邮件信息：Hello，world！";
 >     }
-> }
+>}
 > // 完成 Person 接收消息的功能
-> // 方式1 分析
+>// 方式1 分析
 > // 1. 简单，比较容易想到
-> // 2. 如果我们获取的对象是微信，短信等，则要新增类，同时Person也要增加相应的接收方法
+>// 2. 如果我们获取的对象是微信，短信等，则要新增类，同时Person也要增加相应的接收方法
 > // 3. 解决思路：引入一个抽象的接口 IReceiver，表示接收者，这样Person类与接口发生依赖
-> // 因为Email还有微信等都属于接收的范围，它们各自实现 IReceiver 接口就ok，这样我们就符合依赖倒转原则
+>// 因为Email还有微信等都属于接收的范围，它们各自实现 IReceiver 接口就ok，这样我们就符合依赖倒转原则
 > class Person{
 >     public void receive(Email email){
 >         System.out.println(email.getInfo());
 >     }
 > }
 > ```
->
-> *依赖倒转原则 改造后*
->
-> ```java
-> /**
->  * 依赖倒转原则 改造后
->  */
-> public class DependencyInversion {
->     public static void main(String[] args) {
->         // 客户端无需改变
->         Person person = new Person();
->         person.receive(new Email());
 > 
->         person.receive(new WeChat());
->     }
+
+###### 依赖倒转原则 改造后
+
+> ```java
+>/**
+>  * 依赖倒转原则 改造后
+> */
+> public class DependencyInversion {
+>    public static void main(String[] args) {
+>        // 客户端无需改变
+>         Person person = new Person();
+>        person.receive(new Email());
+> 
+>        person.receive(new WeChat());
+>    }
 > }
-> // 定义接口
-> interface IReceiver{
+>// 定义接口
+>interface IReceiver{
 >     String getInfo();
-> }
+>}
 > // 邮件类
-> class Email implements IReceiver{
+>class Email implements IReceiver{
 >     @Override
->     public String getInfo(){
+>    public String getInfo(){
 >         return "电子邮件信息：Hello，world！";
->     }
+>    }
 > }
 > // 增加微信
 > class WeChat implements IReceiver{
@@ -2983,44 +2998,44 @@ public static void main(String[] args) {
 >     }
 > }
 > ```
->
-> **依赖关系传递的三种方式和应用案例**
->
+> 
+
+##### 依赖关系传递的三种方式和应用案例
+
 > - 接口传递
 >
->
-> - 构造方法传递
->
->
-> - setter 方法传递
->
-> *依赖关系传递的三种方式*
->
-> 方式一
->
-> ```java
-> public class DependencyPass {
->     public static void main(String[] args) {
->         // 方式一
->         ChangHong changHong = new ChangHong();
->         OpenAndClose openAndClose = new OpenAndClose();
->         openAndClose.open(changHong);
->     }
-> }
-> // 方式1：通过接口传递实现依赖
-> // 开关的接口
-> interface IOpenAndClose{
->     void open(ITV tv);  // 抽象方法，接收接口
-> }
 > 
-> interface ITV{  // ITV 接口
->     void play();
-> }
-> class ChangHong implements ITV{
->     @Override
->     public void play() {
->         System.out.println("长虹电视机,打开");
+>- 构造方法传递
+> 
+>
+>- setter 方法传递
+> 
+
+###### 方式一
+
+> ```java
+>public class DependencyPass {
+>     public static void main(String[] args) {
+>        // 方式一
+>         ChangHong changHong = new ChangHong();
+>        OpenAndClose openAndClose = new OpenAndClose();
+>        openAndClose.open(changHong);
 >     }
+>}
+> // 方式1：通过接口传递实现依赖
+>// 开关的接口
+>interface IOpenAndClose{
+>     void open(ITV tv);  // 抽象方法，接收接口
+>}
+>
+> interface ITV{  // ITV 接口
+>    void play();
+> }
+>class ChangHong implements ITV{
+>     @Override
+>    public void play() {
+>         System.out.println("长虹电视机,打开");
+>    }
 > }
 > 
 > // 接口实现
@@ -3032,31 +3047,32 @@ public static void main(String[] args) {
 > }
 > ```
 > 
-> 方式二
->
+
+###### 方式二
+
 > ```java
 >public class DependencyPass {
 >     public static void main(String[] args) {
->         // 方式二 通过构造器进行依赖传递
+>        // 方式二 通过构造器进行依赖传递
 >         ChangHong changHong = new ChangHong();
->         OpenAndClose openAndClose = new OpenAndClose(changHong);
->         openAndClose.open();
+>        OpenAndClose openAndClose = new OpenAndClose(changHong);
+>        openAndClose.open();
 >     }
-> }
+>}
 > // 方式2：通过构造方法依赖传递
-> interface IOpenAndClose{
->     void open();    // 抽象方法
+>interface IOpenAndClose{
+>    void open();    // 抽象方法
 > }
-> interface ITV{  // ITV接口
->     void play();
+>interface ITV{  // ITV接口
+>    void play();
 > }
-> class ChangHong implements ITV{
+>class ChangHong implements ITV{
 > 
->     @Override
+>    @Override
 >     public void play() {
->         System.out.println("长虹电视机,打开");
+>        System.out.println("长虹电视机,打开");
 >     }
-> }
+>}
 > class OpenAndClose implements IOpenAndClose{
 >     public ITV tv;  // 成员属性
 > 
@@ -3071,31 +3087,32 @@ public static void main(String[] args) {
 > }
 > ```
 > 
-> 方式三
->
+
+###### 方式三
+
 > ```java
 >public class DependencyPass {
 >     public static void main(String[] args) {
->         // 方式三 通过 setter 方法传递
+>        // 方式三 通过 setter 方法传递
 >         ChangHong changHong = new ChangHong();
->         OpenAndClose openAndClose = new OpenAndClose();
->         openAndClose.setTv(changHong);
+>        OpenAndClose openAndClose = new OpenAndClose();
+>        openAndClose.setTv(changHong);
 >         openAndClose.open();
->     }
+>    }
 > }
-> // 方式3：通过 setter 方法传递
-> interface IOpenAndClose{
+>// 方式3：通过 setter 方法传递
+>interface IOpenAndClose{
 >     void open();    // 抽象方法
-> 
->     void setTv(ITV tv);
+>
+>    void setTv(ITV tv);
 > }
-> interface ITV{  // ITV接口
+>interface ITV{  // ITV接口
 >     void play();
-> }
+>}
 > class OpenAndClose implements IOpenAndClose{
->     private ITV tv;
+>    private ITV tv;
 > 
->     @Override
+>    @Override
 >     public void setTv(ITV tv) {
 >         this.tv = tv;
 >     }
@@ -3113,8 +3130,9 @@ public static void main(String[] args) {
 > }
 > ```
 > 
-> **依赖倒转原则的注意事项和细节**
->
+
+##### 依赖倒转原则的注意事项和细节
+
 > - 低层模块尽量都要有抽象类或接口，或者两者都有，程序稳定性更好
 >
 > - 变量的声明类型尽量是抽象类或接口，这样我们的变量引用和实际对象间，就存在一个**缓冲层**，利于程序扩展和优化。
@@ -3141,30 +3159,31 @@ public static void main(String[] args) {
 >
 > 里氏替换原则告诉我们，继承实际上让两个类耦合性增强了，在适当的情况下，可以通过聚合，组合，依赖来解决问题。
 >
-> **应用实例**
->
-> *里氏替换原则示例*
+
+##### 应用实例
+
+> **里氏替换原则示例**
 >
 > ```java
-> /**
+>/**
 >  * 里氏替换原则
->  */
+> */
 > public class LisKov {
->     public static void main(String[] args) {
+>    public static void main(String[] args) {
 >         A a = new A();
->         System.out.println("11 - 3 = " + a.func1(11,3));
+>        System.out.println("11 - 3 = " + a.func1(11,3));
 >         System.out.println("1 - 8 = " + a.func1(1,8));
-> 
+>
 >         System.out.println("---------------------------");
-> 
+>
 >         B b = new B();
->         System.out.println("11 - 3 = " + b.func1(11,3));
+>        System.out.println("11 - 3 = " + b.func1(11,3));
 >         System.out.println("1 - 8 = " + b.func1(1,8));
->         System.out.println("11 + 3 + 9 = " + b.func2(11,3));
+>        System.out.println("11 + 3 + 9 = " + b.func2(11,3));
 >     }
-> }
+>}
 > // A类
-> class A{
+>class A{
 >     // 返回两个数的差
 >     public int func1(int num1,int num2){
 >         return num1 - num2;
@@ -3184,37 +3203,38 @@ public static void main(String[] args) {
 >     }
 > }
 > ```
->
+> 
 > **解决方法**
->
+> 
 > 我们发现原来运行正常的相减功能发生了错误。原因就是类 B 无意中重写了父类的方法，造成原有功能出现错误。在实际编程中，我们常常会通过重写父类的方法完成新的功能，这样写起来虽然简单，但整个继承体系的复用性会比较差。特别是运行多态比较频繁的时候。
->
+> 
 > 通用的做法是：原来的父类和子类都继承一个更通俗的基类，原有的继承关系去掉，采用依赖，聚合，组合等关系代替
->
-> **改进方案**
->
+> 
+
+##### 改进方案
+
 > ```java
-> /**
+>/**
 >  * 里氏替换原则 改造后
->  */
+> */
 > public class LisKov {
->     public static void main(String[] args) {
+>    public static void main(String[] args) {
 >         A a = new A();
->         System.out.println("11 - 3 = " + a.func1(11,3));
+>        System.out.println("11 - 3 = " + a.func1(11,3));
 >         System.out.println("1 - 8 = " + a.func1(1,8));
-> 
+>
 >         System.out.println("---------------------------");
-> 
+>
 >         B b = new B();
->         // 因为 B 类不再继承 A类，因此调用者，不会再认为 func1 是求减法
+>        // 因为 B 类不再继承 A类，因此调用者，不会再认为 func1 是求减法
 >         // 调用完成的功能就会很明确
->         System.out.println("11 + 3 = " + b.func1(11,3));
+>        System.out.println("11 + 3 = " + b.func1(11,3));
 >         System.out.println("1 + 8 = " + b.func1(1,8));
->         System.out.println("11 + 3 + 9 = " + b.func2(11,3));
+>        System.out.println("11 + 3 + 9 = " + b.func2(11,3));
 > 
->         // 使用组合仍然可以使用 A 类的相关方法
+>        // 使用组合仍然可以使用 A 类的相关方法
 >         System.out.println("11 -3 = " + b.func3(11,3));
->     }
+>    }
 > }
 > // 创建一个更加基础的基类
 > class Base{
@@ -3258,76 +3278,77 @@ public static void main(String[] args) {
 >
 > 编程中遵循其它原则，以及使用设计模式的目的就是遵循开闭原则。
 >
-> **应用实例**
->
+
+##### 应用实例
+
 > 看一个画图形的功能
 >
-> *方式一*
+> **方式一**
 >
 > ```java
-> public class Ocp {
->     public static void main(String[] args) {
->         // 使用，看看存在的问题
->         GraphicEditor graphicEditor = new GraphicEditor();
->         graphicEditor.drawShape(new Rectangle());
->         graphicEditor.drawShape(new Circle());
->     }
+>public class Ocp {
+>  public static void main(String[] args) {
+>     // 使用，看看存在的问题
+>      GraphicEditor graphicEditor = new GraphicEditor();
+>     graphicEditor.drawShape(new Rectangle());
+>      graphicEditor.drawShape(new Circle());
 > }
-> // 这是一个用于绘图的类
+> }
+>// 这是一个用于绘图的类
 > class GraphicEditor {
->     // 接收 Shape 对象，然后根据 type,来绘制不同的图形
->     public void drawShape(Shape s) {
->         if (s.m_type == 1) {
+> // 接收 Shape 对象，然后根据 type,来绘制不同的图形
+>  public void drawShape(Shape s) {
+>      if (s.m_type == 1) {
 >             drawRectangle(s);
 >         } else if (s.m_type == 2) {
 >             drawCircle(s);
 >         }
 >     }
 >     public void drawRectangle(Shape r) {
->         System.out.println("绘制矩形");
->     }
->     public void drawCircle(Shape r) {
+>      System.out.println("绘制矩形");
+>  }
+>  public void drawCircle(Shape r) {
 >         System.out.println("绘制圆形");
 >     }
-> }
-> // Shape 类，基类
-> class Shape {
+>    }
+>    // Shape 类，基类
+>    class Shape {
 >     int m_type;
-> }
-> class Rectangle extends Shape {
+>    }
+>    class Rectangle extends Shape {
 >     Rectangle() {
 >         super.m_type = 1;
 >     }
-> }
-> class Circle extends Shape {
+>    }
+>    class Circle extends Shape {
 >     Circle() {
->         super.m_type = 2;
->     }
+>      super.m_type = 2;
+>  }
 > }
-> ```
->
+>    ```
+> 
 > ==方式一的优缺点==
->
-> - 优点是比较好理解，简单易操作
->
+>    
+>    - 优点是比较好理解，简单易操作
+>    
 > - 缺点是违反了设计模式的ocp原则，即**对扩展开放（提供方），对修改关闭（使用方）**。即当我们给类增加新功能的时候，尽量不修改代码，或者尽可能少修改代码。
->
-> **比如我们这时要新增加一个图形种类三角形，我们需要做如下修改，修改的地方较多**
->
-> *代码演示*
->
+> 
+>    **比如我们这时要新增加一个图形种类三角形，我们需要做如下修改，修改的地方较多**
+>    
+>    *代码演示*
+> 
 > ```java
-> public class Ocp {
+>public class Ocp {
 >     public static void main(String[] args) {
->         // 使用，看看存在的问题
+>        // 使用，看看存在的问题
 >         GraphicEditor graphicEditor = new GraphicEditor();
->         graphicEditor.drawShape(new Rectangle());
+>        graphicEditor.drawShape(new Rectangle());
 >         graphicEditor.drawShape(new Circle());
->         graphicEditor.drawShape(new Triangle());
+>        graphicEditor.drawShape(new Triangle());
 >     }
-> }
+>}
 > // 这是一个用于绘图的类 [使用方法]
-> class GraphicEditor {
+>class GraphicEditor {
 >     // 接收 Shape 对象，然后根据 type,来绘制不同的图形
 >     public void drawShape(Shape s) {
 >         if (s.m_type == 1) {
@@ -3372,88 +3393,326 @@ public static void main(String[] args) {
 >     }
 > }
 > ```
->
-> **方式一的改进思路分析**
->
+> 
+
+##### 方式一的改进思路分析
+
 > **思路**：把创建 **Shape 类做成抽象类**，并提供一个**抽象的 draw 方法**，让**子类去实现**即可，这样我们有新的图形种类时，只需要让新的图形类继承 Shape，并实现 draw 方法即可，使用方的代码不需要修改，满足了开闭原则
 >
-> *开闭原则 改造后*
+> **开闭原则 改造后**
 >
 > ```java
-> public class Ocp {
+>public class Ocp {
 >     public static void main(String[] args) {
->         // 使用，看看存在的问题
+>        // 使用，看看存在的问题
 >         GraphicEditor graphicEditor = new GraphicEditor();
->         graphicEditor.drawShape(new Rectangle());
+>        graphicEditor.drawShape(new Rectangle());
 >         graphicEditor.drawShape(new Circle());
->         graphicEditor.drawShape(new Triangle());
+>        graphicEditor.drawShape(new Triangle());
 >         graphicEditor.drawShape(new OtherGraphic());
->     }
+>    }
 > }
-> // 这是一个用于绘图的类 [使用方]
+>// 这是一个用于绘图的类 [使用方]
 > class GraphicEditor {
 >     // 接收 Shape 对象，调用draw方法
->     public void drawShape(Shape s) {
->         s.draw();
->     }
-> }
-> // Shape 类，基类
-> abstract class Shape {
+>        public void drawShape(Shape s) {
+>            s.draw();
+>        }
+>    }
+>    // Shape 类，基类
+>    abstract class Shape {
 >     int m_type;
 >     public abstract void draw();
 > }
-> class Rectangle extends Shape {
->     Rectangle() {
->         super.m_type = 1;
->     }
->     @Override
->     public void draw() {
->         System.out.println("绘制矩形");
->     }
-> }
-> class Circle extends Shape {
->     Circle() {
->         super.m_type = 2;
->     }
->     @Override
+>    class Rectangle extends Shape {
+>        Rectangle() {
+>            super.m_type = 1;
+>        }
+>        @Override
+>        public void draw() {
+>            System.out.println("绘制矩形");
+>        }
+>    }
+>    class Circle extends Shape {
+>        Circle() {
+>            super.m_type = 2;
+>        }
+>        @Override
 >     public void draw() {
 >         System.out.println("绘制圆形");
 >     }
-> }
+>    }
 > class Triangle extends Shape {
 >     Triangle() {
->         super.m_type = 3;
->     }
->     @Override
+>            super.m_type = 3;
+>        }
+>        @Override
 >     public void draw() {
 >         System.out.println("绘制三角形");
->     }
-> }
-> // 新增一个图形
+>        }
+>    }
+>    // 新增一个图形
 > class OtherGraphic extends Shape {
 >     OtherGraphic() {
->         super.m_type = 4;
+>        super.m_type = 4;
 >     }
->     @Override
+>    @Override
 >     public void draw() {
->         System.out.println("绘制其它图形");
+>        System.out.println("绘制其它图形");
+>     }
+>}
+> ```
+
+#### 迪米特法则
+
+> **基本介绍**
+>
+> 1. 一个对象应该对其他对象保持最少的了解
+> 2. 类与类关系越密切，耦合度越大
+> 3. 迪米特法则（Demeter Principle）又叫**最少知道原则**，即一个类**对自己依赖的类知道的越少越好**。也就是说，对于被依赖的类不管多少复杂，都尽量将逻辑封装在类的内部。对外除了提供的public 方法，不对外泄露任何信息
+> 4. 迪米特法则还有个更简单的定义：只与直接的朋友通信
+> 5. **直接的朋友**：每个对象都会与其他对象有**耦合关系**，只要两个对象之间有耦合关系，我们就说这两个对象之间是朋友关系。耦合的方式很多，依赖，关联，组合，聚合等。其中，我们称出现**成员变量，方法参数，方法返回值**中的类为直接的朋友，而出现在**局部变量中的类不是直接的朋友**。也就是说，陌生的类不要以局部变量的形式出现在类的内部
+
+##### 应用实例
+
+> 有一个学校，下属有各个学院和总部，现要求打印出学院总部员工id和学院员工的id
+>
+> **迪米特法则 改造前**
+>
+> ```java
+> package com.atguigu.principle.demeter;
+> 
+> import java.util.ArrayList;
+> import java.util.List;
+> 
+> /**
+>  * 迪米特法则 改造前
+>  */
+> // 客户端
+> public class Demeter1 {
+>     public static void main(String[] args) {
+>         // 创建了一个 SchoolManager 对象
+>         SchoolManager schoolManager = new SchoolManager();
+>         // 输出学院地的员工id和学校总部的员工信息
+>         schoolManager.printAllEmployee(new CollegeManager());
+>     }
+> }
+> 
+> // 学院总部员工类
+> class Employee{
+>     private String id;
+> 
+>     public String getId() {
+>         return id;
+>     }
+> 
+>     public void setId(String id) {
+>         this.id = id;
+>     }
+> }
+> 
+> // 学院员工类
+> class CollegeEmployee{
+>     private String id;
+> 
+>     public String getId() {
+>         return id;
+>     }
+> 
+>     public void setId(String id) {
+>         this.id = id;
+>     }
+> }
+> 
+> // 管理学院员工的管理类
+> class CollegeManager{
+>     // 返回学院的所有员工
+>     public List<CollegeEmployee> getAllEmployee(){
+>         List<CollegeEmployee> list = new ArrayList<>();
+>         for (int i = 0; i < 10;i++){ // 这里增加了10个员工到 list 集合
+>             CollegeEmployee emp = new CollegeEmployee();
+>             emp.setId("学院员工id=" + i);
+>             list.add(emp);
+>         }
+>         return list;
+>     }
+> }
+> 
+> // 学校管理类
+> // 分析 SchoolManager 类的直接朋友类有哪些？
+> // Employee - 返回值，CollegeManager - 方法参数，
+> // CollegeEmployee 不是直接朋友，而是一个陌生类，这样违背了 迪米特法则
+> class SchoolManager{
+>     // 返回学校总部的员工
+>     public List<Employee> getAllEmployee(){
+>         List<Employee> list = new ArrayList<>();
+>         for (int i = 0; i < 5;i++){ // 这里增加了5个员工到 list 集合
+>             Employee emp = new Employee();
+>             emp.setId("学校总部员工id=" + i);
+>             list.add(emp);
+>         }
+>         return list;
+>     }
+> 
+>     // 该方法完成输出学校总部和学院员工信息的方法(id)
+>     void printAllEmployee(CollegeManager sub){
+> 
+>         // 分析问题
+>         // 1.这里的 CollegeEmployee 不是 SchoolManager 的直接朋友
+>         // 2.CollegeEmployee 是以局部变量的方式出现在 SchoolManager 中
+>         // 3. 违反了迪米特法则
+> 
+>         // 获取到学院员工
+>         List<CollegeEmployee> list1 = sub.getAllEmployee();
+>         System.out.println("---------------学院员工-----------");
+>         for (CollegeEmployee employee : list1) {
+>             System.out.println(employee.getId());
+>         }
+> 
+>         // 获取到学校总部员工
+>         List<Employee> list2 = this.getAllEmployee();
+>         System.out.println("---------------学校总部员工-----------");
+>         for (Employee employee : list2) {
+>             System.out.println(employee.getId());
+>         }
 >     }
 > }
 > ```
 
-#### 迪米特法则(未完成)
+##### 应用实例改进
+
+> 前面设计的问题在于 SchoolManager 中， **CollegeEmeployee 类并不是 SchoolManager 类的直接朋友**（分析）
+>
+> 按照迪米特法则，应该避免类中出现这样非直接朋友关系的耦合。
+>
+> 对代码按照迪米特法则进行改进
+>
+> ```java
+> package com.atguigu.principle.demeter.improve;
+> 
+> import java.util.ArrayList;
+> import java.util.List;
+> 
+> /**
+>  * 迪米特法则 改造后
+>  */
+> // 客户端
+> public class Demeter1 {
+>     public static void main(String[] args) {
+>         System.out.println("使用迪米特法则改造");
+>         // 创建了一个 SchoolManager 对象
+>         SchoolManager schoolManager = new SchoolManager();
+>         // 输出学院地的员工id和学校总部的员工信息
+>         schoolManager.printAllEmployee(new CollegeManager());
+>     }
+> }
+> 
+> // 学院总部员工类
+> class Employee{
+>     private String id;
+> 
+>     public String getId() {
+>         return id;
+>     }
+> 
+>     public void setId(String id) {
+>         this.id = id;
+>     }
+> }
+> 
+> // 学院员工类
+> class CollegeEmployee{
+>     private String id;
+> 
+>     public String getId() {
+>         return id;
+>     }
+> 
+>     public void setId(String id) {
+>         this.id = id;
+>     }
+> }
+> 
+> // 管理学院员工的管理类
+> class CollegeManager{
+>     // 返回学院的所有员工
+>     public List<CollegeEmployee> getAllEmployee(){
+>         List<CollegeEmployee> list = new ArrayList<>();
+>         for (int i = 0; i < 10;i++){ // 这里增加了10个员工到 list 集合
+>             CollegeEmployee emp = new CollegeEmployee();
+>             emp.setId("学院员工id=" + i);
+>             list.add(emp);
+>         }
+>         return list;
+>     }
+> 
+>     // 输出学院员工的信息
+>     public void printEmployee(){
+>         // 获取到学院员工
+>         List<CollegeEmployee> list1 = getAllEmployee();
+>         System.out.println("---------------学院员工-----------");
+>         for (CollegeEmployee employee : list1) {
+>             System.out.println(employee.getId());
+>         }
+>     }
+> }
+> 
+> // 学校管理类
+> // 分析 SchoolManager 类的直接朋友类有哪些？
+> // Employee - 返回值，CollegeManager - 方法参数，
+> // CollegeEmployee 不是直接朋友，而是一个陌生类，这样违背了 迪米特法则
+> class SchoolManager{
+>     // 返回学校总部的员工
+>     public List<Employee> getAllEmployee(){
+>         List<Employee> list = new ArrayList<>();
+>         for (int i = 0; i < 5;i++){ // 这里增加了5个员工到 list 集合
+>             Employee emp = new Employee();
+>             emp.setId("学校总部员工id=" + i);
+>             list.add(emp);
+>         }
+>         return list;
+>     }
+> 
+>     // 该方法完成输出学校总部和学院员工信息的方法(id)
+>     void printAllEmployee(CollegeManager sub){
+> 
+>         // 分析问题
+>         // 1.将输出学院员工方法，封装到 CollegeManager 中
+>         sub.printEmployee();
+> 
+>         // 获取到学校总部员工
+>         List<Employee> list2 = this.getAllEmployee();
+>         System.out.println("---------------学校总部员工-----------");
+>         for (Employee employee : list2) {
+>             System.out.println(employee.getId());
+>         }
+>     }
+> }
+> ```
+
+##### 迪米特法则注意事项和细节
+
+> 迪米特法则的核心是降低类之间的耦合
+>
+> 但是注意：
+>
+> **由于每个类都减少了不必要的依赖，因此迪米特法则只是要求降低类间（对象间）的耦合关系，并不是要求完全没有依赖关系**
+
+#### 合成复用原则
 
 > **基本介绍**
 >
-> 
+> 原则是尽量使用合成/聚合的方式，而不是使用继承
 >
-> 
-
-#### 合成复用原则(未完成)
-
-> **基本介绍**
+> *如果我们只是让 B 类去使用 A 类方法，使用继承就会让 B 和 A 的耦合性增强*
 >
-> 
+> **设计原则核心思想**
+>
+> 找出应用中可能需要变化之处，把它们独立出来，不要和那些不需要变化的代码混在一起
+>
+> 针对接口编程，而不是针对实现编程
+>
+> 为了交互对象之间**松耦合设计**而努力
 
 ## 代码块
 
@@ -4210,7 +4469,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println(date);
 >   }
->                                                                         
+>                                                                             
 >   private static Date format(String str) throws ParseException {	// 仅抛出异常
 >       DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 >      // 因为异常已经抛出,所以当前不需要处理异常
@@ -4280,7 +4539,7 @@ public static void main(String[] args) {
 >       }
 >       System.out.println("验明正身");
 >   }
->                               
+>                                   
 >   //想要抛出一个实例,方法后还得抛出一个对应的类型
 >   public static void checkSex(String sex) throws Exception {
 >       if ("男".equals(sex) || "女".equals(sex))
@@ -5874,7 +6133,7 @@ public class StudentStreamDemo {
 >
 >   ```java
 >   public class MyThreadDemo {
->                                                               
+>                                                                   
 >   	public static void main(String[] args) {
 >   		//创建线程对象
 >   		Thread t = new MyThread();
@@ -6209,15 +6468,15 @@ public class StudentStreamDemo {
 >
 > ![][5]
 
-### 线程计数器
+### 线程计数器(未完成)
 
 > 
 
-#### CountDownLatch
+#### CountDownLatch(未完成)
 
 > 
 
-#### CyclicBarrier
+#### CyclicBarrier(未完成)
 
 > 
 

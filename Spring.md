@@ -48,6 +48,15 @@
 
 > 
 
+### Spring MVC 的工作流程
+
+> 1. 客户端通过url发送请求
+> 2. 核心控制器Dispatcher Servlet接收到请求，通过系统或自定义的映射器配置找到对应的handler，并将url映射的控制器controller返回给核心控制器
+> 3. 通过核心控制器找到系统或默认的适配器
+> 4. 由找到的适配器，调用实现对应接口的处理器，并将结果返回给适配器，结果中包含数据模型和视图对象，再由适配器返回给核心控制器
+> 5. 核心控制器将获取的数据和视图结合的对象传递给视图解析器，获取解析得到的结果，并由视图解析器响应给核心控制器
+> 6. 核心控制器将结果返回给客户端
+
 ### Spring MVC 配置
 
 > **实现步骤**
@@ -185,13 +194,66 @@
 > - 方法中声明 Model 类型的参数是为了把数据传递给视图
 > - 方法返回的结果是视图的名称**list**，加上[视图解析器](#View)中配置的前后缀变成WEB-INF/views/**list**.jsp
 
+##### @RequestMapping
+
+> **在Spring MVC 中使用 @RequestMapping 来映射请求，也就是通过它来指定控制器可以处理哪些URL请求，相当于Servlet中在web.xml中配置的映射作用一致**
+>
+> ```xml
+> <servlet>
+>     <servlet-name>servletName</servlet-name>
+>     <servlet-class>ServletClass</servlet-class>
+> </servlet>
+> <servlet-mapping>
+>     <servlet-name>servletName</servlet-name>
+>     <url-pattern>url</url-pattern>
+> </servlet-mapping>
+> ```
+>
+> @RequestMapping(value="/foo")
+>
+> @RequestMapping(value={"/foo", "/bar})
+>
+> **RequestMapping注解有六个属性，下面我们把她分成三类进行说明**
+>
+> 1. value，method
+>    - value:指定请求的实际地址，指定的地址可以是URl Template模式（后面将会说明)
+>    - method:指定请求的method类型，GET、POST、PUT、DELETE等
+> 2. consumes，produces
+>    - consumes:指定处理请求的提交内容类型(Content-Type)，例如applicationljson, text/html
+>    - produces:指定返回的内容类型，仅当request请求头中的(Accept)类型中包含该指定类型才返回
+> 3. params，headers
+>    - params:指定request中必须包含某些参数值是，才让该方法处理
+>    - headers:指定request中必须包含某些指定的header值，才能让该方法处理请求
+>
+> **相同的网址，可以区分细节，映射到不同方法**
+>
+> @RequestMapping(value="/foo", method=RequestMethod.GET)
+>
+> @RequestMapping(value="/foo", params="myParam=myValue")
+>
+> - params={"page=1", "findname"} 必须带有page=1并且有findname参数
+>
+> @RequestMapping(value="/foo", headers="Referer=http://www.ifeng.com/")
+>
+> - 判断请求头
+>
+> @RequestMapping(value="/foo", consumes="application/json")
+>
+> - 页面传的参数是json格式的参数
+>
+> @RequestMapping(value="/foo", produces="application/json")
+>
+> - 自己diy返回数据的时候，输出的内容是json格式
+>
+> **json格式数据的接收与返回可以使用 @ResponseBody 注解**
+
 ### Resuful规范(未完成)
 
 > 
 
-#### 1
+#### Resuful规范下的参数的接收
 
-> @PathVariable() 注解
+> @PathVariable 注解
 >
 > ```java
 > @GetMapping("/del/{x}")
@@ -201,7 +263,6 @@
 > }
 > ```
 >
-> 
 
 ### Spring MVC 请求
 
@@ -280,9 +341,9 @@
 > ```java
 > @PostMapping("/link/add")
 > public String add(Link lk, String name, String phone) {
->     LinkService service = new LinkServiceImpl();
->     service.add(lk);
->     return "redirect:/link/list";
+>        LinkService service = new LinkServiceImpl();
+>        service.add(lk);
+>        return "redirect:/link/list";
 > }
 > ```
 >
@@ -293,10 +354,10 @@
 > ```java
 > @PostMapping("/link/list")
 > public String showList(Model m) {
->     LinkService service = new LinkServiceImpl();
->     List<Link> links = service.findAll(lk);
->     m.setAttribute
->     return "redirect:/link/list";
+>        LinkService service = new LinkServiceImpl();
+>        List<Link> links = service.findAll(lk);
+>        m.setAttribute
+>            return "redirect:/link/list";
 > }
 > ```
 >
@@ -305,10 +366,10 @@
 > ```java
 > @PostMapping("/link/list")
 > public String showList(HttpServletRequest req) {
->     LinkService service = new LinkServiceImpl();
->     List<Link> links = service.findAll(lk);
->     req.setAttribute
->         return "redirect:/link/list";
+>        LinkService service = new LinkServiceImpl();
+>        List<Link> links = service.findAll(lk);
+>        req.setAttribute
+>            return "redirect:/link/list";
 > }
 > ```
 
@@ -610,6 +671,10 @@
 > *注意：`<mvc:interceptor>`中的子元素必须按照上述代码中的配置顺序进行编写，即`<mvc:mapping>` `<mvc:exclude-mapping>`  `<bean>`，否则文件会报错*
 >
 > **可以在`<mvc:interceptors>`中配置多个拦截器，多个拦截器之间依据配置的先后顺序来执行**
+
+### 全局异常处理
+
+> HandlerExceptionResolver
 
 ### 校验框架(未完成)
 
@@ -1058,11 +1123,159 @@
 > }
 > ```
 >
-> 
 
 ### MyBatis动态查询
 
+> 编写查询语句映射文件
+>
+> **用于查询 user 表的数据的 userMapper.xml**
+>
+> ```xml
+> <?xml version="1.0" encoding="UTF-8" ?>
+> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+> <!-- 
+>  为这个mapper指定一个唯一的namespace，namespace的值习惯上设置成包名+sql映射文件名，这样就能够保证namespace的值是唯一的
+>  例如namespace="com.roxla.it.dao.StoryDao"就是com.roxla.it.dao(包名)+StoryDao类
+> -->
+> <mapper namespace="com.roxla.it.dao.StoryDao">
+>     <!-- 通过<resultMap>映射实体类属性名和表的字段名对应关系 -->
+>     <!-- type 实体类的全名 -->
+>     <resultMap type="com.roxla.it.entity.Story" id="storyMap">
+>         <id column="s_id" property="id"/>
+>         <result column="s_title" property="title"/>
+>         <result column="s_content" property="content"/>
+>         <result column="s_count" property="count"/>
+>         <result column="s_userid" property="userId"/>
+>         <!--处理外键字段-->
+>         <result column="user_nickname" property="nickName"/>
+>     </resultMap>
+> 
+>     <sql id="storySql">
+>         select s.*, u.user_nickname
+>         from storys s
+>         join users u on s.s_userid=u.user_id
+>     </sql>
+> 	<!-- useGeneratedKeys="true" keyProperty="o.id" 插入完毕后，会把最新id值，自动填充到我们的对象的 id 中 -->
+>     <insert id="insert" useGeneratedKeys="true" keyProperty="o.id">
+>         insert into storys values (default, #{o.title}, #{o.content}, #{o.count}, #{o.userId})
+>     </insert>
+>     <!-- #{} 内表示方法传入参数的别名 -->
+>     <!-- 如果传入的参数没有起别名，可以随便起名字；如果写了别名，一定要使用别名 -->
+>     <update id="update">
+>         update storys
+>         set s_title=#{o.title}, s_content=#{o.content}, s_count=#{o.count}, s_userid=#{o.userId}
+>         where s_id=#{o.id}
+>     </update>
+>     <!-- 增删改默认会返回影响行数 -->
+>     <delete id="delete">
+>         delete from storys where s_id=#{id}
+>     </delete>
+>     <!-- 将返回值转换成 long 类型后返回 -->
+>     <!-- 返回单个值写 resultType -->
+>     <select id="selectCount" resultType="long">
+>         select count(1) from storys
+>     </select>
+>     <!-- id 的值与 dao 中的方法名相同 -->
+>     <!-- resultMap 的值表示返回的结果通过 id 为 storyMap 的 resultMap 规则进行装配 -->
+>     <select id="selectById" resultMap="storyMap">
+>         <include refid="storySql"/>
+>         where s_id=#{id}
+>     </select>
+> 
+>     <select id="selectAll" resultMap="storyMap">
+>         <include refid="storySql"/>
+>     </select>
+> </mapper>
+> ```
+>
+> **Dao**
+>
+> 将 dao 层的常用方法提取出来做成 BaseDao
+>
+> ```java
+> /**
+>  * StoryDao
+>  */
+> public interface StoryDao extends BaseDao<Story, Integer>{
+> }
+> /**
+>  * BaseDao
+>  */
+> public interface BaseDao<T, PK> {
+>     public void insert(@Param("o") T o);
+> 
+>     public int update(@Param("o") T o);
+> 
+>     public int delete(@Param("id") PK id);
+> 
+>     public T selectById(@Param("id") PK id);
+> 
+>     public List<T> selectAll();
+> 
+>     public long selectCount();
+> }
+> ```
+>
+> **项目中常见的mybatis xml语法**
+>
+> https://blog.csdn.net/qq_42320804/article/details/112503933
+
+#### 查询时间范围
+
 > mybatis 中对于时间参数进行比较时的一个bug： 如果拿传入的时间类型参数与空字符串''进行对比判断则会引发异常
+
+#### 解决字段名与实体类属性名不相同的冲突
+
+> **实体类**
+>
+> ```java
+> public class Order {
+>     //Order实体类中属性名和orders表中的字段名是不一样的
+>     private int id;                //id===>order_id
+>     private String orderNo;        //orderNo===>order_no
+>     private float price;
+> }
+> ```
+
+##### 解决办法一
+
+> 通过在查询的sql语句中定义字段名的别名，让字段名的别名和实体类的属性名一致，这样就可以表的字段名和实体类的属性名一一对应上了，这种方式是通过在sql语句中定义别名来解决字段名和属性名的映射关系的。
+>
+> **mapper.xml**
+>
+> ```xml
+> <!-- 
+>  根据id查询得到一个order对象，使用这个查询是可以正常查询到我们想要的结果的，
+>  这是因为我们将查询的字段名都起一个和实体类属性名相同的别名，这样实体类的属性名和查询结果中的字段名就可以一一对应上
+> -->
+> <select id="selectOrder" parameterType="int" resultType="me.gacl.domain.Order">
+>     select order_id id, order_no orderNo,order_price price from orders where order_id=#{id}
+> </select>
+> ```
+
+##### 解决办法二
+
+> 通过\<resultMap>来映射字段名和实体类属性名的一一对应关系。这种方式是使用MyBatis提供的解决方式来解决字段名和属性名的映射关系的。
+>
+> **mapper.xml**
+>
+> ```xml
+> <!-- 
+>  根据id查询得到一个order对象，使用这个查询是可以正常查询到我们想要的结果的，
+>  这是因为我们通过<resultMap>映射实体类属性名和表的字段名一一对应关系 
+> -->
+> <select id="selectOrderResultMap" parameterType="int" resultMap="orderResultMap">
+>     select * from orders where order_id=#{id}
+> </select>
+> <!-- 通过<resultMap>映射实体类属性名和表的字段名对应关系 -->
+> <resultMap type="me.gacl.domain.Order" id="orderResultMap">
+>     <!-- 用id属性来映射主键字段 -->
+>     <id property="id" column="order_id"/>
+>     <!-- 用result属性来映射非主键字段 -->
+>     <result property="orderNo" column="order_no"/>
+>     <result property="price" column="order_price"/>
+> </resultMap>
+> ```
 
 ## Spring(未完成)
 
@@ -1159,7 +1372,7 @@
 > - `<property>`：相当于给对象中的属性设置一个值
 >   - **name**：调用该属性的**set方法**(类中要提供该属性的 set 方法)
 >     - **name**属性的值必须该类中的**set方法**的**方法名去掉set后，将首字母变成小写**
->   - **value**：具体的值，基本数据类型
+>   - **value**：具体的值，基本数据类型。示例中的 Spring 是指字符串 "Spring"
 >   - **ref**：引用Spring容器中创建好的对象
 >
 > *`<property>`标签简写*
@@ -1288,7 +1501,7 @@
 
 ### 依赖注入(DI)
 
-autowire 自动注入
+> 
 
 ### Spring配置AOP
 
@@ -1429,11 +1642,21 @@ autowire 自动注入
 >
 > 拦截**com.xyz.service**包或者子包中定义的所有方法
 
+### 注解
 
+#### @Autowired
 
+> **自动注入**
+>
+> @Autowired 注释，它可以对类成员变量、方法及构造函数进行标注，完成自动装配的工作。 通过 @Autowired 的使用来消除 set ，get 方法
 
+#### @Qualifier
 
-@Resource(name = "flowerService") = @Autowired + @Qualifier("flowerService")
+> @Qualifier 限定哪个 bean 应该被自动注入。当Spring无法判断出哪个 bean 应该被注入时，@Qualifier 注解有助于消除歧义 bean 的自动注入
+
+#### @Resource
+
+> @Resource(name = "flowerService") = @Autowired + @Qualifier("flowerService")
 
 ## Maven(未完成)
 
@@ -1445,13 +1668,13 @@ autowire 自动注入
 >
 > Maven 也可被用于构建和管理各种项目，例如 C#，Ruby，Scala 和其他语言编写的项目。Maven 曾是 Jakarta 项目的子项目，现为由 Apache 软件基金会主持的独立 Apache 项目。
 
-### Maven的配置(未完成)
+### Maven的配置
 
 > **下载Maven**
 >
 > 官方地址：http://maven.apache.org/download.cgi
 >
-> 
+> 下载完成后解压
 >
 > **E盘新建文件夹 maven-rep 作为 Maven 仓库，用于存放下载的 jar 包**
 >
@@ -1508,11 +1731,17 @@ autowire 自动注入
 
 #### 在IntelliJ IDEA中配置maven
 
-> 
+> https://blog.csdn.net/qq_42057154/article/details/106114515
 
-https://mvnrepository.com/
+#### 在eclipse中配置maven
 
+> https://blog.csdn.net/qq_39135287/article/details/81749797
 
+### Maven 仓库
+
+> https://mvnrepository.com/
+>
+> 可以在仓库中单独下载 jar 包
 
 ## MyBatisPlus(未完成)
 
@@ -1838,7 +2067,6 @@ https://mvnrepository.com/
 >}
 >```
 >
->
 
 ##### service层
 
@@ -1995,6 +2223,70 @@ https://mvnrepository.com/
 > }
 > ```
 
+## 发送邮件
+
+> 
+
+### 发送邮件工具类
+
+> ```JAVA
+> @Component
+> public class EmailUtil {
+>     @Autowired
+>     private JavaMailSender mailSender;
+> 
+>     /**
+>      * 发送简单邮件(纯文字)
+>      *
+>      * @param to      目标邮箱
+>      * @param subject 标题
+>      * @param content 正文
+>      */
+>     public void sendMail(String to, String subject, String content) {
+>         SimpleMailMessage m = new SimpleMailMessage();
+>         m.setFrom(((JavaMailSenderImpl) mailSender).getUsername());
+>         System.out.println(to + " " + subject + " " + content);
+>         m.setTo(to); // 目标邮箱
+>         m.setSubject(subject); // 标题
+>         m.setText(content); // 正文
+>         mailSender.send(m);
+>         System.out.println("邮件发送完毕");
+>     }
+> 
+>     /**
+>      * 发送邮件(带附件)
+>      *
+>      * @param to        目标邮箱
+>      * @param subject   标题
+>      * @param html      html
+>      * @param filepaths 文件路径
+>      * @throws MessagingException
+>      */
+>     public void sendMail(String to, String subject, String html, List<String> filepaths) throws MessagingException {
+>         try {
+>             MimeMessage mm = mailSender.createMimeMessage();
+>             MimeMessageHelper helper = new MimeMessageHelper(mm, true, "utf-8");
+>             helper.setFrom(((JavaMailSenderImpl) mailSender).getUsername());
+>             helper.setTo(to);
+>             helper.setSubject(subject);
+>             helper.setText(html, true);
+>             if (filepaths != null) {
+>                 for (String f : filepaths) {
+>                     File file = new File(f);
+>                     helper.addAttachment(MimeUtility.encodeWord(file.getName()), file);
+>                 }
+>             }
+>             mailSender.send(mm);
+>             System.out.println("邮件发送完毕");
+>         } catch (Exception ex) {
+>             throw new RuntimeException(ex);
+>         }
+>     }
+> }
+> ```
+>
+> @component：@component是spring中的一个注解，它的作用就是实现bean的注入
+
 ## 工作流
 
 > 工作流: 工作流指通过计算机对业务流程进行自动化管理，实现多个参与者按照预定义的流程去自动执行业务流程
@@ -2002,6 +2294,36 @@ https://mvnrepository.com/
 > Activiti: Activiti 是一个开源架构的工作流引擎，基于bpmn2.0 标准进行流程定义。其前身是JBPM，Activiti 通过嵌入到业务系统开发中进行使用
 >
 > BPMN 是 Business Process Modeling Notation 的简称，即业务流程建模与标注。BPMN 定义了一个业务流程图，这个流程图被设计用于创建业务流程操作的图形化模型 。 而一个业务流程模型（ Business Process Model ），指一个由图形对象（ graphical objects ）组成的网状图，图形对象包括活动（activities) 和用于定义这些活动执行顺序的流程控制器（ flow controls ）
+>
+> **特点**
+>
+> - 图形化和视觉设计流程图
+>
+> - 支持各种复杂流程
+>
+> - 组织结构级处理者指定功能
+>
+> - B/S结构，纯浏览器应用程序
+>
+> - 强大的安全性特色 
+>
+> - 表单功能强大，外出扩展方便灵活，可对超时管理策略的处理过程进行跟踪和管理
+>
+> - 丰富的统计、查询、报表功能和邮件系统集成
+>
+> **优点**
+>
+> 工作流管理的实现带来的好处非常明显，包括提高企业经营的效率、提高企业资源的利用率，提高企业运作的灵活性和适应性、提高工作效率，关注核心业务，跟踪业务处理流程，量化业务处理效率，减少浪费，增加利润，充分利用现有计算机网络资源。工作流的实施将缩短企业的运营周期，改善内部(外部)流程，优化和合理使用资源，减少人为的错误和延误，提高劳动生产率
+>
+> *实现工作流的好处可以总结如下*
+>
+> - 待处理的项目自动传送到PC
+> - 无需对员工进行流程培训，顺利的实施流程的变更
+> - 员工只需要专注于处理他们关心的数据
+> - 可随时获取前期数据，随时生成加工效率报告
+> - 实现无纸化办公的目标，全面支持移动办公，使工作同步化
+> - 科学管理向更高水平迈进，办公效率显著提高
+> - 通过过程自动化和数据库集成，以及各种形式的统计查询功能，提高企业的核心竞争力及决策能力
 
 ### 工作流的生成
 
@@ -3025,12 +3347,12 @@ https://mvnrepository.com/
 >    ```properties
 >    log4j.logger.com.gec.it.dao=DEBUG,cn
 >    log4j.logger.org.activiti.engine.impl.persistence.entity=DEBUG,cn
->                                                 
+>                                                                                  
 >    log4j.appender.cn = org.apache.log4j.ConsoleAppender  
 >    log4j.appender.cn.Target = System.out  
 >    log4j.appender.cn.layout = org.apache.log4j.PatternLayout  
 >    log4j.appender.cn.layout.ConversionPattern = %-d{yyyy-MM-dd HH\:mm\:ss} [%p]-[%c] %m%n
->                                                 
+>                                                                                  
 >    #log4j.appender.abc = org.apache.log4j.DailyRollingFileAppender  
 >    #log4j.appender.abc.File = D:/gll_logs/xxx
 >    #log4j.appender.abc.DatePattern = '.'yyyy-MM-dd'.log'
@@ -4321,6 +4643,10 @@ https://mvnrepository.com/
 
 ## Spring Boot
 
+> **配置方式**
+>
+> 
+>
 > **入口方法**
 >
 > @SpringBootApplication：拥有此注解的类作为 spring boot 的启动类，程序将从该类中启动
@@ -4335,14 +4661,14 @@ https://mvnrepository.com/
 >
 > ```xml
 > <dependency>
->     <groupId>org.springframework.boot</groupId>
->     <artifactId>spring-boot-starter-web</artifactId>
+>        <groupId>org.springframework.boot</groupId>
+>        <artifactId>spring-boot-starter-web</artifactId>
 > </dependency>
 > 
 > <dependency>
->     <groupId>org.springframework.boot</groupId>
->     <artifactId>spring-boot-starter-test</artifactId>
->     <scope>test</scope>
+>        <groupId>org.springframework.boot</groupId>
+>        <artifactId>spring-boot-starter-test</artifactId>
+>        <scope>test</scope>
 > </dependency>
 > ```
 >
@@ -4424,9 +4750,9 @@ https://mvnrepository.com/
 
 > ```xml
 > <dependency>
->     <groupId>com.oracle.database.jdbc</groupId>
->     <artifactId>ojdbc6</artifactId>
->     <version>11.2.0.4</version>
+>        <groupId>com.oracle.database.jdbc</groupId>
+>        <artifactId>ojdbc6</artifactId>
+>        <version>11.2.0.4</version>
 > </dependency>
 > ```
 
@@ -4440,20 +4766,20 @@ https://mvnrepository.com/
 > @Entity
 > @Table(name = "LK_USER")
 > public class User {
->     @Id
->     @SequenceGenerator(name = "myseq", sequenceName = "seq_lk_user", allocationSize = 1)
->     @GeneratedValue(generator = "myseq", strategy = GenerationType.SEQUENCE)
->     @Column(name = "user_id")
->     private int id;
+>        @Id
+>        @SequenceGenerator(name = "myseq", sequenceName = "seq_lk_user", allocationSize = 1)
+>        @GeneratedValue(generator = "myseq", strategy = GenerationType.SEQUENCE)
+>        @Column(name = "user_id")
+>        private int id;
 > 
->     @Column(name = "user_nickname")
->     private String nickName;
+>        @Column(name = "user_nickname")
+>        private String nickName;
 > 
->     @Column(name = "user_loginname")
->     private String loginName;
+>        @Column(name = "user_loginname")
+>        private String loginName;
 > 
->     @Column(name = "user_loginpwd")
->     private String loginPwd;
+>        @Column(name = "user_loginpwd")
+>        private String loginPwd;
 > }
 > ```
 >
@@ -4586,7 +4912,7 @@ https://mvnrepository.com/
 >
 > ```java
 > public interface UserDao extends JpaRepository<User, Integer> {
->     User findByLoginNameAndLoginPwd(String uname, String pwd);
+>        User findByLoginNameAndLoginPwd(String uname, String pwd);
 > }
 > ```
 >
@@ -4606,8 +4932,8 @@ https://mvnrepository.com/
 >
 > ```java
 > public interface UserDao extends JpaRepository<User, Integer> {
->     @Query("select u from User u where u.loginName=?1 and u.loginPwd=?2")
->     User findByLoginNameAndLoginPwd(String uname, String pwd);
+>        @Query("select u from User u where u.loginName=?1 and u.loginPwd=?2")
+>        User findByLoginNameAndLoginPwd(String uname, String pwd);
 > }
 > ```
 >
@@ -4625,8 +4951,8 @@ https://mvnrepository.com/
 >
 > ```xml
 > <dependency>
->     <groupId>org.springframework.boot</groupId>
->     <artifactId>spring-boot-starter-thymeleaf</artifactId>
+>        <groupId>org.springframework.boot</groupId>
+>        <artifactId>spring-boot-starter-thymeleaf</artifactId>
 > </dependency>
 > ```
 >
@@ -4699,7 +5025,7 @@ https://mvnrepository.com/
 >
 > ```java
 > public interface UserService {
->     User login(String uname, String pwd);
+>        User login(String uname, String pwd);
 > }
 > ```
 >
@@ -4708,13 +5034,13 @@ https://mvnrepository.com/
 > ```java
 > @Service
 > public class UserServiceImpl implements UserService {
->     @Autowired
->     private UserDao dao;
+>        @Autowired
+>        private UserDao dao;
 > 
->     @Override
->     public User login(String uname, String pwd) {
->         return dao.findByLoginNameAndLoginPwd(uname, pwd);
->     }
+>        @Override
+>        public User login(String uname, String pwd) {
+>            return dao.findByLoginNameAndLoginPwd(uname, pwd);
+>        }
 > }
 > ```
 
@@ -4741,13 +5067,13 @@ https://mvnrepository.com/
 >
 > ```java
 > public class LoginInterceptor implements HandlerInterceptor {
->     @Override
->     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
->         if (request.getSession().getAttribute("user") != null)
->             return true;
->         response.sendRedirect(request.getContextPath() + "/login");
->         return false;
->     }
+>        @Override
+>        public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+>            if (request.getSession().getAttribute("user") != null)
+>                return true;
+>            response.sendRedirect(request.getContextPath() + "/login");
+>            return false;
+>        }
 > }
 > ```
 >
@@ -4758,11 +5084,11 @@ https://mvnrepository.com/
 > ```java
 > @Configuration
 > public class MyWebConfig extends WebMvcConfigurationSupport {
->     @Override
->     protected void addInterceptors(InterceptorRegistry registry) {
->         registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/link/**");
->         super.addInterceptors(registry);
->     }
+>        @Override
+>        protected void addInterceptors(InterceptorRegistry registry) {
+>            registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/link/**");
+>            super.addInterceptors(registry);
+>        }
 > }
 > ```
 >
@@ -4780,9 +5106,9 @@ https://mvnrepository.com/
 >
 > ```xml
 > <dependency>
->     <groupId>com.github.wenhao</groupId>
->     <artifactId>jpa-spec</artifactId>
->     <version>3.1.1</version>
+>        <groupId>com.github.wenhao</groupId>
+>        <artifactId>jpa-spec</artifactId>
+>        <version>3.1.1</version>
 > </dependency>
 > ```
 >
@@ -4804,12 +5130,12 @@ https://mvnrepository.com/
 > ```java
 > @RequestMapping("/list")
 > public String showList(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "findname", defaultValue = "") String findname, Model m, @SessionAttribute("user") User u) {
->     Pageable pageable = PageRequest.of(page - 1, 2, Sort.by("name").ascending());
->     Specification<Link> qw = Specifications.<Link>and().eq("user.id", u.getId()).like("name", "%" + findname + "%").build();
->     // 在Oracle里面，如果用like模糊查询，自动生成的sql语句中包含ecp...函数，空白的字符不能使用，会报错
->     Page<Link> info = service.findPage(qw, pageable);
->     m.addAttribute("info", info);
->     return "list";
+>        Pageable pageable = PageRequest.of(page - 1, 2, Sort.by("name").ascending());
+>        Specification<Link> qw = Specifications.<Link>and().eq("user.id", u.getId()).like("name", "%" + findname + "%").build();
+>        // 在Oracle里面，如果用like模糊查询，自动生成的sql语句中包含ecp...函数，空白的字符不能使用，会报错
+>        Page<Link> info = service.findPage(qw, pageable);
+>        m.addAttribute("info", info);
+>        return "list";
 > }
 > ```
 >
@@ -4820,7 +5146,7 @@ https://mvnrepository.com/
 > ```java
 > @Override
 > public Page<Link> findPage(Specification<Link> qw, Pageable pageable) {
->     return dao.findAll(qw, pageable);
+>        return dao.findAll(qw, pageable);
 > }
 > ```
 
@@ -4830,12 +5156,12 @@ https://mvnrepository.com/
 >
 > ```java
 > public interface BaseService<T,ID> {
-> void save(T o);
-> void edit(T o);
-> void remove(T o);
-> void removeById(ID id);
+>     void save(T o);
+>     void edit(T o);
+>     void remove(T o);
+>     void removeById(ID id);
 > 
-> /**
+>     /**
 >      * 查询全部
 >      */
 >     List<T> findAll();
@@ -4971,9 +5297,1717 @@ https://mvnrepository.com/
 > }
 > ```
 
-### springBoot整合mybatisPlus3
+### SpringBoot整合mybatisPlus3
 
 > https://www.cnblogs.com/liuyj-top/p/12976396.html
+
+### 解决跨域问题
+
+> 出于安全原因，浏览器禁止Ajax调用驻留在当前原点之外的资源。例如，当你在一个标签中检查你的银行账户时，你可以在另一个选项卡上拥有EVILL网站。来自EVILL的脚本不能够对你的银行API做出Ajax请求（从你的帐户中取出钱！）使用您的凭据。
+>
+> 跨源资源共享（CORS）是由大多数浏览器实现的W3C规范，允许您灵活地指定什么样的跨域请求被授权，而不是使用一些不太安全和不太强大的策略，如IFRAME或JSONP
+
+#### @CrossOrigin注解
+
+> Spring Framework 4.2 GA为CORS提供了第一类支持，使您比通常的基于过滤器的解决方案更容易和更强大地配置它。所以springMVC的版本要在4.2或以上版本才支持@CrossOrigin
+>
+> **controller配置CORS**
+>
+> ```java
+> @RestController
+> @RequestMapping("/account") public class AccountController {
+> 
+>     @CrossOrigin
+>     @GetMapping("/{id}") public Account retrieve(@PathVariable Long id) { 
+>         // ...
+>     }
+> 
+>     @DeleteMapping("/{id}") public void remove(@PathVariable Long id) { 
+>         // ...
+>     }
+> }
+> ```
+>
+> 其中@CrossOrigin中的2个参数
+>
+> - origins ： 允许可访问的域列表
+>
+>
+> - maxAge：准备响应前的缓存持续的最大时间（以秒为单位）
+>
+> **为整个controller启用@CrossOrigin**
+>
+> ```java
+> @CrossOrigin(origins = "http://domain2.com", maxAge = 3600)
+> @RestController
+> @RequestMapping("/account") public class AccountController {
+> 
+>     @GetMapping("/{id}") public Account retrieve(@PathVariable Long id) { 
+>         // ...
+>     }
+> 
+>     @DeleteMapping("/{id}") public void remove(@PathVariable Long id) { 
+>         // ...
+>     }
+> }
+> ```
+>
+> *同时使用controller和方法级别的CORS配置，Spring将合并两个注释属性以创建合并的CORS配置*
+
+## Nginx
+
+> 
+
+## Spring Cloud
+
+> **概述**
+>
+> Spring Cloud，基于 Spring Boot 提供了一套微服务开发方案，包括服务注册与发现、配置中心、全链路监控、服务网关、负载均衡、熔断器等组件，除了基于 NetFlix 的开源组件做高度抽象封装之外，还有一些选型中立的开源组件。
+>
+> Spring Cloud 利用 Spring Boot 的开发便利性，巧妙地简化了分布式系统基础设施的开发， Spring Cloud 为开发人员提供了快速构建分布式系统的一些工具，**包括配置管理、服务发现、断路器、路由、微代理、事件总线、全局锁、决策竞选、分布式会话等等，他们都可以用 Spring Boot 的开发风格做到一键启动和部署。**
+>
+> Spring Boot 并没有重复的造轮子，它只是将目前各家公司开发的比较成熟、经得起实际考验的服务框架组合起来，通过 Spring Boot 风格进行再封装，屏蔽掉了复杂的配置和实现原理，**最终给开发者流出一套简单易懂、易部署和易维护的分布式系统开发工具包**
+>
+> Spring Cloud 是分布式微服务架构下的一站式解决方案，是各个微服务架构落地技术的集合体，俗称**微服务全家桶**
+>
+> **五大组件**
+>
+> - 服务发现——Netflix Eureka
+> - 客服端负载均衡——Netflix Ribbon
+> - 断路器——Netflix Hystrix
+> - 服务网关——Netflix Zuul
+> - 分布式配置——Spring Cloud Config
+>
+> 
+
+### Eureka
+
+> 
+
+### Openfeign
+
+> 使用 restTemplate 不够透明，希望写成和 spring 工程类似的格式，使用 service 调用
+>
+> 使用 Openfeign 来实现，将 service 变为一个动态代理，它使用 httpClient 发出远程调用
+
+#### 配置文件
+
+> **Maven**
+>
+> ```xml
+> <dependency>
+>     <groupId>org.springframework.cloud</groupId>
+>     <artifactId>spring-cloud-starter-openfeign</artifactId>
+> </dependency>
+> ```
+>
+> 远程通讯框架
+
+#### 使用
+
+> **微服务业务(xw-weibo)**
+>
+> ```java
+> @Controller
+> public class WeiBoServiceImpl implements WeiBoService {
+>     @Autowired
+>     private UserService userService;
+> 
+>     @Override
+>     @RequestMapping(value = "/weibo/add", produces = "application/json;charset=utf-8")
+>     @ResponseBody
+>     public WeiBo addWeiBo(String title, String content, int userId) {
+>         userService.findScoreById(userId);
+>         System.out.println("远程调用users的方法，获取积分是"+score);
+>         return "{\"msg\":\"ok\"}";
+>     }
+> }
+> ```
+>
+> UserService 不能使用导入方式进行，如果导入 xw-user 的话，就会变成单体了。必须通过 json，才符合独立运行的微服务的要求
+>
+> **将 UserService 放到公共模块 common中**
+>
+> 
+
+### Lcn
+
+> 
+
+### 熔断器
+
+> Hystrix 是一个用于分布式系统的延迟和容错的开源库，在分布式系统里，许多依赖不可避免的会调用失败，比如超时、异常等等，Hystrix 能够保证在一个依赖出问题的情况下，不会导致整体服务失败，避免级联故障，以提高分布式系统的弹性。
+>
+> “断路器”：本身是一个开关装置，当某个服务单元发生故障之后，通过断路器的故障监控（类似熔断保险丝），**向调用方返回一个服务预期的、可处理的备选响应（FallBack），而不是长时间的等待或者抛出调用方法无法处理的异常，这样就可以保证了服务调用方的线程不会被长时间、不必要的占用，从而避免了故障在分布式系统中的蔓延，乃至雪崩**
+>
+> 熔断机制是应对雪崩效应的一种微服务链路保护机制。
+>
+> **当某个链路的某个微服务不可用或者响应时间太长时，会进行服务的降级，进而熔断该节点微服务的调用，快速返回错误的响应信息。当检测到该节点微服务调用响应正常后恢复调用链路。在 Spring Cloud 框架内熔断机制通过 Hystrix 实现。Hystrix 会监控微服务间调用的状况，当失败的调用到一定阈值，默认是5秒内20次调用失败就会启动熔断机制。**
+>
+> **熔断机制的注解是 @HystrixCommand**
+>
+> **作用**
+>
+> - 服务降级
+> - 服务熔断
+> - 服务限流
+> - 接近实时监控
+> - ……
+>
+
+#### 配置文件和API配置Hystrix
+
+> https://blog.csdn.net/chenxyz707/article/details/80913725
+
+##### Hystrix 默认加载的配置文件 - 限流、 熔断示例
+
+> **线程池大小**
+>
+> hystrix.threadpool.default.coreSize=1
+>
+> **缓冲区大小， 如果为-1，则不缓冲，直接进行降级 fallback**
+>
+> hystrix.threadpool.default.maxQueueSize=200
+>
+> **缓冲区大小超限的阈值，超限就直接降级**
+>
+> hystrix.threadpool.default.queueSizeRejectionThreshold=2
+
+##### 执行策略
+
+> **资源隔离模式，默认thread。 还有一种叫信号量**
+>
+> hystrix.command.default.execution.isolation.strategy=THREAD
+>
+> **是否打开超时**
+>
+> hystrix.command.default.execution.timeout.enabled=true
+>
+> **超时时间，默认1000毫秒**
+>
+> hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds=15000
+>
+> **超时时中断线程**
+>
+> hystrix.command.default.execution.isolation.thread.interruptOnTimeout=true
+>
+> **取消时候中断线程**
+>
+> hystrix.command.default.execution.isolation.thread.interruptOnFutureCancel=false
+>
+> **信号量模式下，最大并发量**
+>
+> hystrix.command.default.execution.isolation.semaphore.maxConcurrentRequests=2
+
+##### 降级策略
+
+> **是否开启服务降级**
+>
+> hystrix.command.default.fallback.enabled=true
+>
+> **fallback执行并发量**
+>
+> hystrix.command.default.fallback.isolation.semaphore.maxConcurrentRequests=100
+
+##### 熔断策略
+
+> **启用/禁用熔断机制**
+>
+> hystrix.command.default.circuitBreaker.enabled=true
+>
+> **强制开启熔断**
+>
+> hystrix.command.default.circuitBreaker.forceOpen=false
+>
+> **强制关闭熔断**
+>
+> hystrix.command.default.circuitBreaker.forceClosed=false
+> **前提条件，一定时间内发起一定数量的请求。 也就是5秒钟内(这个5秒对应下面的滚动窗口长度)至少请求4次，熔断器才发挥起作用。 默认20**
+>
+> hystrix.command.default.circuitBreaker.requestVolumeThreshold=4
+>
+> **错误百分比。达到或超过这个百分比，熔断器打开。 比如：5秒内有4个请求，2个请求超时或者失败，就会自动开启熔断**
+>
+> hystrix.command.default.circuitBreaker.errorThresholdPercentage=50
+>
+> **10秒后，进入半打开状态（熔断开启，间隔一段时间后，会让一部分的命令去请求服务提供者，如果结果依旧是失败，则又会进入熔断状态，如果成功，就关闭熔断）。 默认5秒**
+>
+> hystrix.command.default.circuitBreaker.sleepWindowInMilliseconds=10000
+
+##### 度量策略
+
+> **5秒为一次统计周期，术语描述：滚动窗口的长度为5秒**
+>
+> hystrix.command.default.metrics.rollingStats.timeInMilliseconds=5000
+>
+> **统计周期内 度量桶的数量，必须被timeInMilliseconds整除。作用：**
+>
+> hystrix.command.default.metrics.rollingStats.numBuckets=10
+>
+> **是否收集执行时间，并计算各个时间段的百分比**
+>
+> hystrix.command.default.metrics.rollingPercentile.enabled=true
+>
+> **设置执行时间统计周期为多久，用来计算百分比**
+>
+> hystrix.command.default.metrics.rollingPercentile.timeInMilliseconds=60000
+>
+> **执行时间统计周期内，度量桶的数量**
+>
+> hystrix.command.default.metrics.rollingPercentile.numBuckets=6
+>
+> **执行时间统计周期内，每个度量桶最多统计多少条记录。设置为50，有100次请求，则只会统计最近的10次**
+>
+> hystrix.command.default.metrics.rollingPercentile.bucketSize=100
+>
+> **数据取样时间间隔**
+>
+> hystrix.command.default.metrics.healthSnapshot.intervalInMilliseconds=500
+>
+> **设置是否缓存请求，request-scope内缓存**
+>
+> hystrix.command.default.requestCache.enabled=false
+>
+> **设置HystrixCommand执行和事件是否打印到HystrixRequestLog中**
+>
+> hystrix.command.default.requestLog.enabled=false
+
+##### 限流策略
+
+> **如果没有定义HystrixThreadPoolKey，HystrixThreadPoolKey会默认定义为HystrixCommandGroupKey的值**
+>
+> hystrix.threadpool.userGroup.coreSize=1
+>
+> hystrix.threadpool.userGroup.maxQueueSize=-1
+>
+> hystrix.threadpool.userGroup.queueSizeRejectionThreshold=800
+>
+> hystrix.threadpool.userThreadPool.coreSize=1
+>
+> hystrix.threadpool.userThreadPool.maxQueueSize=-1
+>
+> hystrix.threadpool.userThreadPool.queueSizeRejectionThreshold=800
+>
+> hystrix.command.userCommandKey.execution.isolation.thread.timeoutInMilliseconds=5000
+
+#### 配置熔断器
+
+> 熔断器配置在 web 层中
+>
+> **Maven**
+>
+> ```xml
+> <!-- 熔断器框架 -->
+> <dependency>
+>     <groupId>org.springframework.cloud</groupId>
+>     <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+>     <version>2.2.2.RELEASE</version>
+> </dependency>
+> ```
+>
+> **application.yml**
+>
+> ```yml
+> # 在 feign 中开启
+> feign:
+>    hystrix:
+>      enabled: true
+> 
+> hystrix:
+>   command:
+>     default:
+>       execution:
+>         isolation:
+>           strategy: SEMAPHORE
+>           thread:
+>             timeoutInMilliseconds: 2000
+>       circuitBreaker:
+>         # 熔断器在整个统计时间内是否开启的阀值, 默认20个请求
+>         requestVolumeThreshold: 6
+>         # 熔断器默认工作时间, 默认: 5 秒
+>         sleepWindowInMilliseconds: 20000
+>         # 默认: 50%, 当出错率超过50% 后熔断器启动
+>         errorThresholdPercentage: 50
+>         # 是否强制开启熔断器阻断所有请求, 默认: false, 不开启
+>         forceOpen: false
+>         # 是否允许熔断器忽略错误, 默认false, 不开启
+>         forceClosed: false
+>         
+> #2.5.8版本以下配置有效
+> #feign:
+> #  hystrix:
+> #    enabled: true
+> #  client:
+> #    config:
+> #      default: # 全局配置
+> #        connectTimeout: 15000
+> #        readTimeout: 3000
+> #        MaxAutoRetries: 0
+> #        MaxAutoRetriesNextServer: 0 #对切换实例的重试次数，默认1
+> #      XW-WEIBO:
+> #        connectTimeout: 15000
+> #        readTimeout: 3000
+> #        MaxAutoRetries: 0
+> #        MaxAutoRetriesNextServer: 0 #对切换实例的重试次数，默认1
+> ```
+
+#### 熔断器处理类
+
+> 作为公共类，应放在 common 中
+>
+> **HystrixWeiBoServiceImpl**
+>
+> ```java
+> @Service
+> public class HystrixWeiBoServiceImpl implements WeiBoService {
+>     @Override
+>     public WeiBo addWeiBo(String title, String content, String img, String usernickname) {
+>         // 返回一个id为负数的类，具体熔断后的处理交由 web 层的控制类
+>         WeiBo wb = new WeiBo();
+>         wb.setId(Integer.MIN_VALUE);
+>         return wb;
+>     }
+> }
+> ```
+>
+> 熔断处理类作为 service 层，放到 spring 中才起作用
+>
+> 哪个服务 api 需要熔断处理，就继承哪个 api 并重写其内部方法
+>
+> **配置 api 使用该熔断类**
+>
+> ```java
+> @FeignClient(value = "XW-WEIBO", fallback = HystrixWeiBoServiceImpl.class)
+> public interface WeiBoService {
+> }
+> ```
+>
+> fallback = HystrixWeiBoServiceImpl.class
+>
+> - 指定被熔断的时候返回的策略
+
+##### 降级处理
+
+> 
+
+##### 示例
+
+> 
+
+### 分布式事务
+
+> 
+
+#### TxManager
+
+> 
+
+### 共享Session
+
+> 
+
+### Gateway
+
+> 
+
+### 解决跨域问题
+
+> 添加跨域允许
+>
+> **application.yml**(xw-gateway)
+>
+> ```yml
+> spring:
+>     cloud:
+>      gateway:
+>        globalcors:
+>          corsConfigurations:
+>           '[/**]':
+>             # 允许携带认证信息
+>             allow-credentials: true
+>             # 允许跨域的源(网站域名/ip)，设置*为全部
+>             allowedOrigins: "*"
+>             # 允许跨域的method， 默认为GET和OPTIONS，设置*为全部
+>             allowedMethods: "*"
+>             # 允许跨域请求里的head字段，设置*为全部
+>             allowedHeaders: "*"
+> ```
+>
+> 添加跨域允许，让前端程序方便获取
+
+
+
+### 配置整理
+
+#### 父工程(总工程)
+
+> **pom.xml**
+>
+> ```xml
+> <?xml version="1.0" encoding="UTF-8"?>
+> <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+>     <modelVersion>4.0.0</modelVersion>
+>     <parent>
+>         <groupId>org.springframework.boot</groupId>
+>         <artifactId>spring-boot-starter-parent</artifactId>
+>         <version>2.2.2.RELEASE</version>
+>         <relativePath/> <!-- lookup parent from repository -->
+>     </parent>
+>     <groupId>com.gec.it</groupId>
+>     <artifactId>xw</artifactId>
+>     <version>0.0.1-SNAPSHOT</version>
+>     <name>xw</name>
+>     <description>Demo project for Spring Boot</description>
+>     <packaging>pom</packaging>
+> 
+>     <modules>
+>         <module>xw-user</module>
+>         <module>xw-weibo</module>
+>         <module>xw-common</module>
+>         <module>xw-service-parent</module>
+>     </modules>
+> 
+>     <properties>
+>         <java.version>1.8</java.version>
+>         <!--        <spring-cloud.version>2020.0.5</spring-cloud.version>-->
+>         <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
+>     </properties>
+>     <dependencies>
+> 
+>         <dependency>
+>             <groupId>org.springframework.cloud</groupId>
+>             <artifactId>spring-cloud-starter</artifactId>
+>         </dependency>
+> 
+>         <dependency>
+>             <groupId>org.springframework.boot</groupId>
+>             <artifactId>spring-boot-starter-test</artifactId>
+>             <scope>test</scope>
+>         </dependency>
+>     </dependencies>
+>     <dependencyManagement>
+>         <dependencies>
+>             <dependency>
+>                 <groupId>org.springframework.cloud</groupId>
+>                 <artifactId>spring-cloud-dependencies</artifactId>
+>                 <version>${spring-cloud.version}</version>
+>                 <type>pom</type>
+>                 <scope>import</scope>
+>             </dependency>
+>         </dependencies>
+>     </dependencyManagement>
+> 
+>     <build>
+>         <plugins>
+>             <plugin>
+>                 <groupId>org.springframework.boot</groupId>
+>                 <artifactId>spring-boot-maven-plugin</artifactId>
+>             </plugin>
+>         </plugins>
+>     </build>
+> </project>
+> ```
+
+#### Eureka
+
+##### pom.xml
+
+> ```xml
+><?xml version="1.0" encoding="UTF-8"?>
+> <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+>  <modelVersion>4.0.0</modelVersion>
+>  <parent>
+>         <groupId>com.gec.it</groupId>
+>         <artifactId>xw</artifactId>
+>         <version>0.0.1-SNAPSHOT</version>
+>     </parent>
+>     <groupId>com.gec.it</groupId>
+>     <artifactId>xw-eureka</artifactId>
+>     <version>0.0.1-SNAPSHOT</version>
+>     <name>xw-eureka</name>
+>     <description>Demo project for Spring Boot</description>
+>    
+>     <dependencies>
+>      <dependency>
+>             <groupId>org.springframework.cloud</groupId>
+>             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+>         </dependency>
+>     </dependencies>
+>    </project>
+>    ```
+> 
+
+##### 启动类
+
+> ```java
+>@SpringBootApplication
+> @EnableEurekaServer
+> public class XwEurekaApplication {
+>      public static void main(String[] args) {
+>            SpringApplication.run(XwEurekaApplication.class, args);
+>        }
+>    }
+>    ```
+>    
+
+##### application.yml
+
+> ```yml
+>server:
+> port: 8761
+> 
+> eureka:
+>    instance:
+>     hostname: localhost
+>    client:
+>       registerWithEureka: false
+>       fetchRegistry: false
+>       serviceUrl:
+>         defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+>    spring:
+>     application:
+>       name: eureka-server
+>    ```
+
+#### Lcn
+
+##### pom.xml
+
+> ```xml
+><?xml version="1.0" encoding="UTF-8"?>
+> <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+>  <modelVersion>4.0.0</modelVersion>
+>  <parent>
+>         <groupId>org.springframework.boot</groupId>
+>         <artifactId>spring-boot-starter-parent</artifactId>
+>         <version>2.2.2.RELEASE</version>
+>         <relativePath/> <!-- lookup parent from repository -->
+>     </parent>
+>     <groupId>com.gec.it</groupId>
+>     <artifactId>xw-lcn</artifactId>
+>     <version>0.0.1-SNAPSHOT</version>
+>     <name>xw-lcn</name>
+>     <description>Demo project for Spring Boot</description>
+>     <properties>
+>         <java.version>1.8</java.version>
+>     </properties>
+>     <dependencies>
+>         <!--LCN TxManager-->
+>         <dependency>
+>             <groupId>com.codingapi.txlcn</groupId>
+>             <artifactId>txlcn-tm</artifactId>
+>             <version>5.0.2.RELEASE</version>
+>         </dependency>
+>    
+>         <dependency>
+>          <groupId>org.springframework.boot</groupId>
+>             <artifactId>spring-boot-starter</artifactId>
+>         </dependency>
+>    
+>         <dependency>
+>          <groupId>org.springframework.boot</groupId>
+>             <artifactId>spring-boot-starter-test</artifactId>
+>             <scope>test</scope>
+>         </dependency>
+>     </dependencies>
+>    
+>     <build>
+>      <plugins>
+>             <plugin>
+>                 <groupId>org.springframework.boot</groupId>
+>                 <artifactId>spring-boot-maven-plugin</artifactId>
+>             </plugin>
+>         </plugins>
+>     </build>
+>    
+>    </project>
+> ```
+> 
+
+##### 启动类
+
+> ```java
+>@SpringBootApplication
+> @EnableTransactionManagerServer
+> public class XwLcnApplication {
+>     public static void main(String[] args) {
+>            SpringApplication.run(XwLcnApplication.class, args);
+>        }
+>    }
+>    ```
+>    
+
+##### application.yml
+
+> ```yml
+>server:
+>  port: 7970
+> 
+> spring:
+>     application:
+>      name: tx-manager
+>     datasource:
+>      driver-class-name: com.mysql.cj.jdbc.Driver
+>      url: jdbc:mysql://127.0.0.1:3306/tx-manager?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+>      username: root
+>      password: root
+>     jpa:
+>      database-platform: org.hibernate.dialect.MySQL8Dialect
+>      show-sql: true
+>    
+>    mybatis:
+>     configuration:
+>      map-underscore-to-camel-case: true
+>      use-generated-keys: true
+>    
+>    tx-lcn:
+>     manager:
+>      port: 8070
+>    ```
+>    
+
+##### SQL
+
+> ```sql
+>CREATE DATABASE
+> IF
+> 	NOT EXISTS `tx-manager` DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
+> USE `tx-manager`;
+>    
+>    SET NAMES utf8mb4;
+>    
+>    SET FOREIGN_KEY_CHECKS = 0;-- ------------------------------ Table structure for t_tx_exception-- ----------------------------
+>    DROP TABLE
+>    IF
+>    	EXISTS `t_tx_exception`;
+>    CREATE TABLE `t_tx_exception` (
+>        `id` BIGINT ( 20 ) NOT NULL AUTO_INCREMENT,
+>        `group_id` VARCHAR ( 64 ) CHARACTER 
+>        SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+>        `unit_id` VARCHAR ( 32 ) CHARACTER 
+>        SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+>        `mod_id` VARCHAR ( 128 ) CHARACTER 
+>        SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+>        `transaction_state` TINYINT ( 4 ) NULL DEFAULT NULL,
+>        `registrar` TINYINT ( 4 ) NULL DEFAULT NULL,
+>        `ex_state` TINYINT ( 4 ) NULL DEFAULT NULL COMMENT '0 待处理 1已处理',
+>        `remark` VARCHAR ( 10240 ) NULL DEFAULT NULL COMMENT '备注',
+>        `create_time` datetime ( 0 ) NULL DEFAULT NULL,
+>        PRIMARY KEY ( `id` ) USING BTREE 
+>    ) ENGINE = INNODB AUTO_INCREMENT = 967 CHARACTER 
+> SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+>    
+>    SET FOREIGN_KEY_CHECKS = 1;
+>    ```
+
+#### Config
+
+##### pom.xml
+
+> ```xml
+><?xml version="1.0" encoding="UTF-8"?>
+> <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>       xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+>  <modelVersion>4.0.0</modelVersion>
+>     <parent>
+>         <groupId>com.gec.it</groupId>
+>         <artifactId>xw</artifactId>
+>         <version>0.0.1-SNAPSHOT</version>
+>     </parent>
+>     <groupId>com.gec.it</groupId>
+>     <artifactId>xw-config</artifactId>
+>     <version>0.0.1-SNAPSHOT</version>
+>     <name>xw-config</name>
+>     <description>Demo project for Spring Boot</description>
+>    
+>     <dependencies>
+>      <dependency>
+>             <groupId>org.springframework.cloud</groupId>
+>             <artifactId>spring-cloud-config-server</artifactId>
+>         </dependency>
+>    
+>         <dependency>
+>          <groupId>org.springframework.cloud</groupId>
+>             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+>         </dependency>
+>     </dependencies>
+>    </project>
+>    ```
+> 
+
+##### 启动类
+
+> ```java
+>@SpringBootApplication
+> @EnableConfigServer
+> public class XwConfigApplication {
+>      public static void main(String[] args) {
+>            SpringApplication.run(XwConfigApplication.class, args);
+>        }
+>    }
+>    ```
+>    
+
+##### application.properties
+
+> ```properties
+>spring.application.name=xw-config
+> server.port=8888
+> 
+> spring.cloud.config.server.git.uri=https://gitee.com/roxlas/springcloud-xw.git
+>    #spring.cloud.config.server.git.searchPaths=respo
+>    spring.cloud.config.label=master
+>    spring.cloud.config.server.git.username=roxlas
+>    spring.cloud.config.server.git.password=roxla1.gitee.com
+>    
+>    eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka/
+>    ```
+
+#### Common(maven工程)
+
+> **pom.xml**
+>
+> ```xml
+> <?xml version="1.0" encoding="UTF-8"?>
+> <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+>     <groupId>com.gec.it</groupId>
+>     <artifactId>xw-common</artifactId>
+>     <version>0.0.1-SNAPSHOT</version>
+>     <modelVersion>4.0.0</modelVersion>
+>     <dependencies>
+>         <dependency>
+>             <groupId>org.springframework.cloud</groupId>
+>             <artifactId>spring-cloud-openfeign-core</artifactId>
+>             <version>3.0.6</version>
+>             <scope>compile</scope>
+>         </dependency>
+>         <dependency>
+>             <groupId>org.springframework</groupId>
+>             <artifactId>spring-web</artifactId>
+>             <version>5.3.14</version>
+>             <scope>compile</scope>
+>         </dependency>
+> 
+>         <dependency>
+>             <groupId>jakarta.persistence</groupId>
+>             <artifactId>jakarta.persistence-api</artifactId>
+>             <version>2.2.3</version>
+>             <scope>compile</scope>
+>         </dependency>
+> 
+>         <dependency>
+>             <groupId>com.fasterxml.jackson.core</groupId>
+>             <artifactId>jackson-annotations</artifactId>
+>             <version>2.12.6</version>
+>             <scope>compile</scope>
+>         </dependency>
+> 
+>         <dependency>
+>             <groupId>org.springframework.data</groupId>
+>             <artifactId>spring-data-commons</artifactId>
+>             <version>2.6.0</version>
+>             <scope>compile</scope>
+>         </dependency>
+>     </dependencies>
+> </project>
+> ```
+
+##### 分页类(远程json,JPA原来的Page不能远程传输)
+
+> **RestPage**
+>
+> ```java
+> package com.gec.it.xwcommon.entity;
+> 
+> import org.springframework.data.domain.Page;
+> import java.util.List;
+> 
+> public class RestPage<T>  {
+>     private int number;
+>     private int size;
+>     private int totalPages;
+>     private int numberOfElements;
+>     private Long totalElements;
+>     private boolean previous;
+>     private boolean first;
+>     private boolean next;
+>     private boolean last;
+>     private List<T> content;
+> 
+>     public RestPage() {
+>     }
+> 
+>     public RestPage(Page<T> page) {
+>         this.setContent(page.getContent());
+>         this.setSize(page.getSize());
+>         this.setTotalElements(page.getTotalElements());
+>         this.setTotalPages(page.getTotalPages());
+>         this.setPrevious(page.hasPrevious());
+>         this.setNextPage(page.hasNext());
+>         this.setFirst(page.isFirst());
+>         this.setLast(page.isLast());
+>         this.setNumber(page.getNumber());
+>         this.setNumberOfElements(page.getNumberOfElements());
+>     }
+> 	....get...set
+> }
+> ```
+>
+
+##### 实体类
+
+> **WeiBo**
+>
+> ```java
+> @Entity
+> @Table(name="weibos")
+> public class WeiBo {
+>     @Id
+>     @GeneratedValue(strategy = GenerationType.IDENTITY)
+>     @Column(name="wb_id")
+>     private int id;
+>     @Column(name="wb_title")
+>     private String title;
+>     @Column(name="wb_content")
+>     private String content;
+>     @Column(name="wb_img")
+>     private String img;
+>     @Column(name="wb_pubtime")
+>     private Date pubTime;
+>     @Column(name="wb_user_nickname")
+>     private String userNickName;
+>     ....
+> }
+> ```
+
+##### Service api
+
+> **WeiBoService**
+>
+> ```java
+> @FeignClient(value = "XW-WEIBO",fallback = HystrixWeiBoServiceImpl.class)
+> //@RequestMapping("/weibo")//不能这样加，会导致降级类也被当成Controller,造成网址冲突
+> public interface WeiBoService {
+>     @GetMapping("/weibo/page")
+>     public RestPage<WeiBo> findPage(
+>         @RequestParam("findTitle") String findTitle,
+>         @RequestParam("minscore") int minscore,
+>         @RequestParam("page")int page,
+>         @RequestParam("row")int row,
+>         @RequestParam("sort")String sort);
+> 
+>     @GetMapping("/weibo/all")
+>     public List<WeiBo> findAll();
+>     @PostMapping("/weibo/add")
+>     public WeiBo addWeiBo(
+>         @RequestParam("title") String title
+>         ,@RequestParam("content") String content
+>         ,@RequestParam("img")String img
+>         ,@RequestParam("usernickname")String usernickname) ;
+> 
+>     @PostMapping("/weibo/add2")
+>     public WeiBo addWeiBo2(@RequestBody WeiBo wb);
+> 
+>     @GetMapping("/weibo/findbyid")
+>     WeiBo findById(@RequestParam("wbid")int wbid);
+> }
+> ```
+
+###### 降级类
+
+> **HystrixWeiBoServiceImpl**
+>
+> ```java
+> @Service
+> public class HystrixWeiBoServiceImpl implements WeiBoService {
+>     @Override
+>     public RestPage<WeiBo> findPage(String findTitle, int minscore, int page, int row, String sort) {
+>         return null;
+>     }
+>     @Override
+>     public List<WeiBo> findAll() {
+>         //降级可以做其它动作
+>         //可以访问内存中的数据
+>         List<WeiBo> list=new ArrayList<>();//map.get("top10");
+>         list.add(new WeiBo(1,"天天向上","奋发图强","",new Date(),"张三"));
+>         return list;
+>     }
+>     @Override
+>     public WeiBo addWeiBo(String title, String content, String img, String usernickname) {
+>         WeiBo wb=new WeiBo();
+>         wb.setId(Integer.MIN_VALUE);
+>         return wb;
+>     }
+>     @Override
+>     public WeiBo addWeiBo2(WeiBo wb) {
+>         WeiBo wb2=new WeiBo();
+>         wb2.setId(Integer.MIN_VALUE);
+>         return wb2;
+>     }
+>     @Override
+>     public WeiBo findById(int wbid) {
+>         WeiBo wb2=new WeiBo();
+>         wb2.setId(Integer.MIN_VALUE);
+>         return wb2;
+>     }
+> }
+> ```
+
+#### 业务层父工程(xw-service-parent)
+
+> **pom.xml**
+>
+> ```xml
+> <?xml version="1.0" encoding="UTF-8"?>
+> <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+>        <parent>
+>            <artifactId>xw</artifactId>
+>            <groupId>com.gec.it</groupId>
+>            <version>0.0.1-SNAPSHOT</version>
+> 
+>        </parent>
+>        <modelVersion>4.0.0</modelVersion>
+>        <artifactId>xw-service-parent</artifactId>
+>        <packaging>pom</packaging>
+> 
+>        <properties>
+>            <java.version>1.8</java.version>
+>        </properties>
+>        <dependencies>
+>            <dependency>
+>                <groupId>com.gec.it</groupId>
+>                <artifactId>xw-common</artifactId>
+>                <version>0.0.1-SNAPSHOT</version>
+>            </dependency>
+>            <dependency>
+>                <groupId>org.springframework.boot</groupId>
+>                <artifactId>spring-boot-starter</artifactId>
+>            </dependency>
+> 
+>            <dependency>
+>                <groupId>org.springframework.cloud</groupId>
+>                <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+>            </dependency>
+> 
+> 
+>            <dependency>
+>                <groupId>org.springframework.boot</groupId>
+>                <artifactId>spring-boot-starter-web</artifactId>
+>            </dependency>
+> 
+>            <dependency>
+>                <groupId>org.springframework.cloud</groupId>
+>                <artifactId>spring-cloud-starter-openfeign</artifactId>
+>            </dependency>
+> 
+>            <dependency>
+>                <groupId>org.springframework.boot</groupId>
+>                <artifactId>spring-boot-starter-data-jpa</artifactId>
+>            </dependency>
+>            <dependency>
+>                <groupId>mysql</groupId>
+>                <artifactId>mysql-connector-java</artifactId>
+>            </dependency>
+> 
+>            <dependency>
+>                <groupId>com.github.wenhao</groupId>
+>                <artifactId>jpa-spec</artifactId>
+>                <version>3.1.1</version>
+>            </dependency>
+> 
+>            <dependency>
+>                <groupId>org.springframework.cloud</groupId>
+>                <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+>                <version>2.2.9.RELEASE</version>
+>            </dependency>
+> 
+>            <dependency>
+>                <groupId>com.codingapi.txlcn</groupId>
+>                <artifactId>txlcn-tc</artifactId>
+>                <version>5.0.2.RELEASE</version>
+>            </dependency>
+> 
+>            <dependency>
+>                <groupId>com.codingapi.txlcn</groupId>
+>                <artifactId>txlcn-txmsg-netty</artifactId>
+>                <version>5.0.2.RELEASE</version>
+>            </dependency>
+> 
+>            <dependency>
+>                <groupId>org.springframework.cloud</groupId>
+>                <artifactId>spring-cloud-starter-config</artifactId>
+>            </dependency>
+>        </dependencies>
+> </project>
+> ```
+
+#### 微服务(业务层 xw-weibo)
+
+##### pom.xml
+
+> ```xml
+> <?xml version="1.0" encoding="UTF-8"?>
+> <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+>     <modelVersion>4.0.0</modelVersion>
+>     <parent>
+>         <groupId>com.gec.it</groupId>
+>         <artifactId>xw-service-parent</artifactId>
+>         <version>0.0.1-SNAPSHOT</version>
+>         <relativePath>../xw-service-parent/pom.xml</relativePath>
+>     </parent>
+>     <groupId>com.gec.it</groupId>
+>     <artifactId>xw-weibo</artifactId>
+>     <version>0.0.1-SNAPSHOT</version>
+>     <name>xw-weibo</name>
+>     <description>Demo project for Spring Boot</description>
+> </project>
+> ```
+>
+
+##### 启动类
+
+> ```java
+> @SpringBootApplication
+> @EnableEurekaClient
+> @EnableFeignClients("com.gec.it.xwcommon.api")
+> @EnableJpaRepositories("com.gec.it.xwweibo.dao")
+> @EntityScan("com.gec.it.xwcommon.entity")
+> @ComponentScan("com.gec.it")
+> @EnableDistributedTransaction
+> public class XwWeiboApplication {
+>     public static void main(String[] args) {
+>         SpringApplication.run(XwWeiboApplication.class, args);
+>     }
+> }
+> ```
+>
+
+##### bootstrap.properties
+
+> ```properties
+> spring.application.name=xw-weibo
+> spring.cloud.config.label=master
+> spring.cloud.config.profile=dev
+> #spring.cloud.config.uri= http://localhost:8888/
+> spring.cloud.config.discovery.enabled=true
+> spring.cloud.config.discovery.serviceId=XW-CONFIG
+> eureka.client.serviceUrl.defaultZone=http://localhost:8761/eureka/
+> ```
+>
+
+##### application.yml
+
+> ```yml
+> server:
+> port: 8766
+> 
+> #eureka:
+> #  client:
+> #    serviceUrl:
+> #      defaultZone: http://localhost:8761/eureka/
+> 
+> spring:
+> #  application:
+> #    name: xw-weibo
+> main:
+>  allow-bean-definition-overriding: true
+> datasource:
+>  driver-class-name: ${driver}
+>  url: ${url}
+>  username: ${username}
+>  password: ${password}
+> jpa:
+>    database-platform: org.hibernate.dialect.MySQL8Dialect
+>    show-sql: true
+> 
+> ribbon:
+> ReadTimeout: 3000
+> ConnectTimeout: 100000 #ribbon请求连接的超时时间，默认值2000
+> MaxAutoRetries: 0 #对当前实例的重试次数，默认
+> MaxAutoRetriesNextServer: 0 #对切换实例的重试次数，默认1
+> 
+> feign:
+> hystrix:
+>   enabled: true
+> 
+> hystrix:
+> command:
+>   default:
+>    execution:
+>      isolation:
+>        strategy: SEMAPHORE
+>        thread:
+>          timeoutInMilliseconds: 2000
+>    circuitBreaker:
+>      # 熔断器在整个统计时间内是否开启的阀值, 默认20个请求
+>      requestVolumeThreshold: 6
+>      # 熔断器默认工作时间, 默认: 5 秒
+>      sleepWindowInMilliseconds: 20000
+>      # 默认: 50%, 当出错率超过50% 后熔断器启动
+>      errorThresholdPercentage: 50
+>      # 是否强制开启熔断器阻断所有请求, 默认: false, 不开启
+>      forceOpen: false
+>      # 是否允许熔断器忽略错误, 默认false, 不开启
+>      forceClosed: false
+> 
+> tx-lcn:
+> client:
+>  manager-address: 127.0.0.1:8070
+> 
+> #2.5.8版本以下配置有效
+> #feign:
+> #  hystrix:
+> #    enabled: true
+> #  client:
+> #    config:
+> #      default:
+> #        connectTimeout: 15000
+> #        readTimeout: 3000
+> #        MaxAutoRetries: 0
+> #        MaxAutoRetriesNextServer: 0 #对切换实例的重试次数，默认1
+> #      XW-WEIBO:
+> #        connectTimeout: 15000
+> #        readTimeout: 3000
+> #        MaxAutoRetries: 0
+> #        MaxAutoRetriesNextServer: 0 #对切换实例的重试次数，默认1
+> 
+> 
+> #xw-user:
+> #  ribbon:
+> #      NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #配置规则 随机
+> #    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule #配置规则 轮询
+> #    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RetryRule #配置规则 重试
+> #    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule #配置规则 响应时间权重
+> #    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.BestAvailableRule #配置规则 最空闲连接策略
+> #      ConnectTimeout: 500 #请求连接超时时间
+> #      ReadTimeout: 1000 #请求处理的超时时间
+> #      OkToRetryOnAllOperations: true #对所有请求都进行重试
+> #      MaxAutoRetriesNextServer: 2 #切换实例的重试次数
+> #      MaxAutoRetries: 1 #对当前实例的重试次数
+> ```
+>
+
+##### 实现类
+
+> **WeiBoServiceImpl**
+>
+> ```java
+> @RestController
+> public class WeiBoServiceImpl implements WeiBoService {
+>     @Autowired
+>     private UserService userService;
+>     @Autowired
+>     private WeiBoDao dao;
+>     
+>     @Override
+>     public RestPage<WeiBo> findPage(String findTitle, int minscore, int page, int row, String sort) {
+>         Specification<WeiBo> qw= Specifications.<WeiBo>and()
+>             .like(findTitle!=null&&!findTitle.isEmpty(),"title",findTitle)
+>             .ge(minscore>0,"score",minscore).build();
+>         Pageable pageable= PageRequest.of(page,row, Sort.by(sort));//分页
+>         Page<WeiBo> info= dao.findAll(qw,pageable);
+>         return new RestPage<WeiBo>(info);
+>     }
+>     
+>     @Override
+>     @Transactional(readOnly = true)
+>     public List<WeiBo> findAll() {
+>         return dao.findAll();
+>     }
+> 
+>     @Override
+>     @Transactional
+>     @LcnTransaction
+>     public WeiBo addWeiBo(String title, String content, String img, String usernickname) {
+>         WeiBo wb = new WeiBo();
+>         wb.setTitle(title);
+>         wb.setContent(content);
+>         wb.setImg(img);
+>         wb.setPubTime(new Date());
+>         wb.setUserNickName(usernickname);
+>         dao.save(wb);
+>         int n=userService.addScore(usernickname, 5);//调用另一个微服务帮忙加分
+>         if(n==Integer.MIN_VALUE)
+>             throw new RuntimeException("加分不成功,网络故障请重试");
+>         return wb;
+>     }
+> 
+>     @Override
+>     @Transactional
+>     @LcnTransaction
+>     public WeiBo addWeiBo2(WeiBo wb) {
+>         dao.save(wb);
+>         return  wb;
+>     }
+> 
+>     @Override
+>     public WeiBo findById(int wbid) {
+>         Optional<WeiBo> one = dao.findById(wbid);
+>         if(one.isPresent())
+>             return one.get();
+>         return null;
+>     }
+> }
+> ```
+
+#### Web
+
+##### pom.xml
+
+> ```xml
+><?xml version="1.0" encoding="UTF-8"?>
+> <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>       xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+>  <modelVersion>4.0.0</modelVersion>
+>     <parent>
+>         <groupId>com.gec.it</groupId>
+>         <artifactId>xw</artifactId>
+>         <version>0.0.1-SNAPSHOT</version>
+>     </parent>
+>     <groupId>com.gec.it</groupId>
+>     <artifactId>xw-web</artifactId>
+>     <version>0.0.1-SNAPSHOT</version>
+>     <name>xw-web</name>
+>     <packaging>jar</packaging>
+>    
+>     <description>Demo project for Spring Boot</description>
+> 
+>     <dependencies>
+>      <dependency>
+>             <groupId>com.gec.it</groupId>
+>             <artifactId>xw-common</artifactId>
+>             <version>0.0.1-SNAPSHOT</version>
+>         </dependency>
+>         <dependency>
+>             <groupId>org.springframework.boot</groupId>
+>             <artifactId>spring-boot-starter-web</artifactId>
+>         </dependency>
+>         <dependency>
+>             <groupId>org.springframework.cloud</groupId>
+>             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+>         </dependency>
+>         <dependency>
+>             <groupId>org.springframework.cloud</groupId>
+>             <artifactId>spring-cloud-starter-openfeign</artifactId>
+>         </dependency>
+>    
+>         <dependency>
+>          <groupId>org.springframework.boot</groupId>
+>             <artifactId>spring-boot-starter-thymeleaf</artifactId>
+>         </dependency>
+>    
+>         <dependency>
+>          <groupId>org.springframework.cloud</groupId>
+>             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+>             <version>2.2.9.RELEASE</version>
+>         </dependency>
+>         <!--服务器之间共享Session  Spring Session-->
+>         <dependency>
+>             <groupId>org.springframework.boot</groupId>
+>             <artifactId>spring-boot-starter-data-redis</artifactId>
+>         </dependency>
+>         <dependency>
+>             <groupId>org.springframework.session</groupId>
+>             <artifactId>spring-session-data-redis</artifactId>
+>         </dependency>
+>         <dependency>
+>             <groupId>org.apache.commons</groupId>
+>             <artifactId>commons-pool2</artifactId>
+>             <version>2.8.0</version>
+>         </dependency>
+>    
+>     </dependencies>
+> </project>
+>    ```
+> 
+
+##### 启动类
+
+> ```java
+>@SpringBootApplication
+> @EnableEurekaClient//和注册中心(服务发现)通讯
+> @EnableFeignClients("com.gec.it.xwcommon.api")//调用微服务的时候，需要产生代理
+> @ComponentScan("com.gec.it")
+>    public class XwWebApplication {
+>        public static void main(String[] args) {
+>            SpringApplication.run(XwWebApplication.class, args);
+>        }
+>    }
+>    ```
+>    
+
+##### application.yml
+
+> ```yml
+>server:
+> port: 8080
+> servlet:
+>  context-path: /xw
+>    
+>    eureka:
+>    client:
+>     serviceUrl:
+>       defaultZone: http://localhost:8761/eureka/
+>    
+>    spring:
+>    application:
+>     name: xw-web
+>    main:
+>     allow-bean-definition-overriding: true
+>    redis:
+>  #数据库名
+>     database: 0
+>  # Redis服务器地址
+>     host: localhost
+>     # Redis服务器连接端口
+>     port: 6379
+>     # Redis服务器连接密码（默认为空）
+>     password:
+>     # 连接池最大连接数（使用负值表示没有限制） 默认 8
+>     lettuce:
+>       pool:
+>         max-active: 8
+>         # 连接池最大阻塞等待时间（使用负值表示没有限制） 默认 -1
+>         max-wait: -1
+>         # 连接池中的最大空闲连接 默认 8
+>         max-idle: 8
+>         # 连接池中的最小空闲连接 默认 0
+>         min-idle: 0   
+>    
+>    ribbon:
+>    ReadTimeout: 3000
+> ConnectTimeout: 100000 #ribbon请求连接的超时时间，默认值2000
+>    MaxAutoRetries: 0 #对当前实例的重试次数，默认
+>    MaxAutoRetriesNextServer: 0 #对切换实例的重试次数，默认1
+>    
+>    feign:
+> hystrix:
+>      enabled: true
+>    
+>    hystrix:
+>    command:
+>     default:
+>       execution:
+>         isolation:
+>           strategy: SEMAPHORE
+>           thread:
+>             timeoutInMilliseconds: 2000
+>       circuitBreaker:
+>         # 熔断器在整个统计时间内是否开启的阀值, 默认20个请求
+>         requestVolumeThreshold: 6
+>         # 熔断器默认工作时间, 默认: 5 秒
+>         sleepWindowInMilliseconds: 20000
+>         # 默认: 50%, 当出错率超过50% 后熔断器启动
+>         errorThresholdPercentage: 50
+>         # 是否强制开启熔断器阻断所有请求, 默认: false, 不开启
+>         forceOpen: false
+>      # 是否允许熔断器忽略错误, 默认false, 不开启
+>         forceClosed: false
+> 
+> 
+>#2.5.8版本以下配置有效
+> #feign:
+>#  hystrix:
+> #    enabled: true
+> #  client:
+> #    config:
+> #      default:
+> #        connectTimeout: 15000
+> #        readTimeout: 3000
+>    #        MaxAutoRetries: 0
+>    #        MaxAutoRetriesNextServer: 0 #对切换实例的重试次数，默认1
+>    #      XW-WEIBO:
+> #        connectTimeout: 15000
+> #        readTimeout: 3000
+>#        MaxAutoRetries: 0
+> #        MaxAutoRetriesNextServer: 0 #对切换实例的重试次数，默认1
+>```
+
+##### 共享session配置
+
+> **SpringSessionConfg**
+>
+> 配置在web服务中
+>
+> ```java
+> @Configuration
+> @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 7200)
+> public class SpringSessionConfg {
+> }
+> ```
+>
+> 注意序列化 public class User implements Serializable {}存入session的东西需要序列化
+
+##### Controller
+
+> **WeiBoController**
+>
+> ```java
+> @Controller
+> public class WeiBoController {
+>        @Autowired
+>        private WeiBoService weiBoService;
+>        @Autowired
+>        private CommentService commentService;
+>        @Autowired
+>        private UserService userService;
+> 
+>        @RequestMapping("/weibo/detail")
+>        public String showDetail(int wbid,Model m){
+>            WeiBo wb=weiBoService.findById(wbid);
+>            if(wb.getId()==Integer.MIN_VALUE)
+>                return "net_err";
+>            User author=userService.findByNickName(wb.getUserNickName());
+>            if(author.getId()==Integer.MIN_VALUE)
+>                return "net_err";
+>            List<Comment> commentList=commentService.findComments(wbid);
+>            if(commentList==null)
+>                return "net_err";
+> 
+>            m.addAttribute("wb",wb);
+>            m.addAttribute("author",author);
+>            m.addAttribute("cmlist",commentList);
+>            return "detail";
+>        }
+> 
+>        //展示微博列表
+>        @RequestMapping("/weibo/page")
+>        public String showPage(String findtitle,int minscore,int page,Model model){
+>            RestPage<WeiBo> info= weiBoService.findPage(findtitle,minscore,page,3,"pubTime desc");
+>            model.addAttribute("info",info);
+>            return "list";
+>        }
+> 
+>        //展示微博列表
+>        @RequestMapping("/weibo/index")
+>        public String showList(Model model){
+> 
+>            List<WeiBo> list=weiBoService.findAll();
+>            if(list==null)
+>                return "net_err";
+>            model.addAttribute("list",list);
+>            return "list";
+>        }
+>        //添加微博
+>        @GetMapping("/weibo/add")
+>        public String add(){
+>            return "add";
+>        }
+>        @PostMapping("/weibo/add")
+>        public String add(String title, String content, @SessionAttribute("user")User user){
+>            WeiBo wb=weiBoService.addWeiBo(title,content,"",user.getNickName());
+>            if(wb.getId()==Integer.MIN_VALUE)
+>                return "net_err";
+>            return "redirect:index";
+>        }
+> }
+> ```
+
+#### Gateway
+
+##### pom.xml
+
+> ```xml
+> <?xml version="1.0" encoding="UTF-8"?>
+> <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+>       xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+>  <modelVersion>4.0.0</modelVersion>
+>  <parent>
+>      <groupId>com.gec.it</groupId>
+>      <artifactId>xw</artifactId>
+>      <version>0.0.1-SNAPSHOT</version>
+>  </parent>
+>  <groupId>com.gec.it</groupId>
+>  <artifactId>xw-gateway</artifactId>
+>  <version>0.0.1-SNAPSHOT</version>
+>  <name>xw-gateway</name>
+>  <description>Demo project for Spring Boot</description>
+> 
+>  <dependencies>
+>      <dependency>
+>          <groupId>org.springframework.cloud</groupId>
+>          <artifactId>spring-cloud-starter-gateway</artifactId>
+>      </dependency>
+>      <dependency>
+>          <groupId>org.springframework.cloud</groupId>
+>          <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+>      </dependency>
+> 
+>      <dependency>
+>          <groupId>org.springframework.cloud</groupId>
+>          <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+>      </dependency>
+> 
+>  </dependencies>
+> 
+>  <dependencyManagement>
+>      <!--Gateway需要2.3.1以上版本的配置的支持，所以低版本的SpringBoot需要导入以下配置，高版本不需要-->
+>      <dependencies>
+>          <dependency>
+>              <groupId>org.springframework.boot</groupId>
+>              <artifactId>spring-boot-dependencies</artifactId>
+>              <version>2.3.1.RELEASE</version>
+>              <type>pom</type>
+>              <scope>import</scope>
+>          </dependency>
+>      </dependencies>
+>  </dependencyManagement>
+> </project>
+> ```
+>
+
+##### 启动类
+
+> ```java
+> @SpringBootApplication
+> public class XwGatewayApplication {
+>     public static void main(String[] args) {
+>         SpringApplication.run(XwGatewayApplication.class, args);
+>     }
+> }
+> ```
+>
+
+##### application.yml
+
+> ```yml
+> server:
+>  port: 9000
+>  
+> eureka:
+>  client:
+>   serviceUrl:
+>    defaultZone: http://localhost:8761/eureka/
+>    
+> spring:
+>   application:
+>     name: xw-gateway
+>   main:
+>     allow-bean-definition-overriding: true
+>   cloud:
+>     gateway:
+>       globalcors:
+>          corsConfigurations:
+>           '[/**]':
+>             # 允许携带认证信息
+>             allow-credentials: true
+>             # 允许跨域的源(网站域名/ip)，设置*为全部
+>             allowedOrigins: "*"
+>             # 允许跨域的method， 默认为GET和OPTIONS，设置*为全部
+>             allowedMethods: "*"
+>             # 允许跨域请求里的head字段，设置*为全部
+>             allowedHeaders: "*"
+>       #自动为每一个在注册中心的微服务生成映射关系 uri的名字就是注册中心中的名名字，例如xw-user
+>       discovery:
+>         locator:
+>           enabled: true #启用自动生成
+>           lowerCaseServiceId: true
+>       default-filters:
+>         - name: Hystrix
+>             args:
+>               name: default
+>               # 降级接口的地址
+>               fallbackUri: forward:/fallback
+>       routes:
+>         - id: weibo_route
+>           uri: lb://XW-WEIBO/
+>           predicates:
+>             - Path=/my/wb/** # 请求地址携带zzzgd的,则转发
+>           filters:
+>             - StripPrefix=2 #必须有这句，否则acc也会继续成映射后url的一部分
+>             - name: Hystrix
+>               args:
+>                 name: testOne
+>                 # 降级接口的地址
+>                 fallbackUri: forward:/fallback
+>         - id: weibo_user
+>           uri: lb://XW-USER/
+>           predicates:
+>             - Path=/user/** # 请求地址携带zzzgd的,则转发
+>           filters:
+>             - StripPrefix=1 #必须有这句，否则acc也会继续成映射后url的一部分
+>             - name: Hystrix
+>               args:
+>                   name: testOne
+>                   # 降级接口的地址
+>                   fallbackUri: forward:/fallback
+> 
+> hystrix:
+>   command:
+>     default:
+>       execution:
+>         timeout:
+>           enabled: true
+>         isolation:
+>           strategy: SEMAPHORE
+>           thread:
+>             timeoutInMilliseconds: 2000
+>       circuitBreaker:
+>         # 熔断器在整个统计时间内是否开启的阀值, 默认20个请求
+>         requestVolumeThreshold: 6
+>         # 熔断器默认工作时间, 默认: 5 秒
+>         sleepWindowInMilliseconds: 20000
+>         # 默认: 50%, 当出错率超过50% 后熔断器启动
+>         errorThresholdPercentage: 50
+>         # 是否强制开启熔断器阻断所有请求, 默认: false, 不开启
+>         forceOpen: false
+>         # 是否允许熔断器忽略错误, 默认false, 不开启
+>         forceClosed: false
+> 
+>     testOne:
+>           execution:
+>             isolation:
+>               thread:
+>                 timeoutInMilliseconds: 5000
+> ```
+
+#### Nginx
+
+> **conf**
+>
+> ```conf
+> upstream xx {
+>         server 192.168.57.2:8080;
+>         server 192.168.57.2:8081;
+>         server 192.168.57.2:8082;
+>     }
+> 
+>     server {
+>         listen       80;
+>         server_name  localhost;
+> 		location /xw{
+> 		    proxy_pass http://xx;
+> 		}
+> 		
+> 		location /imgs/{
+> 		
+> 		    root xw-static;
+> 		}
+>         
+> 		location /aa{
+> 		    proxy_pass https://news.whutech.com/archive/138947.html;
+> 			proxy_set_header           Host $host;  
+> 			proxy_set_header  X-Real-IP  $remote_addr;  
+> 			proxy_set_header           X-Forwarded-For $proxy_add_x_forwarded_for;
+> 			client_max_body_size  100m;
+> 		}      
+> }
+> ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
