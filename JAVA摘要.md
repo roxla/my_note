@@ -1,4 +1,4 @@
-JDK、JRE、JVM之间的关系
+### JDK、JRE、JVM之间的关系
 
 > <span style="color: green;">JDK：</span>
 > java开发工具包，包含jre和开发环境，开发人员使用的工具(date，类型...，Scanner)
