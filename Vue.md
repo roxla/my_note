@@ -2,6 +2,48 @@
 
 > 
 
+## 配置说明
+
+### tsconfig.json
+
+#### 1
+
+> 
+
+#### compilerOptions
+
+> - **target：**
+> - **module：**
+> - **moduleResolution：**
+
+#### include
+
+> 
+
+#### exclude
+
+> 
+
+### vite.config.ts
+
+#### 1
+
+> 
+
+#### 2
+
+> 
+
+### package.json
+
+#### 1
+
+> 
+
+#### 2
+
+> 
+
 ## 组件化
 
 > 
