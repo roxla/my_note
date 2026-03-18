@@ -30,9 +30,16 @@
 
 > 
 
-#### 2
+#### build
 
-> 
+> - **target：**
+> - **cssTarget：**
+> - **outDir：**
+> - **sourcemap：**
+> - **rollupOptions：**
+>   - 1
+> - **lib：**
+>   - 
 
 ### package.json
 
